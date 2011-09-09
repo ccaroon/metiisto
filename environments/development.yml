@@ -25,3 +25,18 @@ show_errors: 1
 # DO NOT EVER USE THAT FEATURE IN PRODUCTION 
 # OR TINY KITTENS SHALL DIE WITH LOTS OF SUFFERING
 auto_reload: 0
+
+plugins:
+    Database:
+        driver: 'mysql'
+        database: 'workman_devel'
+        host: 'localhost'
+        port: 3306
+        username: 'ccaroon'
+        password: 'Vepkef21'
+        connection_check_threshold: 10
+        dbi_params:
+            RaiseError: 1
+            AutoCommit: 1
+            RootClass: 'DBIx::ContextualFetch'
+        log_queries: 1

@@ -15,3 +15,16 @@ show_errors: 0
 # cache route resolution for maximum performance
 route_cache: 1
 
+plugins:
+    Database:
+        driver: 'mysql'
+        database: 'workman_devel'
+        host: 'localhost'
+        port: 3306
+        username: 'ccaroon'
+        password: 'Vepkef21'
+        connection_check_threshold: 10
+        dbi_params:
+            RaiseError: 1
+            AutoCommit: 1
+        log_queries: 0
