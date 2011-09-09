@@ -4,6 +4,7 @@ package Metiisto::Base;
 ################################################################################
 use strict;
 
+use Class::DBI::AbstractSearch;
 use Dancer::Plugin::Database;
 
 use base 'Class::DBI';

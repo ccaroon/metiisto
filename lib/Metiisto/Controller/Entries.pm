@@ -12,9 +12,18 @@ sub list
 {
     my $this = shift;
 
-    my $entry = Metiisto::Entry->retrieve(77);
+    my @entries = Metiisto::Entry->search_where(
+        {1=>1},
+        {limit_dialect => 'LimitOffset', limit => 15, offset => 0}
+    );
+
+    my $out = '';
+    foreach my $e (@entries)
+    {
+        $out .= "<li>" . $e->id() . " - " . $e->subject() . "<br>\n";
+    }
     
-    return ("Entry: ".$entry->subject());
+    return ($out);
 }
 ################################################################################
 sub show
