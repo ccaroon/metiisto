@@ -1,0 +1,15 @@
+[% USE Date %]
+<table border="0">
+    <tr>
+        <td width="1%"><img src="/images/metiisto.jpg" border="0"></td>
+        <td width="80%" class="header" align="center" valign="bottom">
+            [% Date.format(date.now, "%A - %B %d, %Y") %]
+            <br>
+            USERNAME GOES HERE
+<!--            <% unless (User.user.nil?) %>
+            <a href="<%= edit_user_path(User.user) %>"><%=h User.user.name %></a>
+            <% end %>-->
+        </td>
+        <td width="1%"><img src="/images/metiisto.jpg" border="0"></td>
+    </tr>
+</table>

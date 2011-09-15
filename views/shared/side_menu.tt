@@ -1,0 +1,16 @@
+<div class="side_menu_item">
+    <img src="/images/themes/default/entries.png" width="20" height="20">
+    <a href="/entries/new">New Entry</a>
+</div>
+<div class="side_menu_item">
+    <img src="/images/themes/default/goals.png" width="20" height="20">
+    <a href="/goals/new">New Goal</a>
+</div>
+<div class="side_menu_item">
+    <img src="/images/themes/default/todos.png" width="20" height="20">
+    <a href="/todos/new">New Todo</a>
+</div>
+<div class="side_menu_item">
+    <img src="/images/themes/default/notes.png" width="20" height="20">
+    <a href="/notes/new">New Note</a>
+</div>

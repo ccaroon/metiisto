@@ -1,0 +1,73 @@
+[% PROCESS util/format.tt %]
+<div align="center">
+    <table width="100%">
+        <tr>
+            <td valign="top" colspan="2">
+                <div class="header">
+                    <a href="http://<%= User.user.jira_host %>">Tickets</a>
+                </div>
+                <div>[% PROCESS home/tickets.tt %]</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="default" valign="top" width="62%">
+                <table width="100%">
+                    <tr>
+                        <td valign="top">
+                            <div class="header">
+                                This Week's Entries
+                                (<a href="/reports/by_category">Category</a>
+                                 |
+                                 (<a href="/reports/by_day">Daily</a>
+                                 |
+                                 (<a href="/reports/summary">Summary</a>
+                                )
+                            </div>
+                            <div>[% under_construction("HOME/ENTRIES"); %]</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td valign="top">
+                <table width="100%">
+                    <tr>
+                        <td>[% under_construction("HOME/CURRENT_RELEASE"); %]</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="header">
+                                <a href="/todos">Todos</a>
+                            </div>
+                            <div>[% under_construction("HOME/TODOS"); %]</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="header">
+                                <a href="/goals">Goals</a>
+                            </div>
+                            <div>[% under_construction("HOME/GOALS"); %]</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="header">Recent Notes</div>
+                            <div>[% under_construction("HOME/RECENT_NOTES"); %]</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="header">Favorite Notes</div>
+                            <div>[% under_construction("HOME/FAVORITE_NOTES"); %]</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>[% under_construction("HOME/COUNTDOWNS"); %]</div>
+            </td>
+        </tr>
+    </table>
+</div>

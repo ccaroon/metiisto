@@ -1,0 +1,18 @@
+[%
+
+global.cycle_value = '';
+MACRO cycle(val1, val2) BLOCK;
+
+    IF global.cycle_value == val1;
+        global.cycle_value = val2;
+    ELSIF global.cycle_value == val2;
+        global.cycle_value = val1;
+    ELSE;
+        global.cycle_value = val1;
+    END;
+
+    global.cycle_value;
+
+END;
+
+%]

@@ -1,0 +1,32 @@
+[% PROCESS util/tools.tt %]
+[% PROCESS util/format.tt %]
+<div class="header">
+    <b>Entries</b>
+</div>
+<p>
+[% under_construction("SEARCH CONTROLS HERE"); %]
+<div align="center">
+    [% under_construction("PAGINATION CONTROLS HERE"); %]
+</div>
+<table class="list" width="100%">
+    <tr>
+        <th>Task Date</th>
+        <th>Category</th>
+        <th>Ticket</th>
+        <th width="55%">Subject</th>
+        <th>Actions</th>
+    </tr>
+    [% FOREACH entry IN entries %]
+    <tr class="[% cycle ('row_even','row_odd') %]">
+        <td>[% entry.task_date %]</td>
+        <td>[% entry.category %]</td>
+        <td>[% entry.ticket_num %]</td>
+        <td><a href="/entries/[% entry.id %]">[% entry.subject %]</a></td>
+        <td>
+            <img src='/images/themes/default/show.png'>
+            <img src='/images/themes/default/edit.png'>
+            <img src='/images/themes/default/delete.png'>
+        </td>
+    </tr>
+    [% END %]
+</table>

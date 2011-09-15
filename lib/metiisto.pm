@@ -3,31 +3,18 @@ package metiisto;
 use Dancer ':syntax';
 use Dancer::Plugin::Database;
 
-use Metiisto::Controller::Entries;
-
 our $VERSION = '1.0';
-# TODO: move routes somewhere else????
+
+use Metiisto::Controller::Entries;
+Metiisto::Controller::Entries->declare_routes();
+
+use Metiisto::Controller::Home;
+Metiisto::Controller::Home->declare_routes();
+################################################################################
+# Default Route
 ################################################################################
 get '/' => sub {
     template 'index';
 };
 ################################################################################
-get '/entries' => sub {
-
-    my $c = Metiisto::Controller::Entries->new();
-    my $out = $c->list();
-
-    return ($out);
-};
-################################################################################
-get '/entries/:id' => sub {
-
-    my $c = Metiisto::Controller::Entries->new();
-    my $out = $c->show(id => param('id'));
-
-    return ($out);
-};
-################################################################################
 1;
-
-    

@@ -1,0 +1,7 @@
+[%
+
+MACRO under_construction(msg) BLOCK;
+    "<span style='color:grey'>$msg</span>";
+END;
+
+%]
