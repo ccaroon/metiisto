@@ -20,7 +20,10 @@ sub list
          order_by => 'task_date desc'}
     );
 
-    my $out = template 'entries/list', { entries => \@entries };
+    my $out = template 'entries/list', {
+        entries => \@entries,
+        count => Metiisto::Entry->count()
+    };
 
     return ($out);
 }

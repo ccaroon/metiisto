@@ -6,6 +6,7 @@
 <p>
 [% under_construction("SEARCH CONTROLS HERE"); %]
 <div align="center">
+    Num Entries: [% count %]<br>
     [% under_construction("PAGINATION CONTROLS HERE"); %]
 </div>
 <table class="list" width="100%">

@@ -1,7 +1,7 @@
 [% USE Date %]
 <html>
     <head>
-        <title>Workman - CONTROLLER/ACTION </title>
+        <title>Metiisto - [% vars.title %]</title>
         <link href="/css/metiisto.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="/css/Blue.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="/css/calendariffic/calendar-system.css" media="screen" rel="stylesheet" type="text/css" />

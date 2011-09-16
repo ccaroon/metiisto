@@ -18,6 +18,7 @@ WriteMakefile(
         'Dancer::Plugin::Database' => 0,
         'Class::DBI'  => 0,
         'Class::DBI::AbstractSearch'  => 0,
+        'Digest::SHA1'  => 2.13,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'metiisto-*' },

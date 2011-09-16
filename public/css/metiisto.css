@@ -27,7 +27,7 @@ s { color:gray; }
 .row_even { background-color:lightgrey; }
 .row_odd  { background-color:white; }
 
-.error_messages
+.error_message
 {
     background-color:#EEEEEE;
     color:red;

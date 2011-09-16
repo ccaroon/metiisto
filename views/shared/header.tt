@@ -3,12 +3,13 @@
     <tr>
         <td width="1%"><img src="/images/metiisto.jpg" border="0"></td>
         <td width="80%" class="header" align="center" valign="bottom">
-            [% Date.format(date.now, "%A - %B %d, %Y") %]
+            [% IF session.user %]
+                <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
+            [% ELSE %]
+                -
+            [% END %]
             <br>
-            USERNAME GOES HERE
-<!--            <% unless (User.user.nil?) %>
-            <a href="<%= edit_user_path(User.user) %>"><%=h User.user.name %></a>
-            <% end %>-->
+            [% Date.format(date.now, "%A - %B %d, %Y") %]
         </td>
         <td width="1%"><img src="/images/metiisto.jpg" border="0"></td>
     </tr>
