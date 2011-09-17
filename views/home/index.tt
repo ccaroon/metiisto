@@ -4,7 +4,7 @@
         <tr>
             <td valign="top" colspan="2">
                 <div class="header">
-                    <a href="http://<%= User.user.jira_host %>">Tickets</a>
+                    <a href="http://[% session.user.jira_host %]">Tickets</a>
                 </div>
                 <div>[% PROCESS home/tickets.tt %]</div>
             </td>
@@ -38,7 +38,7 @@
                             <div class="header">
                                 <a href="/todos">Todos</a>
                             </div>
-                            <div>[% under_construction("HOME/TODOS"); %]</div>
+                            <div>[% PROCESS home/todos.tt %]</div>
                         </td>
                     </tr>
                     <tr>
