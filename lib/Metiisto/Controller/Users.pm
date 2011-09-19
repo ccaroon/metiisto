@@ -67,6 +67,32 @@ sub login
     return ($out);
 }
 ################################################################################
+sub edit
+{
+    my $this = shift;
+
+    my $out;
+    my $user = Metiisto::User->retrieve(id => params->{id});
+    if (request->method() eq "POST")
+    {
+        foreach my $p (keys %{params()})
+        {
+            next unless $p =~ /^user\.(.*)$/;
+            my $attr = $1;
+            $user->$attr(params->{$p});
+        }
+        my $cnt = $user->update();
+
+        $out = redirect '/home';
+    }
+    else
+    {
+        $out = template 'users/edit', {user => $user};
+    }
+
+    return ($out);
+}
+################################################################################
 sub logout
 {
     my $this = shift;
@@ -93,6 +119,15 @@ sub declare_routes
 
         my $c = Metiisto::Controller::Users->new();
         my $out = $c->logout();
+
+        return ($out);
+    };
+    
+    any ['get','post'] =>  '/users/:id/:action' => sub {
+        my $action = params->{action};
+        
+        my $c = Metiisto::Controller::Users->new();
+        my $out = $c->$action();
 
         return ($out);
     };

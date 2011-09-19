@@ -1,75 +1,93 @@
 <div class="header">
-    <b><%= controller.action_name.capitalize %> User</b>
+    <b>Edit User</b>
 </div>
 
 <div style="padding-left:50px;padding-top:25px">
 
-<% form_for(User.user) do |f| %>
-    <div class="error_messages"><%= f.error_messages %></div>
-
+<form method="post" action="/users/[% user.id %]/edit">
     <div class="default" style="border:solid 1px gray;font-size:large">
-        <b><%=  f.label :name %>:</b>
-        <%= f.text_field :name %>
+        <b>Name:</b>
+        <input type="text" name="user.name" value="[% user.name %]">
         <p>
-        <b><%=  f.label :email %>:</b>
-        <%= f.text_field :email %>
+        <b>Email:</b>
+        <input type="text" name="user.email" value="[% user.email %]">
     </div>
     
     <div class="default">
         <h3 style="border:solid 1px gray">Style</h3><p>
-        <b><%=  f.label :main_style%>:</b>
-        <%=  f.select("style_main", User::MAIN_STYLES) %>
+        <b>Main Style:</b>
+        <select name="user.style_main">
+            [% FOREACH style IN ['None','Blue','BlueGreen'] %]
+                [% selected = user.style_main == style ? "selected" : "" %]
+                <option [% selected %] value="[% style %]">[% style %]</option>
+            [% END %]
+        </select>
         <p>
-            
-        <b><%=  f.label :calendar_style%>:</b>
-        <%=  f.select("style_calendar", User::CAL_STYLES) %>
+
+        <b>Calendar Style:</b>
+        <select name="user.style_calendar">
+            [% FOREACH style IN ['blue2','brown','green','system','tas','win2k-1','win2k-2','win2k-cold-1','win2k-cold-2'] %]
+                [% selected = user.style_calendar == style ? "selected" : "" %]
+                <option [% selected %] value="[% style %]">[% style %]</option>
+            [% END %]
+        </select>
     </div>
     
     <div class="default">
         <h3 style="border:solid 1px gray">Jira Config</h3><p>
-        <b><%=  f.label :jira_host %>:</b>
-        <%= f.text_field :jira_host %>
+        <b>Host:</b>
+        <input type="text" name="user.jira_host" value="[% user.jira_host %]">
         <p>
 
-        <b><%=  f.label :jira_user %>:</b>
-        <%= f.text_field :jira_username %>
+        <b>User:</b>
+        <input type="text" name="user.jira_username" value="[% user.jira_username %]">
         <p>
 
-        <b><%=  f.label :jira_pass %>:</b>
-        <%= f.text_field :jira_password %>
+        <b>Password:</b>
+        <input type="text" name="user.jira_password" value="[% user.jira_password %]">
         <p>
 
-        <b><%=  f.label :jira_filter_id %>:</b>
-        <%= f.text_field :jira_filter_id %>
+        <b>Filter Id:</b>
+        <input type="text" name="user.jira_filter_id" value="[% user.jira_filter_id %]">
     </div>
 
     <div class="default">
         <h3 style="border:solid 1px gray">Email Config</h3><p>
 
-        <b><%=  f.label :email_type%>:</b>
-        <%=  f.select("email_type", %w(sendmail smtp test)) %>
+        <b>Type:</b>
+        <select name="user.email_type">
+            [% FOREACH type IN ['SMTP','Sendmail'] %]
+                [% selected = user.email_type == type ? "selected" : "" %]
+                <option [% selected %] value="[% type | lower %]">[% type %]</option>
+            [% END %]
+        </select>
         <p>
 
-        <b><%=  f.label :smtp_host %>:</b>
-        <%= f.text_field :smtp_host %>
+        <b>SMTP Host:</b>
+        <input type="text" name="user.smtp_host" value="[% user.smtp_host %]">
         <p>
 
-        <b><%=  f.label :smtp_user %>:</b>
-        <%= f.text_field :smtp_user%>
+        <b>SMTP User:</b>
+        <input type="text" name="user.smtp_user" value="[% user.smtp_user %]">
         <p>
 
-        <b><%=  f.label :smtp_pass%>:</b>
-        <%= f.text_field :smtp_pass%>
+        <b>SMTP Password:</b>
+        <input type="text" name="user.smtp_pass" value="[% user.smtp_pass %]">
         <p>
 
-        <b><%=  f.label :smtp_auth%>:</b>
-        <%=  f.select("smtp_auth", [['None','none'],['Plain','plain'],['Login','login'],['Cram MD5','cram_md5']]) %>
+        <b>SMTP Auth:</b>
+        <select name="user.smtp_auth">
+            [% FOREACH type IN ['None','Plain','Login','Cram_MD5'] %]
+                [% selected = user.smtp_auth == type ? "selected" : "" %]
+                <option [% selected %] value="[% type | lower %]">[% type %]</option>
+            [% END %]
+        </select>
         <p>
     </div>
 
-    <p><%= f.submit "Save" %></p>
-<% end %>
+    <p><input type="submit" value="Save"</p>
+</form>
 
-<%= link_to 'Logout', :controller => 'users', :action => 'logout', :id => 'all' %>
+<a href="/users/logout">Logout</a>
 
 </div>
