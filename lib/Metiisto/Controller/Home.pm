@@ -4,6 +4,7 @@ use strict;
 
 use Dancer ':syntax';
 
+use Metiisto::JiraTicket;
 use Metiisto::Todo;
 
 use base 'Metiisto::Controller::Base';
@@ -14,12 +15,10 @@ sub home
 
     my @todos = Metiisto::Todo->search(completed => 0, list_id => undef);
     
-    my @tickets = (
-        {key => 'MIDEV-3719', summary => 'Suppress buy photo link'},
-    );
+    my $tickets = Metiisto::JiraTicket->search(query => "filter=".session->{user}->jira_filter_id());
 
     my $out = template 'home/index', {
-        tickets => \@tickets,
+        tickets => $tickets,
         todos   => \@todos,
     };
 

@@ -1,26 +1,33 @@
 [% PROCESS util/tools.tt %]
+<script>
+    function toggle(cid)
+    {
+        $('#sub_task-'+cid).slideDown('slow', function (){});
+    }
+</script>
 <table class="list" width="100%">
     [% FOREACH ticket in tickets %]
-        <tr class="[% cycle('row_even','row_odd') %]">
+        [% tr_class = cycle('row_even','row_odd') %]
+        <tr class="[% tr_class %]">
             <td align="center">
-                <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% ticket.key %]&subject=[% ticket.summary %]&status=[% ticket.status %]"><img title="Entry from Ticket" src="/images/themes/default/add_entry.png" border="0"></a>
+                <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% ticket.key %]&subject=[% ticket.summary %]"><img title="Entry from Ticket" src="/images/themes/default/add_entry.png" border="0"></a>
             </td>
             <td>
                 <a href="[% ticket.link %]">[% ticket.key %] - [% ticket.summary %]</a>
                 (<font color="[% ticket.color%]">[% ticket.status %]</font>, [% ticket.type %], [% ticket.points %])
-                [%  UNLESS (ticket.sub_tickets.empty) %]
-                     (<a href=javascript:[% visual_effect('toggle_blind', "sub_tickets-#{ticket.key}", {duration => 0.0})%]>[% ticket.sub_tickets.count%] Sub-tasks</a>)
+                [%  UNLESS (ticket.sub_tasks.size == 0) %]
+                     (<a href="javascript:toggle('[% ticket.key %]')">[% ticket.sub_tasks.size %] Sub-tasks</a>)
                  [% END %]
             </td>
         </tr>
-        <tr id="sub_tickets-[%ticket.key%]" style="display:none" class="[% tr_class %]">
+        <tr id="sub_task-[%ticket.key%]" style="display:none" class="[% tr_class %]">
             <td>&nbsp;</td>
             <td colspan="1">
                 <table border="0">
-                    [% FOREACH sub in ticket.sub_tickets %]
+                    [% FOREACH sub in ticket.sub_tasks %]
                         <tr>
                             <td align="center">
-                                <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% sub.key %]&subject=[% sub.summary %]&status=[% sub.status %]"><img title="Entry from Ticket" src="/images/themes/default/add_entry.png" border="0"></a>
+                                <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% sub.key %]&subject=[% sub.summary %]"><img title="Entry from Ticket" src="/images/themes/default/add_entry.png" border="0"></a>
                             </td>
                             <td>
                                 <a href="[%sub.link%]">[% sub.key %] - [% sub.summary %]</a> (<font color="[%sub.color%]">[% sub.status %]</font>)

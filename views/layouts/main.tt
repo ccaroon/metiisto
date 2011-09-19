@@ -8,7 +8,7 @@
         <script src='/javascripts/calendariffic/calendar.js'></script>
         <script src='/javascripts/calendariffic/calendar-setup.js'></script>
         <script src='/javascripts/calendariffic/lang/calendar-en.js'></script>
-        <script src='/javascripts/prototype.js'></script>
+        <script src='/javascripts/jquery.js'></script>
     </head>
     <body id="main_body">
 
