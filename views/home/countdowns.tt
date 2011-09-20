@@ -1,0 +1,14 @@
+[% count = 0 %]
+[% FOREACH countdown IN countdowns %]
+    <div class="countdown_box" align="center">
+        <abbr title="[% countdown.target_date.format("%b %d, %Y %I:%M %p") %]">
+            <strong>[% countdown.time_left _ countdown.units %]</strong>
+            [% countdown.time_left >= 0 ? "Until" : "Since" %]
+            <strong>[% countdown.title %]</strong>
+        </abbr>
+    </div>
+    [% count = count + 1 %]
+    [% IF (count % 4 == 0) %]
+        <br>
+    [% END %]
+[% END %]

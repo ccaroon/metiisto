@@ -46,19 +46,19 @@
                             <div class="header">
                                 <a href="/goals">Goals</a>
                             </div>
-                            <div>[% under_construction("HOME/GOALS"); %]</div>
+                            <div>[% PROCESS home/goals.tt %]</div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="header">Recent Notes</div>
-                            <div>[% under_construction("HOME/RECENT_NOTES"); %]</div>
+                            <div>[% PROCESS home/notes.tt notes=recent_notes %]</div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="header">Favorite Notes</div>
-                            <div>[% under_construction("HOME/FAVORITE_NOTES"); %]</div>
+                            <div>[% PROCESS home/notes.tt notes=favorite_notes %]</div>
                         </td>
                     </tr>
                 </table>
@@ -66,7 +66,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <div>[% under_construction("HOME/COUNTDOWNS"); %]</div>
+                <div>[% PROCESS home/countdowns.tt %]</div>
             </td>
         </tr>
     </table>

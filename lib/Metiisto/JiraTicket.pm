@@ -168,6 +168,9 @@ sub color
         when(/Ready for QA/) {
             $color = 'purple';
         }
+        when(/Verified/) {
+            $color = 'darkgreen';
+        }
     }
 
     return ($color);

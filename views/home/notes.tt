@@ -1,0 +1,13 @@
+<table class="list" width="100%">
+    [% FOREACH note IN notes %]
+        <tr class="[% cycle('row_even','row_odd') %]">
+            <td>
+                [% note.is_encrypted ?
+                  '<img src="/images/themes/default/lock_on.png" border="0">' :
+                  '<img src="/images/themes/default/lock_off.png" border="0">'
+                %]
+                <a href="/notes/[% note.id %]">[% note.title %]</a>
+            </td>
+        </tr>
+    [% END %]
+</table>
