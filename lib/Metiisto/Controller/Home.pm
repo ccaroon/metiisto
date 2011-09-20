@@ -15,7 +15,8 @@ sub home
 
     my @todos = Metiisto::Todo->search(completed => 0, list_id => undef);
     
-    my $tickets = Metiisto::JiraTicket->search(query => "filter=".session->{user}->jira_filter_id());
+    my $tickets = Metiisto::JiraTicket->search(
+        query => "filter=".session->{user}->jira_filter_id());
 
     my $out = template 'home/index', {
         tickets => $tickets,

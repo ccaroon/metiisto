@@ -1,8 +1,15 @@
 [% PROCESS util/tools.tt %]
 <script>
-    function toggle(cid)
+    function toggle_sub_tasks(cid)
     {
-        $('#sub_task-'+cid).slideDown('slow', function (){});
+        if ($('#sub_task-'+cid).is(':hidden'))
+        {
+            $('#sub_task-'+cid).show();
+        }
+        else
+        {
+            $('#sub_task-'+cid).hide();
+        }
     }
 </script>
 <table class="list" width="100%">
@@ -16,7 +23,7 @@
                 <a href="[% ticket.link %]">[% ticket.key %] - [% ticket.summary %]</a>
                 (<font color="[% ticket.color%]">[% ticket.status %]</font>, [% ticket.type %], [% ticket.points %])
                 [%  UNLESS (ticket.sub_tasks.size == 0) %]
-                     (<a href="javascript:toggle('[% ticket.key %]')">[% ticket.sub_tasks.size %] Sub-tasks</a>)
+                     (<a href="javascript:toggle_sub_tasks('[% ticket.key %]')">[% ticket.sub_tasks.size %] Sub-tasks</a>)
                  [% END %]
             </td>
         </tr>

@@ -150,12 +150,24 @@ sub color
     my $color = 'black';
     given ($this->status())
     {
-        when(/Design\/Verify/) { $color = '#999900'; }
-        when(/Coding/) { $color = 'green'; }
-        when(/In Progress/) { $color = 'green'; }
-        when(/Hold/) { $color = 'red'; }
-        when(/Code Review/) { $color = 'blue'; }
-        when(/Ready for QA/) { $color = 'purple'; }
+        when(/Design\/Verify/) {
+            $color = '#999900';
+        }
+        when(/Coding/) {
+            $color = 'green';
+        }
+        when(/In Progress/) {
+            $color = 'green';
+        }
+        when(/Hold/) {
+            $color = 'red';
+        }
+        when(/Code Review/) {
+            $color = 'blue';
+        }
+        when(/Ready for QA/) {
+            $color = 'purple';
+        }
     }
 
     return ($color);
