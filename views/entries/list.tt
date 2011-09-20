@@ -19,7 +19,7 @@
     </tr>
     [% FOREACH entry IN entries %]
     <tr class="[% cycle ('row_even','row_odd') %]">
-        <td>[% entry.task_date %]</td>
+        <td>[% entry.task_date.format('%b %d, %Y') %]</td>
         <td>[% entry.category %]</td>
         <td>[% entry.ticket_num %]</td>
         <td><a href="/entries/[% entry.id %]">[% entry.subject %]</a></td>

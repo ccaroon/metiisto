@@ -1,0 +1,17 @@
+[%
+    USE date;
+    PROCESS util/tools.tt;
+%]
+<table class="list" width="100%">
+    [% FOREACH entry IN entries %]
+        <tr class="[% cycle('row_even','row_odd') %]">
+            <td>[% entry.task_date.format('%a') %]</td>
+            <td>[% entry.category %]<br>
+                <a href="http://jira.mcclatchyinteractive.com/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
+            </td>
+            <td>
+                <a href="/entries/[% entry.id %]">[% entry.subject %]</a>
+            </td>
+        </tr>
+    [% END %]
+</table>

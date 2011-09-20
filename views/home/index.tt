@@ -18,12 +18,12 @@
                                 This Week's Entries
                                 (<a href="/reports/by_category">Category</a>
                                  |
-                                 (<a href="/reports/by_day">Daily</a>
+                                 <a href="/reports/by_day">Daily</a>
                                  |
-                                 (<a href="/reports/summary">Summary</a>
+                                 <a href="/reports/summary">Summary</a>
                                 )
                             </div>
-                            <div>[% under_construction("HOME/ENTRIES"); %]</div>
+                            <div>[% PROCESS home/entries.tt %]</div>
                         </td>
                     </tr>
                 </table>
