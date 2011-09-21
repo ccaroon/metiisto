@@ -19,9 +19,29 @@ sub home
 
     my @todos = Metiisto::Todo->search(completed => 0, list_id => undef);
     
+    # TODO: put some caching around ticket info.
     my $tickets = Metiisto::JiraTicket->search(
         query => "filter=".session->{user}->jira_filter_id());
     
+    # TODO: put some caching around current_release info
+    my $ready_points = 0;
+    my $total_points = 0;
+    # TODO: don't hardcode current release filter id
+    my @release_tickets = Metiisto::JiraTicket->search(
+        query => "filter=11224 AND assignee=".session->{user}->jira_username());
+    foreach my $t (@release_tickets)
+    {
+        $total_points += $t->points();
+        if ($t->status() =~ /(Ready for release|Closed|Rejected)/)
+        {
+            $ready_points += $t->points();
+        }
+    }
+
+    my $current_release_name = (scalar @release_tickets != 0)
+        ? $release_tickets[0]->fix_version()
+        : '?????';
+
     my @recent_notes = Metiisto::Note->search_where(
         {
             is_favorite => {'=', 0},
@@ -63,13 +83,19 @@ sub home
     );
 
     my $out = template 'home/index', {
-        tickets        => $tickets,
-        todos          => \@todos,
-        entries        => \@entries,
-        recent_notes   => \@recent_notes,
-        favorite_notes => \@fav_notes,
-        goals          => \@goals,
-        countdowns     => \@countdowns,
+        tickets         => $tickets,
+        todos           => \@todos,
+        entries         => \@entries,
+        recent_notes    => \@recent_notes,
+        favorite_notes  => \@fav_notes,
+        goals           => \@goals,
+        countdowns      => \@countdowns,
+        current_release => {
+            name         => $current_release_name,
+            ready_points => $ready_points,
+            total_points => $total_points,
+            tickets      => \@release_tickets,
+        }
     };
 
     return ($out);

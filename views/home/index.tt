@@ -31,7 +31,7 @@
             <td valign="top">
                 <table width="100%">
                     <tr>
-                        <td>[% under_construction("HOME/CURRENT_RELEASE"); %]</td>
+                        <td>[% PROCESS home/current_release.tt %]</td>
                     </tr>
                     <tr>
                         <td>

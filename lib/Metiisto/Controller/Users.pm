@@ -83,6 +83,12 @@ sub edit
         }
         my $cnt = $user->update();
 
+        # Update Session        
+        if ($user->id() == session->{user}->id())
+        {
+            session user => $user;
+        }
+
         $out = redirect '/home';
     }
     else
