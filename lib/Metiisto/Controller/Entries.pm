@@ -12,12 +12,24 @@ sub list
 {
     my $this = shift;
 
+    my $conditions = {1=>1};
+    if (params->{filter_text})
+    {
+        # TODO: should be OR'ing subject and desc. but not working
+        $conditions = {
+            #subject     => { 'regexp', params->{filter_text} },
+            description => { 'regexp', params->{filter_text} },
+        };
+    }
+
     my @entries = Metiisto::Entry->search_where(
-        {1=>1},
-        {limit_dialect => 'LimitOffset',
-         limit => 20,
-         offset => 0,
-         order_by => 'task_date desc'}
+        $conditions,
+        {
+            limit_dialect => 'LimitOffset',
+            limit    => 20,
+             offset  => 0,
+            order_by => 'task_date desc, entry_date desc',
+        }
     );
 
     my $out = template 'entries/list', {

@@ -16,10 +16,12 @@ Metiisto::Controller::Home->declare_routes();
 ################################################################################
 before sub
 {
-    my $title = request->uri;
-    $title =~ s/\W+//;
-    $title = ucfirst $title;
-    var title => $title;
+    # undef is for the leading slash
+    my (undef,$controller,$id,$action) = split '/', request->uri, 3;
+    var controller => $controller;
+    var id         => $id;
+    var action     => $action;
+    var title      => ucfirst $controller;
 
     if (!session('user') and request->path_info !~ m|^/users/login|)
     {
