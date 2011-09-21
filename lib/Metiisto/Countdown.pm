@@ -13,16 +13,17 @@ use constant UNIT_MINUTE => 'minute';
 use constant UNIT_SECOND => 'second';
     
 use constant UNITS =>
-[
-    UNIT_YEAR,
-    UNIT_MONTH,
-    UNIT_WEEK,
-    UNIT_DAY,
-    UNIT_HOUR,
-    UNIT_MINUTE,
-    UNIT_SECOND,
-];
-    
+{
+    UNIT_YEAR()   => 0,
+    UNIT_MONTH()  => 1,
+    UNIT_WEEK()   => 2,
+    UNIT_DAY()    => 3,
+    UNIT_HOUR()   => 4,
+    UNIT_MINUTE() => 5,
+    UNIT_SECOND() => 6,
+};
+my %UNITS_INDEX = map {UNITS->{$_} => $_} keys %{UNITS()};
+
 use base 'Metiisto::Base';
 ################################################################################
 __PACKAGE__->table('countdowns');
@@ -55,16 +56,15 @@ sub time_left
     # Auto-adjust units
     if ($this->units() ne UNIT_SECOND && abs($time_left) < 1)
     {
-        my $u_index = UNITS->[$this->units()] + 1;
-        $this->units() = UNITS->[$u_index];
+        my $new_unit = UNITS->{$this->units()} + 1;
+        $this->units() = $UNITS_INDEX{$new_unit};
         $time_left = $this->time_left();
     }
     else #Round to the nearest quarter unit
     {
-        #time_left = time_left.ceil;
         my $is_neg = ($time_left < 0.0) ? 1 : 0;
 
-        my $base = abs($time_left);
+        my $base = int abs($time_left);
         my $frac = abs($time_left) - $base;
 
         given ($frac)
@@ -75,10 +75,20 @@ sub time_left
             when ($_ >= 0.75 && $_< 1.00)  { $time_left = $base + 0.75; }
         }
 
-        $time_left = $time_left * -1 if $is_neg;
+        $time_left *= -1 if $is_neg;
     }
 
     return ($time_left);
+}
+################################################################################
+sub english_units
+{
+    my $this = shift;
+
+    my $units = ucfirst $this->units();
+    $units .= 's' if abs($this->time_left()) > 1;
+    
+    return ($units);
 }
 ################################################################################
 1;

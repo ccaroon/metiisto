@@ -1,8 +1,24 @@
-[% count = 0 %]
+[%
+    USE Math;
+    
+    count = 0;
+    fract_entity = '';
+%]
 [% FOREACH countdown IN countdowns %]
+    [% SWITCH Math.abs(countdown.time_left) -  Math.int(Math.abs(countdown.time_left))%]
+    [% CASE 0.25 %]
+        [% fract_entity = "&frac14;" %]
+    [% CASE 0.50 %]
+        [% fract_entity = "&frac12;" %]
+    [% CASE 0.75 %]
+        [% fract_entity = "&frac34;" %]
+    [% CASE %]
+        [% fract_entity = '' %]
+    [% END %]
     <div class="countdown_box" align="center">
         <abbr title="[% countdown.target_date.format("%b %d, %Y %I:%M %p") %]">
-            <strong>[% countdown.time_left _ countdown.units %]</strong>
+            <strong>[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]</strong>
+            [% countdown.english_units %]
             [% countdown.time_left >= 0 ? "Until" : "Since" %]
             <strong>[% countdown.title %]</strong>
         </abbr>
