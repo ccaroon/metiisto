@@ -5,7 +5,7 @@ use strict;
 use Data::Page;
 use Dancer ':syntax';
 
-use constant ENTRIES_PER_PAGE => 25;
+use constant ENTRIES_PER_PAGE => 21;
 
 use base 'Metiisto::Controller::Base';
 
@@ -58,16 +58,17 @@ sub show
 {
     my $this = shift;
     my %args = @_;
-    
+
     my $entry = Metiisto::Entry->retrieve($args{id});
-    
-    return ("Entry: ".$entry->subject());
+    my $out = template 'entries/show', { entry => $entry };
+
+    return ($out);
 }
 ################################################################################
 sub declare_routes
 {
     my $class = shift;
-    
+
     get '/entries' => sub {
     
         my $c = Metiisto::Controller::Entries->new();
@@ -75,14 +76,29 @@ sub declare_routes
     
         return ($out);
     };
+
+    get '/entries/:id/:action' => sub {
     
+        my $c = Metiisto::Controller::Entries->new();
+        my $action = params->{action};
+        my $out = $c->$action(id => params->{id});
+
+        return ($out);
+    };
+
+    get '/entries/new' => sub {
+    
+        return ("Entries New");
+    };
+
     get '/entries/:id' => sub {
     
         my $c = Metiisto::Controller::Entries->new();
-        my $out = $c->show(id => param('id'));
-    
+        my $out = $c->show(id => params->{id});
+
         return ($out);
     };
+
 }
 ################################################################################
 1;

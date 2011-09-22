@@ -24,9 +24,9 @@
         <td>[% entry.ticket_num %]</td>
         <td><a href="/entries/[% entry.id %]">[% entry.subject %]</a></td>
         <td>
-            <img src='/images/themes/default/show.png'>
-            <img src='/images/themes/default/edit.png'>
-            <img src='/images/themes/default/delete.png'>
+            <a href="/entries/[% entry.id %]"><img src='/images/themes/default/show.png'></a>
+            <a href="/entries/[% entry.id %]/edit"><img src='/images/themes/default/edit.png'></a>
+            <a href="/entries/[% entry.id %]/delete"><img src='/images/themes/default/delete.png'></a>
         </td>
     </tr>
     [% END %]

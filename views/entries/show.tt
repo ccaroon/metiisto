@@ -1,20 +1,20 @@
+[% USE Markdown %]
 <div class="header">
-    <b>Entry</b> - <%= display_entry :entry_date %>
+    <b>Entry</b> - [% entry.entry_date.format('%b %d, %Y %I:%M%p') %]
 </div>
-
 <div style="font-size:large;font-weight:bold">
-    <%= @entry.subject %>
+    [% entry.subject %]
 </div>
 <p>
 <div>
-    <b>Category:</b> <%= @entry.category %>
+    <b>Category:</b> [% entry.category %]
     <br>
-    <b>Ticket: </b><%= (@entry.ticket_num.nil? || @entry.ticket_num.empty?) ? '' : "#{display_entry :ticket}" %>
+    <b>Ticket: </b>[% entry.ticket_num %]
     <br>
-    <b>Goal: </b> <%= @entry.goal.nil? ? '' : @entry.goal.name %>
+    <b>Goal: </b> [% entry.goal ? entry.goal.name : '' %]
     <br>
-    <b>Task Date: </b> <%= display_entry :task_date %>
-    <p><%= display_entry :description %></p>
+    <b>Task Date: </b> [% entry.task_date.format('%b %d, %Y') %]
+    <p>[% entry.description | markdown %]</p>
 </div>
 
-<%= link_to 'Edit', edit_entry_path(@entry) %>
+<a href="/entries/[% entry.id %]/edit">Edit</a>
