@@ -15,7 +15,8 @@ sub list
 {
     my $this = shift;
 
-    my $conditions = {1=>1};
+    my $total_entries = 0;
+    my $conditions    = {1=>1};
     if (params->{filter_text})
     {
         # TODO: should be OR'ing subject and desc. but not working
@@ -23,10 +24,16 @@ sub list
             #subject     => { 'regexp', params->{filter_text} },
             description => { 'regexp', params->{filter_text} },
         };
+        $total_entries
+            = Metiisto::Entry->count_where("description regexp '".params->{filter_text}."'");
     }
-# TODO: make pagination work with filtering
+    else
+    {
+        $total_entries = Metiisto::Entry->count();
+    }
+
     my $page = Data::Page->new();
-    $page->total_entries(Metiisto::Entry->count());
+    $page->total_entries($total_entries);
     $page->entries_per_page(ENTRIES_PER_PAGE);
     $page->current_page(params->{page} || 1);
 
@@ -43,11 +50,11 @@ sub list
     my $out = template 'entries/list', {
         entries => \@entries,
         pagination => {
-            current_page => $page->current_page(),
-            first_page => $page->first_page(),
-            last_page => $page->last_page(),
+            current_page  => $page->current_page(),
+            first_page    => $page->first_page(),
+            last_page     => $page->last_page(),
             previous_page => $page->previous_page(),
-            next_page => $page->next_page(),
+            next_page     => $page->next_page(),
         }
     };
 

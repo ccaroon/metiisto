@@ -17,7 +17,7 @@ Metiisto::Controller::Home->declare_routes();
 before sub
 {
     # undef is for the leading slash
-    my (undef,$controller,$id,$action) = split '/', request->uri, 3;
+    my (undef,$controller,$id,$action) = split '/', request->path_info, 3;
     var controller => $controller;
     var id         => $id;
     var action     => $action;
