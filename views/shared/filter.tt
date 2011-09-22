@@ -5,6 +5,7 @@
             if(e.which == 47) // forward slash
             {
                 document.filter.filter_text.focus()
+                document.filter.filter_text.select();
             }
         }
     );

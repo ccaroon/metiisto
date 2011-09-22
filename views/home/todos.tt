@@ -1,7 +1,14 @@
 [%
+   USE Markdown;
    priority_image = '';
    PROCESS util/tools.tt
 %]
+<script>
+   function toggle_todo_desc(tid)
+   {
+      $('#todo_desc_'+tid).toggle();
+   }
+</script>
 <table class="list" width="100%">
    [% FOREACH todo in todos %]
       [% SWITCH todo.priority %]
@@ -19,9 +26,14 @@
                 <a href="/todos/[% todo.id %]/mark_complete"><img src="/images/themes/default/[% priority_image %]"></a>
             </td>
             <td>
-                <abbr style='border:none' title='[% todo.due_date %]'><a href="/todos/[% todo.id %]/edit">[% todo.title %]</a></abbr>
-                <span class="todos_list_item_desc">[% todo.description %]</span>
+                <abbr style='border:none' title='[% todo.due_on.format('%b %d, %Y') %]'><a href="/todos/[% todo.id %]/edit">[% todo.title %]</a></abbr>
+                [% IF todo.description %]
+                  <a href="javascript:toggle_todo_desc([% todo.id %])">(+)</a>
+               [% END %]
             </td>
+        </tr>
+        <tr id="todo_desc_[% todo.id %]" style="display:none">
+            <td colspan="2">[% todo.description | markdown %]</td>
         </tr>
     [% END %]
 </table>
