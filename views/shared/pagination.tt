@@ -1,0 +1,86 @@
+<div class="pagination">
+    [% IF page_data.previous_page %]
+        <a href="/entries?page=[% page_data.previous_page %]" class="prev_page" rel="prev">&laquo; Previous</a>
+    [% ELSE %]
+        <span class="disabled prev_page">&laquo; Previous</span>
+    [% END %]
+
+    <!--  <<Prev 1 2 3 4 5 6 7 8 9 10 .. X-1 X Next>>  -->
+    [% IF page_data.current_page <= 10 %]
+
+        [% FOREACH page IN [1..10] %]
+            [% IF page == page_data.current_page %]
+                <span class="current">[% page %]</span>
+            [% ELSE %]
+                <a href="/entries?page=[% page %]">[% page %]</a>
+            [% END %]
+        [% END %]
+
+        <span class="gap">&hellip;</span>
+
+        [% fp = page_data.last_page - 1 %]
+        [% lp = page_data.last_page %]
+        [% FOREACH page IN [fp..lp] %]
+            <a href="/entries?page=[% page %]">[% page %]</a>
+        [% END %]
+
+    [% END %]
+    
+    <!-- <<Prev 1 2 .. N N N N CP N N N N .. X-1 X   -->
+    [% IF page_data.current_page > 10 && page_data.current_page < page_data.last_page - 10 %]
+        [% FOREACH page IN [1..2] %]
+            <a href="/entries?page=[% page %]">[% page %]</a>
+        [% END %]
+
+        <span class="gap">&hellip;</span>
+        
+        [% fp = page_data.current_page - 4 %]
+        [% lp   = page_data.current_page - 1 %]
+        [% FOREACH page IN [fp..lp] %]
+                <a href="/entries?page=[% page %]">[% page %]</a>
+        [% END %]
+        
+        <span class="current">[% page_data.current_page %]</span>
+        
+        [% fp = page_data.current_page + 1 %]
+        [% lp = page_data.current_page + 4 %]
+        [% FOREACH page IN [fp..lp] %]
+                <a href="/entries?page=[% page %]">[% page %]</a>
+        [% END %]
+                        
+        <span class="gap">&hellip;</span>
+                
+        [% fp = page_data.last_page - 1 %]
+        [% lp = page_data.last_page %]
+        [% FOREACH page IN [fp..lp] %]
+            <a href="/entries?page=[% page %]">[% page %]</a>
+        [% END %]
+
+    [% END %]
+
+    <!-- <<Prev 1 2 .. X-10 X-9 X-8 X-7 X-6 X-5 X-4 X-3 X-2 X-1 X Next>> -->
+    [% IF page_data.current_page >= page_data.last_page - 10 %]
+        [% FOREACH page IN [1..2] %]
+            <a href="/entries?page=[% page %]">[% page %]</a>
+        [% END %]
+
+        <span class="gap">&hellip;</span>
+
+        [% fp = page_data.last_page - 10 %]
+        [% lp = page_data.last_page %]
+        [% FOREACH page IN [fp..lp] %]
+            [% IF page == page_data.current_page %]
+                <span class="current">[% page %]</span>
+            [% ELSE %]
+                <a href="/entries?page=[% page %]">[% page %]</a>
+            [% END %]
+        [% END %]
+
+    [% END %]
+
+    [% IF page_data.next_page %]
+        <a href="/entries?page=[% page_data.next_page %]" class="next_page" rel="next">Next &raquo;</a>
+    [% ELSE %]
+        <span class="disabled next_page">Next &raquo;</span>
+    [% END %]
+</div>

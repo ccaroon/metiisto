@@ -1,13 +1,13 @@
-[% PROCESS util/tools.tt %]
-[% PROCESS util/format.tt %]
+[%
+    PROCESS util/tools.tt;
+%]
 <div class="header">
     <b>Entries</b>
 </div>
 <p>
 [% PROCESS shared/filter.tt %]
 <div align="center">
-    Num Entries: [% count %]<br>
-    [% under_construction("PAGINATION CONTROLS HERE"); %]
+    [% PROCESS shared/pagination.tt page_data=pagination %]
 </div>
 <table class="list" width="100%">
     <tr>

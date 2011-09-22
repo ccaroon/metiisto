@@ -2,7 +2,10 @@ package Metiisto::Controller::Entries;
 ################################################################################
 use strict;
 
+use Data::Page;
 use Dancer ':syntax';
+
+use constant ENTRIES_PER_PAGE => 25;
 
 use base 'Metiisto::Controller::Base';
 
@@ -21,20 +24,31 @@ sub list
             description => { 'regexp', params->{filter_text} },
         };
     }
+# TODO: make pagination work with filtering
+    my $page = Data::Page->new();
+    $page->total_entries(Metiisto::Entry->count());
+    $page->entries_per_page(ENTRIES_PER_PAGE);
+    $page->current_page(params->{page} || 1);
 
     my @entries = Metiisto::Entry->search_where(
         $conditions,
         {
             limit_dialect => 'LimitOffset',
-            limit    => 20,
-             offset  => 0,
+            limit    => ENTRIES_PER_PAGE,
+            offset  => $page->first(),
             order_by => 'task_date desc, entry_date desc',
         }
     );
 
     my $out = template 'entries/list', {
         entries => \@entries,
-        count => Metiisto::Entry->count()
+        pagination => {
+            current_page => $page->current_page(),
+            first_page => $page->first_page(),
+            last_page => $page->last_page(),
+            previous_page => $page->previous_page(),
+            next_page => $page->next_page(),
+        }
     };
 
     return ($out);
