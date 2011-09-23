@@ -82,6 +82,7 @@ sub edit
             $user->$attr(params->{$p});
         }
         my $cnt = $user->update();
+        die "Error saving User(".params->{id}.")" unless $cnt;
 
         # Update Session        
         if ($user->id() == session->{user}->id())

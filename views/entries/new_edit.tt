@@ -1,56 +1,52 @@
 <div class="header">
-    <b><%= controller.action_name.capitalize %> Entry</b>
+    <b>[% vars.action | ucfirst %] Entry</b>
 </div>
 
 <div style="padding-left:50px;padding-top:25px">
 
-<% form_for(@entry) do |f| %>
-
-    <div class="error_messages">
-        <%= f.error_messages %>
-    </div>
-
-    <b><%=  f.label :task_date %>:</b>
-    <%= calendariffic_input(false, 'entry_task_date', 'calendariffic/date.png',
-        'start_cal', '%Y-%m-%d', @entry.task_date, { :readonly => 'true'}, {:class => 'borderless'}) %>
+<form method="post" action="/entries[% entry.id ? '/' _ entry.id : '' %]">
+    <b>Task Date:</b>
+    <input type="text" id="task_date" name="entry.task_date" value="[% entry.task_date.format('%m/%d/%Y') %]">
     <p>
 
-    <b><%=  f.label :ticket_num %>:</b>
-    <%= f.text_field :ticket_num %>
+    <b>Ticket Number:</b>
+    <input type="text" name="entry.ticket_num" value="[% entry.ticket_num %]">
     <p>
 
-    <b><%=  f.label :category %>:</b>
-    <%=  f.select("category", Entry::CATEGORIES.collect {|c| [ c, c]}) %>
+    <b>Category:</b>
+    <select name="entry.category">
+        [% FOREACH cat IN categories %]
+            [% selected = entry.category == cat ? "selected" : "" %]
+            <option [% selected %] value="[% cat %]">[% cat %]</option>
+        [% END %]
+    </select>
     <p>
 
-    <b><%=  f.label :goal %>:</b>
-    <%=  f.select("goal_id", Goal.uncompleted_goals_for_select(), {:prompt => 'Select Goal'} ) %>
+    <b>Goal:</b>
+    N/A
     <p>
 
-    <b><%=  f.label :subject %>:</b>
-    <%= f.text_field :subject, :size => 64, :id => 'entry_subject', :autocomplete => "off" %>
-    <div class="autocomplete" id="entry_subject_list" style="display:none"></div>
+    <b>Subject:</b>
+    <input type="text" name="entry.subject" value="[% entry.subject %]" size="64" id="entry_subject" autocomplete="off">
     <p>
 
-    <b><%=  f.label :description %>:</b>
+    <b>Description:</b>
     <br>
-    <%=  f.text_area :description, :rows => 25, :cols => 80, :wrap => 'physical' %>
+    <textarea name="entry.description" wrap="physical" rows="25" cols="80">[% entry.description %]</textarea>
 
-    <p><%= f.submit "Save" %></p>
-<% end %>
-
-<%= link_to 'Show', @entry %> |
-<%= link_to 'Back', entries_path %>
+    <p><input type="submit" value="Save"></p>
+</form>
 
 </div>
 
 <script language="javascript">
-    var subject_list =
-    [
-    <% @recent_entries.each do |e| -%>
-        '<%= e.subject.gsub(/'/, "\\\\'") %>',
-    <% end %>
-    ];
 
-    new Autocompleter.Local('entry_subject', 'entry_subject_list', subject_list, { });
+    $( "#task_date" ).datepicker();
+
+    var subject_list = [
+    [%- FOREACH subject IN  recent_subjects -%]
+        '[%- subject.replace("'", "\\'") -%]',
+    [%- END -%]
+    ];
+    $('#entry_subject').autocomplete({source: subject_list});
 </script>

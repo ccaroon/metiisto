@@ -1,14 +1,12 @@
 [% USE Date %]
 <html>
     <head>
-        <title>Metiisto - [% vars.title %]</title>
-        <link href="/css/metiisto.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="/css/[% session.user ? session.user.style_main : 'None' %].css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="/css/calendariffic/calendar-system.css" media="screen" rel="stylesheet" type="text/css" />
-        <script src='/javascripts/calendariffic/calendar.js'></script>
-        <script src='/javascripts/calendariffic/calendar-setup.js'></script>
-        <script src='/javascripts/calendariffic/lang/calendar-en.js'></script>
+        <title>Metiisto - [% vars.controller| ucfirst %]</title>
+        <link href="/css/metiisto.css" rel="stylesheet" type="text/css" />
+        <link href="/css/[% session.user ? session.user.style_main : 'None' %].css" rel="stylesheet" type="text/css" />
+        <link href="/css/jquery-ui/custom.css" rel="stylesheet" type="text/css" />
         <script src='/javascripts/jquery.js'></script>
+        <script src='/javascripts/jquery-ui.js'></script>
     </head>
     <body id="main_body">
 
@@ -38,7 +36,7 @@
         <div class="header" style="text-align:center">
             [% settings.appname %] &copy; Craig N. Caroon 2005-[% Date.format(date.now, "%Y")%]
             <br>
-            Powered by <a href="http://perldancer.org">Dancer</a> v[% dancer_version %]/<a href="http://www.perl.org">Perl</a> v[% perl_version %]
+            Powered by <a href="http://perldancer.org">Dancer</a> v[% dancer_version %]
         </div>
 
     </body>

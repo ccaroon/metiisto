@@ -17,11 +17,10 @@ Metiisto::Controller::Home->declare_routes();
 before sub
 {
     # undef is for the leading slash
-    my (undef,$controller,$id,$action) = split '/', request->path_info, 3;
+    my (undef,$controller,$id,$action) = split '/', request->path_info, 4;
     var controller => $controller;
     var id         => $id;
     var action     => $action;
-    var title      => ucfirst $controller;
 
     if (!session('user') and request->path_info !~ m|^/users/login|)
     {
