@@ -2,28 +2,27 @@
 <html>
     <head>
         <title>Metiisto - [% vars.controller| ucfirst %]</title>
-        <link href="/css/metiisto.css" rel="stylesheet" type="text/css" />
-        <link href="/css/[% session.user ? session.user.style_main : 'None' %].css" rel="stylesheet" type="text/css" />
-        <link href="/css/jquery-ui/custom.css" rel="stylesheet" type="text/css" />
+        <!-- link href="/css/metiisto.css" rel="stylesheet" type="text/css" / -->
+        <link href="/css/[% session.user ? session.user.style_main _ '/' _ session.user.style_main _ '.css' : 'smoothness/smoothness.css' %]" rel="stylesheet" type="text/css" />
         <script src='/javascripts/jquery.js'></script>
         <script src='/javascripts/jquery-ui.js'></script>
     </head>
     <body id="main_body">
 
         <!-- Header -->
-        <div class="header">
+        <div class="ui-widget-header">
             [% PROCESS shared/header.tt %]
         </div>
 
         <!-- Top Menu -->
-        <div class="top_menu">
+        <div class="ui-widget-header">
             [% PROCESS shared/top_menu.tt %]
         </div>
 
         <!-- Side Menu & Main Content -->
         <table border="0" width="100%">
             <tr>
-                <td width="12%" id="side_menu" valign="top">
+                <td width="12%" valign="top">
                     [% PROCESS shared/side_menu.tt %]
                 </td>
                 <td width="100%" valign="top" bgcolor="white">
@@ -33,7 +32,7 @@
         </table>
 
         <!-- Footer -->
-        <div class="header" style="text-align:center">
+        <div class="ui-widget-header" style="text-align:center">
             [% settings.appname %] &copy; Craig N. Caroon 2005-[% Date.format(date.now, "%Y")%]
             <br>
             Powered by <a href="http://perldancer.org">Dancer</a> v[% dancer_version %]

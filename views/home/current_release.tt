@@ -1,4 +1,4 @@
-<div class="header">Current Release ([% current_release.name %]) [% current_release.ready_points %]/[% current_release.total_points %] pts.</div>
+<div class="ui-widget-header">Current Release ([% current_release.name %]) [% current_release.ready_points %]/[% current_release.total_points %] pts.</div>
 <div class="default">
     <table>
         <tr>

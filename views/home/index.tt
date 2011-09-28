@@ -3,7 +3,7 @@
     <table width="100%">
         <tr>
             <td valign="top" colspan="2">
-                <div class="header">
+                <div class="ui-widget-header">
                     <a href="http://[% session.user.jira_host %]">Tickets</a>
                 </div>
                 <div>[% PROCESS home/tickets.tt %]</div>
@@ -14,7 +14,7 @@
                 <table width="100%">
                     <tr>
                         <td valign="top">
-                            <div class="header">
+                            <div class="ui-widget-header">
                                 This Week's Entries
                                 (<a href="/reports/by_category">Category</a>
                                  |
@@ -35,7 +35,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <div class="header">
+                            <div class="ui-widget-header">
                                 <a href="/todos">Todos</a>
                             </div>
                             <div>[% PROCESS home/todos.tt %]</div>
@@ -43,7 +43,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <div class="header">
+                            <div class="ui-widget-header">
                                 <a href="/goals">Goals</a>
                             </div>
                             <div>[% PROCESS home/goals.tt %]</div>
@@ -51,13 +51,13 @@
                     </tr>
                     <tr>
                         <td>
-                            <div class="header">Recent Notes</div>
+                            <div class="ui-widget-header">Recent Notes</div>
                             <div>[% PROCESS home/notes.tt notes=recent_notes %]</div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="header">Favorite Notes</div>
+                            <div class="ui-widget-header">Favorite Notes</div>
                             <div>[% PROCESS home/notes.tt notes=favorite_notes %]</div>
                         </td>
                     </tr>

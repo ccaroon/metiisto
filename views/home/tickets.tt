@@ -12,9 +12,9 @@
         }
     }
 </script>
-<table class="list" width="100%">
+<table class="ui-widget" width="100%">
     [% FOREACH ticket in tickets %]
-        [% tr_class = cycle('row_even','row_odd') %]
+        [% tr_class = cycle('ui-state-active','ui-state-highlight') %]
         <tr class="[% tr_class %]">
             <td align="center">
                 <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% ticket.key %]&subject=[% ticket.summary %]"><img title="Entry from Ticket" src="/images/themes/default/add_entry.png" border="0"></a>
