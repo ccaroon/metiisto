@@ -12,37 +12,45 @@
         }
     }
 </script>
-<table class="ui-widget" width="100%">
-    [% FOREACH ticket in tickets %]
-        [% tr_class = cycle('ui-state-default','ui-state-active') %]
-        <tr class="[% tr_class %]">
-            <td align="center">
-                <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% ticket.key %]&subject=[% ticket.summary %]"><span class="ui-icon ui-icon-arrowreturnthick-1-s"></span></a>
-            </td>
-            <td>
-                <a href="[% ticket.link %]">[% ticket.key %] - [% ticket.summary %]</a>
-                (<font color="[% ticket.color%]">[% ticket.status %]</font>, [% ticket.type %], [% ticket.points %])
-                [%  UNLESS (ticket.sub_tasks.size == 0) %]
-                     (<a href="javascript:toggle_sub_tasks('[% ticket.key %]')">[% ticket.sub_tasks.size %] Sub-tasks</a>)
-                 [% END %]
-            </td>
-        </tr>
-        <tr id="sub_task-[%ticket.key%]" style="display:none" class="[% tr_class %]">
-            <td>&nbsp;</td>
-            <td colspan="1">
-                <table border="0">
-                    [% FOREACH sub in ticket.sub_tasks %]
-                        <tr>
-                            <td align="center">
-                                <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% sub.key %]&subject=[% sub.summary %]"><span class="ui-icon ui-icon-arrowreturnthick-1-s"></span></a>
-                            </td>
-                            <td>
-                                <a href="[%sub.link%]">[% sub.key %] - [% sub.summary %]</a> (<font color="[%sub.color%]">[% sub.status %]</font>)
-                            </td>
-                        </tr>
-                    [% END %]
-                </table>
-            </td>
-        </tr>
-    [% END %]
-</table>
+
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        <a href="http://[% session.user.jira_host %]">Tickets</a>
+    </div>
+    <div class="ui-widget-content">
+        <table width="100%">
+            [% FOREACH ticket in tickets %]
+                [% tr_class = cycle('ui-state-default','ui-state-active') %]
+                <tr class="[% tr_class %]">
+                    <td align="center">
+                        <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% ticket.key %]&subject=[% ticket.summary %]"><span class="ui-icon ui-icon-arrowreturnthick-1-s"></span></a>
+                    </td>
+                    <td>
+                        <a href="[% ticket.link %]">[% ticket.key %] - [% ticket.summary %]</a>
+                        (<font color="[% ticket.color%]">[% ticket.status %]</font>, [% ticket.type %], [% ticket.points %])
+                        [%  UNLESS (ticket.sub_tasks.size == 0) %]
+                             (<a href="javascript:toggle_sub_tasks('[% ticket.key %]')">[% ticket.sub_tasks.size %] Sub-tasks</a>)
+                         [% END %]
+                    </td>
+                </tr>
+                <tr id="sub_task-[%ticket.key%]" style="display:none" class="[% tr_class %]">
+                    <td>&nbsp;</td>
+                    <td colspan="1">
+                        <table border="0">
+                            [% FOREACH sub in ticket.sub_tasks %]
+                                <tr>
+                                    <td align="center">
+                                        <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% sub.key %]&subject=[% sub.summary %]"><span class="ui-icon ui-icon-arrowreturnthick-1-s"></span></a>
+                                    </td>
+                                    <td>
+                                        <a href="[%sub.link%]">[% sub.key %] - [% sub.summary %]</a> (<font color="[%sub.color%]">[% sub.status %]</font>)
+                                    </td>
+                                </tr>
+                            [% END %]
+                        </table>
+                    </td>
+                </tr>
+            [% END %]
+        </table>
+    </div>
+</div>

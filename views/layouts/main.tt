@@ -7,12 +7,9 @@
         <script src='/javascripts/jquery.js'></script>
         <script src='/javascripts/jquery-ui.js'></script>
     </head>
-    <body id="main_body">
-
+    <body>
         <!-- Header -->
-        <div class="ui-widget-header">
-            [% PROCESS shared/header.tt %]
-        </div>
+        [% PROCESS shared/header.tt %]
 
         <!-- Top Menu -->
         [% PROCESS shared/top_menu.tt %]
@@ -20,7 +17,7 @@
         <!-- Side Menu & Main Content -->
         <table border="0" width="100%">
             <tr>
-                <td width="12%" valign="top">
+                <td width="10%" valign="top">
                     [% PROCESS shared/side_menu.tt %]
                 </td>
                 <td width="100%" valign="top" bgcolor="white">
@@ -30,11 +27,6 @@
         </table>
 
         <!-- Footer -->
-        <div class="ui-widget-header" style="text-align:center">
-            [% settings.appname %] &copy; Craig N. Caroon 2005-[% Date.format(date.now, "%Y")%]
-            <br>
-            Powered by <a href="http://perldancer.org">Dancer</a> v[% dancer_version %]
-        </div>
-
+        [% PROCESS shared/footer.tt %]
     </body>
 </html>

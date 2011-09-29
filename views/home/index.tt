@@ -3,30 +3,12 @@
     <table width="100%">
         <tr>
             <td valign="top" colspan="2">
-                <div class="ui-widget-header">
-                    <a href="http://[% session.user.jira_host %]">Tickets</a>
-                </div>
-                <div>[% PROCESS home/tickets.tt %]</div>
+                [% PROCESS home/tickets.tt %]
             </td>
         </tr>
         <tr>
             <td class="default" valign="top" width="62%">
-                <table width="100%">
-                    <tr>
-                        <td valign="top">
-                            <div class="ui-widget-header">
-                                This Week's Entries
-                                (<a href="/reports/by_category">Category</a>
-                                 |
-                                 <a href="/reports/by_day">Daily</a>
-                                 |
-                                 <a href="/reports/summary">Summary</a>
-                                )
-                            </div>
-                            <div>[% PROCESS home/entries.tt %]</div>
-                        </td>
-                    </tr>
-                </table>
+                [% PROCESS home/entries.tt %]
             </td>
             <td valign="top">
                 <table width="100%">
@@ -35,30 +17,22 @@
                     </tr>
                     <tr>
                         <td>
-                            <div class="ui-widget-header">
-                                <a href="/todos">Todos</a>
-                            </div>
-                            <div>[% PROCESS home/todos.tt %]</div>
+                            [% PROCESS home/todos.tt %]
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="ui-widget-header">
-                                <a href="/goals">Goals</a>
-                            </div>
-                            <div>[% PROCESS home/goals.tt %]</div>
+                            [% PROCESS home/goals.tt %]
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="ui-widget-header">Recent Notes</div>
-                            <div>[% PROCESS home/notes.tt notes=recent_notes %]</div>
+                            [% PROCESS home/notes.tt notes=recent_notes title="Recent Notes" %]
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="ui-widget-header">Favorite Notes</div>
-                            <div>[% PROCESS home/notes.tt notes=favorite_notes %]</div>
+                            [% PROCESS home/notes.tt notes=favorite_notes title="Favorite Notes"%]
                         </td>
                     </tr>
                 </table>
@@ -66,7 +40,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <div>[% PROCESS home/countdowns.tt %]</div>
+                [% PROCESS home/countdowns.tt %]
             </td>
         </tr>
     </table>

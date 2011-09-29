@@ -2,16 +2,29 @@
     USE date;
     PROCESS util/tools.tt;
 %]
-<table class="list" width="100%">
-    [% FOREACH entry IN entries %]
-        <tr class="[% cycle('row_even','row_odd') %]">
-            <td>[% entry.task_date.format('%a') %]</td>
-            <td>[% entry.category %]<br>
-                <a href="http://jira.mcclatchyinteractive.com/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
-            </td>
-            <td>
-                <a href="/entries/[% entry.id %]">[% entry.subject %]</a>
-            </td>
-        </tr>
-    [% END %]
-</table>
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        This Week's Entries
+        (<a href="/reports/by_category">Category</a>
+         |
+         <a href="/reports/by_day">Daily</a>
+         |
+         <a href="/reports/summary">Summary</a>
+        )
+    </div>
+    <div class="ui-widget-content">
+        <table width="100%">
+            [% FOREACH entry IN entries %]
+                <tr class="[% cycle('ui-state-default','ui-state-active') %]">
+                    <td>[% entry.task_date.format('%a') %]</td>
+                    <td>[% entry.category %]<br>
+                        <a href="http://jira.mcclatchyinteractive.com/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
+                    </td>
+                    <td>
+                        <a href="/entries/[% entry.id %]">[% entry.subject %]</a>
+                    </td>
+                </tr>
+            [% END %]
+        </table>
+    </div>
+</div>

@@ -1,15 +1,22 @@
-<table class="list" width="100%">
-    [% FOREACH note IN notes %]
-        <tr class="[% cycle('ui-state-default','ui-state-active') %]">
-            <td width="1%">
-                [% note.is_encrypted ?
-                  '<span class="ui-icon ui-icon-locked"></span>' :
-                  '<span class="ui-icon ui-icon-unlocked"></span>'
-                %]
-            </td>
-            <td>
-                <a href="/notes/[% note.id %]">[% note.title %]</a>
-            </td>
-        </tr>
-    [% END %]
-</table>
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        [% title %]
+    </div>
+    <div class="ui-widget-content">
+        <table class="list" width="100%">
+        [% FOREACH note IN notes %]
+            <tr class="[% cycle('ui-state-default','ui-state-active') %]">
+                <td width="1%">
+                    [% note.is_encrypted ?
+                      '<span class="ui-icon ui-icon-locked"></span>' :
+                      '<span class="ui-icon ui-icon-unlocked"></span>'
+                    %]
+                </td>
+                <td>
+                    <a href="/notes/[% note.id %]">[% note.title %]</a>
+                </td>
+            </tr>
+        [% END %]
+        </table>
+    </div>
+</div>

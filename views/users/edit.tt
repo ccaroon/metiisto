@@ -19,7 +19,7 @@
         <select name="user.style_main">
             [% FOREACH style IN ['redmond', 'smoothness', 'trontastic'] %]
                 [% selected = user.style_main == style ? "selected" : "" %]
-                <option [% selected %] value="[% style | lower %]">[% style %]</option>
+                <option [% selected %] value="[% style | lower %]">[% style | ucfirst %]</option>
             [% END %]
         </select>
         <p>

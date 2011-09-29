@@ -1,23 +1,22 @@
-<div class="ui-widget-header">Current Release ([% current_release.name %]) [% current_release.ready_points %]/[% current_release.total_points %] pts.</div>
-<div class="default">
-    <table>
-        <tr>
-            <td width="85%">
-                <!-- Just hard-coding Project ID (pid) for now -->
-                <img align="absmiddle" src="http://jira.mcclatchyinteractive.com/secure/projectavatar?pid=10110"/>
-    [% FOREACH ticket IN current_release.tickets %]
-        [% fs = 100 + (ticket.points * 5) %]
-        [% link_text = ticket.status.match('(Ready for release|Closed|Rejected|Released)')
-           ? "<s>" _ ticket.key _ "</s>"
-           : ticket.key
-        %]
-        <span style="font-size:[% fs %]%" align="center">
-            <abbr style="border:none;" title="[% ticket.summary _ " (" _ ticket.points _ ")" %]">
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        Current Release ([% current_release.name %]) [% current_release.ready_points %]/[% current_release.total_points %] pts.
+    </div>
+    <div class="ui-widget-content">
+        <!-- Just hard-coding Project ID (pid) for now -->
+        <img align="absmiddle" src="http://jira.mcclatchyinteractive.com/secure/projectavatar?pid=10110"/>
+        [% FOREACH ticket IN current_release.tickets %]
+            [% tix_summary = ticket.summary | html %]
+            [% fs = 100 + (ticket.points * 5) %]
+            [% link_text = ticket.status.match('(Ready for release|Closed|Rejected|Released)')
+               ? "<s>" _ ticket.key _ "</s>"
+               : ticket.key
+            %]
+        <span class="ui-widget-content" style="font-size:[% fs %]%" align="center">
+            <abbr style="border:none;" title="[% tix_summary  _ " (" _ ticket.points _ ")" %]">
                 <a href="http://[% session.user.jira_host %]/browse/[% ticket.key %]">[%link_text %]</a>
             </abbr>
         </span>
-    [% END %]
-            </td>
-        </tr>
-    </table>
+        [% END %]
+    </div>
 </div>
