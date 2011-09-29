@@ -17,7 +17,7 @@
         <!-- Side Menu & Main Content -->
         <table border="0" width="100%">
             <tr>
-                <td width="10%" valign="top">
+                <td width="11%" valign="top">
                     [% PROCESS shared/side_menu.tt %]
                 </td>
                 <td width="100%" valign="top" bgcolor="white">
