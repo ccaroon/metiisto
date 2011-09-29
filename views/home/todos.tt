@@ -1,6 +1,5 @@
 [%
    USE Markdown;
-   priority_image = '';
    PROCESS util/tools.tt
 %]
 <script>
@@ -11,19 +10,9 @@
 </script>
 <table class="list" width="100%">
    [% FOREACH todo in todos %]
-      [% SWITCH todo.priority %]
-      [% CASE 1 %]
-         [% priority_image = 'circle_red.png '%]
-      [% CASE 2 %]
-         [% priority_image = 'circle_orange.png '%]
-      [% CASE 3 %]
-         [% priority_image = 'circle_yellow.png '%]
-      [% CASE %]
-         [% priority_image = 'circle_blue.png '%]
-      [% END %]
-        <tr class="[% cycle('row_even','row_odd') %]">
+        <tr class="[% cycle('ui-state-default','ui-state-active') %]">
             <td width="5%" align="center">
-                <a href="/todos/[% todo.id %]/mark_complete"><img src="/images/themes/default/[% priority_image %]"></a>
+                <a href="/todos/[% todo.id %]/mark_complete"><span class='ui-icon ui-icon-check'>[% todo.priority %]</span></a>
             </td>
             <td>
                 <abbr style='border:none' title='[% todo.due_on.format('%b %d, %Y') %]'><a href="/todos/[% todo.id %]/edit">[% todo.title %]</a></abbr>
@@ -33,7 +22,8 @@
             </td>
         </tr>
         <tr id="todo_desc_[% todo.id %]" style="display:none">
-            <td colspan="2">[% todo.description | markdown %]</td>
+            <td>&nbsp;</td>
+            <td>[% todo.description | markdown %]</td>
         </tr>
     [% END %]
 </table>

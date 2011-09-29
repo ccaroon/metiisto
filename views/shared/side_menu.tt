@@ -1,10 +1,7 @@
 <ul id='side_menu'>
     <li><a href="/entries/new"><img src="/images/themes/default/entries.png" width="20" height="20"> New Entry</a></li>
-
     <li><a href="/goals/new"><img src="/images/themes/default/goals.png" width="20" height="20"> New Goal</a></li>
-
     <li><a href="/todos/new"><img src="/images/themes/default/todos.png" width="20" height="20"> New Todo</a></li>
-
     <li><a href="/notes/new"><img src="/images/themes/default/notes.png" width="20" height="20"> New Note</a></li>
 </ul>
 <script>

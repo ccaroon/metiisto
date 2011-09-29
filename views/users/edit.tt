@@ -17,7 +17,7 @@
         <h3 style="border:solid 1px gray">Style</h3><p>
         <b>Main Style:</b>
         <select name="user.style_main">
-            [% FOREACH style IN ['Smoothness'] %]
+            [% FOREACH style IN ['redmond', 'smoothness', 'trontastic'] %]
                 [% selected = user.style_main == style ? "selected" : "" %]
                 <option [% selected %] value="[% style | lower %]">[% style %]</option>
             [% END %]

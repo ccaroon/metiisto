@@ -2,8 +2,8 @@
 <html>
     <head>
         <title>Metiisto - [% vars.controller| ucfirst %]</title>
-        <!-- link href="/css/metiisto.css" rel="stylesheet" type="text/css" / -->
-        <link href="/css/[% session.user ? session.user.style_main _ '/' _ session.user.style_main _ '.css' : 'smoothness/smoothness.css' %]" rel="stylesheet" type="text/css" />
+        <link href="/css/themes/[% session.user ? session.user.style_main : 'smoothness' %]/theme.css" rel="stylesheet" type="text/css" />
+        <link href="/css/metiisto.css" rel="stylesheet" type="text/css" />
         <script src='/javascripts/jquery.js'></script>
         <script src='/javascripts/jquery-ui.js'></script>
     </head>
@@ -15,9 +15,7 @@
         </div>
 
         <!-- Top Menu -->
-        <div class="ui-widget-header">
-            [% PROCESS shared/top_menu.tt %]
-        </div>
+        [% PROCESS shared/top_menu.tt %]
 
         <!-- Side Menu & Main Content -->
         <table border="0" width="100%">
