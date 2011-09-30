@@ -1,15 +1,14 @@
 <span id="top_menu">
-    <a href="/home"><img src="/images/themes/default/home.png" border="0"></a> |
-    <a href="/entries"><img src="/images/themes/default/entries.png" border="0"></a> |
-    <a href=""><img src="/images/themes/default/hours.png" border="0"></a> |
-    <a href=""><img src="/images/themes/default/goals.png" border="0"></a> |
-    <a href=""><img src="/images/themes/default/lists.png" border="0"></a> |
-    <a href=""><img src="/images/themes/default/todos.png" border="0"></a> |
-    <a href=""><img src="/images/themes/default/notes.png" border="0"></a> |
-    <a href=""><img src="/images/themes/default/countdowns.png" border="0"></a> |
-    <a href=""><img src="/images/themes/default/user_stories.png" border="0"></a> |
-    <a href=""><img src="/images/themes/default/reports.png" border="0"></a>
+    <a class="top_menu_item" href="/home"><img src="/images/themes/default/home.png" border="0"></a>
+    <a class="top_menu_item" href="/entries"><img src="/images/themes/default/entries.png" border="0"></a>
+    <a class="top_menu_item" href=""><img src="/images/themes/default/hours.png" border="0"></a>
+    <a class="top_menu_item" href=""><img src="/images/themes/default/lists.png" border="0"></a>
+    <a class="top_menu_item" href=""><img src="/images/themes/default/todos.png" border="0"></a>
+    <a class="top_menu_item" href=""><img src="/images/themes/default/notes.png" border="0"></a>
+    <a class="top_menu_item" href=""><img src="/images/themes/default/countdowns.png" border="0"></a>
+    <a class="top_menu_item" href=""><img src="/images/themes/default/user_stories.png" border="0"></a>
+    <a class="top_menu_item" href=""><img src="/images/themes/default/reports.png" border="0"></a>
 </span>
 <script>
-    $('#top_menu').menu();
+	$('.top_menu_item').button();
 </script>

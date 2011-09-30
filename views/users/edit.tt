@@ -1,93 +1,76 @@
-<div class="header">
-    <b>Edit User</b>
-</div>
-
-<div style="padding-left:50px;padding-top:25px">
-
 <form method="post" action="/users/[% user.id %]/edit">
-    <div class="default" style="border:solid 1px gray;font-size:large">
-        <b>Name:</b>
-        <input type="text" name="user.name" value="[% user.name %]">
-        <p>
-        <b>Email:</b>
-        <input type="text" name="user.email" value="[% user.email %]">
-    </div>
+<div class="ui-widget">
     
-    <div class="default">
-        <h3 style="border:solid 1px gray">Style</h3><p>
-        <b>Main Style:</b>
+    <p>
+    <div class="ui-widget-header">Information</div>
+    <div class="ui-widget-content">
+        <p>Name: <input type="text" name="user.name" size="32" value="[% user.name %]"></p>
+        <p>Email: <input type="text" name="user.email" size="32" value="[% user.email %]"></p>
+    </div>
+    </p>
+
+    <p>
+    <div class="ui-widget-header">Style</div>
+    <div class="ui-widget-content">
+        <p>
+        Main Style:
         <select name="user.style_main">
-            [% FOREACH style IN ['cupertino', 'redmond', 'smoothness', 'trontastic'] %]
+            [% FOREACH style IN ['cupertino', 'overcast', 'pepper-grinder', 'redmond', 'seafoam',  'smoothness', 'start', 'trontastic', 'ui-lightness', 'vader'] %]
                 [% selected = user.style_main == style ? "selected" : "" %]
                 <option [% selected %] value="[% style | lower %]">[% style | ucfirst %]</option>
             [% END %]
         </select>
-        <p>
-
-        <b>Calendar Style:</b>
-        <select name="user.style_calendar">
-            [% FOREACH style IN ['blue2','brown','green','system','tas','win2k-1','win2k-2','win2k-cold-1','win2k-cold-2'] %]
-                [% selected = user.style_calendar == style ? "selected" : "" %]
-                <option [% selected %] value="[% style %]">[% style %]</option>
-            [% END %]
-        </select>
+        </p>
     </div>
+    </p>
     
-    <div class="default">
-        <h3 style="border:solid 1px gray">Jira Config</h3><p>
-        <b>Host:</b>
-        <input type="text" name="user.jira_host" value="[% user.jira_host %]">
-        <p>
-
-        <b>User:</b>
-        <input type="text" name="user.jira_username" value="[% user.jira_username %]">
-        <p>
-
-        <b>Password:</b>
-        <input type="text" name="user.jira_password" value="[% user.jira_password %]">
-        <p>
-
-        <b>Filter Id:</b>
-        <input type="text" name="user.jira_filter_id" value="[% user.jira_filter_id %]">
+    <p>
+    <div class="ui-widget-header">Jira Config</div>
+    <div class="ui-widget-content">
+        <p>Host: <input type="text" name="user.jira_host" size="32" value="[% user.jira_host %]"></p>
+        <p>User: <input type="text" name="user.jira_username" value="[% user.jira_username %]"></p>
+        <p>Password: <input type="text" name="user.jira_password" value="[% user.jira_password %]"></p>
+        <p>Filter Id: <input type="text" name="user.jira_filter_id" value="[% user.jira_filter_id %]"></p>
     </div>
-
-    <div class="default">
-        <h3 style="border:solid 1px gray">Email Config</h3><p>
-
-        <b>Type:</b>
+    </p>
+        
+    <p>
+    <div class="ui-widget-header">Email Config</div>
+    <div class="ui-widget-content">
+        <p>
+        Type:
         <select name="user.email_type">
             [% FOREACH type IN ['SMTP','Sendmail'] %]
                 [% selected = user.email_type == type ? "selected" : "" %]
                 <option [% selected %] value="[% type | lower %]">[% type %]</option>
             [% END %]
         </select>
-        <p>
+        </p>
 
-        <b>SMTP Host:</b>
-        <input type="text" name="user.smtp_host" value="[% user.smtp_host %]">
+        <p>SMTP Host: <input type="text" name="user.smtp_host" value="[% user.smtp_host %]"></p>
+        <p>SMTP User: <input type="text" name="user.smtp_user" value="[% user.smtp_user %]"></p>
+        <p>SMTP Password: <input type="text" name="user.smtp_pass" value="[% user.smtp_pass %]"></p>
         <p>
-
-        <b>SMTP User:</b>
-        <input type="text" name="user.smtp_user" value="[% user.smtp_user %]">
-        <p>
-
-        <b>SMTP Password:</b>
-        <input type="text" name="user.smtp_pass" value="[% user.smtp_pass %]">
-        <p>
-
-        <b>SMTP Auth:</b>
+        SMTP Auth:
         <select name="user.smtp_auth">
             [% FOREACH type IN ['None','Plain','Login','Cram_MD5'] %]
                 [% selected = user.smtp_auth == type ? "selected" : "" %]
                 <option [% selected %] value="[% type | lower %]">[% type %]</option>
             [% END %]
         </select>
-        <p>
+        </p>
     </div>
+    </p>
 
-    <p><input type="submit" value="Save"</p>
-</form>
-
-<a href="/users/logout">Logout</a>
+    <p>
+        <input id="button-save-user" type="submit" value="Save">
+        <a id="button-logout" href="/users/logout">Logout</a>
+    </p>
 
 </div>
+</form>
+
+<script>
+    $('#button-save-user').button();
+    $('#button-logout').button();
+</script>

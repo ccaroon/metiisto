@@ -8,11 +8,8 @@
         <script src='/javascripts/jquery-ui.js'></script>
     </head>
     <body>
-        <!-- Header -->
+        <!-- Header (includes Top Menu) -->
         [% PROCESS shared/header.tt %]
-
-        <!-- Top Menu -->
-        [% PROCESS shared/top_menu.tt %]
 
         <!-- Side Menu & Main Content -->
         <table border="0" width="100%">

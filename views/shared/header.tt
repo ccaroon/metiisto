@@ -3,17 +3,21 @@
     <div class="ui-widget-header">
         <table border="0">
             <tr>
-                <td width="1%"><span style="font-size:x-large">Metiisto</span></td>
-                <td width="80%" class="header" align="center" valign="bottom">
-                    [% IF session.user %]
-                        <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
-                    [% ELSE %]
-                        -
-                    [% END %]
-                    <br>
-                    [% Date.format(date.now, "%A - %B %d, %Y") %]
+                <td style="padding-right:12em">
+                    <span style="font-weight:bold;font-size:xx-large">Metiisto</span>
                 </td>
-                <td width="1%"><img src="/images/metiisto.jpg" border="0"></td>
+                <td style="padding-right:12em">
+                    [% PROCESS shared/top_menu.tt %]
+                </td>
+                <td>
+                [% IF session.user %]
+                    <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
+                [% ELSE %]
+                    <a href="/users/login">Log In</a>
+                [% END %]
+                <br>
+                [% Date.format(date.now, "%A - %B %d, %Y") %]
+                </td>
             </tr>
         </table>
     </div>    

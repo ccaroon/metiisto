@@ -1,30 +1,34 @@
-<html>
-    <body>
-        <p>
-        <h2>[% is_create ? "Create Initial User" : "Please Login" %]</h2>
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        [% is_create ? "Create Initial User" : "Please Login" %]
+    </div>
+    <div class="ui-widget-content">
         [%IF login_error %]
-            <span class="error_message">[% login_error %]</span>
+            <span class="ui-state-error">[% login_error %]</span>
         [% END %]
         <form  method="post" action="/users/login">
             <p>
                 <img src="/images/themes/default/user.png" border="0">
-                <b>Username: </b><input type="text" name="user_name">
+                Username: <input type="text" name="user_name">
             </p>
             <p>
                 <img src="/images/themes/default/lock_on.png" border="0">
-                <b>Password: </b><input type="password" name="password">
+                Password: <input type="password" name="password">
             </p>
             [% IF is_create %]
             <p>
                 <img src="/images/themes/default/user.png" border="0">
-                <b>Real Name: </b><input type="text" name="name">
+                Real Name: <input type="text" name="name">
             </p>
             <p>
                 <img src="/images/themes/default/user.png" border="0">
-                <b>Email: </b><input type="text" name="email">
+                Email: <input type="text" name="email">
             </p>
             [% END %]
-            <input type="submit" value="[% is_create ? "Create" : "Login" %]">
+            <input id="button-create-login" type="submit" value="[% is_create ? "Create" : "Login" %]">
         </form>
-    </body>
-</html>
+    </div>
+</div>
+<script>
+    $('#button-create-login').button();
+</script>

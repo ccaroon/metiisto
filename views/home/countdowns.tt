@@ -16,15 +16,14 @@
         [% CASE %]
             [% fract_entity = '' %]
         [% END %]
-        <button class="countdown_box">
+        <span class="ui-state-highlight">
             <strong>[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]</strong>
             [% countdown.english_units %]
             [% countdown.time_left >= 0 ? "Until" : "Since" %]
             <strong>[% countdown.title %]</strong>
-        </button>
+        </span>
+        &nbsp;
     [% END %]
     </div>
 </div>
-<script>
-    $('.countdown_box').button({icons: { primary: "ui-icon-clock" }});
-</script>
+
