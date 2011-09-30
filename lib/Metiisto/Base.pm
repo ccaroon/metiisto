@@ -38,7 +38,7 @@ sub has_a_datetime
         },
         deflate  => sub {
             my $dt = shift;
-            return ($dt->format("%Y-%m-%d %H:%M:%S"));
+            return ($dt->format_db());
         },
     );
 }

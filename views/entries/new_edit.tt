@@ -1,46 +1,46 @@
-<div class="header">
-    <b>[% vars.action | ucfirst %] Entry</b>
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        <b>[% vars.action | ucfirst %] Entry</b>
+    </div>
+    <div class="ui-widget-content">
+        <form method="post" action="/entries[% entry.id ? '/' _ entry.id : '' %]">
+            <b>Task Date:</b>
+            <input type="text" id="task_date" name="entry.task_date" value="[% entry.task_date.format('%m/%d/%Y') %]">
+            <p>
+        
+            <b>Ticket Number:</b>
+            <input type="text" name="entry.ticket_num" value="[% entry.ticket_num %]">
+            <p>
+        
+            <b>Category:</b>
+            <select name="entry.category">
+                [% FOREACH cat IN categories %]
+                    [% selected = entry.category == cat ? "selected" : "" %]
+                    <option [% selected %] value="[% cat %]">[% cat %]</option>
+                [% END %]
+            </select>
+            <p>
+        
+            <b>Subject:</b>
+            <input type="text" name="entry.subject" value="[% entry.subject | html %]" size="64" id="entry_subject" autocomplete="off">
+            <p>
+        
+            <b>Description:</b>
+            <br>
+            <textarea name="entry.description" wrap="physical" rows="25" cols="80">[% entry.description %]</textarea>
+        
+            <p>
+                <input id="button-save" type="submit" value="Save">
+                <a id="button-view-entry" href="/entries/[% entry.id %]">View</a>
+            </p>
+            
+        </form>
+    </div>
 </div>
-
-<div style="padding-left:50px;padding-top:25px">
-
-<form method="post" action="/entries[% entry.id ? '/' _ entry.id : '' %]">
-    <b>Task Date:</b>
-    <input type="text" id="task_date" name="entry.task_date" value="[% entry.task_date.format('%m/%d/%Y') %]">
-    <p>
-
-    <b>Ticket Number:</b>
-    <input type="text" name="entry.ticket_num" value="[% entry.ticket_num %]">
-    <p>
-
-    <b>Category:</b>
-    <select name="entry.category">
-        [% FOREACH cat IN categories %]
-            [% selected = entry.category == cat ? "selected" : "" %]
-            <option [% selected %] value="[% cat %]">[% cat %]</option>
-        [% END %]
-    </select>
-    <p>
-
-    <b>Goal:</b>
-    N/A
-    <p>
-
-    <b>Subject:</b>
-    <input type="text" name="entry.subject" value="[% entry.subject %]" size="64" id="entry_subject" autocomplete="off">
-    <p>
-
-    <b>Description:</b>
-    <br>
-    <textarea name="entry.description" wrap="physical" rows="25" cols="80">[% entry.description %]</textarea>
-
-    <p><input type="submit" value="Save"></p>
-</form>
-
-</div>
-
 <script language="javascript">
 
+    $('#button-view-entry').button();
+    $('#button-save').button();
     $( "#task_date" ).datepicker();
 
     var subject_list = [

@@ -1,20 +1,21 @@
 [% USE Markdown %]
-<div class="header">
-    <b>Entry</b> - [% entry.entry_date.format('%b %d, %Y %I:%M%p') %]
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        Entry - [% entry.subject %] ([% entry.entry_date.format('%b %d, %Y %I:%M%p') %])
+    </div>
+    <div class="ui-widget-content">
+        <b>Category:</b> [% entry.category %]
+        <br>
+        <b>Ticket: </b>[% entry.ticket_num %]
+        <br>
+        <b>Goal: </b> [% entry.goal ? entry.goal.name : '' %]
+        <br>
+        <b>Task Date: </b> [% entry.task_date.format('%b %d, %Y') %]
+        <p>[% entry.description | markdown %]</p>
+    
+        <a id="button-edit-entry" href="/entries/[% entry.id %]/edit">Edit</a>
+    </div>
 </div>
-<div style="font-size:large;font-weight:bold">
-    [% entry.subject %]
-</div>
-<p>
-<div>
-    <b>Category:</b> [% entry.category %]
-    <br>
-    <b>Ticket: </b>[% entry.ticket_num %]
-    <br>
-    <b>Goal: </b> [% entry.goal ? entry.goal.name : '' %]
-    <br>
-    <b>Task Date: </b> [% entry.task_date.format('%b %d, %Y') %]
-    <p>[% entry.description | markdown %]</p>
-</div>
-
-<a href="/entries/[% entry.id %]/edit">Edit</a>
+<script>
+    $('#button-edit-entry').button();
+</script>

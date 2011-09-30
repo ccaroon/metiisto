@@ -91,6 +91,7 @@ sub create
         $data->{$attr} = params->{$p};
     }
     $data->{entry_date} = Metiisto::Util::DateTime->now()->format_db();
+
     my $entry = Metiisto::Entry->insert($data);
     die "Error creating Entry" unless $entry;
 
