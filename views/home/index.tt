@@ -22,11 +22,6 @@
                     </tr>
                     <tr>
                         <td>
-                            [% PROCESS home/goals.tt %]
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
                             [% PROCESS home/notes.tt notes=recent_notes title="Recent Notes" %]
                         </td>
                     </tr>
