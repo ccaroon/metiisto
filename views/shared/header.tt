@@ -3,10 +3,10 @@
     <div class="ui-widget-header">
         <table border="0">
             <tr>
-                <td style="padding-right:12em">
+                <td style="padding-right:15em">
                     <span style="font-weight:bold;font-size:xx-large">Metiisto</span>
                 </td>
-                <td style="padding-right:12em">
+                <td style="padding-right:14em">
                     [% PROCESS shared/top_menu.tt %]
                 </td>
                 <td>
