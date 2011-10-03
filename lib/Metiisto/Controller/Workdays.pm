@@ -1,61 +1,28 @@
-package Metiisto::Controller::Entries;
+package Metiisto::Controller::Workdays;
 ################################################################################
 use strict;
 
-use Data::Page;
 use Dancer ':syntax';
-
-use constant ENTRIES_PER_PAGE => 21;
 
 use base 'Metiisto::Controller::Base';
 
-use Metiisto::Entry;
+use Metiisto::Workday;
 ################################################################################
 sub list
 {
     my $this = shift;
 
-    my $total_entries = 0;
-    my $conditions    = {1=>1};
-    if (params->{filter_text})
-    {
-        # TODO: should be OR'ing subject and desc. but not working
-        $conditions = {
-            #subject     => { 'regexp', params->{filter_text} },
-            description => { 'regexp', params->{filter_text} },
-        };
-        $total_entries
-            = Metiisto::Entry->count_where("description regexp '".params->{filter_text}."'");
-    }
-    else
-    {
-        $total_entries = Metiisto::Entry->count();
-    }
-
-    my $page = Data::Page->new();
-    $page->total_entries($total_entries);
-    $page->entries_per_page(ENTRIES_PER_PAGE);
-    $page->current_page(params->{page} || 1);
-
-    my @entries = Metiisto::Entry->search_where(
-        $conditions,
+    my @days = Metiisto::Workday->search_where(
         {
-            limit_dialect => 'LimitOffset',
-            limit    => ENTRIES_PER_PAGE,
-            offset  => $page->first() - 1,
-            order_by => 'task_date desc, entry_date desc',
+            work_date => {'>=','2011-10-03'}
+        },
+        {
+            order_by => 'work_date, time_in',
         }
     );
 
-    my $out = template 'entries/list', {
-        entries => \@entries,
-        pagination => {
-            current_page  => $page->current_page(),
-            first_page    => $page->first_page(),
-            last_page     => $page->last_page(),
-            previous_page => $page->previous_page(),
-            next_page     => $page->next_page(),
-        }
+    my $out = template 'workdays/list', {
+        days => \@days,
     };
 
     return ($out);
@@ -71,12 +38,12 @@ sub new_record
         category   => params->{category},
         task_date  => Metiisto::Util::DateTime->new(epoch => time)
     };
-    my $subjects = Metiisto::Entry->recent_subjects();
+    my $subjects = Metiisto::Workday->recent_subjects();
 
-    my $out = template 'entries/new_edit', {
+    my $out = template 'workdays/new_edit', {
         entry => $entry,
         recent_subjects => $subjects,
-        categories => Metiisto::Entry->CATEGORIES,
+        categories => Metiisto::Workday->CATEGORIES,
     };
 
     return ($out);
@@ -95,10 +62,10 @@ sub create
     }
     $data->{entry_date} = Metiisto::Util::DateTime->now()->format_db();
 
-    my $entry = Metiisto::Entry->insert($data);
+    my $entry = Metiisto::Workday->insert($data);
     die "Error creating Entry" unless $entry;
 
-    my $out = redirect "/entries/".$entry->id();
+    my $out = redirect "/work_days/".$entry->id();
 
     return ($out);
 }
@@ -108,8 +75,8 @@ sub show
     my $this = shift;
     my %args = @_;
 
-    my $entry = Metiisto::Entry->retrieve($args{id});
-    my $out = template 'entries/show', { entry => $entry };
+    my $entry = Metiisto::Workday->retrieve($args{id});
+    my $out = template 'workdays/show', { entry => $entry };
 
     return ($out);
 }
@@ -119,13 +86,13 @@ sub edit
     my $this = shift;
     my %args = @_;
 
-    my $entry = Metiisto::Entry->retrieve($args{id});
-    my $subjects = Metiisto::Entry->recent_subjects();
+    my $entry = Metiisto::Workday->retrieve($args{id});
+    my $subjects = Metiisto::Workday->recent_subjects();
 
-    my $out = template 'entries/new_edit', {
+    my $out = template 'workdays/new_edit', {
         entry => $entry,
         recent_subjects => $subjects,
-        categories => Metiisto::Entry->CATEGORIES,
+        categories => Metiisto::Workday->CATEGORIES,
     };
 
     return ($out);
@@ -136,7 +103,7 @@ sub update
     my $this = shift;
     my %args = @_;
     
-    my $entry = Metiisto::Entry->retrieve(id => $args{id});
+    my $entry = Metiisto::Workday->retrieve(id => $args{id});
 
     foreach my $p (keys %{params()})
     {
@@ -147,7 +114,7 @@ sub update
     my $cnt = $entry->update();
     die "Error saving Entry($args{id})" unless $cnt;
 
-    my $out = redirect "/entries/$args{id}";
+    my $out = redirect "/work_days/$args{id}";
 
     return ($out);
 }
@@ -157,15 +124,37 @@ sub delete
     my $this = shift;
     my %args = @_;
 
-    my $entry = Metiisto::Entry->retrieve(id => $args{id});
+    my $entry = Metiisto::Workday->retrieve(id => $args{id});
     $entry->delete();
     
-    my $url = '/entries';
+    my $url = '/work_days';
     $url .= "?filter_text=".params->{filter_text} if params->{filter_text};
 
     my $out = redirect $url;
 
     return ($out);
+}
+################################################################################
+sub set_day_type
+{
+    my $this = shift;
+    my %args = @_;
+
+    my $day = Metiisto::Workday->retrieve(id => $args{id});
+    my $type = 'DAY_TYPE_'.uc params->{type};
+    $day->set_day_type(Metiisto::Workday->$type);
+    $day->update();
+
+    return (redirect '/workdays');
+}
+################################################################################
+sub declare_routes
+{
+    my $class = shift;
+    
+    $class->SUPER::declare_routes();
+    
+    
 }
 ################################################################################
 1;

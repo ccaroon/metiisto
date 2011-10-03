@@ -1,0 +1,108 @@
+[%
+    PROCESS util/tools.tt;
+%]
+<div class="ui-widget">
+    <div class="ui-widget-header">Work Days</div>
+    <div class="ui-widget-content">
+        <table width="100%">
+            <tr class="ui-widget-header" >
+                <th>Date</th>
+                <th>In</th>
+                <th>Out</th>
+                <th>Lunch</th>
+                <th>Hours</th>
+                <th>Day Type</th>
+                <th>Note</th>
+                <th>Actions</th>
+            </tr>
+            [% FOREACH day in days %]
+            <tr class="[%= cycle('ui-state-default m-not-bold','ui-state-active m-not-bold') %]">
+                <td width="18%">[%= day.work_date.format("%A (%b %d, %Y)") %]</td>
+                <td>[%= day.time_in.format("%I:%M %P") %]</td>
+                <td>[%= day.time_out.format("%I:%M %P") %]</td>
+                <td>[%= day.time_lunch.format("%R") %]</td>
+                <td>[%= day.total_hours %]</td>
+                <td width="20%" align="center">
+                    <button id="button-regular-[% day.id %]" class="button-regular-day" value="/workdays/[% day.id %]/set_day_type?type=regular">Regular</button>
+                    <button id="button-holiday-[% day.id %]" class="button-holiday-day" value="/workdays/[% day.id %]/set_day_type?type=holiday">Holiday</button>
+                    <button id="button-vacation-[% day.id %]" class="button-vacation-day" value="/workdays/[% day.id %]/set_day_type?type=vacation">Vacation</button>
+                    <button id="button-sick-[% day.id %]" class="button-sick-day" value="/workdays/[% day.id %]/set_day_type?type=sick">Sick</button>
+                    [% IF day.is_holiday %]
+                    <script>
+                        $(function () {
+                            $('#button-holiday-[% day.id %]').button('disable')
+                        });
+                    </script>
+                    [% ELSIF day.is_vacation %]
+                    <script>
+                        $(function () {
+                            $('#button-vacation-[% day.id %]').button('disable')
+                        });
+                    </script>
+                    [% ELSIF day.is_sick_day %]
+                    <script>
+                        $(function () {
+                            $('#button-sick-[% day.id %]').button('disable')
+                        });
+                    </script>
+                    [% ELSE %]
+                    <script>
+                        $(function () {
+                            $('#button-regular-[% day.id %]').button('disable')
+                        });
+                    </script>
+                    [% END %]
+                </td>
+                <td width="10%">[%= day.note %]</td>
+                <td>
+                    <img src="/images/themes/default/show.png">
+                    <img src="/images/themes/default/edit.png">
+                    <img src="/images/themes/default/delete.png">
+                </td>
+            </tr>
+            [% END  %]
+        </table>        
+    </div>
+
+</div>
+<script>
+    function set_day_type()
+    {
+        var url = this.value;
+        window.location = url;
+    }
+    
+    $('.button-regular-day').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-clock',
+        }
+    }).click(set_day_type);
+
+    $('.button-holiday-day').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-flag',
+        }
+    }).click(set_day_type);
+    
+    $('.button-vacation-day').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-suitcase',
+        }
+    }).click(set_day_type);
+    
+    $('.button-sick-day').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-clipboard',
+        }
+    }).click(set_day_type);
+
+</script>
+
+<p>
+New
+|
+Generate Week

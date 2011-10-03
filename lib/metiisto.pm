@@ -5,14 +5,17 @@ use Dancer::Plugin::Database;
 
 our $VERSION = '1.0';
 
-use Metiisto::Controller::Users;
-Metiisto::Controller::Users->declare_routes();
+use Metiisto::Controller::Home;
+Metiisto::Controller::Home->declare_routes();
 
 use Metiisto::Controller::Entries;
 Metiisto::Controller::Entries->declare_routes();
 
-use Metiisto::Controller::Home;
-Metiisto::Controller::Home->declare_routes();
+use Metiisto::Controller::Users;
+Metiisto::Controller::Users->declare_routes();
+
+use Metiisto::Controller::Workdays;
+Metiisto::Controller::Workdays->declare_routes();
 ################################################################################
 before sub
 {

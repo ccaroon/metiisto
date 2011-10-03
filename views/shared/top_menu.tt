@@ -1,7 +1,7 @@
 <span id="top_menu">
     <a class="top_menu_item" href="/home"><img src="/images/themes/default/home.png" border="0"></a>
     <a class="top_menu_item" href="/entries"><img src="/images/themes/default/entries.png" border="0"></a>
-    <a class="top_menu_item" href="/work_days"><img src="/images/themes/default/hours.png" border="0"></a>
+    <a class="top_menu_item" href="/workdays"><img src="/images/themes/default/hours.png" border="0"></a>
     <a class="top_menu_item" href="/lists"><img src="/images/themes/default/lists.png" border="0"></a>
     <a class="top_menu_item" href="/todos"><img src="/images/themes/default/todos.png" border="0"></a>
     <a class="top_menu_item" href="/notes"><img src="/images/themes/default/notes.png" border="0"></a>
