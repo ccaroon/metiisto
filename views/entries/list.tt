@@ -8,7 +8,7 @@
         [% PROCESS shared/pagination.tt page_data=pagination %]
     </div>
     <div class="ui-widget-content">
-        <table class="list" width="100%">
+        <table width="100%">
             <tr class="ui-widget-header">
                 <th>Task Date</th>
                 <th>Category</th>
@@ -21,11 +21,17 @@
                 <td>[% entry.task_date.format('%b %d, %Y') %]</td>
                 <td>[% entry.category %]</td>
                 <td><a href="http://[% session.user.jira_host %]/browse/[% entry.ticket_num%]">[% entry.ticket_num %]</a></td>
-                <td><a href="/entries/[% entry.id %]">[% entry.subject %]</a></td>
+                <td><a href="/entries/[% entry.id %]">[% entry.subject | html %]</a></td>
                 <td align="center">
                     <a class="action-view" href="/entries/[% entry.id %]">View</a>
                     <a class="action-edit" href="/entries/[% entry.id %]/edit">Edit</a>
-                    <a class="action-delete" href="/entries/[% entry.id %]/delete">Delete</a>
+                    <button class="action-delete" value="[% entry.id %]" >Delete</button>
+                    <div id="dialog-confirm-delete-[% entry.id %]" class="dialog-confirm-delete" title="Delete Entry?" align="center">
+                        <p>
+                            <strong>[% entry.subject | html %]</strong>
+                        </p>
+                        <button class="action-confirm-delete" value="/entries/[% entry.id %]/delete?filter_text=[% params.filter_text %]">Delete</button>
+                    </div>
                 </td>
             </tr>
             [% END %]
@@ -33,6 +39,13 @@
     </div>
 </div>
 <script>
+    $('.dialog-confirm-delete').dialog({
+        resizable: false,
+        width: 450,
+        module: true,
+        autoOpen: false,
+    });
+    
     $('.action-view').button({
         text: false,
         icons: {
@@ -52,5 +65,19 @@
         icons: {
             primary: 'ui-icon-trash'
         }
+    }).click(function () {
+        var id = this.value;
+        $('#dialog-confirm-delete-'+id).dialog('open');
     });
+
+    $('.action-confirm-delete').button({
+        icons: {
+                primary: 'ui-icon-trash'
+    }}).click(
+        function ()
+        {
+            window.location = this.value;
+        }
+    )
+
 </script>

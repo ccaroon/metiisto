@@ -129,7 +129,16 @@ sub search
         # Match sub-tasks to parent ticket.
         foreach my $st (@sub_tasks)
         {
-            $tickets{$st->{parent}}->add_sub_task($st->{ticket});
+            if ($tickets{$st->{parent}})
+            {
+                $tickets{$st->{parent}}->add_sub_task($st->{ticket});
+            }
+            # Parent ticket is not part of the loaded ticket list. Add to top-level
+            # ticket list instead of to parent as sub-task.
+            else
+            {
+                $tickets{$st->{ticket}->key()} = $st->{ticket};
+            }
         }
     }
 

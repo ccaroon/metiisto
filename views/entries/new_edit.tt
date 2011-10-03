@@ -5,7 +5,7 @@
     <div class="ui-widget-content">
         <form method="post" action="/entries[% entry.id ? '/' _ entry.id : '' %]">
             <b>Task Date:</b>
-            <input type="text" id="task_date" name="entry.task_date" value="[% entry.task_date.format('%m/%d/%Y') %]">
+            <input type="text" id="task_date" name="entry.task_date" value="[% entry.task_date.format_db('date_only',1) %]">
             <p>
         
             <b>Ticket Number:</b>
@@ -41,7 +41,7 @@
 
     $('#button-view-entry').button();
     $('#button-save').button();
-    $( "#task_date" ).datepicker();
+    $( "#task_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
     var subject_list = [
     [%- FOREACH subject IN  recent_subjects -%]

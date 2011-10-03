@@ -36,13 +36,13 @@ sub list
     $page->total_entries($total_entries);
     $page->entries_per_page(ENTRIES_PER_PAGE);
     $page->current_page(params->{page} || 1);
-
+print STDERR "=====> Entries.pm #39 --> Page->First [".$page->first()."] \n";
     my @entries = Metiisto::Entry->search_where(
         $conditions,
         {
             limit_dialect => 'LimitOffset',
             limit    => ENTRIES_PER_PAGE,
-            offset  => $page->first(),
+            offset  => $page->first() - 1,
             order_by => 'task_date desc, entry_date desc',
         }
     );
@@ -152,6 +152,17 @@ sub update
 sub delete
 {
     my $this = shift;
+    my %args = @_;
+
+    my $entry = Metiisto::Entry->retrieve(id => $args{id});
+    $entry->delete();
+    
+    my $url = '/entries';
+    $url .= "?filter_text=".params->{filter_text} if params->{filter_text};
+
+    my $out = redirect $url;
+
+    return ($out);
 }
 ################################################################################
 sub declare_routes

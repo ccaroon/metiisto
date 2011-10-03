@@ -6,7 +6,8 @@ use Date::Format;
 use Date::Parse;
 use Moose;
 
-use constant FORMAT_DB => '%Y-%m-%d %H:%M:%S';
+use constant FORMAT_DB_DATE     => '%Y-%m-%d';
+use constant FORMAT_DB_DATETIME =>  FORMAT_DB_DATE . ' %H:%M:%S';
 ################################################################################
 has epoch => (
     is  => 'rw',
@@ -38,7 +39,13 @@ sub format
 sub format_db
 {
     my $this = shift;
-    return ($this->format(FORMAT_DB));
+    my %args = @_;
+
+    return (
+        $args{date_only}
+            ? $this->format(FORMAT_DB_DATE)
+            : $this->format(FORMAT_DB_DATETIME)
+    );
 }
 ################################################################################
 1;

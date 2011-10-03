@@ -57,7 +57,8 @@ sub time_left
     if ($this->units() ne UNIT_SECOND && abs($time_left) < 1)
     {
         my $new_unit = UNITS->{$this->units()} + 1;
-        $this->units() = $UNITS_INDEX{$new_unit};
+        $this->units($UNITS_INDEX{$new_unit});
+        $this->update();
         $time_left = $this->time_left();
     }
     else #Round to the nearest quarter unit
