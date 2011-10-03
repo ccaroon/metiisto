@@ -23,7 +23,7 @@
                 [% tr_class = cycle('ui-state-default m-not-bold','ui-state-active m-not-bold') %]
                 <tr class="[% tr_class %]">
                     <td align="center">
-                        <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% ticket.key %]&subject=[% ticket.summary %]"><span class="ui-icon ui-icon-arrowreturnthick-1-s"></span></a>
+                        <a href="/entries/new?ticket_num=[% ticket.key %]&subject=[% ticket.summary | uri %]&category=Ticket"><span class="ui-icon ui-icon-arrowreturnthick-1-s"></span></a>
                     </td>
                     <td>
                         <a href="[% ticket.link %]">[% ticket.key %] - [% ticket.summary %]</a>
@@ -40,7 +40,7 @@
                             [% FOREACH sub in ticket.sub_tasks %]
                                 <tr>
                                     <td align="center">
-                                        <a href="/entries/new_from_jira_ticket/index.html?ticket_num=[% sub.key %]&subject=[% sub.summary %]"><span class="ui-icon ui-icon-arrowreturnthick-1-s"></span></a>
+                                        <a href="/entries/new?ticket_num=[% sub.key %]&subject=[% sub.summary | uri %]&category=Ticket"><span class="ui-icon ui-icon-arrowreturnthick-1-s"></span></a>
                                     </td>
                                     <td>
                                         <a href="[%sub.link%]">[% sub.key %] - [% sub.summary %]</a> (<font color="[%sub.color%]">[% sub.status %]</font>)

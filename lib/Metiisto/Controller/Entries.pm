@@ -36,7 +36,7 @@ sub list
     $page->total_entries($total_entries);
     $page->entries_per_page(ENTRIES_PER_PAGE);
     $page->current_page(params->{page} || 1);
-print STDERR "=====> Entries.pm #39 --> Page->First [".$page->first()."] \n";
+
     my @entries = Metiisto::Entry->search_where(
         $conditions,
         {
@@ -66,7 +66,10 @@ sub new_entry
     my $this = shift;
 
     my $entry = {
-        task_date => Metiisto::Util::DateTime->new(epoch => time)
+        ticket_num => params->{ticket_num},
+        subject    => params->{subject},
+        category   => params->{category},
+        task_date  => Metiisto::Util::DateTime->new(epoch => time)
     };
     my $subjects = Metiisto::Entry->recent_subjects();
 
