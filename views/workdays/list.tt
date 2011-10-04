@@ -30,25 +30,25 @@
                     [% IF day.is_holiday %]
                     <script>
                         $(function () {
-                            $('#button-holiday-[% day.id %]').button('disable')
+                            $('#button-holiday-[% day.id %]').addClass('ui-state-highlight');
                         });
                     </script>
                     [% ELSIF day.is_vacation %]
                     <script>
                         $(function () {
-                            $('#button-vacation-[% day.id %]').button('disable')
+                            $('#button-vacation-[% day.id %]').addClass('ui-state-highlight');
                         });
                     </script>
                     [% ELSIF day.is_sick_day %]
                     <script>
                         $(function () {
-                            $('#button-sick-[% day.id %]').button('disable')
+                            $('#button-sick-[% day.id %]').addClass('ui-state-highlight');
                         });
                     </script>
                     [% ELSE %]
                     <script>
                         $(function () {
-                            $('#button-regular-[% day.id %]').button('disable')
+                            $('#button-regular-[% day.id %]').addClass('ui-state-highlight');
                         });
                     </script>
                     [% END %]
@@ -61,11 +61,19 @@
                 </td>
             </tr>
             [% END  %]
-        </table>        
+        </table>
+        
+        <p>
+        <a class="button" href="/workdays/generate_week">Generate Week</a>
+        <a class="button" href="/workdays/new">New</a>
+        </p>
     </div>
 
 </div>
 <script>
+    
+    $('.button').button();
+    
     function set_day_type()
     {
         var url = this.value;
@@ -101,8 +109,3 @@
     }).click(set_day_type);
 
 </script>
-
-<p>
-New
-|
-Generate Week

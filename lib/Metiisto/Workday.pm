@@ -5,6 +5,9 @@ use feature 'switch';
 
 use base 'Metiisto::Base';
 
+use constant DEFAULT_IN_TIME  =>'09:00';
+use constant DEFAULT_OUT_TIME =>'17:00';
+
 use constant DAY_TYPE_REGULAR  => 0;
 use constant DAY_TYPE_HOLIDAY  => 1;
 use constant DAY_TYPE_VACATION => 2;
