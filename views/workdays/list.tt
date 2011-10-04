@@ -54,19 +54,23 @@
                     [% END %]
                 </td>
                 <td width="10%">[%= day.note %]</td>
-                <td>
-                    <img src="/images/themes/default/show.png">
-                    <img src="/images/themes/default/edit.png">
-                    <img src="/images/themes/default/delete.png">
+                <td align="center">
+                    [% PROCESS shared/list/actions.tt
+                        controller = 'workdays'
+                        item_id = day.id
+                        delete_message = day.work_date.format("%A (%b %d, %Y)")
+                        query_string = ""
+                    %]
                 </td>
             </tr>
             [% END  %]
         </table>
         
         <p>
-        <a class="button" href="/workdays/generate_week">Generate Week</a>
-        <a class="button" href="/workdays/new">New</a>
+            <a class="button" href="/workdays/generate_week">Generate Week</a>
+            <a class="button" href="/workdays/new">New</a>
         </p>
+
     </div>
 
 </div>
@@ -107,5 +111,7 @@
             primary: 'ui-icon-clipboard',
         }
     }).click(set_day_type);
+
+    [% PROCESS shared/list/actions_js.tt %]
 
 </script>

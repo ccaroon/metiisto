@@ -43,7 +43,6 @@ sub new_record
 
     my $out = template 'workdays/new_edit', {
         entry => $day,
-        recent_subjects => $subjects,
         categories => Metiisto::Workday->CATEGORIES,
     };
 
@@ -77,7 +76,7 @@ sub show
     my %args = @_;
 
     my $day = Metiisto::Workday->retrieve($args{id});
-    my $out = template 'workdays/show', { entry => $day };
+    my $out = template 'workdays/show', { day => $day };
 
     return ($out);
 }
@@ -127,13 +126,8 @@ sub delete
 
     my $day = Metiisto::Workday->retrieve(id => $args{id});
     $day->delete();
-    
-    my $url = '/work_days';
-    $url .= "?filter_text=".params->{filter_text} if params->{filter_text};
 
-    my $out = redirect $url;
-
-    return ($out);
+    return (redirect '/workdays');
 }
 ################################################################################
 sub set_day_type
@@ -143,9 +137,9 @@ sub set_day_type
 
     my $day = Metiisto::Workday->retrieve(id => $args{id});
     my $type = 'DAY_TYPE_'.uc params->{type};
-    $day->set_day_type(Metiisto::Workday->$type);
+    $day->day_type(Metiisto::Workday->$type);
     my $note = (Metiisto::Workday->$type == Metiisto::Workday->DAY_TYPE_REGULAR)
-        ? ''
+        ? undef
         : ucfirst params->{type};
     $day->note($note);
     $day->update();
@@ -162,9 +156,9 @@ sub generate_week
     {
         my $date = Metiisto::Util::DateTime->new(
             epoch => $monday->epoch() + (86_400 * $i));
-# TODO: use find_or_create instead of insert()
-        Metiisto::Workday->insert({
-            work_date  => $date->format_db(),
+
+        Metiisto::Workday->find_or_create({
+            work_date  => $date->format_db(date_only => 1),
             time_in    => Metiisto::Workday->DEFAULT_IN_TIME,
             time_out   => Metiisto::Workday->DEFAULT_OUT_TIME,
             time_lunch => '00:00',

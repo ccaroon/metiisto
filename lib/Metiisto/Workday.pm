@@ -23,28 +23,54 @@ __PACKAGE__->has_a_datetime('time_in');
 __PACKAGE__->has_a_datetime('time_out');
 __PACKAGE__->has_a_datetime('time_lunch');
 ################################################################################
-sub set_day_type
+sub day_type
 {
     my $this = shift;
-    my $type = shift;
-    
-    # First Clear all Flags (Also same as REGULAR)
-    $this->is_vacation(0);
-    $this->is_holiday(0);
-    $this->is_sick_day(0);
-    
-    given ($type)
+    my $new_type = shift;
+
+    my $type;
+
+    # Set
+    if (defined $new_type)
     {
-        when (DAY_TYPE_HOLIDAY) {
-            $this->is_holiday(1);
+        # First Clear all Flags (Also same as REGULAR)
+        $this->is_vacation(0);
+        $this->is_holiday(0);
+        $this->is_sick_day(0);
+        
+        given ($new_type)
+        {
+            when (DAY_TYPE_HOLIDAY) {
+                $this->is_holiday(1);
+            }
+            when (DAY_TYPE_VACATION) {
+                $this->is_vacation(1);
+            }
+            when (DAY_TYPE_SICK) {
+                $this->is_sick_day(1);
+            }
         }
-        when (DAY_TYPE_VACATION) {
-            $this->is_vacation(1);
+        $type = $new_type;
+    }
+    # Get
+    else
+    {
+        $type = DAY_TYPE_REGULAR;
+        if ($this->is_holiday())
+        {
+            $type = DAY_TYPE_HOLIDAY;
         }
-        when (DAY_TYPE_SICK) {
-            $this->is_sick_day(1);
+        elsif ($this->is_vacation())
+        {
+            $type = DAY_TYPE_VACATION;
+        }
+        elsif ($this->is_sick_day())
+        {
+            $type = DAY_TYPE_SICK;
         }
     }
+    
+    return ($type);
 }
 ################################################################################
 sub total_hours

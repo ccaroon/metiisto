@@ -1,0 +1,44 @@
+$(function () {
+
+    $('.dialog-confirm-delete').dialog({
+        resizable: false,
+        width: 450,
+        module: true,
+        autoOpen: false,
+    });
+    
+    $('.action-view').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-search'
+        }
+    });
+    
+    $('.action-edit').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-pencil'
+        }
+    });
+    
+    $('.action-delete').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-trash'
+        }
+    }).click(function () {
+        var id = this.value;
+        $('#dialog-confirm-delete-'+id).dialog('open');
+    });
+
+    $('.action-confirm-delete').button({
+        icons: {
+            primary: 'ui-icon-trash'
+        }
+    }).click(
+        function () {
+            window.location = this.value;
+        }
+    )
+
+});

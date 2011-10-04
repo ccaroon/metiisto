@@ -8,6 +8,7 @@ use Moose;
 
 use constant FORMAT_DB_DATE     => '%Y-%m-%d';
 use constant FORMAT_DB_DATETIME =>  FORMAT_DB_DATE . ' %H:%M:%S';
+use constant FORMAT_TIME        => "%I:%M%p";
 ################################################################################
 has epoch => (
     is  => 'rw',
@@ -44,6 +45,12 @@ sub format
     my $format = shift;
 
     return(time2str($format,$this->epoch()));
+}
+################################################################################
+sub format_time
+{
+    my $this = shift;
+    return ($this->format(FORMAT_TIME));
 }
 ################################################################################
 sub format_db

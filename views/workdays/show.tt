@@ -1,23 +1,26 @@
-<div class="header">
-    Work Day
+<div class="ui-widget">
+
+    <div class="ui-widget-header">Work Day</div>
+
+    <div class="ui-widget-content"">
+        <b>[% day.work_date.format("%A (%b %d, %Y)") %]</b> was a <b>[% day.day_type %]</b>.
+        <br>
+        [% IF (day.is_holiday || day.is_vacation || day.is_sick_day) %]
+            I did not work this day.
+        [% ELSE %]
+            I came in to work at <font color="green">[% day.time_in.format_time %]</font>,
+            took <font color="orange">[% day.time_lunch.format("%R") %]</font> for lunch,
+            and left at <font color="red">[% day.time_out.format_time %]</font> for
+            a total of <b>[% day.total_hours %]</b> hours.
+        [% END %]
+        <p>
+            [% day.note %]
+        </p>
+
+        <a id="button-action-edit" href="/workdays/[% day.id %]/edit">Edit</a>
+    </div>
+
 </div>
-
-<div style="font-size:large;">
-    <b><%= display_work_day :work_date %></b> was a <b><%= display_work_day :day_type %></b>.
-    <br>
-    <% if (@work_day.is_holiday || @work_day.is_vacation || @work_day.is_sick_day) %>
-        I did not work this day.
-    <%  else %>
-        I came in to work at <font color="green"><%= display_work_day :in %></font>,
-        took <font color="orange"><%= display_work_day :lunch %></font> for lunch,
-        and left at <font color="red"><%= display_work_day :out %></font> for
-        a total of <b><%= sprintf("%0.2f", @work_day.total_hours()) %></b> hours.
-    <% end %>
-    <p>
-        <%= display_work_day :note %>
-    </p>
-</div>
-
-<p>
-
-<%= link_to 'Edit', edit_work_day_path(@work_day) %>
+<script>
+    $('#button-action-edit').button();
+</script>

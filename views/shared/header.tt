@@ -16,7 +16,7 @@
                     <a href="/users/login">Log In</a>
                 [% END %]
                 <br>
-                [% Date.format(date.now, "%A - %B %d, %Y") %]
+                [% Date.format(date.now, "%A - %b %d, %Y") %]
                 </td>
             </tr>
         </table>
