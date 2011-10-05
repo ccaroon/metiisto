@@ -3,9 +3,9 @@
         <a href="/goals">Goals</a>
     </div>
     <div class="ui-widget-content">
-        <table width="100%">
+        <table width="100%" class="ui-widget-content">
         [% FOREACH goal IN goals %]
-            <tr class="[% cycle('ui-state-default m-not-bold','ui-state-active m-not-bold') %]">
+            <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                 <td align="center">[% goal.priority %]</td>
                 <td><a href="/goals/[% goal.id %]">[% goal.name %]</a></td>
                 <td align="center">[% goal.percent_complete _ '%' %]</td>

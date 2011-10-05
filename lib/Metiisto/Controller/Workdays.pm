@@ -24,6 +24,7 @@ sub list
     );
 
     my $out = template 'workdays/list', {
+        today => Metiisto::Util::DateTime->now(),
         days => \@days,
     };
 
@@ -34,16 +35,10 @@ sub new_record
 {
     my $this = shift;
 
-    my $day = {
-        ticket_num => params->{ticket_num},
-        subject    => params->{subject},
-        category   => params->{category},
-        task_date  => Metiisto::Util::DateTime->new(epoch => time)
-    };
+    my $day = {};
 
     my $out = template 'workdays/new_edit', {
-        entry => $day,
-        categories => Metiisto::Workday->CATEGORIES,
+        day => $day,
     };
 
     return ($out);
@@ -56,16 +51,14 @@ sub create
     my $data = {};
     foreach my $p (keys %{params()})
     {
-        next unless $p =~ /^entry\.(.*)$/;
+        next unless $p =~ /^workday\.(.*)$/;
         my $attr = $1;
         $data->{$attr} = params->{$p};
     }
-    $data->{entry_date} = Metiisto::Util::DateTime->now()->format_db();
-
     my $day = Metiisto::Workday->insert($data);
-    die "Error creating Entry" unless $day;
+    die "Error creating Workday" unless $day;
 
-    my $out = redirect "/work_days/".$day->id();
+    my $out = redirect "/workdays";
 
     return ($out);
 }
@@ -87,12 +80,9 @@ sub edit
     my %args = @_;
 
     my $day = Metiisto::Workday->retrieve($args{id});
-    my $subjects = Metiisto::Workday->recent_subjects();
 
     my $out = template 'workdays/new_edit', {
-        entry => $day,
-        recent_subjects => $subjects,
-        categories => Metiisto::Workday->CATEGORIES,
+        day => $day,
     };
 
     return ($out);
@@ -107,14 +97,14 @@ sub update
 
     foreach my $p (keys %{params()})
     {
-        next unless $p =~ /^entry\.(.*)$/;
+        next unless $p =~ /^workday\.(.*)$/;
         my $attr = $1;
         $day->$attr(params->{$p});
     }
     my $cnt = $day->update();
-    die "Error saving Entry($args{id})" unless $cnt;
+    die "Error saving Workday($args{id})" unless $cnt;
 
-    my $out = redirect "/work_days/$args{id}";
+    my $out = redirect "/workdays";
 
     return ($out);
 }
@@ -138,10 +128,20 @@ sub set_day_type
     my $day = Metiisto::Workday->retrieve(id => $args{id});
     my $type = 'DAY_TYPE_'.uc params->{type};
     $day->day_type(Metiisto::Workday->$type);
-    my $note = (Metiisto::Workday->$type == Metiisto::Workday->DAY_TYPE_REGULAR)
-        ? undef
-        : ucfirst params->{type};
-    $day->note($note);
+
+    if (Metiisto::Workday->$type == Metiisto::Workday->DAY_TYPE_REGULAR)
+    {
+        $day->note(undef);
+        $day->time_in(Metiisto::Workday->DEFAULT_TIME_IN);
+        $day->time_out(Metiisto::Workday->DEFAULT_TIME_OUT);
+    }
+    else
+    {
+        $day->note(ucfirst params->{type});
+        $day->time_in('00:00:00');
+        $day->time_out('00:00:00');
+        $day->time_lunch('00:00:00');
+    }
     $day->update();
 
     return (redirect '/workdays');
@@ -159,8 +159,8 @@ sub generate_week
 
         Metiisto::Workday->find_or_create({
             work_date  => $date->format_db(date_only => 1),
-            time_in    => Metiisto::Workday->DEFAULT_IN_TIME,
-            time_out   => Metiisto::Workday->DEFAULT_OUT_TIME,
+            time_in    => Metiisto::Workday->DEFAULT_TIME_IN,
+            time_out   => Metiisto::Workday->DEFAULT_TIME_OUT,
             time_lunch => '00:00',
         });
     }

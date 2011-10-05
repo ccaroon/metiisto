@@ -4,7 +4,7 @@
     fract_entity = '';
 %]
 <div class="ui-widget">
-    <div class="ui-widget-content">
+    <div>
     [% FOREACH countdown IN countdowns %]
         [% SWITCH Math.abs(countdown.time_left) -  Math.int(Math.abs(countdown.time_left))%]
         [% CASE 0.25 %]
@@ -16,7 +16,7 @@
         [% CASE %]
             [% fract_entity = '' %]
         [% END %]
-        <span class="ui-state-highlight">
+        <span class="ui-widget-content">
             <strong>[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]</strong>
             [% countdown.english_units %]
             [% countdown.time_left >= 0 ? "Until" : "Since" %]

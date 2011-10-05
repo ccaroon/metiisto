@@ -17,7 +17,7 @@
                 <th>Actions</th>
             </tr>
             [% FOREACH entry IN entries %]
-            <tr class="[% cycle ('ui-state-default m-not-bold','ui-state-active m-not-bold') %]">
+            <tr class="[% cycle ('ui-state-default m-not-bold','NONE') %]">
                 <td>[% entry.task_date.format('%b %d, %Y') %]</td>
                 <td>[% entry.category %]</td>
                 <td><a href="http://[% session.user.jira_host %]/browse/[% entry.ticket_num%]">[% entry.ticket_num %]</a></td>

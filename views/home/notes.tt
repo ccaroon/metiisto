@@ -3,9 +3,9 @@
         [% title %]
     </div>
     <div class="ui-widget-content">
-        <table class="list" width="100%">
+        <table width="100%" class="ui-widget-content">
         [% FOREACH note IN notes %]
-            <tr class="[% cycle('ui-state-default m-not-bold','ui-state-active m-not-bold') %]">
+            <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                 <td width="1%">
                     [% note.is_encrypted ?
                       '<span class="ui-icon ui-icon-locked"></span>' :

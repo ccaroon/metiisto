@@ -14,9 +14,9 @@
       <a href="/todos">Todos</a>
    </div>
    <div class="ui-widget-content">
-      <table width="100%">
+      <table width="100%" class="ui-widget-content">
          [% FOREACH todo in todos %]
-              <tr class="[% cycle('ui-state-default m-not-bold','ui-state-active m-not-bold') %]">
+              <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                   <td width="5%" align="center">
                       <a href="/todos/[% todo.id %]/mark_complete"><span class='ui-icon ui-icon-check'>[% todo.priority %]</span></a>
                   </td>

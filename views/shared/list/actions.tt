@@ -1,5 +1,10 @@
+[% UNLESS no_view %]
 <a class="action-view" href="/[% controller %]/[% item_id %]">View</a>
+[% END %]
+[% UNLESS no_edit %]
 <a class="action-edit" href="/[% controller %]/[% item_id %]/edit">Edit</a>
+[% END %]
+[% UNLESS no_delete %]
 <button class="action-delete" value="[% item_id %]" >Delete</button>
 <div id="dialog-confirm-delete-[% item_id %]" class="dialog-confirm-delete" title=" Confirm Delete" align="center">
     <p>
@@ -7,3 +12,4 @@
     </p>
     <button class="action-confirm-delete" value="/[% controller %]/[% item_id %]/delete?[% query_string %]">Delete</button>
 </div>
+[% END %]

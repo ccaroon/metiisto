@@ -18,9 +18,9 @@
         <a href="http://[% session.user.jira_host %]">Tickets</a>
     </div>
     <div class="ui-widget-content">
-        <table width="100%">
+        <table width="100%" class="ui-widget-content">
             [% FOREACH ticket in tickets %]
-                [% tr_class = cycle('ui-state-default m-not-bold','ui-state-active m-not-bold') %]
+                [% tr_class = cycle('ui-state-default m-not-bold','NONE') %]
                 <tr class="[% tr_class %]">
                     <td align="center">
                         <a href="/entries/new?ticket_num=[% ticket.key %]&subject=[% ticket.summary | uri %]&category=Ticket"><span class="ui-icon ui-icon-arrowreturnthick-1-s"></span></a>

@@ -1,2 +1,4 @@
 .m-not-bold { font-weight: normal !important }
 .m-pagination, a { text-decoration: none }
+.m-bold { font-weight: bolder !important}
+.m-strikethru { text-decoration: line-through !important}

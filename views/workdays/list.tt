@@ -4,7 +4,7 @@
 <div class="ui-widget">
     <div class="ui-widget-header">Work Days</div>
     <div class="ui-widget-content">
-        <table width="100%">
+        <table width="100%" class="ui-widget-content">
             <tr class="ui-widget-header" >
                 <th>Date</th>
                 <th>In</th>
@@ -16,12 +16,52 @@
                 <th>Actions</th>
             </tr>
             [% FOREACH day in days %]
-            <tr class="[%= cycle('ui-state-default m-not-bold','ui-state-active m-not-bold') %]">
-                <td width="18%">[%= day.work_date.format("%A (%b %d, %Y)") %]</td>
-                <td>[%= day.time_in.format("%I:%M %P") %]</td>
-                <td>[%= day.time_out.format("%I:%M %P") %]</td>
-                <td>[%= day.time_lunch.format("%R") %]</td>
-                <td>[%= day.total_hours %]</td>
+            [% is_today = day.work_date.format("%D") == today.format("%D") ? 1 : 0 %]
+            <tr class="[% cycle('ui-state-default m-not-bold','NONE') %] [% is_today ? 'm-bold' : '' %]">
+                <td width="18%">
+                    [% IF is_today %]
+                        <span class="ui-icon ui-icon-calendar" style="float:left;"></span>
+                    [% END %]
+                    [% day.work_date.format("%A (%b %d, %Y)") %]
+                </td>
+                <td align="center">
+                    <span id="action-time_in-[% day.id %]" class="ui-icon ui-icon-pencil" style="float:right"></span>                    
+                    <div id="view-time_in-[% day.id %]">
+                        [% day.time_in.format("%I:%M %P") %]
+                    </div>
+                     <div id="edit-time_in-[% day.id %]"  style="display:none">
+                        <form method="POST" action="/workdays/[% day.id %]">
+                            <input id="input-time_in-[% day.id %]" type="text" name="workday.time_in" size="4" value="[% day.time_in.format("%R") %]">
+                        </form>
+                     </div>
+                    <script>
+                        $('#action-time_in-[% day.id %]').click(function() {
+                            $('#view-time_in-[% day.id %]').hide();
+                            $('#edit-time_in-[% day.id %]').show();
+                            $('#input-time_in-[% day.id %]').focus().select();
+                        });
+                    </script>
+                </td>
+                <td align="center">
+                    <span id="action-time_out-[% day.id %]" class="ui-icon ui-icon-pencil" style="float:right"></span>                    
+                    <div id="view-time_out-[% day.id %]">
+                        [% day.time_out.format("%I:%M %P") %]
+                    </div>
+                     <div id="edit-time_out-[% day.id %]"  style="display:none">
+                        <form method="POST" action="/workdays/[% day.id %]">
+                            <input id="input-time_out-[% day.id %]" type="text" name="workday.time_out" size="4" value="[% day.time_out.format("%R") %]">
+                        </form>
+                     </div>
+                    <script>
+                        $('#action-time_out-[% day.id %]').click(function() {
+                            $('#view-time_out-[% day.id %]').hide();
+                            $('#edit-time_out-[% day.id %]').show();
+                            $('#input-time_out-[% day.id %]').focus().select();
+                        });
+                    </script>
+                </td>
+                <td align="center">[% day.time_lunch.format("%R") %]</td>
+                <td align="center">[% day.total_hours %]</td>
                 <td width="20%" align="center">
                     <button id="button-regular-[% day.id %]" class="button-regular-day" value="/workdays/[% day.id %]/set_day_type?type=regular">Regular</button>
                     <button id="button-holiday-[% day.id %]" class="button-holiday-day" value="/workdays/[% day.id %]/set_day_type?type=holiday">Holiday</button>
@@ -30,33 +70,52 @@
                     [% IF day.is_holiday %]
                     <script>
                         $(function () {
-                            $('#button-holiday-[% day.id %]').addClass('ui-state-highlight');
+                            $('#button-holiday-[% day.id %]').addClass('ui-state-focus');
                         });
                     </script>
                     [% ELSIF day.is_vacation %]
                     <script>
                         $(function () {
-                            $('#button-vacation-[% day.id %]').addClass('ui-state-highlight');
+                            $('#button-vacation-[% day.id %]').addClass('ui-state-focus');
                         });
                     </script>
                     [% ELSIF day.is_sick_day %]
                     <script>
                         $(function () {
-                            $('#button-sick-[% day.id %]').addClass('ui-state-highlight');
+                            $('#button-sick-[% day.id %]').addClass('ui-state-focus');
                         });
                     </script>
                     [% ELSE %]
                     <script>
                         $(function () {
-                            $('#button-regular-[% day.id %]').addClass('ui-state-highlight');
+                            $('#button-regular-[% day.id %]').addClass('ui-state-focus');
                         });
                     </script>
                     [% END %]
                 </td>
-                <td width="10%">[%= day.note %]</td>
+                <td align="center" width="20%">
+                    <span id="action-note-[% day.id %]" class="ui-icon ui-icon-pencil" style="float:right"></span>                    
+                    <div id="view-note-[% day.id %]">
+                        [% day.note %]
+                    </div>
+                     <div id="edit-note-[% day.id %]" style="display:none">
+                        <form method="POST" action="/workdays/[% day.id %]">
+                            <input id="input-note-[% day.id %]" type="text" name="workday.note" size="10" value="[% day.note %]">
+                        </form>
+                     </div>
+                    <script>
+                        $('#action-note-[% day.id %]').click(function() {
+                            $('#view-note-[% day.id %]').hide();
+                            $('#edit-note-[% day.id %]').show();
+                            $('#input-note-[% day.id %]').focus().select();
+                        });
+                    </script>
+                </td>
                 <td align="center">
                     [% PROCESS shared/list/actions.tt
                         controller = 'workdays'
+                        no_view = 1
+                        no_edit = 1
                         item_id = day.id
                         delete_message = day.work_date.format("%A (%b %d, %Y)")
                         query_string = ""
@@ -75,7 +134,6 @@
 
 </div>
 <script>
-    
     $('.button').button();
     
     function set_day_type()
