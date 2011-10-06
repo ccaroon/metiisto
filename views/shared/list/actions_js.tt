@@ -40,5 +40,12 @@ $(function () {
             window.location = this.value;
         }
     )
+    
+    $('.action-cancel-delete').button().click(
+        function () {
+            var id = this.value;
+            $('#dialog-confirm-delete-'+id).dialog('close');
+        }
+    )
 
 });

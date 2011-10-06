@@ -11,5 +11,6 @@
         <strong>[% delete_message | html %]</strong>
     </p>
     <button class="action-confirm-delete" value="/[% controller %]/[% item_id %]/delete?[% query_string %]">Delete</button>
+    <button class="action-cancel-delete" value="[% item_id %]">Cancel</button>
 </div>
 [% END %]
