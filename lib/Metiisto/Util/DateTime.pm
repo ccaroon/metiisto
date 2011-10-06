@@ -42,7 +42,7 @@ sub now
 sub format
 {
     my $this   = shift;
-    my $format = shift;
+    my $format = shift || '%b %d, %Y';
 
     return(time2str($format,$this->epoch()));
 }

@@ -2,13 +2,6 @@
    USE Markdown;
    PROCESS util/tools.tt
 %]
-<script>
-   function toggle_todo_desc(tid)
-   {
-      $('#todo_desc_'+tid).toggle();
-   }
-</script>
-
 <div class="ui-widget">
    <div class="ui-widget-header">
       <a href="/todos">Todos</a>
@@ -23,11 +16,16 @@
                   <td>
                       <abbr style='border:none' title='[% todo.due_on.format('%b %d, %Y') %]'><a href="/todos/[% todo.id %]/edit">[% todo.title %]</a></abbr>
                       [% IF todo.description %]
-                        <a href="javascript:toggle_todo_desc([% todo.id %])">(+)</a>
-                     [% END %]
+                      <span id="action-show-todo-desc-[% todo.id %]" class="ui-icon ui-icon-document" style="float:left"></span>
+                        <script>
+                            $('#action-show-todo-desc-[% todo.id %]').click(function() {
+                                $('#todo-desc-[% todo.id %]').toggle();
+                            });
+                        </script>
+                      [% END %]
                   </td>
               </tr>
-              <tr id="todo_desc_[% todo.id %]" style="display:none">
+              <tr id="todo-desc-[% todo.id %]" style="display:none">
                   <td>&nbsp;</td>
                   <td>[% todo.description | markdown %]</td>
               </tr>

@@ -16,6 +16,9 @@ Metiisto::Controller::Users->declare_routes();
 
 use Metiisto::Controller::Workdays;
 Metiisto::Controller::Workdays->declare_routes();
+
+use Metiisto::Controller::Todos;
+Metiisto::Controller::Todos->declare_routes();
 ################################################################################
 before sub
 {
