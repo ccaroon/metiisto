@@ -1,44 +1,64 @@
-<div class="header">
-    <b><%= controller.action_name.capitalize %> Todo</b>
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        [% vars.action | ucfirst %] Todo
+    </div>
+
+    <div class="ui-widget-content">
+        <form method="post" action="/todos[% todo.id ? '/' _ todo.id : '' %]">
+            <p>
+            <b>Title:</b>
+            <input type="text" size="42" name="todo.title" value="[% todo.title %]">
+            </p>
+        
+            <p>
+            <b>Description:</b><br>
+            <textarea name="todo.description" rows="10" cols="45" wrap="physical">[% todo.description %]</textarea>
+            </p>
+            
+            <p>
+            <b>Priority:</b>
+            <div id="todo-priority">
+                [% FOREACH priority IN [1..10] %]
+                <input id="todo-priority-[% priority %]" type="radio" name="todo.priority" value="[% priority %]" [% todo.priority == priority ? 'checked' : '' %]><label for="todo-priority-[% priority %]">[% priority %]</label>
+                [% END %]
+            </div>
+            </p>
+            
+            <p>
+            <b>Due Date:</b>
+            <input type="text" id="todo-due-on" name="todo.due_on" value="[% todo.due_on.format_db('date_only',1) %]">
+            </p>
+        
+            <p>
+            <b>List:</b>
+            TODO: List list here
+            </p>
+
+            <p>
+            <b>Completed:</b>
+            <input id="todo-completed" type="checkbox" name="todo.completed" value="1" [% todo.completed ? 'checked' : '' %]>
+            <label for="todo-completed">Complete?</label>
+            </p>
+        
+            <p>
+                <input class="button" type="submit" value="Save">
+                <a class="button" href="/todos/[% todo.id %]">View</a>
+            </p>
+        </form>
+    </div>    
 </div>
-
-<div style="padding-left:50px;padding-top:25px">
-
-<% form_for(@todo) do |f| %>
-    <div class="error_messages"><%= f.error_messages %></div>
-
-    <b><%=  f.label :completed %>:</b>
-    <%= f.check_box :completed %>
-    <p>
-
-    <b><%=  f.label :priority %>:</b>
-    <%= f.select(:priority, Todo::PRIORITIES.collect {|p| [p, p] }) %>
-    <p>
-
-    <b><%=  f.label :due_date %>:</b>
-    <%= calendariffic_input(false, 'todo_due_on', 'calendariffic/date.png',
-        'start_cal', '%Y-%m-%d', @todo.due_on, {:readonly => true, :size => 10}, {:class => 'borderless'}) %>
-    <img src="/images/themes/unknown/grey_x.gif" title="Clear Due Date" onClick="$('todo_due_on').value = '';">
-    <p>
-
-    <b><%=  f.label :title %>:</b>
-    <%=  f.text_field :title, :size => 25 %>
-    <p>
-
-    <b><%=  f.label :description %>:</b><br>
-    <%=  f.text_area :description, :rows => 5, :cols => 35, :wrap => 'physical' %>
-    <p>
-
-    <b><%=  f.label :list %>:</b>
-    <% list_select_items = List.find(:all).collect {|l| [l.name, l.id] } %>
-    <% list_select_items.unshift(["--None--", nil]) %>
-    <%= f.select(:list_id, list_select_items) %>
-    <p>
-
-    <p><%= f.submit "Save" %></p>
-<% end %>
-
-<%= link_to 'Show', @todo %> |
-<%= link_to 'Back', todos_path %>
-
-</div>
+<script>
+    $('.button').button();
+    
+    $('#todo-completed').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-check'
+        }
+    });
+    
+    $('#todo-priority').buttonset();
+    
+    $( "#todo-due-on" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    
+</script>

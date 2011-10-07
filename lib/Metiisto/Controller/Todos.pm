@@ -123,6 +123,7 @@ sub update
     
     my $todo = Metiisto::Todo->retrieve(id => $args{id});
 
+# TODO: if marking completed, need to set completed_on date.
     foreach my $p (keys %{params()})
     {
         next unless $p =~ /^todo\.(.*)$/;
@@ -132,7 +133,7 @@ sub update
     my $cnt = $todo->update();
     die "Error saving Todo($args{id})" unless $cnt;
 
-    my $out = redirect "/todo/$args{id}";
+    my $out = redirect "/todos/$args{id}";
 
     return ($out);
 }

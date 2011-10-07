@@ -1,6 +1,6 @@
 <div class="ui-widget">
     <div class="ui-widget-header">
-        <b>[% vars.action | ucfirst %] Entry</b>
+        [% vars.action | ucfirst %] Entry<
     </div>
     <div class="ui-widget-content">
         <form method="post" action="/entries[% entry.id ? '/' _ entry.id : '' %]">

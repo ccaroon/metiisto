@@ -20,7 +20,7 @@
             [% FOREACH todo in todos %]
             [% completed = todo.completed_on ? 1 : 0 %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
-                <td>[% todo.priority %]</td>
+                <td align="center">[% todo.priority %]</td>
                 <td>
                     <a href="/todos/[% todo.id %]" class="[% completed ? 'm-strikethru' : '' %]">[% todo.title %]</a>
                     [% IF todo.description %]
@@ -33,8 +33,14 @@
                     </script>
                     [% END %]
                 </td>
-                <td>[% todo.due_on.format() %]</td>
-                <td>[% todo.completed_on.format() %]</td>
+                <td align="center">[% todo.due_on.format() %]</td>
+                <td align="center">
+                    [% IF completed %]
+                    [% todo.completed_on.format() %]
+                    [% ELSE %]
+                        <a class="action-button-mark-complete" href="/todos/[% todo.id %]/mark_complete">Done</a>
+                    [% END %]
+                </td>
                 <td align="center">
                     [% PROCESS shared/list/actions.tt
                         controller = 'todos'
@@ -50,4 +56,12 @@
 </div>
 <script>
     [% PROCESS shared/list/actions_js.tt %]
+    
+    $('.action-button-mark-complete').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-check'
+        }
+    });
+    
 </script>

@@ -1,5 +1,5 @@
 [% IF page_data.first_page != page_data.last_page %]
-<div class="m-pagination">
+<div>
     [% base_uri = request.path_info _ '?filter_text=' _ params.filter_text %]
     [% IF page_data.previous_page %]
         <a href="[% base_uri %]&page=[% page_data.previous_page %]" rel="prev">&laquo; Previous</a>
@@ -14,9 +14,9 @@
         [% lp = page_data.last_page <= 10 ? page_data.last_page : 10 %]
         [% FOREACH page IN [fp..lp] %]
             [% IF page == page_data.current_page %]
-                <span class="ui-state-active">[% page %]</span>
+                <span class="ui-state-active m-pagination">[% page %]</span>
             [% ELSE %]
-                <a class="ui-state-default ui-priority-secondary" href="[% base_uri %]&page=[% page %]">[% page %]</a>
+                <a class="ui-state-default ui-priority-secondary m-pagination" href="[% base_uri %]&page=[% page %]">[% page %]</a>
             [% END %]
         [% END %]
 
@@ -26,13 +26,13 @@
             [% fp = page_data.last_page - 1 %]
             [% lp = page_data.last_page %]
             [% FOREACH page IN [fp..lp] %]
-                <a class="ui-state-default ui-priority-secondary" href="[% base_uri %]&page=[% page %]">[% page %]</a>
+                <a class="ui-state-default ui-priority-secondary m-pagination" href="[% base_uri %]&page=[% page %]">[% page %]</a>
             [% END %]
         [% END %]
     <!-- <<Prev 1 2 .. N N N N CP N N N N .. X-1 X   -->
     [% ELSIF page_data.current_page > 10 && page_data.current_page < page_data.last_page - 10 %]
         [% FOREACH page IN [1..2] %]
-            <a class="ui-state-default ui-priority-secondary" href="[% base_uri %]&page=[% page %]">[% page %]</a>
+            <a class="ui-state-default ui-priority-secondary m-pagination" href="[% base_uri %]&page=[% page %]">[% page %]</a>
         [% END %]
 
         <span>&hellip;</span>
@@ -40,15 +40,15 @@
         [% fp = page_data.current_page - 4 %]
         [% lp   = page_data.current_page - 1 %]
         [% FOREACH page IN [fp..lp] %]
-                <a class="ui-state-default ui-priority-secondary" href="[% base_uri %]&page=[% page %]">[% page %]</a>
+                <a class="ui-state-default ui-priority-secondary m-pagination" href="[% base_uri %]&page=[% page %]">[% page %]</a>
         [% END %]
         
-        <span class="ui-state-active">[% page_data.current_page %]</span>
+        <span class="ui-state-active m-pagination">[% page_data.current_page %]</span>
         
         [% fp = page_data.current_page + 1 %]
         [% lp = page_data.current_page + 4 %]
         [% FOREACH page IN [fp..lp] %]
-                <a class="ui-state-default ui-priority-secondary" href="[% base_uri %]&page=[% page %]">[% page %]</a>
+                <a class="ui-state-default ui-priority-secondary m-pagination" href="[% base_uri %]&page=[% page %]">[% page %]</a>
         [% END %]
                         
         <span>&hellip;</span>
@@ -56,12 +56,12 @@
         [% fp = page_data.last_page - 1 %]
         [% lp = page_data.last_page %]
         [% FOREACH page IN [fp..lp] %]
-            <a class="ui-state-default ui-priority-secondary" href="[% base_uri %]&page=[% page %]">[% page %]</a>
+            <a class="ui-state-default ui-priority-secondary m-pagination" href="[% base_uri %]&page=[% page %]">[% page %]</a>
         [% END %]
     <!-- <<Prev 1 2 .. X-10 X-9 X-8 X-7 X-6 X-5 X-4 X-3 X-2 X-1 X Next>> -->
     [% ELSIF page_data.current_page >= page_data.last_page - 10 %]
         [% FOREACH page IN [1..2] %]
-            <a class="ui-state-default ui-priority-secondary" href="[% base_uri %]&page=[% page %]">[% page %]</a>
+            <a class="ui-state-default ui-priority-secondary m-pagination" href="[% base_uri %]&page=[% page %]">[% page %]</a>
         [% END %]
 
         <span>&hellip;</span>
@@ -70,9 +70,9 @@
         [% lp = page_data.last_page %]
         [% FOREACH page IN [fp..lp] %]
             [% IF page == page_data.current_page %]
-                <span class="ui-state-active">[% page %]</span>
+                <span class="ui-state-active m-pagination">[% page %]</span>
             [% ELSE %]
-                <a class="ui-state-default ui-priority-secondary" href="[% base_uri %]&page=[% page %]">[% page %]</a>
+                <a class="ui-state-default ui-priority-secondary m-pagination" href="[% base_uri %]&page=[% page %]">[% page %]</a>
             [% END %]
         [% END %]
 
