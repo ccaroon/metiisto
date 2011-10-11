@@ -6,6 +6,8 @@ use Data::Page;
 use Dancer ':syntax';
 use SQL::Abstract;
 
+use Metiisto::Util::DateTime;
+
 use constant TODOS_PER_PAGE => 15;
 
 use base 'Metiisto::Controller::Base';
@@ -63,7 +65,6 @@ sub new_record
     my $this = shift;
 
     my $todo = {};
-
     my $out = template 'todos/new_edit', {
         todo => $todo,
     };
@@ -82,6 +83,8 @@ sub create
         my $attr = $1;
         $data->{$attr} = params->{$p};
     }
+    $data->{due_on}     = undef unless $data->{due_on};
+    $data->{created_on} = Metiisto::Util::DateTime->now()->format_db();
 
     my $todo = Metiisto::Todo->insert($data);
     die "Error creating Entry" unless $todo;
@@ -120,15 +123,21 @@ sub update
 {
     my $this = shift;
     my %args = @_;
-    
+
     my $todo = Metiisto::Todo->retrieve(id => $args{id});
 
-# TODO: if marking completed, need to set completed_on date.
     foreach my $p (keys %{params()})
     {
         next unless $p =~ /^todo\.(.*)$/;
         my $attr = $1;
         $todo->$attr(params->{$p});
+    }
+# TODO: due_on currently required or fails
+# How to set to undef?
+    $todo->set(due_on => undef) unless $todo->due_on();
+    if ($todo->completed() and !$todo->completed_on())
+    {
+        $todo->completed_on(Metiisto::Util::DateTime->now());
     }
     my $cnt = $todo->update();
     die "Error saving Todo($args{id})" unless $cnt;

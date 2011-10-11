@@ -35,7 +35,7 @@
             </p>
 
             <p>
-            <b>Completed:</b>
+            <b>Completed: [% todo.completed_on.format %]</b>
             <input id="todo-completed" type="checkbox" name="todo.completed" value="1" [% todo.completed ? 'checked' : '' %]>
             <label for="todo-completed">Complete?</label>
             </p>
