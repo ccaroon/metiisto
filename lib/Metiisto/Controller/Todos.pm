@@ -64,7 +64,7 @@ sub new_record
 {
     my $this = shift;
 
-    my $todo = {};
+    my $todo = { priority => 1 };
     my $out = template 'todos/new_edit', {
         todo => $todo,
     };
@@ -132,9 +132,6 @@ sub update
         my $attr = $1;
         $todo->$attr(params->{$p});
     }
-# TODO: due_on currently required or fails
-# How to set to undef?
-    $todo->set(due_on => undef) unless $todo->due_on();
     if ($todo->completed() and !$todo->completed_on())
     {
         $todo->completed_on(Metiisto::Util::DateTime->now());
@@ -145,6 +142,19 @@ sub update
     my $out = redirect "/todos/$args{id}";
 
     return ($out);
+}
+################################################################################
+sub mark_complete
+{
+    my $this = shift;
+    my %args = @_;
+
+    my $todo = Metiisto::Todo->retrieve(id => $args{id});
+    $todo->completed_on(Metiisto::Util::DateTime->now());
+    $todo->completed(1);
+    $todo->update();
+
+    return (redirect request->referer);
 }
 ################################################################################
 sub delete

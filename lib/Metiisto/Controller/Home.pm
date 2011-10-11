@@ -17,7 +17,10 @@ sub home
 {
     my $this = shift;
 
-    my @todos = Metiisto::Todo->search(completed => 0, list_id => undef);
+    my @todos = Metiisto::Todo->search(completed => 0,
+        list_id => undef,
+        { order_by => 'due_on, priority, created_on' }
+    );
     
     # TODO: put some caching around ticket info.
     my $tickets = Metiisto::JiraTicket->search(

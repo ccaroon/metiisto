@@ -28,4 +28,17 @@ sub test_parse : Test(3)
     is $dt->epoch(), 35787600, 'MM/DD/YYYY should parse date to correct epoch';
 }
 ################################################################################
+sub test_undef_dt: Test(4)
+{
+    my $this = shift;
+    
+    my $dt = TESTED_CLASS->new();
+    is $dt->epoch(), undef, "new() with no params should create an 'empty' instance";
+    is $dt->format("%c"), undef, "formatting an 'empty' instance should return undef";
+
+    $dt = TESTED_CLASS->parse(undef);
+    is $dt->epoch(), undef, "parse(undef) should return an 'empty' instance";
+    is $dt->format("%c"), undef, "formatting an 'empty' instance should return undef";
+}
+################################################################################
 1;

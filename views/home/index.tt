@@ -7,7 +7,7 @@
             </td>
         </tr>
         <tr>
-            <td class="default" valign="top" width="62%">
+            <td class="default" valign="top" width="68%">
                 [% PROCESS home/entries.tt %]
             </td>
             <td valign="top">

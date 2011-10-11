@@ -21,8 +21,11 @@
             [% completed = todo.completed_on ? 1 : 0 %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                 <td align="center">[% todo.priority %]</td>
-                <td>
+                <td class="[% todo.overdue AND NOT todo.completed ? 'ui-state-error' : '' %]">
                     <a href="/todos/[% todo.id %]" class="[% completed ? 'm-strikethru' : '' %]">[% todo.title %]</a>
+                    [% IF (todo.due_soon OR todo.overdue) AND NOT todo.completed %]
+                        <span class="ui-icon ui-icon-alert" style="float:right"></span>
+                    [% END %]
                     [% IF todo.description %]
                     <span id="action-show-desc-[% todo.id %]" class="ui-icon ui-icon-document" style="float:left"></span>
                     <span id="desc-[% todo.id %]" class="ui-priority-secondary" style="display:none">[% todo.description | markdown %]</span>

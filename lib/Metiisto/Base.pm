@@ -37,7 +37,7 @@ sub has_a_datetime
 
     $class->has_a( $field => 'Metiisto::Util::DateTime',
         inflate  => sub {
-            my $date_str = shift;
+            my $date_str = shift || undef;
             return (Metiisto::Util::DateTime->parse($date_str));
         },
         deflate  => sub {

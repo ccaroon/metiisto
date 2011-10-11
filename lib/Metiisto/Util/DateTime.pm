@@ -20,7 +20,13 @@ sub parse
     my $class    = shift;
     my $date_str = shift;
 
-    return($class->new(epoch => str2time($date_str)));
+    my $dt = $class->new();
+    if (defined $date_str)
+    {
+        $dt->epoch(str2time($date_str));
+    }
+
+    return($dt);
 }
 ################################################################################
 sub monday
@@ -44,7 +50,13 @@ sub format
     my $this   = shift;
     my $format = shift || '%b %d, %Y';
 
-    return(time2str($format,$this->epoch()));
+    my $formatted_dt = undef;
+    if (defined $this->epoch())
+    {
+        $formatted_dt = time2str($format,$this->epoch());
+    }
+
+    return($formatted_dt);
 }
 ################################################################################
 sub format_time
