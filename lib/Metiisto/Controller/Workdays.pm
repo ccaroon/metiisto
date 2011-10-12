@@ -13,19 +13,11 @@ sub list
 {
     my $this = shift;
 
-    my $monday = Metiisto::Util::DateTime->monday();
-    my @days = Metiisto::Workday->search_where(
-        {
-            work_date => {'>=', $monday->format_db(date_only => 1)}
-        },
-        {
-            order_by => 'work_date, time_in',
-        }
-    );
+    my $days = Metiisto::Workday->this_week();
 
     my $out = template 'workdays/list', {
         today => Metiisto::Util::DateTime->now(),
-        days => \@days,
+        days => $days,
     };
 
     return ($out);

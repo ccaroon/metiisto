@@ -1,0 +1,10 @@
+Hours
+=====
+[% total = 0 %]
+[%- FOREACH day IN work_days -%]
+[% day_hours = day.total_hours %]
+[% total = total + day_hours -%]
+* [% day.work_date.format("%m/%d") %]:  [% day.time_in.format("%I:%M%p") %] - [% day.time_out.format("%I:%M%p") %] ([% day_hours | format("%.2f") %])  [% day.note %]
+[%- END %]
+
+Total: [% total | format("%.2f") %]

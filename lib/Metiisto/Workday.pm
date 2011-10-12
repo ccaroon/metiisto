@@ -5,6 +5,8 @@ use feature 'switch';
 
 use base 'Metiisto::Base';
 
+use Metiisto::Util::DateTime;
+
 use constant DEFAULT_TIME_IN  =>'09:00';
 use constant DEFAULT_TIME_OUT =>'17:00';
 
@@ -22,6 +24,23 @@ __PACKAGE__->has_a_datetime('work_date');
 __PACKAGE__->has_a_datetime('time_in');
 __PACKAGE__->has_a_datetime('time_out');
 __PACKAGE__->has_a_datetime('time_lunch');
+################################################################################
+sub this_week
+{
+    my $class = shift;
+
+    my $monday = Metiisto::Util::DateTime->monday();
+    my @days = $class->search_where(
+        {
+            work_date => {'>=', $monday->format_db(date_only => 1)}
+        },
+        {
+            order_by => 'work_date, time_in',
+        }
+    );
+    
+    return(wantarray ? @days : \@days);
+}
 ################################################################################
 sub day_type
 {
