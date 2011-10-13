@@ -1,0 +1,19 @@
+[% PROCESS 'reports/controls.tt' %]
+
+[% PROCESS 'reports/hours.tt' %]
+--------------------------------------------------------------------------------
+[% FOREACH day_list IN entries %]
+[% NEXT unless day_list.0 %]
+[% day_list.0.task_date.format('%A') %]
+---------
+
+[% FOREACH day in day_list %]
+#### [% day.subject %] ####
+
+[% day.description %]
+
+[% END %]
+
+[% END %]
+
+[% PROCESS 'reports/controls.tt' %]

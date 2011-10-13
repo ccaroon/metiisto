@@ -47,7 +47,9 @@ sub declare_routes
         }
         else
         {
-            $out = "Unknown Action [$action] for /$base_url";
+            $out = template 'error', {
+                message => "Unknown Action [$action] for /$base_url",
+            };
         }
 
        return ($out);

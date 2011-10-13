@@ -6,6 +6,8 @@ use Date::Format;
 use Date::Parse;
 use Moose;
 
+use constant DAY => 86_400;
+
 use constant FORMAT_DB_DATE     => '%Y-%m-%d';
 use constant FORMAT_DB_DATETIME =>  FORMAT_DB_DATE . ' %H:%M:%S';
 use constant FORMAT_TIME        => "%I:%M%p";
@@ -37,6 +39,15 @@ sub monday
     my $monday = time() - (86_400 * ($week_day-1));
     
     return (Metiisto::Util::DateTime->new(epoch => $monday));
+}
+################################################################################
+sub add_days
+{
+    my $this = shift;
+    my %args = @_;
+
+    my $current_epoch = $this->epoch();
+    $this->epoch($current_epoch + ($args{days} * DAY));
 }
 ################################################################################
 sub now

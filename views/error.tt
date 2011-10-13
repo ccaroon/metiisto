@@ -1,0 +1,10 @@
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        <span class="ui-icon ui-icon-alert" style="float:left"></span>
+        [% vars.controller | ucfirst %] Error
+    </div>
+    <div class="ui-widget-content ui-state-error">
+        <p>[% message %]</p>
+        <p><a href="[% request.referer %]">Back</a></p>
+    </div>
+</div>
