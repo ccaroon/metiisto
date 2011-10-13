@@ -6,7 +6,7 @@
     <a class="top_menu_item" href="/todos"><img src="/images/themes/default/todos.png" border="0"></a>
     <a class="top_menu_item" href="/notes"><img src="/images/themes/default/notes.png" border="0"></a>
     <a class="top_menu_item" href="/countdowns"><img src="/images/themes/default/countdowns.png" border="0"></a>
-    <a class="top_menu_item" href="/reports"><img src="/images/themes/default/reports.png" border="0"></a>
+    <a class="top_menu_item" href="/reports/weekly"><img src="/images/themes/default/reports.png" border="0"></a>
 </span>
 <script>
 	$('.top_menu_item').button();

@@ -14,7 +14,6 @@ use base 'Metiisto::Controller::Base';
 sub daily
 {
     my $this = shift;
-    my %args = @_;
 
     # Workdays
     my $days = Metiisto::Workday->this_week();
@@ -42,6 +41,36 @@ sub daily
         name  => 'Daily Report',
         work_days => $days,
         entries => \@entries,
+    },
+    {layout => undef};
+
+    return (markdown($out));
+}
+################################################################################
+sub weekly
+{
+    my $this = shift;
+
+    # Workdays
+    my $days = Metiisto::Workday->this_week();
+
+    # Entries by Category
+    my %entries;
+    foreach my $category (@{Metiisto::Entry->CATEGORIES()})
+    {
+        my @entries = Metiisto::Entry->this_week(where => {
+            category => { '=' => $category }
+        });
+        $entries{$category} = \@entries;
+    }
+use Data::Dumper;
+local $Data::Dumper::Maxdepth=1;
+print STDERR Dumper \%entries;
+    my $out = template "/reports/weekly",
+    {
+        name  => 'Weekly Report',
+        work_days => $days,
+        entries => \%entries,
     },
     {layout => undef};
 

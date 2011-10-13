@@ -1,0 +1,16 @@
+[% PROCESS 'reports/controls.tt' %]
+
+[% PROCESS 'reports/hours.tt' %]
+--------------------------------------------------------------------------------
+[% FOREACH item IN entries.pairs %]
+    [% IF item.value.size > 0 %]
+## [% item.key %] ##
+        [% FOREACH entry IN item.value %]
+#### [% entry.subject %] ####
+[% entry.category.match('(Code Review|Meeting)') ? '' : entry.description %]
+        [% END %]
+    [% END %]
+
+[% END %]
+
+[% PROCESS 'reports/controls.tt' %]

@@ -45,23 +45,28 @@ sub recent_subjects
 sub this_week
 {
     my $class = shift;
-    
+    my %args  = @_;
+
+    my $conditions = $args{where} || {};
+
     my $start_date = Metiisto::Util::DateTime->monday();
     my $mon_str = $start_date->format_db(date_only => 1);
     $start_date->add_days(days => 4);
     my $fri_str = $start_date->format_db(date_only => 1);
+    $conditions->{task_date} = { 'between' => [$mon_str, $fri_str] };
 
-    return(
-        Metiisto::Entry->search_where
-        (
-            {
-                task_date => { 'between' => [$mon_str, $fri_str] },
-            },
-            {
-                order_by => 'task_date, entry_date',
-            }
-        )
+    my @search_opts = (
+        $conditions,
+        {
+            order_by => 'task_date, entry_date',
+        }
     );
+    
+    my @results = wantarray
+        ? Metiisto::Entry->search_where(@search_opts)
+        : scalar Metiisto::Entry->search_where(@search_opts);
+    
+    return(wantarray ? @results : $results[0]);
 }
 ################################################################################
 1;

@@ -4,13 +4,7 @@
 %]
 <div class="ui-widget">
     <div class="ui-widget-header">
-        This Week's Entries
-        (<a href="/reports/category">Category</a>
-         |
-         <a href="/reports/daily">Daily</a>
-         |
-         <a href="/reports/summary">Summary</a>
-        )
+         <a href="/reports/daily">This Week's Entries</a>
     </div>
     <div class="ui-widget-content">
         <table width="100%" class="ui-widget-content">
