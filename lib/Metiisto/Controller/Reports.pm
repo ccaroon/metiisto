@@ -61,11 +61,28 @@ sub weekly
         my @entries = Metiisto::Entry->this_week(where => {
             category => { '=' => $category }
         });
-        $entries{$category} = \@entries;
+        
+        # Flatten multiple entries with the same subject into a single entry
+        my %entry_filter;
+        foreach my $e (@entries)
+        {
+            my $main_entry = $entry_filter{$e->subject()};
+            if ($main_entry)
+            {
+                my $new_desc = $main_entry->description();
+                $new_desc .= "\n\n----------\n\n" . $e->description();
+                $main_entry->description($new_desc);
+            }
+            else
+            {
+                $entry_filter{$e->subject()} = $e;
+            }
+        }
+        
+        @entries = values %entry_filter;
+        $entries{$category} = \@entries;;
     }
-use Data::Dumper;
-local $Data::Dumper::Maxdepth=1;
-print STDERR Dumper \%entries;
+
     my $out = template "/reports/weekly",
     {
         name  => 'Weekly Report',

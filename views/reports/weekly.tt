@@ -1,16 +1,23 @@
 [% PROCESS 'reports/controls.tt' %]
 
-[% PROCESS 'reports/hours.tt' %]
---------------------------------------------------------------------------------
-[% FOREACH item IN entries.pairs %]
-    [% IF item.value.size > 0 %]
-## [% item.key %] ##
-        [% FOREACH entry IN item.value %]
-#### [% entry.subject %] ####
-[% entry.category.match('(Code Review|Meeting)') ? '' : entry.description %]
-        [% END %]
-    [% END %]
+[% PROCESS 'reports/hours.tt' -%]
 
-[% END %]
+--------------------------------------------------------------------------------
+
+[%- FOREACH item IN entries.pairs %]
+    [%- IF item.value.size > 0 %]
+
+## [% item.key %] ##
+    [%- FOREACH entry IN item.value %]
+        [%- SWITCH item.key %]
+        [%- CASE ['Code Review', 'Meeting', 'Other'] %]
+* [% entry.subject %]
+        [%- CASE %]
+### [% entry.subject %]
+[% entry.description %]
+        [%- END %]
+    [%- END %]
+    [%- END %]
+[%- END %]
 
 [% PROCESS 'reports/controls.tt' %]

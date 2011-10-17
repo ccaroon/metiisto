@@ -47,4 +47,17 @@ sub has_a_datetime
     );
 }
 ################################################################################
+# TODO: HACK, HACK!!
+# I don't like this, but without it Class::DBI issues a warn that causes
+# Dancer to 500. Development mode only?
+sub DESTROY
+{
+    my $this = shift;
+    
+    if ($this->is_changed())
+    {
+        $this->discard_changes();
+    }
+}
+################################################################################
 1;
