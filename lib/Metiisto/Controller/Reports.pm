@@ -16,10 +16,10 @@ sub daily
     my $this = shift;
 
     # Workdays
-    my $days = Metiisto::Workday->this_week();
+    my $days = Metiisto::Workday->find_week(date => params->{date});
 
     # Entries
-    my $iterator = Metiisto::Entry->this_week();
+    my $iterator = Metiisto::Entry->find_week(date => params->{date});
     # Fetch and organize into a ARRAY of ARRAYs ordered by week day number
     # Sunday == 0, Monday == 1, etc..
     my @entries;
@@ -52,15 +52,18 @@ sub weekly
     my $this = shift;
 
     # Workdays
-    my $days = Metiisto::Workday->this_week();
+    my $days = Metiisto::Workday->find_week(date => params->{date});
 
     # Entries by Category
     my %entries;
     foreach my $category (@{Metiisto::Entry->CATEGORIES()})
     {
-        my @entries = Metiisto::Entry->this_week(where => {
-            category => { '=' => $category }
-        });
+        my @entries = Metiisto::Entry->find_week(
+            date  => params->{date},
+            where => {
+                category => { '=' => $category }
+            }
+        );
         
         # Flatten multiple entries with the same subject into a single entry
         my %entry_filter;
@@ -79,7 +82,8 @@ sub weekly
             }
         }
         
-        @entries = values %entry_filter;
+        @entries = sort {$a->entry_date()->epoch() <=> $b->entry_date->epoch() }
+            values %entry_filter;
         $entries{$category} = \@entries;;
     }
 

@@ -42,14 +42,14 @@ sub recent_subjects
     return (wantarray ? @subjects : \@subjects);
 }
 ################################################################################
-sub this_week
+sub find_week
 {
     my $class = shift;
     my %args  = @_;
 
     my $conditions = $args{where} || {};
 
-    my $start_date = Metiisto::Util::DateTime->monday();
+    my $start_date = Metiisto::Util::DateTime->monday(for_date => $args{date});
     my $mon_str = $start_date->format_db(date_only => 1);
     $start_date->add_days(days => 4);
     my $fri_str = $start_date->format_db(date_only => 1);

@@ -10,7 +10,7 @@
 ## [% item.key %] ##
     [%- FOREACH entry IN item.value %]
         [%- SWITCH item.key %]
-        [%- CASE ['Code Review', 'Meeting', 'Other'] %]
+        [%- CASE ['Code Review', 'Meeting'] %]
 * [% entry.subject %]
         [%- CASE %]
 ### [% entry.subject %]

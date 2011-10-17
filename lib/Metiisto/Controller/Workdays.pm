@@ -13,7 +13,7 @@ sub list
 {
     my $this = shift;
 
-    my $days = Metiisto::Workday->this_week();
+    my $days = Metiisto::Workday->find_week();
 
     my $out = template 'workdays/list', {
         today => Metiisto::Util::DateTime->now(),

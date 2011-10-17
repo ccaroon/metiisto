@@ -34,10 +34,14 @@ sub parse
 sub monday
 {
     my $class = shift;
-    
-    my $week_day = Metiisto::Util::DateTime->now()->format("%w");
-    my $monday = time() - (86_400 * ($week_day-1));
-    
+    my %args = @_;
+
+    my $for_date = defined $args{for_date}
+        ? Metiisto::Util::DateTime->parse($args{for_date})
+        : Metiisto::Util::DateTime->now();
+    my $week_day = $for_date->format("%w");
+    my $monday = $for_date->epoch() - (86_400 * ($week_day-1));
+
     return (Metiisto::Util::DateTime->new(epoch => $monday));
 }
 ################################################################################

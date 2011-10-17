@@ -25,20 +25,23 @@ __PACKAGE__->has_a_datetime('time_in');
 __PACKAGE__->has_a_datetime('time_out');
 __PACKAGE__->has_a_datetime('time_lunch');
 ################################################################################
-sub this_week
+sub find_week
 {
     my $class = shift;
+    my %args = @_;
 
-    my $monday = Metiisto::Util::DateTime->monday();
+    my $monday = Metiisto::Util::DateTime->monday(for_date => $args{date});
     my @days = $class->search_where(
         {
             work_date => {'>=', $monday->format_db(date_only => 1)}
         },
         {
-            order_by => 'work_date, time_in',
+            limit_dialect => 'LimitOffset',
+            limit         => 5,
+            order_by      => 'work_date, time_in',
         }
     );
-    
+
     return(wantarray ? @days : \@days);
 }
 ################################################################################
