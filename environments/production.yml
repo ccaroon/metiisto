@@ -18,7 +18,7 @@ route_cache: 1
 plugins:
     Database:
         driver: 'mysql'
-        database: 'workman_devel'
+        database: 'workman_CNC'
         host: 'localhost'
         port: 3306
         username: 'ccaroon'
@@ -27,4 +27,5 @@ plugins:
         dbi_params:
             RaiseError: 1
             AutoCommit: 1
-        log_queries: 0
+            RootClass: 'DBIx::ContextualFetch'
+        log_queries: 1

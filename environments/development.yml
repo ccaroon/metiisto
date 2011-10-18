@@ -39,4 +39,5 @@ plugins:
             RaiseError: 1
             AutoCommit: 1
             RootClass: 'DBIx::ContextualFetch'
+            mysql_enable_utf8: 1
         log_queries: 1
