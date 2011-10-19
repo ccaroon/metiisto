@@ -4,14 +4,17 @@ use strict;
 
 use Digest::SHA1 qw(sha1_hex);
 
+use Metiisto::Preference;
+
 use base 'Metiisto::Base';
+# TODO: do i have a pref caching issue???
+my %PREF_CACHE;
 ################################################################################
 __PACKAGE__->table('users');
 __PACKAGE__->columns(All => qw/
-    id name user_name password jira_host jira_username jira_password
-    jira_filter_id email_type smtp_host smtp_user smtp_pass smtp_auth style_main
-    style_calendar email
+    id name user_name password email
 /);
+__PACKAGE__->has_many(_prefs => 'Metiisto::Preference');
 ################################################################################
 sub authenticate
 {
@@ -29,6 +32,32 @@ sub authenticate
     }
     
     return ($user);
+}
+################################################################################
+sub preferences
+{
+    my $this = shift;
+    my %args;
+
+    scalar(@_) == 1 ? $args{name} = shift : (%args = @_);
+
+    if (!%PREF_CACHE || $args{reload})
+    {
+        my @prefs = $this->_prefs();
+        map { $PREF_CACHE{$_->name()} = $_; } @prefs;
+    }
+
+    my $value;
+    if ($args{name})
+    {
+        $value = $PREF_CACHE{$args{name}}->value();
+    }
+    else
+    {
+        $value = \%PREF_CACHE;
+    }
+
+    return ($value);
 }
 ################################################################################
 1;

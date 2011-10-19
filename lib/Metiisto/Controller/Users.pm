@@ -73,16 +73,28 @@ sub edit
 
     my $out;
     my $user = Metiisto::User->retrieve(id => params->{id});
+    my $prefs = $user->preferences();
     if (request->method() eq "POST")
     {
         foreach my $p (keys %{params()})
         {
             next unless $p =~ /^user\.(.*)$/;
             my $attr = $1;
-            $user->$attr(params->{$p});
+
+            if ($attr =~ /^preferences\.(.*)$/)
+            {
+                my $pref_name = $1;
+                my $pref = $prefs->{$pref_name};
+                $pref->value(params->{$p});
+            }
+            else
+            {
+                $user->$attr(params->{$p});
+            }
         }
-        my $cnt = $user->update();
-        die "Error saving User(".params->{id}.")" unless $cnt;
+        map { $_->update() or die "Error saving Preference(".$_->name().")" }
+            values %$prefs;
+        $user->update() or die "Error saving User(".params->{id}.")";
 
         # Update Session        
         if ($user->id() == session->{user}->id())
@@ -90,11 +102,15 @@ sub edit
             session user => $user;
         }
 
-        $out = redirect '/home';
+        $out = redirect request->referer;
     }
     else
     {
-        $out = template 'users/edit', {user => $user};
+        $out = template 'users/edit', {
+            user       => $user,
+            themes     => Metiisto::Preference->THEMES,
+            smtp_auths => Metiisto::Preference->SMTP_AUTHS,
+        };
     }
 
     return ($out);

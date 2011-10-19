@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Metiisto - [% vars.controller| ucfirst %]</title>
-        <link href="/css/themes/[% session.user ? session.user.style_main : 'smoothness' %]/theme.css" rel="stylesheet" type="text/css" />
+        <link href="/css/themes/[% session.user ? session.user.preferences('theme') : 'smoothness' %]/theme.css" rel="stylesheet" type="text/css" />
         <link href="/css/metiisto.css" rel="stylesheet" type="text/css" />
         <script src='/javascripts/jquery.js'></script>
         <script src='/javascripts/jquery-ui.js'></script>

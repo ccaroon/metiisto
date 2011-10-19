@@ -3,6 +3,7 @@ package Metiisto::Controller::Reports;
 use strict;
 
 use Dancer ':syntax';
+use Mail::Mailer;
 use Text::Markdown 'markdown';
 
 use Metiisto::Entry;
@@ -38,9 +39,10 @@ sub daily
 
     my $out = template "/reports/daily",
     {
-        name  => 'Daily Report',
+        title     => 'Daily Report',
+        name      => 'daily',
         work_days => $days,
-        entries => \@entries,
+        entries   => \@entries,
     },
     {layout => undef};
 
@@ -89,20 +91,86 @@ sub weekly
 
     my $out = template "/reports/weekly",
     {
-        name  => 'Weekly Report',
+        title     => 'Weekly Report',
+        name      => 'weekly',
         work_days => $days,
-        entries => \%entries,
+        entries   => \%entries,
     },
     {layout => undef};
 
     return (markdown($out));
 }
 ################################################################################
+sub email
+{
+    my $this = shift;
+    my %args = @_;
+    
+    my $report_name = $args{name};
+    my $report_body = $this->$report_name();
+    # TODO: potentially the wrong date depending on when the report is sent
+    my $report_date = Metiisto::Util::DateTime->monday();
+    $report_date->add_days(days => 4);
+
+    my $mailer = Mail::Mailer->new('smtp_auth',
+        {Server => session->{user}->preferences('smtp_host'),
+        Auth => [
+            session->{user}->preferences('smtp_auth'),
+            session->{user}->preferences('smtp_user'),
+            session->{user}->preferences('smtp_pass')
+        ]
+    });
+    #my $mailer = Mail::Mailer->new('sendmail');
+
+    my @to = split /,/, session->{user}->preferences('report_recipients');
+    $mailer->open({
+        To      => \@to,
+        From    => session->{user}->name().' <'.session->{user}->email().'>',
+        Subject => "[WR] ".$report_date->format("%Y.%m.%d"),
+        'Content-type' => "text/html",
+    });
+    print $mailer $report_body;
+    my $sent = $mailer->close();
+    
+    my $out;
+    if ($sent)
+    {
+        $out = redirect '/home'
+    }
+    else
+    {
+        $out = template 'error', {
+            message => "Error emailing '$report_name' report: $!"
+        };
+    }
+
+    return($out);
+}
+################################################################################
 sub declare_routes
 {
     my $class = shift;
     
-     get "/reports/:name" => sub {
+    get "/reports/:name/:action" => sub {
+        my $c = $class->new();
+        
+        my $out;
+        my $method = params->{action};
+        if ($c->can($method))
+        {
+            $out = $c->$method(name => params->{name});
+        }
+        else
+        {
+            $out = template 'error', {
+                message => "Unknown report action: '$method'.",
+            };
+        }
+
+        return ($out);
+    };
+    
+    get "/reports/:name" => sub {
         my $c = $class->new();
         
         my $out;

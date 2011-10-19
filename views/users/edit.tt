@@ -10,14 +10,14 @@
     </p>
 
     <p>
-    <div class="ui-widget-header">Style</div>
+    <div class="ui-widget-header">Theme</div>
     <div class="ui-widget-content">
         <p>
-        Main Style:
-        <select name="user.style_main">
-            [% FOREACH style IN ['cupertino', 'overcast', 'pepper-grinder', 'redmond', 'seafoam',  'smoothness', 'start', 'trontastic', 'ui-lightness', 'vader'] %]
-                [% selected = user.style_main == style ? "selected" : "" %]
-                <option [% selected %] value="[% style | lower %]">[% style | ucfirst %]</option>
+        Main Theme:
+        <select name="user.preferences.theme">
+            [% FOREACH theme IN themes %]
+                [% selected = user.preferences('theme') == theme ? "selected" : "" %]
+                <option [% selected %] value="[% theme %]">[% theme | ucfirst %]</option>
             [% END %]
         </select>
         </p>
@@ -27,35 +27,27 @@
     <p>
     <div class="ui-widget-header">Jira Config</div>
     <div class="ui-widget-content">
-        <p>Host: <input type="text" name="user.jira_host" size="32" value="[% user.jira_host %]"></p>
-        <p>User: <input type="text" name="user.jira_username" value="[% user.jira_username %]"></p>
-        <p>Password: <input type="text" name="user.jira_password" value="[% user.jira_password %]"></p>
-        <p>Filter Id: <input type="text" name="user.jira_filter_id" value="[% user.jira_filter_id %]"></p>
+        <p>Host: <input type="text" name="user.preferences.jira_host" size="32" value="[% user.preferences('jira_host') %]"></p>
+        <p>User: <input type="text" name="user.preferences.jira_username" value="[% user.preferences('jira_username') %]"></p>
+        <p>Password: <input type="text" name="user.preferences.jira_password" value="[% user.preferences('jira_password') %]"></p>
+        <p>Filter Id: <input type="text" name="user.preferences.jira_filter_id" value="[% user.preferences('jira_filter_id') %]"></p>
     </div>
     </p>
         
     <p>
     <div class="ui-widget-header">Email Config</div>
     <div class="ui-widget-content">
-        <p>
-        Type:
-        <select name="user.email_type">
-            [% FOREACH type IN ['SMTP','Sendmail'] %]
-                [% selected = user.email_type == type ? "selected" : "" %]
-                <option [% selected %] value="[% type | lower %]">[% type %]</option>
-            [% END %]
-        </select>
-        </p>
 
-        <p>SMTP Host: <input type="text" name="user.smtp_host" value="[% user.smtp_host %]"></p>
-        <p>SMTP User: <input type="text" name="user.smtp_user" value="[% user.smtp_user %]"></p>
-        <p>SMTP Password: <input type="text" name="user.smtp_pass" value="[% user.smtp_pass %]"></p>
+        <p>Report Recipients: <input type="text" size="64" name="user.preferences.report_recipients" value="[% user.preferences('report_recipients') %]"></p>
+        <p>SMTP Host: <input type="text" name="user.preferences.smtp_host" value="[% user.preferences('smtp_host') %]"></p>
+        <p>SMTP User: <input type="text" name="user.preferences.smtp_user" value="[% user.preferences('smtp_user') %]"></p>
+        <p>SMTP Password: <input type="text" name="user.preferences.smtp_pass" value="[% user.preferences('smtp_pass') %]"></p>
         <p>
         SMTP Auth:
-        <select name="user.smtp_auth">
-            [% FOREACH type IN ['None','Plain','Login','Cram_MD5'] %]
-                [% selected = user.smtp_auth == type ? "selected" : "" %]
-                <option [% selected %] value="[% type | lower %]">[% type %]</option>
+        <select name="user.preferences.smtp_auth">
+            [% FOREACH type IN smtp_auths %]
+                [% selected = user.preferences('smtp_auth') == type ? "selected" : "" %]
+                <option [% selected %] value="[% type %]">[% type | ucfirst %]</option>
             [% END %]
         </select>
         </p>

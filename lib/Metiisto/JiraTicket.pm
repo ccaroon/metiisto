@@ -82,9 +82,9 @@ sub search
     my $url = JIRA_URL;
     my $query = $args{query};
 
-    $url =~ s/_JIRA_HOST_/session->{user}->jira_host()/e;
-    $url =~ s/_JIRA_USER_/session->{user}->jira_username()/e;
-    $url =~ s/_JIRA_PASS_/session->{user}->jira_password()/e;
+    $url =~ s/_JIRA_HOST_/session->{user}->preferences('jira_host')/e;
+    $url =~ s/_JIRA_USER_/session->{user}->preferences('jira_username')/e;
+    $url =~ s/_JIRA_PASS_/session->{user}->preferences('jira_password')/e;
     $url =~ s/_JIRA_QUERY_/$query/;
 
     my $xml = LWP::Simple::get($url);

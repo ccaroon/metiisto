@@ -24,14 +24,14 @@ sub home
     
     # TODO: put some caching around ticket info.
     my $tickets = Metiisto::JiraTicket->search(
-        query => "filter=".session->{user}->jira_filter_id());
+        query => "filter=".session->{user}->preferences('jira_filter_id'));
     
     # TODO: put some caching around current_release info
     my $ready_points = 0;
     my $total_points = 0;
     # TODO: don't hardcode current release filter id
     my @release_tickets = Metiisto::JiraTicket->search(
-        query => "filter=11224 AND assignee=".session->{user}->jira_username());
+        query => "filter=11224 AND assignee=".session->{user}->preferences('jira_username'));
     foreach my $t (@release_tickets)
     {
         $total_points += $t->points();

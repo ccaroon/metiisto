@@ -12,7 +12,7 @@ use Data::Dumper;
 use constant MIGRATION_DIR => "$ENV{METIISTO_HOME}/sql/migrations";
 $ENV{DANCER_ENVIRONMENT} ||= 'development';
 ################################################################################
-my $cmd = shift or '';
+my $cmd = shift;
 
 print STDERR "Using Dancer '$ENV{DANCER_ENVIRONMENT}' Environment.\n";
 print STDERR "-----------------------------------------------------------\n";
@@ -44,6 +44,8 @@ EOF
 
     $dbh->do('DROP TABLE IF EXISTS `schema_migrations`;');
     $dbh->do($create_table_sql);
+    
+    print STDERR "Database has been initialized for migrations.\n";
 }
 ################################################################################
 # TODO: migrate currently only supports UP.
@@ -59,7 +61,7 @@ sub migrate
     my $cols = $dbh->selectcol_arrayref('select * from schema_migrations order by version');
     my @applied_migs = @$cols;
 
-    foreach my $mig (@migrations)
+    foreach my $mig (sort @migrations)
     {
         $mig =~ /^(\d{14})_(.*)\.pm/;
         my $version = $1;

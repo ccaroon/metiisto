@@ -1,4 +1,4 @@
-package workdays_rename_in_out_lunch;
+package init_workman_db_for_metiisto;
 ################################################################################
 use strict;
 
@@ -9,6 +9,9 @@ use constant UP => <<'EOF';
 alter table work_days change `in` time_in time not null;
 alter table work_days change `out` time_out time not null;
 alter table work_days change `lunch` time_lunch time not null;
+
+update preferences set value='seafoam' where name='theme';
+insert into preferences (user_id, name, value) values (1, 'report_recipients', 'ccaroon@mcclatchyinteractive.com,craig-web@caroon.org');
 EOF
 ################################################################################
 use constant DOWN => <<'EOF';

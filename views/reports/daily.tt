@@ -1,4 +1,4 @@
-[% PROCESS 'reports/controls.tt' %]
+[% PROCESS 'reports/controls.tt' report='daily' %]
 
 [% PROCESS 'reports/hours.tt' %]
 --------------------------------------------------------------------------------
