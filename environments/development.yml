@@ -29,7 +29,7 @@ auto_reload: 0
 plugins:
     Database:
         driver: 'mysql'
-        database: 'workman_devel'
+        database: 'metiisto_devel'
         host: 'localhost'
         port: 3306
         username: 'ccaroon'

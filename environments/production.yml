@@ -18,7 +18,7 @@ route_cache: 1
 plugins:
     Database:
         driver: 'mysql'
-        database: 'workman_CNC'
+        database: 'metiisto_prod'
         host: 'localhost'
         port: 3306
         username: 'ccaroon'
@@ -28,4 +28,5 @@ plugins:
             RaiseError: 1
             AutoCommit: 1
             RootClass: 'DBIx::ContextualFetch'
+            mysql_enable_utf8: 1
         log_queries: 1

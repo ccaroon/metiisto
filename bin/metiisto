@@ -3,26 +3,25 @@
 DIR=`dirname $0`
 APP_DIR=$DIR/..
 PID_FILE=$APP_DIR/logs/metiisto.pid
-# TODO: GET RID OF THE NEED FOR THE _PDB_ and _DDB_ vars
 ################################################################################
-if [ -z $METIISTO_PDB_HOST ]; then METIISTO_PDB_HOST='localhost'; fi;
-if [ -z $METIISTO_PDB_DATABASE ]; then METIISTO_PDB_DATABASE='metiisto_prod'; fi;
-
-if [ -z $METIISTO_DDB_HOST ]; then METIISTO_DDB_HOST='localhost'; fi;
-if [ -z $METIISTO_DDB_DATABASE ]; then METIISTO_DDB_DATABASE='metiisto_devel'; fi;
-
 if [ -z $METIISTO_SERVER ]; then METIISTO_SERVER='Starman'; fi;
-# TODO: Change to use deployment env
-if [ -z $METIISTO_ENV ]; then METIISTO_ENV='development'; fi;
+if [ -z $METIISTO_ENV ]; then METIISTO_ENV='production'; fi;
 ################################################################################
 function app_start
 {
     cd $APP_DIR;
-    
+
     if [ -f $PID_FILE ]; then
-        echo "Already running.";
+        echo "Already running: `cat $PID_FILE`";
     else
-        plackup -s $METIISTO_SERVER -E $METIISTO_ENV -p 3000 -D --pid $PID_FILE --access-log logs/$METIISTO_ENV.log --error-log logs/${METIISTO_ENV}_error.log -a bin/app.pl &> /dev/null
+        plackup -s $METIISTO_SERVER -E $METIISTO_ENV -p 3000 -D --pid $PID_FILE --access-log logs/$METIISTO_ENV.log --error-log logs/error.${METIISTO_ENV}.log -a bin/app.pl &> /dev/null
+
+        if [ -f $PID_FILE ]; then
+            echo "Started: `cat $PID_FILE`"
+        else
+            echo "Unable to start.";
+        fi
+
     fi
 }
 ################################################################################
@@ -30,6 +29,7 @@ function app_stop
 {
     if [ -f $PID_FILE ]; then
         kill `cat $PID_FILE`
+        echo "Stopped.";
     else
         echo "Not running.";
     fi
@@ -61,18 +61,6 @@ case $1 in
     ;;
     log) 
         tail -f $APP_DIR/logs/$METIISTO_ENV.log
-    ;;
-    backup) 
-        mysqldump -u$METIISTO_PDB_USERNAME -p$METIISTO_PDB_PASSWORD $METIISTO_PDB_DATABASE > ~/backups/metiisto_prod_dump-`date +%F`.sql
-    ;;
-    prod_db) 
-        mysql -h$METIISTO_PDB_HOST -u$METIISTO_PDB_USERNAME $METIISTO_PDB_DATABASE -p$METIISTO_PDB_PASSWORD
-    ;;
-    prod_db_restore) 
-        mysql -h$METIISTO_PDB_HOST -u$METIISTO_PDB_USERNAME $METIISTO_PDB_DATABASE -p$METIISTO_PDB_PASSWORD < $2
-    ;;
-    devel_db) 
-        mysql -h$METIISTO_DDB_HOST -u$METIISTO_DDB_USERNAME $METIISTO_DDB_DATABASE -p$METIISTO_DDB_PASSWORD
     ;;
     *) echo "metiisto: Unknown command [$1]";
 esac

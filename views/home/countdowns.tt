@@ -17,10 +17,12 @@
             [% fract_entity = '' %]
         [% END %]
         <span class="ui-widget-content">
+            <abbr style="" title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]">
             <strong>[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]</strong>
             [% countdown.english_units %]
             [% countdown.time_left >= 0 ? "Until" : "Since" %]
             <strong>[% countdown.title %]</strong>
+            </abbr>
         </span>
         &nbsp;
     [% END %]

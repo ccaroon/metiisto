@@ -1,0 +1,6 @@
+## Devel ##
+1. mdb.pl restore <FILENAME>
+2. mdb.pl shell
+    - drop table preferences;
+3. mdb.pl init_migrations
+4. mdb.pl migrate
