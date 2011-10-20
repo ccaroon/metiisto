@@ -13,7 +13,7 @@
         [%- CASE ['Code Review', 'Meeting'] %]
 * [% entry.subject %]
         [%- CASE %]
-### [% entry.subject %]
+#### [% entry.subject %] ####
 [% entry.description %]
         [%- END %]
     [%- END %]

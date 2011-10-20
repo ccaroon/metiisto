@@ -1,3 +1,7 @@
 <div style="border:1px solid black;font-weight:bold;background-color:lightgrey" align="center">
-<a href="/home">Home</a> | [% title %] | <a href="/reports/[% name %]/email">Email Report</a>
+[% IF no_controls %]
+    [% title %]
+[% ELSE %]
+    <a href="/home">Home</a> | [% title %] | <a href="/reports/[% name %]/email[% params.date ? "?date=" _ params.date : '' %]">Email Report</a>
+[% END %]
 </div>

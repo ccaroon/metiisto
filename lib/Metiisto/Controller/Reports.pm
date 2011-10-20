@@ -3,7 +3,7 @@ package Metiisto::Controller::Reports;
 use strict;
 
 use Dancer ':syntax';
-use Mail::Mailer;
+use Mail::SendEasy;
 use Text::Markdown 'markdown';
 
 use Metiisto::Entry;
@@ -15,6 +15,7 @@ use base 'Metiisto::Controller::Base';
 sub daily
 {
     my $this = shift;
+    my %args = @_;
 
     # Workdays
     my $days = Metiisto::Workday->find_week(date => params->{date});
@@ -39,10 +40,11 @@ sub daily
 
     my $out = template "/reports/daily",
     {
-        title     => 'Daily Report',
-        name      => 'daily',
-        work_days => $days,
-        entries   => \@entries,
+        title       => 'Daily Report',
+        name        => 'daily',
+        no_controls => $args{no_controls},
+        work_days   => $days,
+        entries     => \@entries,
     },
     {layout => undef};
 
@@ -52,6 +54,7 @@ sub daily
 sub weekly
 {
     my $this = shift;
+    my %args = @_;
 
     # Workdays
     my $days = Metiisto::Workday->find_week(date => params->{date});
@@ -91,10 +94,11 @@ sub weekly
 
     my $out = template "/reports/weekly",
     {
-        title     => 'Weekly Report',
-        name      => 'weekly',
-        work_days => $days,
-        entries   => \%entries,
+        title       => 'Weekly Report',
+        name        => 'weekly',
+        no_controls => $args{no_controls},
+        work_days   => $days,
+        entries     => \%entries,
     },
     {layout => undef};
 
@@ -105,42 +109,35 @@ sub email
 {
     my $this = shift;
     my %args = @_;
-    
+
     my $report_name = $args{name};
-    my $report_body = $this->$report_name();
-    # TODO: potentially the wrong date depending on when the report is sent
-    my $report_date = Metiisto::Util::DateTime->monday();
+    my $report_body = $this->$report_name(no_controls => 1);
+    my $report_date = Metiisto::Util::DateTime->monday(for_date => params->{date});
     $report_date->add_days(days => 4);
 
-    my $mailer = Mail::Mailer->new('smtp_auth',
-        {Server => session->{user}->preferences('smtp_host'),
-        Auth => [
-            session->{user}->preferences('smtp_auth'),
-            session->{user}->preferences('smtp_user'),
-            session->{user}->preferences('smtp_pass')
-        ]
-    });
-    #my $mailer = Mail::Mailer->new('sendmail');
+    my $mailer = Mail::SendEasy->new(
+        smtp => session->{user}->preferences('smtp_host'),
+        user => session->{user}->preferences('smtp_user'),
+        pass => session->{user}->preferences('smtp_pass'),
+    );
 
-    my @to = split /,/, session->{user}->preferences('report_recipients');
-    $mailer->open({
-        To      => \@to,
-        From    => session->{user}->name().' <'.session->{user}->email().'>',
-        Subject => "[WR] ".$report_date->format("%Y.%m.%d"),
-        'Content-type' => "text/html",
-    });
-    print $mailer $report_body;
-    my $sent = $mailer->close();
-    
+    my $sent = $mailer->send(
+        to         => session->{user}->preferences('report_recipients'),
+        from       => session->{user}->email(),
+        from_title => session->{user}->name(),
+        subject    => "[WR] ".$report_date->format("%Y.%m.%d"),
+        html       => $report_body,
+    );
+
     my $out;
     if ($sent)
     {
-        $out = redirect '/home'
+        $out = redirect '/home';
     }
     else
     {
         $out = template 'error', {
-            message => "Error emailing '$report_name' report: $!"
+            message => "Error emailing '$report_name' report: ".$mailer->error()
         };
     }
 
