@@ -1,0 +1,35 @@
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        [% vars.action | ucfirst %] Note
+    </div>
+    <div class="ui-widget-content">
+        <form method="post" action="/notes[% note.id ? '/' _ note.id : '' %]">
+            <p>
+                Title: <input type="text" name="note.title" value="[% note.title %]" size="25">
+            </p>
+            <p>
+                Favorite?:
+                <label for="note-favorite">Favorite?</label>
+                <input id="note-favorite" type="checkbox" name="note.is_favorite" value="1" [% note.is_favorite ? 'checked' : '' %]>
+            </p>
+            <p>
+                Body:<br>
+                <textarea rows="25" cols="80" wrap="physical" name="note.body">[% note.body %]</textarea>                
+            </p>
+            <p>
+                <input class="button" type="submit" value="Save">
+                <a class="button" href="/notes/[% note.id %]">View</a>
+            </p>
+        </form>
+    </div>
+</div>
+<script>
+    $('.button').button();
+    
+    $('#note-favorite').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-check'
+        }
+    });
+</script>

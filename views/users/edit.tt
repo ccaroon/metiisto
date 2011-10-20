@@ -10,7 +10,7 @@
     </p>
 
     <p>
-    <div class="ui-widget-header">Theme</div>
+    <div class="ui-widget-header">Misc Settings</div>
     <div class="ui-widget-content">
         <p>
         Main Theme:
@@ -21,6 +21,8 @@
             [% END %]
         </select>
         </p>
+        <p>Encryption Pass-phrase: <input type="text" size="56" maxlength="56" name="user.preferences.encryption_passphrase" value="[% user.preferences('encryption_passphrase') %]"></p>
+        <p>Report Recipients: <input type="text" size="64" name="user.preferences.report_recipients" value="[% user.preferences('report_recipients') %]"></p>
     </div>
     </p>
     
@@ -37,8 +39,6 @@
     <p>
     <div class="ui-widget-header">Email Config</div>
     <div class="ui-widget-content">
-
-        <p>Report Recipients: <input type="text" size="64" name="user.preferences.report_recipients" value="[% user.preferences('report_recipients') %]"></p>
         <p>SMTP Host: <input type="text" name="user.preferences.smtp_host" value="[% user.preferences('smtp_host') %]"></p>
         <p>SMTP User: <input type="text" name="user.preferences.smtp_user" value="[% user.preferences('smtp_user') %]"></p>
         <p>SMTP Password: <input type="text" name="user.preferences.smtp_pass" value="[% user.preferences('smtp_pass') %]"></p>

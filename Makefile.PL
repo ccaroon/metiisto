@@ -23,6 +23,7 @@ WriteMakefile(
         'Text::Markdown'             => 1.0,
         'Template::Plugin::Markdown' => 0,
         'Mail::SendEasy'             => 1.2,
+		'Crypt::Blowfish'            => 2.12,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'metiisto-*' },

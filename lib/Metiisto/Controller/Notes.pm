@@ -1,4 +1,4 @@
-package Metiisto::Controller::Todos;
+package Metiisto::Controller::Notes;
 ################################################################################
 use strict;
 
@@ -8,46 +8,48 @@ use SQL::Abstract;
 
 use Metiisto::Util::DateTime;
 
-use constant TODOS_PER_PAGE => 15;
+use constant NOTES_PER_PAGE => 15;
 
 use base 'Metiisto::Controller::Base';
 
-use Metiisto::Todo;
+use Metiisto::Note;
 ################################################################################
 sub list
 {
     my $this = shift;
 
     my $total      = 0;
-    my $conditions = {
-        list_id => undef
-    };
+    my $conditions = {};
     if (params->{filter_text})
     {
-        $conditions->{title} = { 'regexp', params->{filter_text} };
+        $conditions->{body} = { 'regexp', params->{filter_text} };
+    }
+    else
+    {
+        $conditions->{1} = 1;
     }
 
     my $sql_abs = SQL::Abstract->new();
     my ($where, @binds) = $sql_abs->where($conditions);
-    $total = Metiisto::Todo->count_where($where, \@binds);
+    $total = Metiisto::Note->count_where($where, \@binds);
 
     my $page = Data::Page->new();
     $page->total_entries($total);
-    $page->entries_per_page(TODOS_PER_PAGE);
+    $page->entries_per_page(NOTES_PER_PAGE);
     $page->current_page(params->{page} || 1);
 
-    my @todos = Metiisto::Todo->search_where(
+    my @notes = Metiisto::Note->search_where(
         $conditions,
         {
             limit_dialect => 'LimitOffset',
-            limit    => TODOS_PER_PAGE,
+            limit    => NOTES_PER_PAGE,
             offset  => $page->first() - 1,
-            order_by => 'completed, completed_on desc, priority',
+            order_by => 'created_on',
         }
     );
 
-    my $out = template 'todos/list', {
-        todos => \@todos,
+    my $out = template 'notes/list', {
+        notes => \@notes,
         pagination => {
             current_page  => $page->current_page(),
             first_page    => $page->first_page(),
@@ -64,9 +66,9 @@ sub new_record
 {
     my $this = shift;
 
-    my $todo = { priority => 1 };
-    my $out = template 'todos/new_edit', {
-        todo => $todo,
+    my $note = { is_favorite => 0, is_encrypted => 0 };
+    my $out = template 'notes/new_edit', {
+        note => $note,
     };
 
     return ($out);
@@ -79,17 +81,17 @@ sub create
     my $data = {};
     foreach my $p (keys %{params()})
     {
-        next unless $p =~ /^todo\.(.*)$/;
+        next unless $p =~ /^note\.(.*)$/;
         my $attr = $1;
         $data->{$attr} = params->{$p};
     }
-    $data->{due_on}     = undef unless $data->{due_on};
     $data->{created_on} = Metiisto::Util::DateTime->now()->format_db();
+    $data->{updated_on} = $data->{created_on};
 
-    my $todo = Metiisto::Todo->insert($data);
-    die "Error creating Todo" unless $todo;
+    my $note = Metiisto::Note->insert($data);
+    die "Error creating Note" unless $note;
 
-    my $out = redirect "/todos/".$todo->id();
+    my $out = redirect "/notes/".$note->id();
 
     return ($out);
 }
@@ -99,8 +101,8 @@ sub show
     my $this = shift;
     my %args = @_;
 
-    my $todo = Metiisto::Todo->retrieve($args{id});
-    my $out = template 'todos/show', { todo => $todo };
+    my $note = Metiisto::Note->retrieve($args{id});
+    my $out = template 'notes/show', { note => $note };
 
     return ($out);
 }
@@ -110,10 +112,9 @@ sub edit
     my $this = shift;
     my %args = @_;
 
-    my $todo = Metiisto::Todo->retrieve($args{id});
-
-    my $out = template 'todos/new_edit', {
-        todo => $todo,
+    my $note = Metiisto::Note->retrieve($args{id});
+    my $out = template 'notes/new_edit', {
+        note => $note,
     };
 
     return ($out);
@@ -124,48 +125,34 @@ sub update
     my $this = shift;
     my %args = @_;
 
-    my $todo = Metiisto::Todo->retrieve(id => $args{id});
+    my $note = Metiisto::Note->retrieve(id => $args{id});
 
     foreach my $p (keys %{params()})
     {
-        next unless $p =~ /^todo\.(.*)$/;
+        next unless $p =~ /^note\.(.*)$/;
         my $attr = $1;
-        $todo->$attr(params->{$p});
+        $note->$attr(params->{$p});
     }
-    if ($todo->completed() and !$todo->completed_on())
-    {
-        $todo->completed_on(Metiisto::Util::DateTime->now());
-    }
-    my $cnt = $todo->update();
-    die "Error saving Todo($args{id})" unless $cnt;
+    $note->is_favorite(0) unless params->{'note.is_favorite'};
+    $note->updated_on(Metiisto::Util::DateTime->now());
+    my $cnt = $note->update();
+    die "Error saving Note($args{id})" unless $cnt;
 
-    my $out = redirect "/todos/$args{id}";
+    my $out = redirect "/notes/$args{id}";
 
     return ($out);
 }
 ################################################################################
-sub mark_complete
-{
-    my $this = shift;
-    my %args = @_;
-
-    my $todo = Metiisto::Todo->retrieve(id => $args{id});
-    $todo->completed_on(Metiisto::Util::DateTime->now());
-    $todo->completed(1);
-    $todo->update();
-
-    return (redirect request->referer);
-}
-################################################################################
+# TODO: delete or just mark as deleted?
 sub delete
 {
     my $this = shift;
     my %args = @_;
 
-    my $todo = Metiisto::Todo->retrieve(id => $args{id});
-    $todo->delete();
+    my $note = Metiisto::Note->retrieve(id => $args{id});
+    $note->delete();
     
-    my $url = '/todos';
+    my $url = '/notes';
     $url .= "?filter_text=".params->{filter_text} if params->{filter_text};
 
     my $out = redirect $url;

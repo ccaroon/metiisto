@@ -12,6 +12,7 @@ alter table work_days change `lunch` time_lunch time not null;
 
 update preferences set value='seafoam' where name='theme';
 insert into preferences (user_id, name, value) values (1, 'report_recipients', 'ccaroon@mcclatchyinteractive.com,craig-web@caroon.org');
+insert into preferences (user_id, name, value) values (1, 'encryption_passphrase', 'Just hard-coding the key for now.');
 
 drop table user_stories;
 drop table user_story_categories;

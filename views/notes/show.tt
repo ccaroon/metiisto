@@ -1,0 +1,15 @@
+[% USE Markdown %]
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        Notes &raquo; [% note.title %]
+        <span id="action-edit-note" class="ui-icon ui-icon-pencil" style="float:left"></span>
+    </div>
+    <div class="ui-widget-content">
+        [% note.body | markdown %]
+    </div>    
+</div>
+<script>
+    $('#action-edit-note').click(function () {
+        window.location = '/notes/[% note.id %]/edit';
+    });
+</script>
