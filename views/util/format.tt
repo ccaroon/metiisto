@@ -1,7 +1,20 @@
 [%
+USE Math;
 
-MACRO under_construction(msg) BLOCK;
-    "<span style='color:grey'>$msg</span>";
+MACRO fraction_entity(number) BLOCK;
+    fract_entity = '';
+    SWITCH (Math.abs(number) -  Math.int(Math.abs(number)));
+    CASE 0.25;
+        fract_entity = "&frac14;";
+    CASE 0.50;
+        fract_entity = "&frac12;";
+    CASE 0.75;
+        fract_entity = "&frac34;";
+    CASE;
+        fract_entity = '';
+    END;
+    
+    fract_entity;
 END;
 
 %]

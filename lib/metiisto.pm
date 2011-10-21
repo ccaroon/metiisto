@@ -23,6 +23,9 @@ Metiisto::Controller::Todos->declare_routes();
 use Metiisto::Controller::Notes;
 Metiisto::Controller::Notes->declare_routes();
 
+use Metiisto::Controller::Countdowns;
+Metiisto::Controller::Countdowns->declare_routes();
+
 use Metiisto::Controller::Reports;
 Metiisto::Controller::Reports->declare_routes();
 ################################################################################

@@ -1,0 +1,19 @@
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        Countdowns &raquo; [% countdown.title %]
+        <span id="action-edit-countdown" class="ui-icon ui-icon-pencil" style="float:left"></span>
+    </div>
+    <div class="ui-widget-content">
+        <p>
+            <b>Title:</b> [% countdown.title %]<br>
+            <b>Target date:</b> [% countdown.target_date.format("%b %d, %Y %I:%M:%S %p") %]<br>
+            <b>Display units:</b> [% countdown.english_units %]<br>
+            <b>Display on homepage:</b> [% countdown.on_homepage ? 'Yes' : 'No' %]<br>
+        </p>
+    </div>
+</div>
+<script>
+    $('#action-edit-countdown').click(function () {
+        window.location = '/countdowns/[% countdown.id %]/edit';
+    });
+</script>

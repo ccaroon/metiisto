@@ -1,21 +1,11 @@
 [%
     USE Math;
-
-    fract_entity = '';
+    PROCESS util/format.tt;
 %]
 <div class="ui-widget">
     <div>
     [% FOREACH countdown IN countdowns %]
-        [% SWITCH Math.abs(countdown.time_left) -  Math.int(Math.abs(countdown.time_left))%]
-        [% CASE 0.25 %]
-            [% fract_entity = "&frac14;" %]
-        [% CASE 0.50 %]
-            [% fract_entity = "&frac12;" %]
-        [% CASE 0.75 %]
-            [% fract_entity = "&frac34;" %]
-        [% CASE %]
-            [% fract_entity = '' %]
-        [% END %]
+        [% fract_entity = fraction_entity(countdown.time_left) %]
         <span class="ui-widget-content">
             <abbr style="" title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]">
             <strong>[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]</strong>
