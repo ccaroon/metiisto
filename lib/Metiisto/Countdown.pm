@@ -28,11 +28,9 @@ use base 'Metiisto::Base';
 ################################################################################
 __PACKAGE__->table('countdowns');
 __PACKAGE__->columns(All => qw/
-    id title target_date units on_homepage created_at updated_at
+    id title target_date units on_homepage
 /);
 __PACKAGE__->has_a_datetime('target_date');
-__PACKAGE__->has_a_datetime('created_at');
-__PACKAGE__->has_a_datetime('updated_at');
 ################################################################################
 sub time_left
 {

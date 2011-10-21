@@ -18,7 +18,7 @@
                 <th>Actions</th>
             </tr>
             [% FOREACH todo in todos %]
-            [% completed = todo.completed_on ? 1 : 0 %]
+            [% completed = todo.completed_date ? 1 : 0 %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                 <td align="center">[% todo.priority %]</td>
                 <td class="[% todo.overdue AND NOT todo.completed ? 'ui-state-error' : '' %]">
@@ -36,10 +36,10 @@
                     </script>
                     [% END %]
                 </td>
-                <td align="center">[% todo.due_on.format() %]</td>
+                <td align="center">[% todo.due_date.format() %]</td>
                 <td align="center">
                     [% IF completed %]
-                    [% todo.completed_on.format() %]
+                    [% todo.completed_date.format() %]
                     [% ELSE %]
                         <a class="action-button-mark-complete" href="/todos/[% todo.id %]/mark_complete">Done</a>
                     [% END %]

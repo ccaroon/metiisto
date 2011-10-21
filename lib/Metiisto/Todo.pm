@@ -8,12 +8,11 @@ use constant DUE_SOON => 86_400*7;
 ################################################################################
 __PACKAGE__->table('todos');
 __PACKAGE__->columns(All => qw/
-    id priority title created_on completed completed_on due_on list_id
+    id priority title completed completed_date due_date list_id
     description
 /);
-__PACKAGE__->has_a_datetime('created_on');
-__PACKAGE__->has_a_datetime('completed_on');
-__PACKAGE__->has_a_datetime('due_on');
+__PACKAGE__->has_a_datetime('completed_date');
+__PACKAGE__->has_a_datetime('due_date');
 ################################################################################
 # TODO: add relationship to list (list_id)
 ################################################################################
@@ -23,8 +22,8 @@ sub due_soon
     my $due_soon = 0;
     
     my $now    = time;
-    my $due_on = defined $this->due_on() ? $this->due_on()->epoch() : undef;
-    if ($due_on and $due_on > $now and ($due_on - $now < DUE_SOON))
+    my $due_date = defined $this->due_date() ? $this->due_date()->epoch() : undef;
+    if ($due_date and $due_date > $now and ($due_date - $now < DUE_SOON))
     {
         $due_soon = 1;
     }
@@ -38,8 +37,8 @@ sub overdue
     my $overdue = 0;
 
     my $now    = time;
-    my $due_on = defined $this->due_on() ? $this->due_on()->epoch() : undef;
-    if ($due_on and $due_on < $now)
+    my $due_date = defined $this->due_date() ? $this->due_date()->epoch() : undef;
+    if ($due_date and $due_date < $now)
     {
         $overdue = 1;
     }

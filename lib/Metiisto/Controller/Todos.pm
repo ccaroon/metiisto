@@ -42,7 +42,7 @@ sub list
             limit_dialect => 'LimitOffset',
             limit    => TODOS_PER_PAGE,
             offset  => $page->first() - 1,
-            order_by => 'completed, completed_on desc, priority',
+            order_by => 'completed, completed_date desc, priority',
         }
     );
 
@@ -83,8 +83,8 @@ sub create
         my $attr = $1;
         $data->{$attr} = params->{$p};
     }
-    $data->{due_on}     = undef unless $data->{due_on};
-    $data->{created_on} = Metiisto::Util::DateTime->now()->format_db();
+    $data->{due_date}     = undef unless $data->{due_date};
+    $data->{created_date} = Metiisto::Util::DateTime->now()->format_db();
 
     my $todo = Metiisto::Todo->insert($data);
     die "Error creating Todo" unless $todo;
@@ -132,9 +132,9 @@ sub update
         my $attr = $1;
         $todo->$attr(params->{$p});
     }
-    if ($todo->completed() and !$todo->completed_on())
+    if ($todo->completed() and !$todo->completed_date())
     {
-        $todo->completed_on(Metiisto::Util::DateTime->now());
+        $todo->completed_date(Metiisto::Util::DateTime->now());
     }
     my $cnt = $todo->update();
     die "Error saving Todo($args{id})" unless $cnt;
@@ -150,7 +150,7 @@ sub mark_complete
     my %args = @_;
 
     my $todo = Metiisto::Todo->retrieve(id => $args{id});
-    $todo->completed_on(Metiisto::Util::DateTime->now());
+    $todo->completed_date(Metiisto::Util::DateTime->now());
     $todo->completed(1);
     $todo->update();
 

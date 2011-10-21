@@ -19,7 +19,7 @@ sub home
 
     my @todos = Metiisto::Todo->search(completed => 0,
         list_id => undef,
-        { order_by => 'due_on, priority, created_on' }
+        { order_by => 'due_date, priority' }
     );
     
     # TODO: put some caching around ticket info.
@@ -48,10 +48,10 @@ sub home
     my @recent_notes = Metiisto::Note->search_where(
         {
             is_favorite => {'=', 0},
-            deleted_on  => {'is', undef},
+            deleted_date  => {'is', undef},
         },
         {
-            order_by => 'created_on desc',
+            order_by => 'created_date desc',
             limit_dialect => 'LimitOffset',
             limit => 5,
         }
@@ -60,9 +60,9 @@ sub home
     my @fav_notes = Metiisto::Note->search_where(
         {
             is_favorite => {'=', 1},
-            deleted_on  => {'is', undef},
+            deleted_date  => {'is', undef},
         },
-        { order_by => 'created_on asc' }
+        { order_by => 'created_date asc' }
     );
 
     my @goals = Metiisto::Goal->search_where(

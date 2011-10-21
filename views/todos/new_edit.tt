@@ -26,7 +26,7 @@
             
             <p>
             <b>Due Date:</b>
-            <input type="text" id="todo-due-on" name="todo.due_on" value="[% todo.due_on.format_db('date_only',1) %]">
+            <input type="text" id="todo-due-on" name="todo.due_date" value="[% todo.due_date.format_db('date_only',1) %]">
             </p>
         
             <p>
@@ -35,7 +35,7 @@
             </p>
 
             <p>
-            <b>Completed: [% todo.completed_on.format %]</b>
+            <b>Completed: [% todo.completed_date.format %]</b>
             <input id="todo-completed" type="checkbox" name="todo.completed" value="1" [% todo.completed ? 'checked' : '' %]>
             <label for="todo-completed">Complete?</label>
             </p>

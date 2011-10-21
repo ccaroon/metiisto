@@ -44,7 +44,7 @@ sub list
             limit_dialect => 'LimitOffset',
             limit    => NOTES_PER_PAGE,
             offset  => $page->first() - 1,
-            order_by => 'created_on',
+            order_by => 'created_date',
         }
     );
 
@@ -85,8 +85,8 @@ sub create
         my $attr = $1;
         $data->{$attr} = params->{$p};
     }
-    $data->{created_on} = Metiisto::Util::DateTime->now()->format_db();
-    $data->{updated_on} = $data->{created_on};
+    $data->{created_date} = Metiisto::Util::DateTime->now()->format_db();
+    $data->{updated_date} = $data->{created_date};
 
     my $note = Metiisto::Note->insert($data);
     die "Error creating Note" unless $note;
@@ -134,7 +134,7 @@ sub update
         $note->$attr(params->{$p});
     }
     $note->is_favorite(0) unless params->{'note.is_favorite'};
-    $note->updated_on(Metiisto::Util::DateTime->now());
+    $note->updated_date(Metiisto::Util::DateTime->now());
     my $cnt = $note->update();
     die "Error saving Note($args{id})" unless $cnt;
 
