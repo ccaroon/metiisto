@@ -125,9 +125,9 @@
             [% END  %]
         </table>
         
-        <p>
+        <p align="center">
             <a class="button" href="/workdays/generate_week">Generate Week</a>
-            <a class="button" href="/workdays/new">New</a>
+            <a class="button" href="/workdays/new">Add</a>
         </p>
 
     </div>

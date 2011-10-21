@@ -1,7 +1,7 @@
 [% USE Markdown %]
 <div class="ui-widget">
     <div class="ui-widget-header">
-        Todos &raquo; [% todo.title %]
+        Todos &raquo; <span class="[% todo.completed ? 'm-strikethru' : '' %]">[% todo.title %]</span>
         <span id="action-edit-todo" class="ui-icon ui-icon-pencil" style="float:left"></span>
     </div>
     <div class="ui-widget-content">

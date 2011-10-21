@@ -9,7 +9,7 @@
         [% PROCESS shared/pagination.tt page_data=pagination %]
     </div>
     <div class=ui-widget-content>
-        <table width="100%">
+        <table width="100%" class="ui-widget-content">
             <tr class="ui-widget-header">
                 <th>Preview</th>
                 <th>Target Date</th>
