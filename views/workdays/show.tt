@@ -1,10 +1,9 @@
 <div class="ui-widget">
-
-    <div class="ui-widget-header">Work Day</div>
-
+    <div class="ui-widget-header">
+        Work Days &raquo; [% day.work_date.format %]
+    </div>
     <div class="ui-widget-content"">
-        <b>[% day.work_date.format("%A (%b %d, %Y)") %]</b> was a <b>[% day.day_type %]</b>.
-        <br>
+        <p><b>[% day.work_date.format("%A (%b %d, %Y)") %]</b> was a <b>[% day.day_type %]</b>.</p>
         [% IF (day.is_holiday || day.is_vacation || day.is_sick_day) %]
             I did not work this day.
         [% ELSE %]
@@ -16,11 +15,5 @@
         <p>
             [% day.note %]
         </p>
-
-        <a id="button-action-edit" href="/workdays/[% day.id %]/edit">Edit</a>
     </div>
-
 </div>
-<script>
-    $('#button-action-edit').button();
-</script>

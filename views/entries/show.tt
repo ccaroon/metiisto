@@ -1,21 +1,24 @@
 [% USE Markdown %]
 <div class="ui-widget">
     <div class="ui-widget-header">
-        Entry - [% entry.subject %] ([% entry.entry_date.format('%b %d, %Y %I:%M%p') %])
+        Entries &raquo; [% entry.subject %]
+        <span id="action-edit-entry" class="ui-icon ui-icon-pencil" style="float:left"></span>
     </div>
     <div class="ui-widget-content">
+        <b>Entry Date:</b> [% entry.entry_date.format('%b %d, %Y %I:%M%p') %]
+        <br>
+        <b>Task Date: </b> [% entry.task_date.format %]
+        <br>
         <b>Category:</b> [% entry.category %]
         <br>
         <b>Ticket: </b>[% entry.ticket_num %]
         <br>
         <b>Goal: </b> [% entry.goal ? entry.goal.name : '' %]
-        <br>
-        <b>Task Date: </b> [% entry.task_date.format('%b %d, %Y') %]
         <p>[% entry.description | markdown %]</p>
-    
-        <a id="button-edit-entry" href="/entries/[% entry.id %]/edit">Edit</a>
     </div>
 </div>
 <script>
-    $('#button-edit-entry').button();
+    $('#action-edit-entry').click(function () {
+        window.location = '/entries/[% entry.id %]/edit';
+    });
 </script>
