@@ -14,7 +14,7 @@
                       <a href="/todos/[% todo.id %]/mark_complete"><span class='ui-icon ui-icon-check'>[% todo.priority %]</span></a>
                   </td>
                   <td class="[% todo.overdue ? 'ui-state-error' : '' %]">
-                      <abbr style='border:none' title='[% todo.due_date ? todo.due_date.format('%b %d, %Y') : 'No Due Date' %]'><a href="/todos/[% todo.id %]/edit">[% todo.title %]</a></abbr>
+                      <abbr style='border:none' title='[% todo.due_date ? todo.due_date.format('%b %d, %Y') : 'No Due Date' %]'><a href="/todos/[% todo.id %]">[% todo.title %]</a></abbr>
                       [% IF todo.due_soon OR todo.overdue %]
                         <span class="ui-icon ui-icon-alert" style="float:right"></span>
                       [% END %]
