@@ -28,7 +28,7 @@
                     [% END %]
                     <span class="ui-icon ui-icon-[% icon %]" style="float:left"></span>
                 </td>
-                <td><a href="/notes/[% note.id %]">[% note.title %]</a></td>
+                <td><a href="/notes/[% note.id %]" class="[% note.deleted_date ? 'm-strikethru' : '' %]">[% note.title %]</a></td>
                 <td align="center">
                     [% PROCESS shared/list/actions.tt
                         controller = 'notes'

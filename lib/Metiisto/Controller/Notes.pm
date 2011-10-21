@@ -143,15 +143,15 @@ sub update
     return ($out);
 }
 ################################################################################
-# TODO: delete or just mark as deleted?
 sub delete
 {
     my $this = shift;
     my %args = @_;
 
     my $note = Metiisto::Note->retrieve(id => $args{id});
-    $note->delete();
-    
+    $note->deleted_date(Metiisto::Util::DateTime->now());
+    $note->update();
+
     my $url = '/notes';
     $url .= "?filter_text=".params->{filter_text} if params->{filter_text};
 

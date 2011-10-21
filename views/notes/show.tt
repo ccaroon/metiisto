@@ -1,7 +1,7 @@
 [% USE Markdown %]
 <div class="ui-widget">
     <div class="ui-widget-header">
-        Notes &raquo; [% note.title %]
+        Notes &raquo; <span class="[% note.deleted_date ? 'm-strikethru' : '' %]">[% note.title %]</span>
         <span id="action-edit-note" class="ui-icon ui-icon-pencil" style="float:left"></span>
     </div>
     <div class="ui-widget-content">
