@@ -41,7 +41,7 @@ sub list
         {
             limit_dialect => 'LimitOffset',
             limit    => TODOS_PER_PAGE,
-            offset  => $page->first() - 1,
+            offset  => $page->first() ? $page->first() - 1 : 0,
             order_by => 'completed, completed_date desc, priority',
         }
     );
