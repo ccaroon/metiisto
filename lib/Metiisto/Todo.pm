@@ -11,6 +11,7 @@ __PACKAGE__->columns(All => qw/
     id priority title completed completed_date due_date list_id
     description
 /);
+__PACKAGE__->has_a(list_id => 'Metiisto::List');
 __PACKAGE__->has_a_datetime('completed_date');
 __PACKAGE__->has_a_datetime('due_date');
 ################################################################################

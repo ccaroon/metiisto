@@ -1,0 +1,33 @@
+[%
+    PROCESS util/tools.tt;
+%]
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        Lists &raquo; [% list.name %]
+    </div>    
+    <div class="ui-widget-content">
+        <table width="100%">
+            [% FOREACH item IN list.items %]
+            <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
+                <td align="center"><button class="list-item-complete">X</button></td>
+                <td>
+                    <a href="/todos/[% item.id %]/edit" class="[% item.completed ? 'm-strikethru' : '' %]">[% item.title %]</a>
+                </td>
+                <td align="center">
+                    [% PROCESS shared/list/actions.tt
+                        controller = 'todos'
+                        item_id = item.id
+                        delete_message = item.title
+                        query_string = "filter_text=" _ params.filter_text
+                    %]
+                </td>
+            [% END %]
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    [% PROCESS shared/list/actions_js.tt %]
+    
+    $('.list-item-complete').button();
+</script>

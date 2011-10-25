@@ -1,0 +1,36 @@
+[%
+    PROCESS util/tools.tt;
+%]
+<div class="ui-widget">
+    <div class="ui-widget-header">Lists</div>
+    <div class="ui-widget-content" align="center">
+        [% PROCESS shared/filter.tt %]
+        [% PROCESS shared/pagination.tt page_data=pagination %]
+    </div>
+    <div class="ui-widget-content">
+        <table width="100%">
+            <tr class="ui-widget-header">
+                <th>Name</th>
+                <th>Items</th>
+                <th>Actions</th>
+            </tr>
+            [% FOREACH list in lists %]
+            <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
+                <td width="70%"><a href="/lists/[% list.id %]">[% list.name %]</a></td>
+                <td>[% list.completed_items.size %]/[% list.items.size %]</td>
+                <td align="center">
+                    [% PROCESS shared/list/actions.tt
+                        controller = 'lists'
+                        item_id = list.id
+                        delete_message = list.name
+                        query_string = "filter_text=" _ params.filter_text
+                    %]
+                </td>
+            </tr>
+            [% END %]
+        </table>
+    </div>
+</div>
+<script>
+    [% PROCESS shared/list/actions_js.tt %]
+</script>

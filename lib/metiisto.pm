@@ -20,6 +20,9 @@ Metiisto::Controller::Workdays->declare_routes();
 use Metiisto::Controller::Todos;
 Metiisto::Controller::Todos->declare_routes();
 
+use Metiisto::Controller::Lists;
+Metiisto::Controller::Lists->declare_routes();
+
 use Metiisto::Controller::Notes;
 Metiisto::Controller::Notes->declare_routes();
 
