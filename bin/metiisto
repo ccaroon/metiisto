@@ -14,7 +14,7 @@ function app_start
     if [ -f $PID_FILE ]; then
         echo "Already running: `cat $PID_FILE`";
     else
-        plackup -s $METIISTO_SERVER -E $METIISTO_ENV -p 3000 -D --pid $PID_FILE --access-log logs/$METIISTO_ENV.log --error-log logs/error.${METIISTO_ENV}.log -a bin/app.pl &> /dev/null
+        plackup -s $METIISTO_SERVER -E $METIISTO_ENV -p 5000 -D --pid $PID_FILE --access-log logs/$METIISTO_ENV.log --error-log logs/error.${METIISTO_ENV}.log -a bin/app.pl &> /dev/null
 
         if [ -f $PID_FILE ]; then
             echo "Started: `cat $PID_FILE`"

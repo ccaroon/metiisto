@@ -6,7 +6,6 @@ use Date::Format;
 use Dancer ':syntax';
 
 use Metiisto::Countdown;
-use Metiisto::Goal;
 use Metiisto::JiraTicket;
 use Metiisto::Note;
 use Metiisto::Todo;
@@ -65,11 +64,6 @@ sub home
         { order_by => 'created_date asc' }
     );
 
-    my @goals = Metiisto::Goal->search_where(
-        { completed => {'!=', 1}, },
-        { order_by => 'priority' }
-    );
-    
     my @countdowns = Metiisto::Countdown->search_where(
         { on_homepage => {'=', 1},  },
         { order_by => 'target_date' }
@@ -91,7 +85,6 @@ sub home
         entries         => \@entries,
         recent_notes    => \@recent_notes,
         favorite_notes  => \@fav_notes,
-        goals           => \@goals,
         countdowns      => \@countdowns,
         current_release => {
             name         => $current_release_name,

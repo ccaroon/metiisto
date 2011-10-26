@@ -11,7 +11,6 @@ use constant CATEGORIES => [
     'Ticket',
     'Code Review',
     'Operational',
-    'Goal Progress',
     'Other',
 ];
 

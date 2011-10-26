@@ -12,8 +12,6 @@
         <b>Category:</b> [% entry.category %]
         <br>
         <b>Ticket: </b>[% entry.ticket_num %]
-        <br>
-        <b>Goal: </b> [% entry.goal ? entry.goal.name : '' %]
         <p>[% entry.description | markdown %]</p>
     </div>
 </div>

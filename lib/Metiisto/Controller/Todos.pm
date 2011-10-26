@@ -83,8 +83,7 @@ sub create
         my $attr = $1;
         $data->{$attr} = params->{$p};
     }
-    $data->{due_date}     = undef unless $data->{due_date};
-    $data->{created_date} = Metiisto::Util::DateTime->now()->format_db();
+    $data->{due_date} = undef unless $data->{due_date};
 
     my $todo = Metiisto::Todo->insert($data);
     die "Error creating Todo" unless $todo;

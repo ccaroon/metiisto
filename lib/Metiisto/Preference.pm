@@ -9,6 +9,7 @@ use base 'Metiisto::Base';
 use constant SMTP_AUTHS => ['none','plain','login','cram_MD5'];
 
 use constant THEMES => [
+    'aristo',
     'cupertino',
     'overcast',
     'pepper-grinder',
