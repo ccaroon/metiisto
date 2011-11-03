@@ -9,17 +9,13 @@ use base 'Metiisto::Base';
 use constant SMTP_AUTHS => ['none','plain','login','cram_MD5'];
 
 use constant THEMES => [
-    'aristo',
     'cupertino',
-    'overcast',
+    'lime-sherbert',
     'pepper-grinder',
     'redmond',
     'seafoam',
     'smoothness',
-    'start',
-    'trontastic',
     'ui-lightness',
-    'vader'
 ];
 ################################################################################
 __PACKAGE__->table('preferences');
