@@ -18,9 +18,10 @@
             [% FOREACH day in days %]
             [% is_today = day.work_date.format("%D") == today.format("%D") ? 1 : 0 %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %] [% is_today ? 'm-bold' : '' %]">
-                <td width="18%">
+                <td width="20%">
                     [% IF is_today %]
                         <span class="ui-icon ui-icon-calendar" style="float:left;"></span>
+                        <span class="ui-icon ui-icon-calendar" style="float:right;"></span>
                     [% END %]
                     [% day.work_date.format("%A (%b %d, %Y)") %]
                 </td>
