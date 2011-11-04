@@ -16,11 +16,24 @@ sub home
 {
     my $this = shift;
 
-    my @todos = Metiisto::Todo->search(completed => 0,
-        list_id => undef,
+    my @todos;
+    # With Due date, orderd by due_date, priority
+    push @todos, Metiisto::Todo->search_where(
+        {
+            completed => 0,
+            list_id   => undef,
+            due_date  => {'is not', undef},
+        },
         { order_by => 'due_date, priority' }
     );
-    
+    # No Due date, ordered by priority
+    push @todos, Metiisto::Todo->search(
+        completed => 0,
+        list_id   => undef,
+        due_date  => undef,
+        { order_by => 'priority' }
+    );
+
     # TODO: put some caching around ticket info.
     my $tickets = Metiisto::JiraTicket->search(
         query => "filter=".session->{user}->preferences('jira_filter_id'));
@@ -70,6 +83,7 @@ sub home
     );
 
     # Figure out date of Monday
+    # TODO: replace with call to DateTime->monday()?
     my $wday = time2str("%w", time());
     my $monday = time() - ($wday * 86400);
     my @entries = Metiisto::Entry->search_where(
