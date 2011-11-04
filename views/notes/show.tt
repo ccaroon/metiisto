@@ -3,6 +3,12 @@
     <div class="ui-widget-header">
         Notes &raquo; <span class="[% note.deleted_date ? 'm-strikethru' : '' %]">[% note.title %]</span>
         <span id="action-edit-note" class="ui-icon ui-icon-pencil" style="float:left"></span>
+        [% IF note.is_encrypted %]
+            [% icon = 'locked'%]
+        [% ELSE %]
+            [% icon = 'unlocked'%]
+        [% END %]
+        <span class="ui-icon ui-icon-[% icon %]" style="float:left" id="note-[% note.id %]"></span>
     </div>
     <div class="ui-widget-content">
         [% note.body | markdown %]

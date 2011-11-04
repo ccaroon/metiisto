@@ -2,6 +2,8 @@ package Metiisto::Note;
 ################################################################################
 use strict;
 
+use Crypt::CBC;
+
 use base 'Metiisto::Base';
 ################################################################################
 __PACKAGE__->table('notes');
@@ -12,5 +14,37 @@ __PACKAGE__->columns(All => qw/
 __PACKAGE__->has_a_datetime('created_date');
 __PACKAGE__->has_a_datetime('updated_date');
 __PACKAGE__->has_a_datetime('deleted_date');
+################################################################################
+sub encrypt
+{
+    my $this = shift;
+    my %args = @_;
+
+    my $cipher = Crypt::CBC->new(
+        -key    => $args{key},
+        -cipher => 'Blowfish'
+    );
+
+    my $new_body = $cipher->encrypt_hex($this->body());
+
+    $this->is_encrypted(1);
+    $this->body($new_body);
+}
+################################################################################
+sub decrypt
+{
+    my $this = shift;
+    my %args = @_;
+
+    my $cipher = Crypt::CBC->new(
+        -key    => $args{key},
+        -cipher => 'Blowfish'
+    );
+
+    my $new_body = $cipher->decrypt_hex($this->body());
+
+    $this->is_encrypted(0);
+    $this->body($new_body);
+}
 ################################################################################
 1;

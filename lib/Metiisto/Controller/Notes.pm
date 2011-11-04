@@ -8,6 +8,7 @@ use SQL::Abstract;
 
 use Metiisto::Util::DateTime;
 
+use constant ENCRYPTION_KEY => 'Hello World!';
 use constant NOTES_PER_PAGE => 15;
 
 use base 'Metiisto::Controller::Base';
@@ -158,6 +159,30 @@ sub delete
     my $out = redirect $url;
 
     return ($out);
+}
+################################################################################
+sub encrypt
+{
+    my $this = shift;
+    my %args = @_;
+
+    my $note = Metiisto::Note->retrieve(id => $args{id});
+    $note->encrypt(key => ENCRYPTION_KEY);
+    $note->update();
+
+    return (redirect request->referer);
+}
+################################################################################
+sub decrypt
+{
+    my $this = shift;
+    my %args = @_;
+
+    my $note = Metiisto::Note->retrieve(id => $args{id});
+    $note->decrypt(key => ENCRYPTION_KEY);
+    $note->update();
+
+    return (redirect request->referer);
 }
 ################################################################################
 1;

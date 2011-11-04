@@ -26,7 +26,7 @@
                     [% ELSE %]
                         [% icon = 'unlocked'%]
                     [% END %]
-                    <span class="ui-icon ui-icon-[% icon %]" style="float:left"></span>
+                    <span class="ui-icon ui-icon-[% icon %]" style="float:left" id="note-[% note.id %]"></span>
                 </td>
                 <td><a href="/notes/[% note.id %]" class="[% note.deleted_date ? 'm-strikethru' : '' %]">[% note.title %]</a></td>
                 <td align="center">
@@ -44,5 +44,16 @@
 
 </div>
 <script>
+
+    $('.ui-icon-locked').click(function () {
+        var match = this.id.match(/\d+/);
+        window.location = '/notes/'+match[0]+'/decrypt';
+    });
+    
+    $('.ui-icon-unlocked').click(function () {
+        var match = this.id.match(/\d+/);
+        window.location = '/notes/'+match[0]+'/encrypt';
+    });
+    
     [% PROCESS shared/list/actions_js.tt %]
 </script>
