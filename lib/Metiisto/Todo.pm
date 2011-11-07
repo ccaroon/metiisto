@@ -15,7 +15,11 @@ __PACKAGE__->has_a(list_id => 'Metiisto::List');
 __PACKAGE__->has_a_datetime('completed_date');
 __PACKAGE__->has_a_datetime('due_date');
 ################################################################################
-# TODO: add relationship to list (list_id)
+sub list
+{
+    my $this = shift;
+    return ($this->list_id());
+}
 ################################################################################
 sub due_soon
 {

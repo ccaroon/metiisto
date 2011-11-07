@@ -98,7 +98,7 @@ sub show
 {
     my $this = shift;
     my %args = @_;
-# TODO: sort items by completed,priority
+
     my $list = Metiisto::List->retrieve($args{id});
     my $out = template 'lists/show', { list => $list };
 

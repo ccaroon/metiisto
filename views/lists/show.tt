@@ -1,17 +1,27 @@
 [%
+    USE Markdown;
     PROCESS util/tools.tt;
 %]
 <div class="ui-widget">
     <div class="ui-widget-header">
-        Lists &raquo; [% list.name %]
-    </div>    
+        <a href="/lists">Lists</a> &raquo; [% list.name %]
+    </div>
     <div class="ui-widget-content">
         <table width="100%">
             [% FOREACH item IN list.items %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                 <td align="center"><button class="list-item-complete">X</button></td>
                 <td>
-                    <a href="/todos/[% item.id %]/edit" class="[% item.completed ? 'm-strikethru' : '' %]">[% item.title %]</a>
+                    <a href="/todos/[% item.id %]" class="[% item.completed ? 'm-strikethru' : '' %]">[% item.title %]</a>
+                    [% IF item.description %]
+                    <span id="action-show-desc-[% item.id %]" class="ui-icon ui-icon-document" style="float:left"></span>
+                    <span id="desc-[% item.id %]" class="ui-priority-secondary" style="display:none">[% item.description | markdown %]</span>
+                    <script>
+                        $('#action-show-desc-[% item.id %]').click(function() {
+                            $('#desc-[% item.id %]').toggle();
+                        });
+                    </script>
+                    [% END %]
                 </td>
                 <td align="center">
                     [% PROCESS shared/list/actions.tt
@@ -24,10 +34,17 @@
             [% END %]
             </tr>
         </table>
+        
+        <p align="center">
+            <a class="button" href="/todos/new?list_id=[% list.id %]">Add Item</a>
+        </p>
+
     </div>
 </div>
 <script>
     [% PROCESS shared/list/actions_js.tt %]
     
     $('.list-item-complete').button();
+    
+    $('.button').button();
 </script>

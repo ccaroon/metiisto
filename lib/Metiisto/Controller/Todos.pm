@@ -12,6 +12,7 @@ use constant TODOS_PER_PAGE => 15;
 
 use base 'Metiisto::Controller::Base';
 
+use Metiisto::List;
 use Metiisto::Todo;
 ################################################################################
 sub list
@@ -64,9 +65,16 @@ sub new_record
 {
     my $this = shift;
 
-    my $todo = { priority => 1 };
+    my @lists = Metiisto::List->retrieve_all();
+    @lists = sort {lc $a->name() cmp lc $b->name() } @lists;
+
+    my $todo = {
+        priority => 1,
+        list     => {id => params->{list_id}},
+    };
     my $out = template 'todos/new_edit', {
-        todo => $todo,
+        todo  => $todo,
+        lists => \@lists,
     };
 
     return ($out);
@@ -83,6 +91,7 @@ sub create
         my $attr = $1;
         $data->{$attr} = params->{$p};
     }
+    $data->{list_id}  = undef unless $data->{list_id};
     $data->{due_date} = undef unless $data->{due_date};
 
     my $todo = Metiisto::Todo->insert($data);
@@ -109,10 +118,14 @@ sub edit
     my $this = shift;
     my %args = @_;
 
+    my @lists = Metiisto::List->retrieve_all();
+    @lists = sort {lc $a->name() cmp lc $b->name() } @lists;
+
     my $todo = Metiisto::Todo->retrieve($args{id});
 
     my $out = template 'todos/new_edit', {
-        todo => $todo,
+        todo  => $todo,
+        lists => \@lists,
     };
 
     return ($out);
@@ -164,12 +177,11 @@ sub delete
     my $todo = Metiisto::Todo->retrieve(id => $args{id});
     $todo->delete();
     
-    my $url = '/todos';
-    $url .= "?filter_text=".params->{filter_text} if params->{filter_text};
+    #my $url = '/todos';
+    #$url .= "?filter_text=".params->{filter_text} if params->{filter_text};
+    #my $out = redirect $url;
 
-    my $out = redirect $url;
-
-    return ($out);
+    return (redirect request->referer);
 }
 ################################################################################
 1;

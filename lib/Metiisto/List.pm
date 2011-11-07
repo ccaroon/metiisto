@@ -8,7 +8,7 @@ __PACKAGE__->table('lists');
 __PACKAGE__->columns(All => qw/
     id name
 /);
-__PACKAGE__->has_many(items => 'Metiisto::Todo');
+__PACKAGE__->has_many(items => 'Metiisto::Todo', { order_by => 'completed,priority' });
 ################################################################################
 sub completed_items
 {
