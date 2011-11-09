@@ -89,9 +89,9 @@ sub create
     {
         next unless $p =~ /^todo\.(.*)$/;
         my $attr = $1;
-        $data->{$attr} = params->{$p};
+        my $value = params->{$p} eq 'NULL' ? undef : params->{$p};
+        $data->{$attr} = $value;
     }
-    $data->{list_id}  = undef unless $data->{list_id};
     $data->{due_date} = undef unless $data->{due_date};
 
     my $todo = Metiisto::Todo->insert($data);
@@ -142,7 +142,8 @@ sub update
     {
         next unless $p =~ /^todo\.(.*)$/;
         my $attr = $1;
-        $todo->$attr(params->{$p});
+        my $value = params->{$p} eq 'NULL' ? undef : params->{$p};
+        $todo->$attr($value);
     }
     if ($todo->completed() and !$todo->completed_date())
     {
@@ -176,10 +177,6 @@ sub delete
 
     my $todo = Metiisto::Todo->retrieve(id => $args{id});
     $todo->delete();
-    
-    #my $url = '/todos';
-    #$url .= "?filter_text=".params->{filter_text} if params->{filter_text};
-    #my $out = redirect $url;
 
     return (redirect request->referer);
 }

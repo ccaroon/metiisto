@@ -33,7 +33,7 @@
             <b>List:</b>
             [% list_id = todo.list.id ? todo.list.id : 0 %]
             <select name="todo.list_id">
-                <option [% list_id ? '' : 'selected' %] value="">--None--</option>
+                <option [% list_id ? '' : 'selected' %] value="NULL">--None--</option>
             [% FOREACH list in lists %]
                 <option [% list.id == list_id ? 'selected' : '' %] value="[% list.id %]">[% list.name %]</option>
             [% END %]
