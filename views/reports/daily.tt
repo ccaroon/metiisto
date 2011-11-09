@@ -6,10 +6,10 @@
 [% NEXT unless day_list.0 %]
 ## [% day_list.0.task_date.format('%A') %] ##
 
-[% FOREACH day in day_list %]
-#### [% day.subject %] ####
+[% FOREACH entry in day_list %]
+#### [% entry.ticket_num ? '<a href="http://' _ session.user.preferences('jira_host') _ '/browse/' _ entry.ticket_num _ '">' _ entry.ticket_num _ '</a> - ' : '' %] [% entry.subject %] ####
 
-[% day.description %]
+[% entry.description %]
 
 [% END %]
 
