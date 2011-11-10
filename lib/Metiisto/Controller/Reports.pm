@@ -3,7 +3,7 @@ package Metiisto::Controller::Reports;
 use strict;
 
 use Dancer ':syntax';
-use Mail::SendEasy;
+use Net::SMTP::SSL;
 use Text::Markdown 'markdown';
 
 use Metiisto::Entry;
@@ -110,35 +110,55 @@ sub email
     my $this = shift;
     my %args = @_;
 
+    my $out;
+
     my $report_name = $args{name};
     my $report_body = $this->$report_name(no_controls => 1);
     my $report_date = Metiisto::Util::DateTime->monday(for_date => params->{date});
     $report_date->add_days(days => 4);
 
-    my $mailer = Mail::SendEasy->new(
-        smtp => session->{user}->preferences('smtp_host'),
-        user => session->{user}->preferences('smtp_user'),
-        pass => session->{user}->preferences('smtp_pass'),
-    );
-
-    my $sent = $mailer->send(
-        to         => session->{user}->preferences('report_recipients'),
-        from       => session->{user}->email(),
-        from_title => session->{user}->name(),
-        subject    => "[WR] ".$report_date->format("%Y.%m.%d"),
-        html       => $report_body,
-    );
-
-    my $out;
-    if ($sent)
+    eval
     {
-        $out = redirect '/home';
+        my $smtp_user = session->{user}->preferences('smtp_user');
+        my $from      = session->{user}->email();
+        my $user_name = session->{user}->name();
+        my $to        = session->{user}->preferences('report_recipients');
+
+        my $smtp = Net::SMTP::SSL->new(
+            session->{user}->preferences('smtp_host'),
+            Port  => session->{user}->preferences('smtp_port'),
+            Debug => 0
+        );
+        die "Unable to connect to SMTP server" unless $smtp;
+
+        $smtp->auth($smtp_user, session->{user}->preferences('smtp_pass'))
+            or die "Authentication failed!";
+
+        $smtp->mail("$smtp_user\n");
+        my @recepients = split /,/, $to;
+        foreach my $recp (@recepients)
+        {
+            $smtp->to("$recp\n");
+        }
+        $smtp->data();
+        $smtp->datasend("From: $user_name <$from>\n");
+        $smtp->datasend("To: $to\n");
+        $smtp->datasend("Subject: [WR] " . $report_date->format("%Y.%m.%d") . "\n");
+        $smtp->datasend("Content-type: text/html\n");
+        $smtp->datasend("\n");
+        $smtp->datasend($report_body. "\n");
+        $smtp->dataend();
+        $smtp->quit();
+    };
+    if ($@)
+    {
+        $out = template 'error', {
+            message => "Error emailing '$report_name' report: $@"
+        };
     }
     else
     {
-        $out = template 'error', {
-            message => "Error emailing '$report_name' report: ".$mailer->error()
-        };
+        $out = redirect '/home';
     }
 
     return($out);

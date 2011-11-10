@@ -109,7 +109,6 @@ sub edit
         $out = template 'users/edit', {
             user       => $user,
             themes     => Metiisto::Preference->THEMES,
-            smtp_auths => Metiisto::Preference->SMTP_AUTHS,
         };
     }
 

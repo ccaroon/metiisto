@@ -40,17 +40,9 @@
     <div class="ui-widget-header">Email Config</div>
     <div class="ui-widget-content">
         <p>SMTP Host: <input type="text" name="user.preferences.smtp_host" value="[% user.preferences('smtp_host') %]"></p>
+        <p>SMTP Port: <input type="text" name="user.preferences.smtp_port" value="[% user.preferences('smtp_port') %]"></p>
         <p>SMTP User: <input type="text" name="user.preferences.smtp_user" value="[% user.preferences('smtp_user') %]"></p>
         <p>SMTP Password: <input type="text" name="user.preferences.smtp_pass" value="[% user.preferences('smtp_pass') %]"></p>
-        <p>
-        SMTP Auth:
-        <select name="user.preferences.smtp_auth">
-            [% FOREACH type IN smtp_auths %]
-                [% selected = user.preferences('smtp_auth') == type ? "selected" : "" %]
-                <option [% selected %] value="[% type %]">[% type | ucfirst %]</option>
-            [% END %]
-        </select>
-        </p>
     </div>
     </p>
 
