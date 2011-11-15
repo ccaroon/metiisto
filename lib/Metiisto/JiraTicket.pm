@@ -3,7 +3,7 @@ package Metiisto::JiraTicket;
 use strict;
 use feature 'switch';
 
-use Dancer ':syntax';
+use Dancer qw(session);
 use LWP::Simple qw();
 use Moose;
 use XML::Simple;

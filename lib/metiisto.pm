@@ -32,7 +32,7 @@ Metiisto::Controller::Countdowns->declare_routes();
 use Metiisto::Controller::Reports;
 Metiisto::Controller::Reports->declare_routes();
 ################################################################################
-before sub
+hook before => sub
 {
     # undef is for the leading slash
     my (undef,$controller,$id,$action) = split '/', request->path_info, 4;
