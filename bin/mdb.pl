@@ -33,7 +33,7 @@ if ($cmd and main->can($cmd))
 else
 {
     warn "Unknown command: '$cmd'.\n";
-    print STDERR "Usage: $0 init_migrations|migrate|create_migration\n";
+    print STDERR "Usage: $0 backup|restore|shell|init_migrations|migrate|create_migration\n";
 }
 ################################################################################
 sub backup
