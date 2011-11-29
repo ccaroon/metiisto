@@ -13,7 +13,7 @@ sub list
 {
     my $this = shift;
 
-    my $days = Metiisto::Workday->find_week();
+    my $days = Metiisto::Workday->find_week(date => params->{date});
 
     my $out = template 'workdays/list', {
         today => Metiisto::Util::DateTime->now(),
@@ -96,9 +96,10 @@ sub update
     my $cnt = $day->update();
     die "Error saving Workday($args{id})" unless $cnt;
 
-    my $out = redirect "/workdays";
+    my $url = '/workdays';
+    $url .= "?date=".params->{date} if params->{date};
 
-    return ($out);
+    return (redirect $url);
 }
 ################################################################################
 sub delete
@@ -109,7 +110,10 @@ sub delete
     my $day = Metiisto::Workday->retrieve(id => $args{id});
     $day->delete();
 
-    return (redirect '/workdays');
+    my $url = '/workdays';
+    $url .= "?date=".params->{date} if params->{date};
+
+    return (redirect $url);
 }
 ################################################################################
 sub set_day_type
@@ -136,14 +140,17 @@ sub set_day_type
     }
     $day->update();
 
-    return (redirect '/workdays');
+    my $url = '/workdays';
+    $url .= "?date=".params->{date} if params->{date};
+
+    return (redirect $url);
 }
 ################################################################################
 sub generate_week
 {
     my $this = shift;
 
-    my $monday = Metiisto::Util::DateTime->monday();
+    my $monday = Metiisto::Util::DateTime->monday(for_date => params->{date});
     for(my $i = 0; $i < 5; $i++)
     {
         my $date = Metiisto::Util::DateTime->new(
@@ -157,7 +164,10 @@ sub generate_week
         });
     }
 
-    return (redirect '/workdays');
+    my $url = '/workdays';
+    $url .= "?date=".params->{date} if params->{date};
+
+    return (redirect $url);
 }
 ################################################################################
 sub declare_routes

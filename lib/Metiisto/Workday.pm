@@ -30,14 +30,16 @@ sub find_week
     my $class = shift;
     my %args = @_;
 
-    my $monday = Metiisto::Util::DateTime->monday(for_date => $args{date});
+    my $date = Metiisto::Util::DateTime->monday(for_date => $args{date});
+    my $mon_str = $date->format_db(date_only => 1);
+    $date->add_days(days => 4);
+    my $fri_str = $date->format_db(date_only => 1);
+
     my @days = $class->search_where(
         {
-            work_date => {'>=', $monday->format_db(date_only => 1)}
+            work_date => {'between' => [$mon_str, $fri_str]}
         },
         {
-            limit_dialect => 'LimitOffset',
-            limit         => 5,
             order_by      => 'work_date, time_in',
         }
     );

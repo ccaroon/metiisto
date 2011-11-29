@@ -64,10 +64,10 @@
                 <td align="center">[% day.time_lunch.format("%R") %]</td>
                 <td align="center">[% day.total_hours %]</td>
                 <td width="20%" align="center">
-                    <button id="button-regular-[% day.id %]" class="button-regular-day" value="/workdays/[% day.id %]/set_day_type?type=regular">Regular</button>
-                    <button id="button-holiday-[% day.id %]" class="button-holiday-day" value="/workdays/[% day.id %]/set_day_type?type=holiday">Holiday</button>
-                    <button id="button-vacation-[% day.id %]" class="button-vacation-day" value="/workdays/[% day.id %]/set_day_type?type=vacation">Vacation</button>
-                    <button id="button-sick-[% day.id %]" class="button-sick-day" value="/workdays/[% day.id %]/set_day_type?type=sick">Sick</button>
+                    <button id="button-regular-[% day.id %]" class="button-regular-day" value="/workdays/[% day.id %]/set_day_type?type=regular;date=[% params.date %]">Regular</button>
+                    <button id="button-holiday-[% day.id %]" class="button-holiday-day" value="/workdays/[% day.id %]/set_day_type?type=holiday;date=[% params.date %]">Holiday</button>
+                    <button id="button-vacation-[% day.id %]" class="button-vacation-day" value="/workdays/[% day.id %]/set_day_type?type=vacation;date=[% params.date %]">Vacation</button>
+                    <button id="button-sick-[% day.id %]" class="button-sick-day" value="/workdays/[% day.id %]/set_day_type?type=sick;date=[% params.date %]">Sick</button>
                     [% IF day.is_holiday %]
                     <script>
                         $(function () {
@@ -101,6 +101,7 @@
                     </div>
                      <div id="edit-note-[% day.id %]" style="display:none">
                         <form method="POST" action="/workdays/[% day.id %]">
+                            <input type="hidden" name="date" value="[% params.date %]">
                             <input id="input-note-[% day.id %]" type="text" name="workday.note" size="10" value="[% day.note %]">
                         </form>
                      </div>
@@ -119,7 +120,7 @@
                         no_edit = 1
                         item_id = day.id
                         delete_message = day.work_date.format("%A (%b %d, %Y)")
-                        query_string = ""
+                        query_string = "date=" _ params.date
                     %]
                 </td>
             </tr>
@@ -127,7 +128,7 @@
         </table>
         
         <p align="center">
-            <a class="button" href="/workdays/generate_week">Generate Week</a>
+            <a class="button" href="/workdays/generate_week?date=[% params.date %]">Generate Week</a>
             <a class="button" href="/workdays/new">Add</a>
         </p>
 
