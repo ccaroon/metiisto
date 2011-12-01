@@ -16,19 +16,21 @@ sub list
     my $this = shift;
 
     my $total_entries = 0;
-    my $conditions    = {1=>1};
+    my $conditions;
     if (params->{filter_text})
     {
-        # TODO: should be OR'ing subject and desc. but not working
-        $conditions = {
-            #subject     => { 'regexp', params->{filter_text} },
-            description => { 'regexp', params->{filter_text} },
-        };
+        $conditions = [
+            { subject => { 'regexp', params->{filter_text} } },
+            # OR
+            { description => { 'regexp', params->{filter_text} } },
+        ];
+
         $total_entries
             = Metiisto::Entry->count_where("description regexp '".params->{filter_text}."'");
     }
     else
     {
+        $conditions    = {1=>1};
         $total_entries = Metiisto::Entry->count();
     }
 

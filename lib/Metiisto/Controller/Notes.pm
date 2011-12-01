@@ -20,14 +20,18 @@ sub list
     my $this = shift;
 
     my $total      = 0;
-    my $conditions = {};
+    my $conditions;
     if (params->{filter_text})
     {
-        $conditions->{body} = { 'regexp', params->{filter_text} };
+        $conditions = [
+            { title => { 'regexp', params->{filter_text} } },
+            # OR
+            { body  => { 'regexp', params->{filter_text} } },
+        ];
     }
     else
     {
-        $conditions->{1} = 1;
+        $conditions = {1=>1};
     }
 
     my $sql_abs = SQL::Abstract->new();
