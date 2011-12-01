@@ -3,13 +3,19 @@
     PROCESS util/tools.tt;
 %]
 <div class="ui-widget">
+    [% IF is_list %]
+    <div class="ui-widget-header">
+        <a href="/lists">Lists</a> &raquo; [% list.name %]
+    </div>
+    [% ELSE %]
     <div class="ui-widget-header">Todos</div>
     <div class="ui-widget-content" align="center">
         [% PROCESS shared/filter.tt %]
         [% PROCESS shared/pagination.tt page_data=pagination %]
     </div>
+    [% END %]
     <div class="ui-widget-content">
-        <table width="100%">
+        <table width="100%" class="ui-widget-content">
             <tr class="ui-widget-header">
                 <th>Priority</th>
                 <th width="55%">Title</th>
@@ -55,16 +61,23 @@
             </tr>
             [% END  %]
         </table>
+        [% IF is_list %]
+        <p align="center">
+            <a class="button" href="/todos/new?list_id=[% list.id %]">Add Item</a>
+        </p>
+        [% END %]
     </div>
 </div>
 <script>
+    $('.button').button();
+
     [% PROCESS shared/list/actions_js.tt %]
-    
+
     $('.action-button-mark-complete').button({
         text: false,
         icons: {
             primary: 'ui-icon-check'
         }
     });
-    
+
 </script>

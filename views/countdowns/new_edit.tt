@@ -5,16 +5,18 @@
     <div class="ui-widget-content">
         <form method="post" action="/countdowns[% countdown.id ? '/' _ countdown.id : '' %]">
             <p>
-                Title: <input type="text" name="countdown.title" value="[% countdown.title %]">
+                <b>Title:</b>
+                <input type="text" name="countdown.title" value="[% countdown.title %]">
             </p>
             <p>
-                Target Date:
+                <b>Target Date:</b>
                 <input type="text" id="countdown-target_date" name="countdown.target_date" value="[% countdown.target_date.format_db('date_only',1) %]" size="10">
                 <br>
-                Target Time: <input type="text" name="countdown.target_time" value="[% countdown.target_date.format('%I:%M%P') %]" size="10">
+                <b>Target Time:</b>
+                <input type="text" name="countdown.target_time" value="[% countdown.target_date.format('%I:%M%P') %]" size="10">
             </p>
             <p>
-                Units:
+                <b>Units:</b>
                 <select name="countdown.units">
                 [% FOREACH unit IN units %]
                     <option [% countdown.units == unit ? 'selected' : '' %] value="[% unit %]">[% unit | ucfirst %]s</option>
@@ -22,7 +24,7 @@
                 </select>
             </p>
             <p>
-                On Homepage:
+                <b>On Homepage:</b>
                 <label for="countdown-homepage">On Homepage</label>
                 <input id="countdown-homepage" type="checkbox" name="countdown.on_homepage" value="1" [% countdown.on_homepage ? 'checked' : '' %]>
             </p>

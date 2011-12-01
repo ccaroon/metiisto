@@ -5,15 +5,16 @@
     <div class="ui-widget-content">
         <form method="post" action="/notes[% note.id ? '/' _ note.id : '' %]">
             <p>
-                Title: <input type="text" name="note.title" value="[% note.title %]" size="25">
+                <b>Title:</b>
+                <input type="text" name="note.title" value="[% note.title %]" size="25">
             </p>
             <p>
-                Favorite?:
+                <b>Favorite?:</b>
                 <label for="note-favorite">Favorite?</label>
                 <input id="note-favorite" type="checkbox" name="note.is_favorite" value="1" [% note.is_favorite ? 'checked' : '' %]>
             </p>
             <p>
-                Body:<br>
+                <b>Body:</b><br>
                 <textarea rows="25" cols="80" wrap="physical" name="note.body">[% note.body %]</textarea>                
             </p>
             <p>

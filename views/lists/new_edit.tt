@@ -1,0 +1,19 @@
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        [% vars.action | ucfirst %] List
+    </div>
+    <div class="ui-widget-content">
+        <form method="post" action="/lists[% list.id ? '/' _ list.id : '' %]">
+            <p>
+                <b>Name:</b> <input type="text" name="list.name" value="[% list.name %]" size="25">
+            </p>
+            <p>
+                <input class="button" type="submit" value="Save">
+                <a class="button" href="/lists/[% list.id %]">View</a>
+            </p>
+        </form>
+    </div>
+</div>
+<script>
+    $('.button').button();
+</script>

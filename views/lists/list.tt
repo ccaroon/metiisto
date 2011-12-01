@@ -8,7 +8,7 @@
         [% PROCESS shared/pagination.tt page_data=pagination %]
     </div>
     <div class="ui-widget-content">
-        <table width="100%">
+        <table width="100%"  class="ui-widget-content">
             <tr class="ui-widget-header">
                 <th>Name</th>
                 <th>Items</th>
@@ -17,7 +17,7 @@
             [% FOREACH list in lists %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                 <td width="70%"><a href="/lists/[% list.id %]">[% list.name %]</a></td>
-                <td>[% list.completed_items.size %]/[% list.items.size %]</td>
+                <td>[% list.completed_items.size OR 0 %]/[% list.items.size OR 0 %]</td>
                 <td align="center">
                     [% PROCESS shared/list/actions.tt
                         controller = 'lists'
@@ -29,8 +29,10 @@
             </tr>
             [% END %]
         </table>
+        <p align="center"><a class="button" href="/lists/new">Add</a></p>
     </div>
 </div>
 <script>
+    $('.button').button();
     [% PROCESS shared/list/actions_js.tt %]
 </script>

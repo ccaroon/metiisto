@@ -2,6 +2,8 @@ use Test::More tests => 2;
 use strict;
 use warnings;
 
+use lib "$ENV{METIISTO_HOME}/lib";
+
 # the order is important
 use metiisto;
 use Dancer::Test;

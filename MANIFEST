@@ -221,7 +221,6 @@ views/index.tt
 views/layouts/main.tt
 views/lists/list.tt
 views/lists/new_edit.html.erb
-views/lists/show.tt
 views/notes/list.tt
 views/notes/new_edit.tt
 views/notes/show.tt

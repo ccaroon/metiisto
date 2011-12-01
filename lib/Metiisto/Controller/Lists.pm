@@ -100,7 +100,13 @@ sub show
     my %args = @_;
 
     my $list = Metiisto::List->retrieve($args{id});
-    my $out = template 'lists/show', { list => $list };
+
+    my @items = $list->items();
+    my $out = template 'todos/list', {
+        list    => $list,
+        todos   => \@items,
+        is_list => 1
+    };
 
     return ($out);
 }
