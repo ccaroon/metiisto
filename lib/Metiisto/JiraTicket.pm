@@ -10,6 +10,9 @@ use XML::Simple;
 
 use constant JIRA_URL => "http://_JIRA_HOST_/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?jqlQuery=_JIRA_QUERY_&tempMax=1000&os_username=_JIRA_USER_&os_password=_JIRA_PASS_";
 
+# customfield_10020 == Points
+use constant FIELDS => '&field=key&field=summary&field=link&field=status&field=type&field=fixVersions&field=parent&field=customfield_10020';
+
 use constant SUB_TASK_TYPES => {
     'Sub-task'    => 1,
     'Spec Review' => 1,
@@ -86,6 +89,7 @@ sub search
     $url =~ s/_JIRA_USER_/session->{user}->preferences('jira_username')/e;
     $url =~ s/_JIRA_PASS_/session->{user}->preferences('jira_password')/e;
     $url =~ s/_JIRA_QUERY_/$query/;
+    $url .= FIELDS;
 
     my $xml = LWP::Simple::get($url);
     if ($xml)
