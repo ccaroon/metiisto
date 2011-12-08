@@ -36,7 +36,7 @@ sub monday
     my $class = shift;
     my %args = @_;
 
-    my $for_date = defined $args{for_date}
+    my $for_date = $args{for_date}
         ? Metiisto::Util::DateTime->parse($args{for_date})
         : Metiisto::Util::DateTime->now();
     my $week_day = $for_date->format("%w");

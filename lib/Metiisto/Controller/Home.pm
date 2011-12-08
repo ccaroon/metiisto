@@ -9,6 +9,7 @@ use Metiisto::Countdown;
 use Metiisto::JiraTicket;
 use Metiisto::Note;
 use Metiisto::Todo;
+use Metiisto::Util::Cache;
 
 use base 'Metiisto::Controller::Base';
 ################################################################################
@@ -34,27 +35,51 @@ sub home
         { order_by => 'priority' }
     );
 
-    # TODO: put some caching around ticket info.
-    my $tickets = Metiisto::JiraTicket->search(
-        query => "filter=".session->{user}->preferences('jira_filter_id'));
-    
-    # TODO: put some caching around current_release info
-    my $ready_points = 0;
-    my $total_points = 0;
-    # TODO: don't hardcode current release filter id
-    my @release_tickets = Metiisto::JiraTicket->search(
-        query => "filter=11224 AND assignee=".session->{user}->preferences('jira_username'));
-    foreach my $t (@release_tickets)
+    my $tickets = Metiisto::Util::Cache->get(key => 'my_tickets');
+    unless ($tickets)
     {
-        $total_points += $t->points();
-        if ($t->status() =~ /(Ready for release|Closed|Rejected)/)
-        {
-            $ready_points += $t->points();
-        }
+        $tickets = Metiisto::JiraTicket->search(
+            query => "filter=".session->{user}->preferences('jira_filter_id'));
+        Metiisto::Util::Cache->set(key => 'my_tickets', value => $tickets, ttl => 60);
     }
 
-    my $current_release_name = (scalar @release_tickets != 0)
-        ? $release_tickets[0]->fix_version()
+    my $ready_points = 0;
+    my $total_points = 0;
+    my $release_tickets;
+    my $release_data = Metiisto::Util::Cache->get(key => 'release_tickets');
+    if ($release_data)
+    {
+        $ready_points    = $release_data->{ready_points};
+        $total_points    = $release_data->{total_points};
+        $release_tickets = $release_data->{tickets};
+    }
+    else
+    {
+        # TODO: don't hardcode current release filter id
+        $release_tickets = Metiisto::JiraTicket->search(
+            query => "filter=11224 AND assignee=".session->{user}->preferences('jira_username'));
+        foreach my $t (@$release_tickets)
+        {
+            $total_points += $t->points();
+            if ($t->status() =~ /(Ready for release|Closed|Rejected)/)
+            {
+                $ready_points += $t->points();
+            }
+        }
+        
+        Metiisto::Util::Cache->set(
+            key   => 'release_tickets',
+            value => {
+                tickets      => $release_tickets,
+                ready_points => $ready_points,
+                total_points => $total_points,
+            },
+            ttl   => 10 * 60,
+        );
+    }
+
+    my $current_release_name = (scalar @$release_tickets != 0)
+        ? $release_tickets->[0]->fix_version()
         : '?????';
 
     my @recent_notes = Metiisto::Note->search_where(
@@ -104,7 +129,7 @@ sub home
             name         => $current_release_name,
             ready_points => $ready_points,
             total_points => $total_points,
-            tickets      => \@release_tickets,
+            tickets      => $release_tickets,
         }
     };
 
