@@ -1,13 +1,14 @@
 [%
     USE Math;
     PROCESS util/format.tt;
+    count = 0;
 %]
 <div class="ui-widget">
     <div>
-    [% FOREACH countdown IN countdowns %]
-        [% fract_entity = fraction_entity(countdown.time_left) %]
+    [%- FOREACH countdown IN countdowns -%]
+        [%- fract_entity = fraction_entity(countdown.time_left) -%]
         <span class="ui-widget-content">
-            <abbr style="" title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]">
+            <abbr title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]">
             <strong>[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]</strong>
             [% countdown.english_units %]
             [% countdown.time_left >= 0 ? "Until" : "Since" %]
@@ -15,7 +16,11 @@
             </abbr>
         </span>
         &nbsp;
-    [% END %]
+        [% count = count + 1 %]
+        [% IF count % 4 == 0 %]
+            <br>
+        [% END %]
+    [%- END -%]
     </div>
 </div>
 
