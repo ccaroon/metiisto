@@ -33,7 +33,7 @@ if ($cmd and main->can($cmd))
 else
 {
     warn "Unknown command: '$cmd'.\n";
-    print STDERR "Usage: $0 backup|restore|shell|init_migrations|migrate|create_migration\n";
+    print STDERR "Usage: $0 backup|restore|shell|init_migrations|migrate|create_migration|dump_schema\n";
 }
 ################################################################################
 sub backup
@@ -131,6 +131,57 @@ sub migrate
             $dbh->do("insert into schema_migrations values ($version, now())");
         }
     }
+}
+################################################################################
+sub dump_schema
+{
+    my $class = shift;
+    my $schema_file = 'schema.sql';
+
+    # HEADER
+    my $schema = <<EOF;
+/*!40014 SET \@OLD_UNIQUE_CHECKS=\@\@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET \@OLD_FOREIGN_KEY_CHECKS=\@\@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+
+-- -----------------------------------------------------------------------------
+
+EOF
+
+    # BODY == Create table statements
+    my $dbh = database();
+    my $stmt = $dbh->prepare("show tables");
+    $stmt->execute();
+    while ( my $row = $stmt->fetchrow_arrayref() )
+    {
+        my $cs = $dbh->prepare("show create table $row->[0]");
+        $cs->execute();
+        my $info = $cs->fetchrow_arrayref();
+        my $sql  = $info->[1];
+        $cs->finish();
+
+        $sql =~ s/\) ENGINE=(\w*) .*/) ENGINE=$1/m;
+        $sql .= ';';
+
+        $schema .= <<EOF;
+-- $row->[0]
+$sql
+
+EOF
+    }
+    $stmt->finish();
+
+    # FOOTER
+    $schema .= <<EOF;
+-- -----------------------------------------------------------------------------
+
+/*!40014 SET FOREIGN_KEY_CHECKS=\@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=\@OLD_UNIQUE_CHECKS */;
+
+EOF
+
+    write_file( $schema_file, $schema );
+    
+    print STDERR "'$ENV{METIISTO_ENV}' database schema dumped to '$schema_file'\n";
 }
 ################################################################################
 sub create_migration
