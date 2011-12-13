@@ -1,8 +1,14 @@
 use Test::More tests => 2;
 use strict;
-use warnings;
 
 use lib "$ENV{METIISTO_HOME}/lib";
+
+# *MUST* come before 'use Dancer::*' so that Dancer gets the correct environment
+BEGIN
+{
+    $ENV{METIISTO_ENV} = 'test';
+    $ENV{DANCER_ENVIRONMENT} = $ENV{METIISTO_ENV};
+}
 
 # the order is important
 use metiisto;

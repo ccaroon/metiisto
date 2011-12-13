@@ -2,6 +2,7 @@ package Metiisto::Preference;
 ################################################################################
 use strict;
 
+use lib "$ENV{METIISTO_HOME}/lib";
 use Metiisto::User;
 
 use base 'Metiisto::Base';

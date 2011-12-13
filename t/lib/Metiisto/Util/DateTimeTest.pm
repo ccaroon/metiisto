@@ -42,7 +42,7 @@ sub test_undef_dt: Test(4)
     is $dt->format("%c"), undef, "formatting an 'empty' instance should return undef";
 }
 ################################################################################
-sub test_monday : Tests
+sub test_monday : Test(2)
 {
     my $this = shift;
     

@@ -2,10 +2,19 @@
 ################################################################################
 use strict;
 
+BEGIN
+{
+    $ENV{METIISTO_ENV}       = 'test';
+    $ENV{DANCER_ENVIRONMENT} = $ENV{METIISTO_ENV};
+}
+use Dancer ':script';
+
 use lib "$ENV{METIISTO_HOME}/t/lib";
 
 use Test::Class;
 ################################################################################
+use Metiisto::CountdownTest;
+#use Metiisto::PreferenceTest;
 use Metiisto::Util::DateTimeTest;
 ################################################################################
 Test::Class->runtests();
