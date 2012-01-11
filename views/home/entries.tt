@@ -11,8 +11,12 @@
             [% FOREACH entry IN entries %]
                 <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                     <td>[% entry.task_date.format('%a') %]</td>
-                    <td>[% entry.category %]<br>
-                        <a href="http://jira.mcclatchyinteractive.com/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
+                    <td>
+                        [% IF entry.category == 'Ticket' %]
+                            <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
+                        [% ELSE %]
+                            [% entry.category %]
+                        [% END %]
                     </td>
                     <td>
                         <a href="/entries/[% entry.id %]">[% entry.subject %]</a>
