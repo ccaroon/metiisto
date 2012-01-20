@@ -8,20 +8,20 @@
         [% END %]
         <form  method="post" action="/users/login">
             <p>
-                <img src="/images/themes/default/user.png" border="0">
+                <img src="/images/icons/user.png" border="0">
                 Username: <input type="text" name="user_name">
             </p>
             <p>
-                <img src="/images/themes/default/lock_on.png" border="0">
+                <img src="/images/icons/lock_on.png" border="0">
                 Password: <input type="password" name="password">
             </p>
             [% IF is_create %]
             <p>
-                <img src="/images/themes/default/user.png" border="0">
+                <img src="/images/icons/user.png" border="0">
                 Real Name: <input type="text" name="name">
             </p>
             <p>
-                <img src="/images/themes/default/user.png" border="0">
+                <img src="/images/icons/email.png" border="0">
                 Email: <input type="text" name="email">
             </p>
             [% END %]
