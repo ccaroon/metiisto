@@ -9,10 +9,10 @@ use base 'Metiisto::Base';
 
 use constant THEMES => [
     'cupertino',
-    'lime-sherbert',
+    'flick',
+    'humanity',
     'pepper-grinder',
     'redmond',
-    'seafoam',
     'smoothness',
     'ui-lightness',
 ];
