@@ -21,6 +21,7 @@ WriteMakefile(
         'Digest::SHA1'               => 2.13,
         'Data::Page'                 => 2.02,
         'Text::Markdown'             => 1.000031,
+        'Template'                   => 2.24,
         'Template::Plugin::Markdown' => 0.02,
         'Net::SSLeay'                => 1.42,
         'IO::Socket::SSL'            => 1.49,
