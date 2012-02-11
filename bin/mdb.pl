@@ -1,4 +1,4 @@
-#!/bin/env perl
+#!/usr/bin/env perl
 use strict;
 
 use lib "$ENV{METIISTO_HOME}/sql/migrations";
