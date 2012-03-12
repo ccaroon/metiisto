@@ -11,7 +11,7 @@
                 </td>
                 <td>
                 [% IF session.user %]
-                    <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
+                    <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a> [% vars.env != 'production' ? '(' _ vars.env _ ')' : '' %]
                 [% ELSE %]
                     <a href="/users/login">Log In</a>
                 [% END %]

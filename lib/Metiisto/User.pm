@@ -7,8 +7,6 @@ use Digest::SHA1 qw(sha1_hex);
 use Metiisto::Preference;
 
 use base 'Metiisto::Base';
-# TODO: do i have a pref caching issue???
-my %PREF_CACHE;
 ################################################################################
 __PACKAGE__->table('users');
 __PACKAGE__->columns(All => qw/
@@ -41,20 +39,19 @@ sub preferences
 
     scalar(@_) == 1 ? $args{name} = shift : (%args = @_);
 
-    if (!%PREF_CACHE || $args{reload})
-    {
-        my @prefs = $this->_prefs();
-        map { $PREF_CACHE{$_->name()} = $_; } @prefs;
-    }
+    my @prefs = $this->_prefs();
+
+    my %pref_map;
+    map { $pref_map{$_->name()} = $_; } @prefs;
 
     my $value;
     if ($args{name})
     {
-        $value = $PREF_CACHE{$args{name}}->value();
+        $value = $pref_map{$args{name}}->value();
     }
     else
     {
-        $value = \%PREF_CACHE;
+        $value = \%pref_map;
     }
 
     return ($value);

@@ -45,6 +45,15 @@ function app_status
     fi
 }
 ################################################################################
+function app_env
+{
+    if [ $1 ]; then
+        echo "Please use this command: sh> export METIISTO_ENV=$1";
+    else
+        echo "Environment: $METIISTO_ENV";
+    fi
+}
+################################################################################
 case $1 in
     start) 
         app_start;
@@ -61,7 +70,7 @@ case $1 in
         app_status;
     ;;
     env) 
-        echo "Environment: $METIISTO_ENV";
+        app_env $2;
     ;;
     log) 
         tail -f $APP_DIR/logs/$METIISTO_ENV.log

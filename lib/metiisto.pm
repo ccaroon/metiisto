@@ -39,6 +39,9 @@ hook before => sub
     var controller => $controller;
     var id         => $id;
     var action     => $action;
+    # NOTE: I want to access the "environment" setting in my templates. I can't
+    #       find any other way except to set a 'var'
+    var env        => setting('environment');
 
     if (!session('user') and request->path_info !~ m|^/users/login|)
     {
