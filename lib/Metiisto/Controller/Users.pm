@@ -3,7 +3,6 @@ package Metiisto::Controller::Users;
 use strict;
 
 use Dancer ':syntax';
-use Digest::SHA1 qw(sha1_hex);
 
 use Metiisto::User;
 
@@ -21,12 +20,12 @@ sub login
         if (params->{name} && params->{user_name}
             && params->{password} && params->{email})
         {
-            Metiisto::User->insert({
+            Metiisto::User->add(
                 name      => params->{name},
                 user_name => params->{user_name},
-                password  => sha1_hex(params->{password}),
+                password  => params->{password},
                 email     => params->{email}
-            });
+            );
         }
         else
         {

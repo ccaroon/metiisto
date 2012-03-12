@@ -60,4 +60,23 @@ sub preferences
     return ($value);
 }
 ################################################################################
+sub add
+{
+    my $class = shift;
+    my %args = @_;
+
+    if ($args{name} && $args{user_name}
+        && $args{password} && $args{email})
+    {
+        my $user = $class->insert({
+            name      => $args{name},
+            user_name => $args{user_name},
+            password  => sha1_hex($args{password}),
+            email     => $args{email}
+        });
+
+        Metiisto::Preference->init_defaults_for_user(user => $user);
+    }
+}
+################################################################################
 1;
