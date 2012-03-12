@@ -16,11 +16,10 @@ use constant CATEGORIES => [
 
 __PACKAGE__->table('entries');
 __PACKAGE__->columns(All => qw/
-    id task_date entry_date ticket_num subject description category goal_id
+    id task_date entry_date ticket_num subject description category
 /);
 __PACKAGE__->has_a_datetime('task_date');
 __PACKAGE__->has_a_datetime('entry_date');
-# TODO: has_a: goal -- deprecate goals????
 ################################################################################
 sub recent_subjects
 {

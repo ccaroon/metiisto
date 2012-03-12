@@ -20,7 +20,6 @@ lib/Metiisto/Controller/Users.pm
 lib/Metiisto/Controller/Workdays.pm
 lib/Metiisto/Countdown.pm
 lib/Metiisto/Entry.pm
-lib/Metiisto/Goal.pm
 lib/Metiisto/JiraTicket.pm
 lib/Metiisto/List.pm
 lib/Metiisto/Note.pm
@@ -167,6 +166,7 @@ sql/migrations/20111019101654_move_prefs_from_users_table_to_preferences_table.p
 sql/migrations/20111019144300_init_workman_db_for_metiisto.pm
 sql/migrations/20111021092343_normalize_date_field_names.pm
 sql/migrations/20111110142300_SMTP_delete_auth_type_and_add_port.pm
+sql/migrations/20120312123947_deprecate_goals.pm
 sql/schema.sql
 t/controllers.t.example
 t/lib/Metiisto/BaseTest.pm
@@ -185,7 +185,6 @@ views/error.tt
 views/home/countdowns.tt
 views/home/current_release.tt
 views/home/entries.tt
-views/home/goals.tt
 views/home/index.tt
 views/home/notes.tt
 views/home/tickets.tt

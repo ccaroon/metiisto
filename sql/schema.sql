@@ -22,22 +22,9 @@ CREATE TABLE `entries` (
   `subject` varchar(255) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `category` varchar(255) NOT NULL DEFAULT 'Other',
-  `goal_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM;
-
--- goals
-CREATE TABLE `goals` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `priority` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text,
-  `completed` tinyint(1) NOT NULL DEFAULT '0',
-  `completed_date` datetime DEFAULT NULL,
-  `percent_complete` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
 
 -- lists
 CREATE TABLE `lists` (
@@ -56,16 +43,6 @@ CREATE TABLE `notes` (
   `is_favorite` tinyint(1) NOT NULL DEFAULT '0',
   `is_encrypted` tinyint(1) NOT NULL DEFAULT '0',
   `deleted_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
-
--- obstacles
-CREATE TABLE `obstacles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `description` text,
-  `is_overcome` tinyint(1) NOT NULL,
-  `goal_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
