@@ -15,7 +15,11 @@ function app_start
     if [ -f $PID_FILE ]; then
         echo "Already running: `cat $PID_FILE`";
     else
-        plackup -s $METIISTO_SERVER -E $METIISTO_ENV -p $PORT -D --pid $PID_FILE --access-log logs/$METIISTO_ENV.log --error-log logs/error.${METIISTO_ENV}.log -a bin/app.pl &> /dev/null
+        if [ "X$1" == 'Xdevel' ]; then
+            plackup -s $METIISTO_SERVER -E development -p $PORT --pid $PID_FILE -a bin/app.pl
+        else
+            plackup -s $METIISTO_SERVER -E $METIISTO_ENV -p $PORT -D --pid $PID_FILE --access-log logs/$METIISTO_ENV.log --error-log logs/error.${METIISTO_ENV}.log -a bin/app.pl &> /dev/null
+        fi
 
         if [ -f $PID_FILE ]; then
             echo "Started: `cat $PID_FILE`"
@@ -57,6 +61,9 @@ function app_env
 case $1 in
     start) 
         app_start;
+    ;;
+    start_devel)
+        app_start 'devel';
     ;;
     stop) 
         app_stop;

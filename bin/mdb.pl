@@ -16,6 +16,9 @@ BEGIN
 use Dancer ':script';
 use Dancer::Plugin::Database;
 
+use constant MIGRATE_NONE  => 'None';
+use constant MIGRATE_UP    => 'Up';
+use constant MIGRATE_DOWN  => 'Down';
 use constant MIGRATION_DIR => "$ENV{METIISTO_HOME}/sql/migrations";
 ################################################################################
 my $cmd = shift;
@@ -89,11 +92,10 @@ EOF
     print STDERR "Database has been initialized for migrations.\n";
 }
 ################################################################################
-# TODO: migrate currently only supports UP.
-################################################################################
 sub migrate
 {
     my $class = shift;
+    my $to_version = shift || 99999999999999;
 
     my $dbh = database();
 
@@ -105,30 +107,53 @@ sub migrate
     foreach my $mig (sort @migrations)
     {
         $mig =~ /^(\d{14})_(.*)\.pm/;
-        my $version = $1;
-        my $class   = $2;
-        # Skip if migration already applied to DB
-        next if grep /$version/, @applied_migs;
+        my $version   = $1;
+        my $mig_class = $2;
 
+        my $applied = (grep /$version/, @applied_migs) ? 1 : 0;
+
+        my $direction = MIGRATE_NONE;
+        if ($applied)
+        {
+            if ($version > $to_version)
+            {
+                $direction = MIGRATE_DOWN;
+            }
+        }
+        else
+        {
+            if ($version <= $to_version)
+            {
+                $direction = MIGRATE_UP;
+            }
+        }
+
+        next if $direction eq MIGRATE_NONE;
+        
         eval { require $mig; };
         print STDERR "Error requiring '$mig' [$@]. Skipping.\n" and next if $@;
+        print STDERR "$direction => $version - $mig_class...\n";
 
-        print STDERR "Applying $version - $class...\n";
-        my $up = $class->up($dbh);
-        $up =~ s/\n//g;
-        my @statements = split /;/, $up;
+        my $sql = $direction eq MIGRATE_UP
+            ? $mig_class->up($dbh)
+            : $mig_class->down($dbh);
+
+        $sql =~ s/\n//g;
+        my @statements = split /;/, $sql;
         eval
         {
             map { $dbh->do($_) } @statements;
         };
         if ($@)
         {
-            warn "Error applying migration $version - $class: $@";
+            warn "Error applying migration $version - $mig_class: $@";
             next;
         }
         else
         {
-            $dbh->do("insert into schema_migrations values ($version, now())");
+            $direction eq MIGRATE_UP
+                ? $dbh->do("insert into schema_migrations values ($version, now())")
+                : $dbh->do("delete from schema_migrations where version='$version'");
         }
     }
 }
