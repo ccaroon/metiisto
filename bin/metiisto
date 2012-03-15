@@ -79,6 +79,9 @@ case $1 in
     env) 
         app_env $2;
     ;;
+    run)
+        DANCER_ENVIRONMENT=$METIISTO_ENV perl -Mstrict -M"Dancer ':script'" -MDancer::Plugin::Database $2
+    ;;
     log) 
         tail -f $APP_DIR/logs/$METIISTO_ENV.log
     ;;
