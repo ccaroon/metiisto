@@ -33,6 +33,7 @@ WriteMakefile(
         'Moose'                      => 2.0401,
         'File::Slurp'                => 9999.19,
         'XML::Simple'                => 2.18,
+        'Lingua::EN::Inflect'        => 1.893,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'metiisto-*' },

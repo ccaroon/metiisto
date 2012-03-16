@@ -3,34 +3,34 @@
         [% vars.action | ucfirst %] Countdown
     </div>
     <div class="ui-widget-content">
-        <form method="post" action="/countdowns[% countdown.id ? '/' _ countdown.id : '' %]">
+        <form method="post" action="/countdowns[% item.id ? '/' _ item.id : '' %]">
             <p>
                 <b>Title:</b>
-                <input type="text" name="countdown.title" value="[% countdown.title %]">
+                <input type="text" name="countdown.title" value="[% item.title %]">
             </p>
             <p>
                 <b>Target Date:</b>
-                <input type="text" id="countdown-target_date" name="countdown.target_date" value="[% countdown.target_date.format_db('date_only',1) %]" size="10">
+                <input type="text" id="countdown-target_date" name="countdown.target_date" value="[% item.target_date.format_db('date_only',1) %]" size="10">
                 <br>
                 <b>Target Time:</b>
-                <input type="text" name="countdown.target_time" value="[% countdown.target_date.format('%I:%M%P') %]" size="10">
+                <input type="text" name="countdown.target_time" value="[% item.target_date.format('%I:%M%P') %]" size="10">
             </p>
             <p>
                 <b>Units:</b>
                 <select name="countdown.units">
                 [% FOREACH unit IN units %]
-                    <option [% countdown.units == unit ? 'selected' : '' %] value="[% unit %]">[% unit | ucfirst %]s</option>
+                    <option [% item.units == unit ? 'selected' : '' %] value="[% unit %]">[% unit | ucfirst %]s</option>
                 [% END %]
                 </select>
             </p>
             <p>
                 <b>On Homepage:</b>
                 <label for="countdown-homepage">On Homepage</label>
-                <input id="countdown-homepage" type="checkbox" name="countdown.on_homepage" value="1" [% countdown.on_homepage ? 'checked' : '' %]>
+                <input id="countdown-homepage" type="checkbox" name="countdown.on_homepage" value="1" [% item.on_homepage ? 'checked' : '' %]>
             </p>
             <p>
                 <input class="button" type="submit" value="Save">
-                <a class="button" href="/countdowns/[% countdown.id %]">View</a>
+                <a class="button" href="/countdowns/[% item.id %]">View</a>
             </p>
         </form>
     </div>

@@ -16,7 +16,7 @@
                 <th>On Homepage</th>
                 <th>Actions</th>
             </tr>
-            [% FOREACH countdown IN countdowns %]
+            [% FOREACH countdown IN items %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                 <td>
                     <strong>[% Math.int(Math.abs(countdown.time_left)) _ fraction_entity(countdown.time_left) %]</strong>

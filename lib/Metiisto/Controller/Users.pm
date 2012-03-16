@@ -95,12 +95,6 @@ sub edit
             values %$prefs;
         $user->update() or die "Error saving User(".params->{id}.")";
 
-        # Update Session        
-        if ($user->id() == session->{user}->id())
-        {
-            session user => $user;
-        }
-
         $out = redirect request->referer;
     }
     else
