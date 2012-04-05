@@ -1,13 +1,10 @@
-<form method="post" action="/users/[% user.id %]/edit">
 <div class="ui-widget">
-    
-    <p>
+<form method="post" action="/users/[% user.id %]/edit">    
     <div class="ui-widget-header">Information</div>
     <div class="ui-widget-content">
         <p>Name: <input type="text" name="user.name" size="32" value="[% user.name %]"></p>
         <p>Email: <input type="text" name="user.email" size="32" value="[% user.email %]"></p>
     </div>
-    </p>
 
     <p>
     <div class="ui-widget-header">Misc Settings</div>
@@ -51,8 +48,8 @@
         <a id="button-logout" href="/users/logout">Logout</a>
     </p>
 
-</div>
 </form>
+</div>
 
 <script>
     $('#button-save-user').button();

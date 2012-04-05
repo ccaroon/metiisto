@@ -11,7 +11,10 @@
         <br>
         <b>Category:</b> [% entry.category %]
         <br>
-        <b>Ticket: </b>[% entry.ticket_num %]
+        <b>Ticket: </b>
+        [% IF entry.ticket_num %]
+            <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
+        [% END %]
         <p>[% entry.description | markdown %]</p>
     </div>
 </div>

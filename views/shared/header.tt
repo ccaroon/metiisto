@@ -1,24 +1,18 @@
 [% USE Date %]
 <div class="ui-widget">
-    <div class="ui-widget-header">
-        <table border="0">
-            <tr>
-                <td style="padding-right:15em">
-                    <span style="font-weight:bold;font-size:xx-large">Metiisto</span>
-                </td>
-                <td style="padding-right:14em">
-                    [% PROCESS shared/top_menu.tt %]
-                </td>
-                <td>
-                [% IF session.user %]
-                    <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a> [% vars.env != 'production' ? '(' _ vars.env _ ')' : '' %]
-                [% ELSE %]
-                    <a href="/users/login">Log In</a>
-                [% END %]
-                <br>
-                [% Date.format(date.now, "%A - %b %d, %Y") %]
-                </td>
-            </tr>
-        </table>
-    </div>    
+    <div class="ui-widget-content">
+    <div style="float:left; width:12%;"><span style="font-weight:bold;font-size:xx-large">Metiisto</span></div>
+    
+    <div style="float:left; width:75%; text-align: center">[% PROCESS shared/top_menu.tt %]</div>
+    
+    <div style="float:right;width:13%">
+    [% IF session.user %]
+        <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a> [% vars.env != 'production' ? '(' _ vars.env _ ')' : '' %]
+    [% ELSE %]
+        <a href="/users/login">Log In</a>
+    [% END %]
+    <br>
+    [% Date.format(date.now, "%A - %b %d, %Y") %]
+    </div>
+    </div>
 </div>

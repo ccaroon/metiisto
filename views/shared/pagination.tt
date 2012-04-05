@@ -1,5 +1,5 @@
 [% IF page_data.first_page != page_data.last_page %]
-<div>
+<div class="ui-widget">
     [% base_uri = request.path_info _ '?filter_text=' _ params.filter_text %]
     [% IF page_data.previous_page %]
         <a href="[% base_uri %]&page=[% page_data.previous_page %]" rel="prev">&laquo; Previous</a>

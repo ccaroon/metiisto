@@ -10,7 +10,7 @@
         }
     );
 </script>
-<form name="filter" action="/[% vars.controller %]" method="get">
+<form class="ui-widget" name="filter" action="/[% vars.controller %]" method="get">
     Filter: <input type="text" name="filter_text" value="[% params.filter_text %]">
     <input type="button" value="Clear" onClick="document.filter.filter_text.value=null;submit();">
 </form>

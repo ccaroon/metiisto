@@ -1,18 +1,20 @@
-<div align="center">
-<h1>Welcome to Metiisto</h1>
-<h3>Metiisto's main page is <a href="/home">Home</a></h3>
+<div class="ui-widget">
+    <div align="center">
+    <h1>Welcome to Metiisto</h1>
+    <h3>Metiisto's main page is <a href="/home">Home</a></h3>
+    </div>
+    
+    <hr>
+    
+    You may also try:
+    
+    <ul>
+        <li>Using the menu items at the top or left.
+        [% IF session.user %]
+            <li><a href="/users/logout">Logging Out</a>
+            <li><a href="/users/[% session.user.id %]/edit">Editing your User</a>
+        [% ELSE %]
+            <li><a href="/users/login">Logging In</a>
+        [% END %]
+    </ul>
 </div>
-
-<hr>
-
-You may also try:
-
-<ul>
-    <li>Using the menu items at the top or left.
-    [% IF session.user %]
-        <li><a href="/users/logout">Logging Out</a>
-        <li><a href="/users/[% session.user.id %]/edit">Editing your User</a>
-    [% ELSE %]
-        <li><a href="/users/login">Logging In</a>
-    [% END %]
-</ul>

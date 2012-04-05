@@ -1,42 +1,20 @@
 [% PROCESS util/format.tt %]
-<div align="center">
-    <table width="100%">
-        <tr>
-            <td valign="top" colspan="2">
-                [% PROCESS home/tickets.tt %]
-            </td>
-        </tr>
-        <tr>
-            <td class="default" valign="top" width="68%">
-                [% PROCESS home/entries.tt %]
-            </td>
-            <td valign="top">
-                <table width="100%">
-                    <tr>
-                        <td>[% PROCESS home/current_release.tt %]</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            [% PROCESS home/todos.tt %]
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            [% PROCESS home/notes.tt notes=recent_notes title="Recent Notes" %]
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            [% PROCESS home/notes.tt notes=favorite_notes title="Favorite Notes"%]
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                [% PROCESS home/countdowns.tt %]
-            </td>
-        </tr>
-    </table>
+<div class="ui-widget">
+
+    <div>[% PROCESS home/tickets.tt %]</div>
+
+    <div style="float:left;width:70%">[% PROCESS home/entries.tt %]</div>
+    
+    <div style="float:left; width:30%">
+        [% PROCESS home/current_release.tt %]
+        
+        [% PROCESS home/todos.tt %]
+        
+        [% PROCESS home/notes.tt notes=recent_notes title="Recent Notes" %]
+        
+        [% PROCESS home/notes.tt notes=favorite_notes title="Favorite Notes"%]
+    </div>
+    
+    <div style="clear:both">[% PROCESS home/countdowns.tt %]</div>
+
 </div>

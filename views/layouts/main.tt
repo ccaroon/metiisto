@@ -11,19 +11,17 @@
         <!-- Header (includes Top Menu) -->
         [% PROCESS shared/header.tt %]
 
-        <!-- Side Menu & Main Content -->
-        <table border="0" width="100%">
-            <tr>
-                <td width="11%" valign="top">
-                    [% PROCESS shared/side_menu.tt %]
-                </td>
-                <td width="100%" valign="top" bgcolor="white">
-                    [% content %]
-                </td>
-            </tr>
-        </table>
+        <!-- Side Menu -->
+        <div style="clear:both; float:left; width:10%; background-color: white">
+            [% PROCESS shared/side_menu.tt %]
+        </div>
+
+        <!-- Main Content -->
+        <div style="float:left; width:90%; background-color:white">
+            [% content %]
+        </div>
 
         <!-- Footer -->
-        [% PROCESS shared/footer.tt %]
+        <div style="clear: both">[% PROCESS shared/footer.tt %]</div>
     </body>
 </html>

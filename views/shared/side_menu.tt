@@ -1,7 +1,7 @@
 <div class="ui-widget">
-    <a id="side_menu_new_entry" href="/entries/new">New Entry</a>
-    <a id="side_menu_new_todo" href="/todos/new">New Todo</a>
-    <a id="side_menu_new_note" href="/notes/new">New Note</a>
+    <a id="side_menu_new_entry" class="m-side-menu-button" href="/entries/new">New Entry</a>
+    <a id="side_menu_new_todo" class="m-side-menu-button" href="/todos/new">New Todo</a>
+    <a id="side_menu_new_note" class="m-side-menu-button" href="/notes/new">New Note</a>
 </div>
 <script>
     $('#side_menu_new_entry').button({
