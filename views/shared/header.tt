@@ -1,18 +1,24 @@
 [% USE Date %]
+
 <div class="ui-widget">
     <div class="ui-widget-content">
-    <div style="float:left; width:12%;"><span style="font-weight:bold;font-size:xx-large">Metiisto</span></div>
+
+        <div style="float:left; width:12%; height:5%;background-color: inherit">
+            <span style="font-weight:bold;font-size:xx-large">Metiisto</span>
+        </div>
     
-    <div style="float:left; width:75%; text-align: center">[% PROCESS shared/top_menu.tt %]</div>
-    
-    <div style="float:right;width:13%">
-    [% IF session.user %]
-        <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a> [% vars.env != 'production' ? '(' _ vars.env _ ')' : '' %]
-    [% ELSE %]
-        <a href="/users/login">Log In</a>
-    [% END %]
-    <br>
-    [% Date.format(date.now, "%A - %b %d, %Y") %]
-    </div>
+        <div style="float:left; width:75%; height:5%; text-align: center;background-color: inherit">
+            [% PROCESS shared/top_menu.tt %]
+        </div>
+
+        <div style="float:left;width:13%; height:5%; background-color: inherit; text-align: right">
+            [% IF session.user %]
+                <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a> [% vars.env != 'production' ? '(' _ vars.env _ ')' : '' %]
+            [% ELSE %]
+                <a href="/users/login">Log In</a>
+            [% END %]
+            <br>
+            [% Date.format(date.now, "%A - %b %d, %Y") %]
+        </div>
     </div>
 </div>
