@@ -5,12 +5,16 @@ use lib "$ENV{METIISTO_HOME}/sql/migrations";
 
 use Date::Format;
 use File::Slurp;
-use Data::Dumper;
+use Getopt::Long;
 
 # *MUST* come before 'use Dancer::*' so that Dancer gets the correct environment
 BEGIN
 {
-    $ENV{METIISTO_ENV} ||= 'development';
+    my $env;
+    GetOptions ("env=s" => \$env);
+    $env ||= 'development';
+    
+    $ENV{METIISTO_ENV} = $env;
     $ENV{DANCER_ENVIRONMENT} = $ENV{METIISTO_ENV};
 }
 use Dancer ':script';
@@ -21,7 +25,7 @@ use constant MIGRATE_UP    => 'Up';
 use constant MIGRATE_DOWN  => 'Down';
 use constant MIGRATION_DIR => "$ENV{METIISTO_HOME}/sql/migrations";
 ################################################################################
-my $cmd = shift;
+my $cmd = shift || '';
 
 die "$0: Dancer Environment does not match Metiisto Environment."
     unless config->{environment} eq $ENV{METIISTO_ENV};
@@ -35,8 +39,8 @@ if ($cmd and main->can($cmd))
 }
 else
 {
-    warn "Unknown command: '$cmd'.\n";
-    print STDERR "Usage: $0 backup|restore|shell|init_migrations|migrate|create_migration|dump_schema\n";
+    warn "Unknown command: '$cmd'.\n" if $cmd;
+    print STDERR "Usage: $0 [--env env] backup|restore|shell|migrate|create_migration|dump_schema\n";
 }
 ################################################################################
 sub backup
@@ -250,4 +254,40 @@ EOT
     print STDERR "Wrote '$filename'\n";
 }
 ################################################################################
+sub help
+{
+    my $class = shift;
 
+    print <<EOF;
+Usage: $0 <cmd> [--env env]
+
+By default all commands will use the 'development' database. In order to specify
+a different database/environment you can use the '--env' parameter.
+
+Environments:
+    * development
+    * test
+    * production
+
+Commands:
+    * backup: Create a backup of your metiisto database. Includes schema and data.
+        - Example: mdb.pl backup
+    * restore: Restores a backup created with the 'backup' command.
+        - Args: backup_file_name --> *Required*
+        - Example: mdb.pl restore metiisto_prod-2012-03-02.sql
+    * shell: Drops you into a mysql shell using your metiisto database.
+        - Example: mdb.pl shell --env test
+    * migrate: Runs the necessary database migrations to get database schema to
+               the specified version.
+        - Args: version --> *Optional. Defaults to latest version.*
+        - Examples:
+            1. mdb.pl migrate
+            2. md.pl migrate 20111110142300
+    * create_migration: Create a new database migration.
+        - Args: name/description
+        - Example: mdb.pl create_migration 'add age field to person table'
+    * dump_schema: Writes the database schema out to a file called 'schema.sql'
+        - Example: mdb.pl dump_schema
+EOF
+}
+################################################################################
