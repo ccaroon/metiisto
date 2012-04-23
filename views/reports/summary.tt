@@ -1,0 +1,11 @@
+[% PROCESS 'reports/controls.tt' %]
+
+--------------------------------------------------------------------------------
+
+[%- FOREACH entry IN entries %]
+## [% entry.category == 'Ticket' ? '<a href="http://' _ session.user.preferences('jira_host') _ '/browse/' _ entry.ticket_num _ '">' _ entry.ticket_num _ '</a> - ' : '' %] [% entry.subject %] ([% entry.task_date.format %]) ##
+[% entry.description %]
+
+[%- END %]
+
+[% PROCESS 'reports/controls.tt' %]

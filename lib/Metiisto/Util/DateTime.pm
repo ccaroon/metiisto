@@ -52,6 +52,8 @@ sub add_days
 
     my $current_epoch = $this->epoch();
     $this->epoch($current_epoch + ($args{days} * DAY));
+    
+    return($this);
 }
 ################################################################################
 sub now

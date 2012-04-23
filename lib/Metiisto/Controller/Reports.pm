@@ -70,26 +70,8 @@ sub weekly
             }
         );
         
-        # Flatten multiple entries with the same subject into a single entry
-        my %entry_filter;
-        foreach my $e (@entries)
-        {
-            my $main_entry = $entry_filter{$e->subject()};
-            if ($main_entry)
-            {
-                my $new_desc = $main_entry->description();
-                $new_desc .= "\n\n----------\n\n" . $e->description();
-                $main_entry->description($new_desc);
-            }
-            else
-            {
-                $entry_filter{$e->subject()} = $e;
-            }
-        }
-        
-        @entries = sort {$a->entry_date()->epoch() <=> $b->entry_date->epoch() }
-            values %entry_filter;
-        $entries{$category} = \@entries;;
+        @entries = $this->_consolidate_entries(entries => \@entries);
+        $entries{$category} = \@entries;
     }
 
     my $out = template "/reports/weekly",
@@ -99,6 +81,48 @@ sub weekly
         no_controls => $args{no_controls},
         work_days   => $days,
         entries     => \%entries,
+    },
+    {layout => undef};
+
+    return (markdown($out));
+}
+################################################################################
+sub summary
+{
+    my $this = shift;
+    my %args = @_;
+    
+    my $from_date = defined params->{from}
+        ? Metiisto::Util::DateTime->parse(params->{from})
+        : Metiisto::Util::DateTime->now()->add_days(days => -7);
+
+    my $to_date = defined params->{to}
+        ? Metiisto::Util::DateTime->parse(params->{to})
+        : Metiisto::Util::DateTime->now();
+
+    my @search_opts = (
+        {
+            task_date => { 'between' => [
+                                            $from_date->format_db(date_only => 1),
+                                            $to_date->format_db(date_only => 1)
+                                        ]
+                         },
+            category => { 'in' => ['Ticket','Operational','Other'] }
+        },
+        {
+            order_by => 'task_date, entry_date',
+        }
+    );
+
+    my @entries = Metiisto::Entry->search_where(@search_opts);
+    @entries = $this->_consolidate_entries(entries => \@entries);
+
+    my $out = template "/reports/summary",
+    {
+        title   => 'Summary Report',
+        name    => 'summary',
+        no_controls => 0,
+        entries => \@entries,
     },
     {layout => undef};
 
@@ -162,6 +186,38 @@ sub email
     }
 
     return($out);
+}
+################################################################################
+# Flattens multiple entries with the same subject into a single entry
+################################################################################
+sub _consolidate_entries
+{
+    my $this = shift;
+    my %args = @_;
+
+    my $entries = $args{entries};
+        
+    my %entry_filter;
+    foreach my $e (@$entries)
+    {
+        my $main_entry = $entry_filter{$e->subject()};
+        if ($main_entry)
+        {
+            my $new_desc = $main_entry->description();
+            $new_desc .= "\n\n----------\n\n" . $e->description();
+            $main_entry->description($new_desc);
+        }
+        else
+        {
+            $entry_filter{$e->subject()} = $e;
+        }
+    }
+    
+    my @consolidated_entries
+        = sort {$a->entry_date()->epoch() <=> $b->entry_date->epoch() }
+            values %entry_filter;
+
+    return (wantarray ? @consolidated_entries : \@consolidated_entries);
 }
 ################################################################################
 sub declare_routes
