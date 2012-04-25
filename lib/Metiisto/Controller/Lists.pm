@@ -104,7 +104,7 @@ sub show
     my @items = $list->items();
     my $out = template 'todos/list', {
         list    => $list,
-        todos   => \@items,
+        items   => \@items,
         is_list => 1
     };
 

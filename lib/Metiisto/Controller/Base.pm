@@ -1,12 +1,21 @@
 package Metiisto::Controller::Base;
 ################################################################################
+use feature 'switch';
+
 use Dancer ':syntax';
 
+use Clone qw(clone);
 use Data::Page;
 use Lingua::EN::Inflect qw(PL);
 use SQL::Abstract;
 
-use constant LIST_ENTRIES_PER_PAGE => 10;
+my %LIST;
+use constant LIST_DEFAULTS => {
+    entries_per_page   => 15,
+    filter_fields      => undef,
+    order_by           => 'id',
+    default_conditions => undef,
+};
 ################################################################################
 sub new
 {
@@ -24,6 +33,17 @@ sub import
     $class->declare_routes();
 }
 ################################################################################
+sub setup_list_handler
+{
+    my $class = shift;
+    my %args = @_;
+
+    foreach my $key (keys %{LIST_DEFAULTS()})
+    {
+        $LIST{$class}->{$key} = $args{$key} || LIST_DEFAULTS->{$key};
+    }
+}
+################################################################################
 sub list
 {
     my $this       = shift;
@@ -31,37 +51,42 @@ sub list
     my $model      = $this->_model();
 
     my $total = 0;
-    my $conditions;
-    if (params->{filter_text})
-    {
-        my $sql_a = SQL::Abstract->new();
-        $conditions = [];
-        foreach my $ff (@{$controller->LIST_FILTER_FIELDS()})
-        {
-            push @$conditions, { $ff => { 'regexp', params->{filter_text} } };
-        }
+    my @conditions;
 
-        my @where = $sql_a->where($conditions);
-        $total = $model->count_where((shift @where), \@where);
+    # Add search filters
+    if (defined $LIST{$controller}->{filter_fields} and params->{filter_text})
+    {
+        foreach my $ff (@{$LIST{$controller}->{filter_fields}})
+        {
+            my $ff_cond = clone($LIST{$controller}->{default_conditions}) || {};
+            $ff_cond->{$ff} = { 'regexp', params->{filter_text} };
+
+            push @conditions, $ff_cond;
+        }
     }
     else
     {
-        $conditions    = {1=>1};
-        $total = $model->count();
+        my $cond = $LIST{$controller}->{default_conditions} || {1=>1};
+        push @conditions, $cond;
     }
+
+    # Determine total records based on conditions
+    my $sql_a = SQL::Abstract->new();
+    my @where = $sql_a->where(\@conditions);
+    $total = $model->count_where((shift @where), \@where);
 
     my $page = Data::Page->new();
     $page->total_entries($total);
-    $page->entries_per_page($controller->LIST_ENTRIES_PER_PAGE);
+    $page->entries_per_page($LIST{$controller}->{entries_per_page});
     $page->current_page(params->{page} || 1);
 
     my @items = $model->search_where(
-        $conditions,
+        \@conditions,
         {
             limit_dialect => 'LimitOffset',
-            limit    => $controller->LIST_ENTRIES_PER_PAGE,
+            limit    => $LIST{$controller}->{entries_per_page},
             offset  => $page->first() ? $page->first() - 1 : 0,
-            order_by => $controller->LIST_ORDER_BY,
+            order_by => $LIST{$controller}->{order_by},
         }
     );
 
@@ -107,7 +132,16 @@ sub create
     {
         next unless $p =~ /^$prefix\.(.*)$/;
         my $attr = $1;
-        $data->{$attr} = params->{$p};
+        
+        my $value;
+        given (params->{$p})
+        {
+            when ('NULL') { $value = undef }
+            when ('')     { $value = undef }
+            default       { $value = params->{$p} }
+        }
+
+        $data->{$attr} = $value;
     }
 
     my $obj = $model->insert($data);
@@ -161,7 +195,16 @@ sub update
     {
         next unless $p =~ /^$prefix\.(.*)$/;
         my $attr = $1;
-        $obj->$attr(params->{$p});
+
+        my $value;
+        given (params->{$p})
+        {
+            when ('NULL') { $value = undef }
+            when ('')     { $value = undef }
+            default       { $value = params->{$p} }
+        }
+
+        $obj->$attr($value);
     }
 
     if (defined $args{pre_obj_update})
@@ -185,13 +228,13 @@ sub delete
     my $model = $this->_model();
     my $obj = $model->retrieve(id => $args{id});
     $obj->delete();
-    
-    my $url = '/'.vars->{controller};
-    $url .= "?filter_text=".params->{filter_text} if params->{filter_text};
 
-    my $out = redirect $url;
+    #my $url = '/'.vars->{controller};
+    #$url .= "?filter_text=".params->{filter_text} if params->{filter_text};
+    #my $out = redirect $url;
+    #return ($out);
 
-    return ($out);
+    return (redirect request->referer);
 }
 ################################################################################
 # Declare the standard routes for all controllers.

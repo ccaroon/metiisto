@@ -4,34 +4,34 @@
     </div>
 
     <div class="ui-widget-content">
-        <form method="post" action="/todos[% todo.id ? '/' _ todo.id : '' %]">
+        <form method="post" action="/todos[% item.id ? '/' _ item.id : '' %]">
             <p>
             <b>Title:</b>
-            <input type="text" size="42" name="todo.title" value="[% todo.title %]">
+            <input type="text" size="42" name="todo.title" value="[% item.title %]">
             </p>
         
             <p>
             <b>Description:</b><br>
-            <textarea name="todo.description" rows="10" cols="45" wrap="physical">[% todo.description %]</textarea>
+            <textarea name="todo.description" rows="10" cols="45" wrap="physical">[% item.description %]</textarea>
             </p>
             
             <p>
             <b>Priority:</b>
             <div id="todo-priority">
                 [% FOREACH priority IN [1..10] %]
-                <input id="todo-priority-[% priority %]" type="radio" name="todo.priority" value="[% priority %]" [% todo.priority == priority ? 'checked' : '' %]><label for="todo-priority-[% priority %]">[% priority %]</label>
+                <input id="todo-priority-[% priority %]" type="radio" name="todo.priority" value="[% priority %]" [% item.priority == priority ? 'checked' : '' %]><label for="todo-priority-[% priority %]">[% priority %]</label>
                 [% END %]
             </div>
             </p>
             
             <p>
             <b>Due Date:</b>
-            <input type="text" id="todo-due-on" name="todo.due_date" value="[% todo.due_date.format_db('date_only',1) %]">
+            <input type="text" id="todo-due-on" name="todo.due_date" value="[% item.due_date.format_db('date_only',1) %]">
             </p>
         
             <p>
             <b>List:</b>
-            [% list_id = todo.list.id ? todo.list.id : 0 %]
+            [% list_id = item.list.id ? item.list.id : 0 %]
             <select name="todo.list_id">
                 <option [% list_id ? '' : 'selected' %] value="NULL">--None--</option>
             [% FOREACH list in lists %]
@@ -41,14 +41,14 @@
             </p>
 
             <p>
-            <b>Completed: [% todo.completed_date.format %]</b>
-            <input id="todo-completed" type="checkbox" name="todo.completed" value="1" [% todo.completed ? 'checked' : '' %]>
+            <b>Completed: [% item.completed_date.format %]</b>
+            <input id="todo-completed" type="checkbox" name="todo.completed" value="1" [% item.completed ? 'checked' : '' %]>
             <label for="todo-completed">Complete?</label>
             </p>
         
             <p>
                 <input class="button" type="submit" value="Save">
-                <a class="button" href="/todos/[% todo.id %]">View</a>
+                <a class="button" href="/todos/[% item.id %]">View</a>
             </p>
         </form>
     </div>    

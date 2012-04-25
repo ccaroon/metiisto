@@ -1,28 +1,28 @@
 [% USE Markdown %]
 <div class="ui-widget">
     <div class="ui-widget-header">
-        [% IF todo.list.id %]
-            <a href="/lists">Lists</a> &raquo; <a href="/lists/[% todo.list.id %]">[% todo.list.name %]</a> &raquo; 
+        [% IF item.list.id %]
+            <a href="/lists">Lists</a> &raquo; <a href="/lists/[% item.list.id %]">[% item.list.name %]</a> &raquo; 
         [% ELSE %]
             <a href="/todos">Todos</a> &raquo; 
         [% END %]
-        <span class="[% todo.completed ? 'm-strikethru' : '' %]">[% todo.title %]</span>
+        <span class="[% item.completed ? 'm-strikethru' : '' %]">[% item.title %]</span>
         <span id="action-edit-todo" class="ui-icon ui-icon-pencil" style="float:left"></span>
     </div>
     <div class="ui-widget-content">
         <p>
-            <strong>Priority: </strong>[% todo.priority %]<br>
-            <strong>Due: </strong>[% todo.due_date.format %]<br>
-            <strong>Completed: </strong>[% todo.completed_date ? todo.completed_date.format : 'Pending '%]<br>
-            <strong>List: </strong><a href="/lists/[% todo.list.id %]">[% todo.list.name %]</a><br>
+            <strong>Priority: </strong>[% item.priority %]<br>
+            <strong>Due: </strong>[% item.due_date.format %]<br>
+            <strong>Completed: </strong>[% item.completed_date ? item.completed_date.format : 'Pending '%]<br>
+            <strong>List: </strong><a href="/lists/[% item.list.id %]">[% item.list.name %]</a><br>
         </p>
         <p>
-            [% todo.description | markdown %]
+            [% item.description | markdown %]
         </p>
     </div>
 </div>
 <script>
     $('#action-edit-todo').click(function () {
-        window.location = '/todos/[% todo.id %]/edit';
+        window.location = '/todos/[% item.id %]/edit';
     });
 </script>

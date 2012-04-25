@@ -9,8 +9,10 @@ use Metiisto::Util::DateTime;
 use base 'Metiisto::Controller::Base';
 
 use Metiisto::Countdown;
-use constant LIST_FILTER_FIELDS => [];
-use constant LIST_ORDER_BY      => 'target_date';
+
+__PACKAGE__->setup_list_handler(
+    order_by => 'target_date',
+);
 ################################################################################
 sub new_record
 {

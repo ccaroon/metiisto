@@ -2,69 +2,26 @@ package Metiisto::Controller::Todos;
 ################################################################################
 use strict;
 
-use Data::Page;
 use Dancer ':syntax';
 use SQL::Abstract;
 
+use Metiisto::List;
+use Metiisto::Todo;
 use Metiisto::Util::DateTime;
-
-use constant TODOS_PER_PAGE => 15;
 
 use base 'Metiisto::Controller::Base';
 
-use Metiisto::List;
-use Metiisto::Todo;
-################################################################################
-sub list
-{
-    my $this = shift;
-
-    my $total      = 0;
-    my $conditions = {
-        list_id => undef
-    };
-    if (params->{filter_text})
-    {
-        $conditions->{title} = { 'regexp', params->{filter_text} };
-    }
-
-    my $sql_abs = SQL::Abstract->new();
-    my ($where, @binds) = $sql_abs->where($conditions);
-    $total = Metiisto::Todo->count_where($where, \@binds);
-
-    my $page = Data::Page->new();
-    $page->total_entries($total);
-    $page->entries_per_page(TODOS_PER_PAGE);
-    $page->current_page(params->{page} || 1);
-
-    my @todos = Metiisto::Todo->search_where(
-        $conditions,
-        {
-            limit_dialect => 'LimitOffset',
-            limit    => TODOS_PER_PAGE,
-            offset  => $page->first() ? $page->first() - 1 : 0,
-            order_by => 'completed, completed_date desc, priority',
-        }
-    );
-
-    my $out = template 'todos/list', {
-        todos => \@todos,
-        pagination => {
-            current_page  => $page->current_page(),
-            first_page    => $page->first_page(),
-            last_page     => $page->last_page(),
-            previous_page => $page->previous_page(),
-            next_page     => $page->next_page(),
-        }
-    };
-
-    return ($out);
-}
+__PACKAGE__->setup_list_handler(
+    filter_fields      => ['title'],
+    order_by           => 'completed, completed_date desc, priority',
+    default_conditions => { list_id => undef },
+);
 ################################################################################
 sub new_record
 {
     my $this = shift;
-
+    my %args = @_;
+    
     my @lists = Metiisto::List->retrieve_all();
     @lists = sort {lc $a->name() cmp lc $b->name() } @lists;
 
@@ -72,43 +29,12 @@ sub new_record
         priority => 1,
         list     => {id => params->{list_id}},
     };
-    my $out = template 'todos/new_edit', {
-        todo  => $todo,
-        lists => \@lists,
-    };
 
-    return ($out);
-}
-################################################################################
-sub create
-{
-    my $this = shift;
-
-    my $data = {};
-    foreach my $p (keys %{params()})
-    {
-        next unless $p =~ /^todo\.(.*)$/;
-        my $attr = $1;
-        my $value = params->{$p} eq 'NULL' ? undef : params->{$p};
-        $data->{$attr} = $value;
-    }
-    $data->{due_date} = undef unless $data->{due_date};
-
-    my $todo = Metiisto::Todo->insert($data);
-    die "Error creating Todo" unless $todo;
-
-    my $out = redirect "/todos/".$todo->id();
-
-    return ($out);
-}
-################################################################################
-sub show
-{
-    my $this = shift;
-    my %args = @_;
-
-    my $todo = Metiisto::Todo->retrieve($args{id});
-    my $out = template 'todos/show', { todo => $todo };
+    my $out = $this->SUPER::new_record(
+        %args,
+        item          => $todo,
+        template_vars => {lists => \@lists}
+    );
 
     return ($out);
 }
@@ -121,12 +47,7 @@ sub edit
     my @lists = Metiisto::List->retrieve_all();
     @lists = sort {lc $a->name() cmp lc $b->name() } @lists;
 
-    my $todo = Metiisto::Todo->retrieve($args{id});
-
-    my $out = template 'todos/new_edit', {
-        todo  => $todo,
-        lists => \@lists,
-    };
+    my $out = $this->SUPER::edit(%args, template_vars => {lists => \@lists});
 
     return ($out);
 }
@@ -136,23 +57,15 @@ sub update
     my $this = shift;
     my %args = @_;
 
-    my $todo = Metiisto::Todo->retrieve(id => $args{id});
-
-    foreach my $p (keys %{params()})
-    {
-        next unless $p =~ /^todo\.(.*)$/;
-        my $attr = $1;
-        my $value = params->{$p} eq 'NULL' ? undef : params->{$p};
-        $todo->$attr($value);
-    }
-    if ($todo->completed() and !$todo->completed_date())
-    {
-        $todo->completed_date(Metiisto::Util::DateTime->now());
-    }
-    my $cnt = $todo->update();
-    die "Error saving Todo($args{id})" unless $cnt;
-
-    my $out = redirect "/todos/$args{id}";
+    my $out = $this->SUPER::update(%args,
+        pre_obj_update => sub {
+            my $todo = shift;
+            if ($todo->completed() and !$todo->completed_date())
+            {
+                $todo->completed_date(Metiisto::Util::DateTime->now());
+            }
+        }
+    );
 
     return ($out);
 }
@@ -166,17 +79,6 @@ sub mark_complete
     $todo->completed_date(Metiisto::Util::DateTime->now());
     $todo->completed(1);
     $todo->update();
-
-    return (redirect request->referer);
-}
-################################################################################
-sub delete
-{
-    my $this = shift;
-    my %args = @_;
-
-    my $todo = Metiisto::Todo->retrieve(id => $args{id});
-    $todo->delete();
 
     return (redirect request->referer);
 }

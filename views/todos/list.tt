@@ -23,7 +23,7 @@
                 <th>Completed Date</th>
                 <th>Actions</th>
             </tr>
-            [% FOREACH todo in todos %]
+            [% FOREACH todo in items %]
             [% completed = todo.completed_date ? 1 : 0 %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                 <td align="center">[% todo.priority %]</td>
