@@ -107,7 +107,18 @@ sub show
     my %args = @_;
 
     my $note = Metiisto::Note->retrieve($args{id});
-    my $out = template 'notes/show', { note => $note };
+    my $print = params->{print};
+    
+    my $out;
+    if ($print)
+    {
+        $out = template 'notes/print', { note => $note }, {layout => undef};
+    }
+    else
+    {
+        $out = template 'notes/show', { note => $note };
+    }
+
 
     return ($out);
 }

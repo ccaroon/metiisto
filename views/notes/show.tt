@@ -9,6 +9,7 @@
             [% icon = 'unlocked'%]
         [% END %]
         <span class="ui-icon ui-icon-[% icon %]" style="float:left" id="note-[% note.id %]"></span>
+        <span class="ui-icon ui-icon-print" style="float:left" id="action-print-note"/></span>
     </div>
     <div class="ui-widget-content">
         [% note.body | markdown %]
@@ -17,5 +18,9 @@
 <script>
     $('#action-edit-note').click(function () {
         window.location = '/notes/[% note.id %]/edit';
+    });
+    
+    $('#action-print-note').click(function () {
+        window.location = '/notes/[% note.id %]?print=1';
     });
 </script>

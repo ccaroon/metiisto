@@ -1,0 +1,11 @@
+[% USE Markdown %]
+<html>
+    <head>
+        <title>[% note.title %]</title>
+    </head>
+    <body>
+        <h1>[% note.title %]</h1>
+        <hr/>
+        [% note.body | markdown %]
+    </body>
+</html>
