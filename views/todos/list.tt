@@ -18,17 +18,24 @@
         <table width="100%" class="ui-widget-content">
             <tr class="ui-widget-header">
                 <th>Priority</th>
+                <th>-</th>
                 <th width="55%">Title</th>
-                <th>Due Date</th>
-                <th>Completed Date</th>
+                <th>Due</th>
+                <th>Completed</th>
                 <th>Actions</th>
             </tr>
             [% FOREACH todo in items %]
-            [% completed = todo.completed_date ? 1 : 0 %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                 <td align="center">[% todo.priority %]</td>
+                <td align="center">
+                    [% IF todo.completed %]
+                        <span class="ui-icon ui-icon-check"></span>
+                    [% ELSE %]
+                        <a class="action-button-mark-complete" href="/todos/[% todo.id %]/mark_complete">Mark Complete</a>
+                    [% END %]
+                </td>
                 <td class="[% todo.overdue AND NOT todo.completed ? 'ui-state-error' : '' %]">
-                    <a href="/todos/[% todo.id %]" class="[% completed ? 'm-strikethru' : '' %]">[% todo.title %]</a>
+                    <a href="/todos/[% todo.id %]" class="[% todo.completed ? 'm-strikethru' : '' %]">[% todo.title %]</a>
                     [% IF (todo.due_soon OR todo.overdue) AND NOT todo.completed %]
                         <span class="ui-icon ui-icon-alert" style="float:right"></span>
                     [% END %]
@@ -44,10 +51,8 @@
                 </td>
                 <td align="center">[% todo.due_date.format() %]</td>
                 <td align="center">
-                    [% IF completed %]
+                    [% IF todo.completed %]
                     [% todo.completed_date.format() %]
-                    [% ELSE %]
-                        <a class="action-button-mark-complete" href="/todos/[% todo.id %]/mark_complete">Done</a>
                     [% END %]
                 </td>
                 <td align="center">
@@ -76,7 +81,7 @@
     $('.action-button-mark-complete').button({
         text: false,
         icons: {
-            primary: 'ui-icon-check'
+            primary: 'ui-icon-radio-on'
         }
     });
 

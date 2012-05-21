@@ -1,4 +1,9 @@
-[% USE Date %]
+[% USE Date; %]
+[% IF vars.env != 'production' %]
+<div align="center">
+    <span class="ui-state-error" align="center">Note: You are using the <strong>[% vars.env %]</strong> environment.</span>
+</div>
+[% END %]
 
 <div class="ui-widget">
     <div class="ui-widget-content">
@@ -10,10 +15,10 @@
         <div style="float:left; width:74%; height:50; text-align: center;background-color: inherit">
             [% PROCESS shared/top_menu.tt %]
         </div>
-
+        
         <div style="float:left;width:14%; height:50; background-color: inherit; text-align: right">
             [% IF session.user %]
-                <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a> [% vars.env != 'production' ? '(' _ vars.env _ ')' : '' %]
+                <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
             [% ELSE %]
                 <a href="/users/login">Log In</a>
             [% END %]
