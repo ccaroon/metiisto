@@ -65,6 +65,25 @@ CREATE TABLE `schema_migrations` (
   UNIQUE KEY `uk_version` (`version`)
 ) ENGINE=InnoDB;
 
+-- tagged_object
+CREATE TABLE `tagged_object` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `tag_id` bigint(20) unsigned NOT NULL,
+  `obj_class` varchar(64) NOT NULL,
+  `obj_id` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_tag_obj` (`tag_id`,`obj_class`,`obj_id`),
+  CONSTRAINT `fk_tags_assoc_tag_id` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`)
+) ENGINE=InnoDB;
+
+-- tags
+CREATE TABLE `tags` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_tags_name` (`name`)
+) ENGINE=InnoDB;
+
 -- todos
 CREATE TABLE `todos` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,

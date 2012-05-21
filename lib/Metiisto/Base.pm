@@ -11,7 +11,6 @@ use base 'Class::DBI';
 sub db_Main { return database; }
 __PACKAGE__->set_sql(count => "SELECT COUNT(*) FROM __TABLE__");
 __PACKAGE__->set_sql(count_where => "SELECT COUNT(*) FROM __TABLE__ WHERE %s");
-#__PACKAGE__->connection('dbi:mysql:workman_devel', 'ccaroon', 'Vepkef21');
 ################################################################################
 sub count
 {

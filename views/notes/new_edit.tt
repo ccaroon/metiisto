@@ -14,6 +14,9 @@
                 <input id="note-favorite" type="checkbox" name="note.is_favorite" value="1" [% note.is_favorite ? 'checked' : '' %]>
             </p>
             <p>
+                <ul id="tags"></ul>
+            </p>
+            <p>
                 <b>Body:</b><br>
                 <textarea rows="25" cols="80" wrap="physical" name="note.body">[% note.body %]</textarea>                
             </p>
@@ -26,7 +29,14 @@
 </div>
 <script>
     $('.button').button();
-    
+
+    $('#tags').tagit({
+        itemName: 'note',
+        fieldName: 'tags',
+        availableTags: ["Craig","Caroon","Perl","Java"],
+        allowSpaces: true,
+    });
+
     $('#note-favorite').button({
         text: false,
         icons: {
