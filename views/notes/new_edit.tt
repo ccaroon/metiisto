@@ -14,7 +14,11 @@
                 <input id="note-favorite" type="checkbox" name="note.is_favorite" value="1" [% note.is_favorite ? 'checked' : '' %]>
             </p>
             <p>
-                <ul id="tags"></ul>
+                <ul id="tags">
+                [% FOREACH tag IN note_tags %]
+                    <li>[% tag.name %]</li>
+                [% END %]
+                </ul>
             </p>
             <p>
                 <b>Body:</b><br>
@@ -33,7 +37,7 @@
     $('#tags').tagit({
         itemName: 'note',
         fieldName: 'tags',
-        availableTags: ["Craig","Caroon","Perl","Java"],
+        availableTags: ["[% all_tags.join('","') %]"],
         allowSpaces: true,
     });
 

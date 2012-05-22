@@ -4,7 +4,7 @@ use strict;
 
 use Crypt::CBC;
 
-use base 'Metiisto::Base';
+use base qw(Metiisto::Base Metiisto::Taggable);
 ################################################################################
 __PACKAGE__->table('notes');
 __PACKAGE__->columns(All => qw/

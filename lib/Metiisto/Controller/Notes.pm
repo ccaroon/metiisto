@@ -72,8 +72,11 @@ sub new_record
     my $this = shift;
 
     my $note = { is_favorite => 0, is_encrypted => 0 };
+    my @all_tags = map { $_->name() } Metiisto::Tag->retrieve_all();
+    
     my $out = template 'notes/new_edit', {
         note => $note,
+        all_tags => \@all_tags,
     };
 
     return ($out);
@@ -96,6 +99,8 @@ sub create
     my $note = Metiisto::Note->insert($data);
     die "Error creating Note" unless $note;
 
+    $note->update_tags(tags => params()->{'note[tags][]'});
+
     my $out = redirect "/notes/".$note->id();
 
     return ($out);
@@ -107,6 +112,7 @@ sub show
     my %args = @_;
 
     my $note = Metiisto::Note->retrieve($args{id});
+    my $tags = $note->get_tags();
     my $print = params->{print};
     
     my $out;
@@ -116,9 +122,8 @@ sub show
     }
     else
     {
-        $out = template 'notes/show', { note => $note };
+        $out = template 'notes/show', { note => $note, tags => $tags };
     }
-
 
     return ($out);
 }
@@ -129,8 +134,13 @@ sub edit
     my %args = @_;
 
     my $note = Metiisto::Note->retrieve($args{id});
+    my $note_tags = $note->get_tags();
+    my @all_tags = map { $_->name() } Metiisto::Tag->retrieve_all();
+
     my $out = template 'notes/new_edit', {
-        note => $note,
+        note      => $note,
+        note_tags => $note_tags,
+        all_tags  => \@all_tags,
     };
 
     return ($out);
@@ -142,6 +152,7 @@ sub update
     my %args = @_;
 
     my $note = Metiisto::Note->retrieve(id => $args{id});
+    $note->update_tags(tags => params()->{'note[tags][]'});
 
     foreach my $p (keys %{params()})
     {

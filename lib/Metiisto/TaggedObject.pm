@@ -1,4 +1,4 @@
-package Metiisto::Tag;
+package Metiisto::TaggedObject;
 ################################################################################
 use strict;
 
