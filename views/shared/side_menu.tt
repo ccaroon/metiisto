@@ -2,8 +2,28 @@
     <a id="side_menu_new_entry" class="m-side-menu-button" href="/entries/new">New Entry</a>
     <a id="side_menu_new_todo" class="m-side-menu-button" href="/todos/new">New Todo</a>
     <a id="side_menu_new_note" class="m-side-menu-button" href="/notes/new">New Note</a>
+
+    <p>
+        <form class="ui-widget" name="tag_search" action="/tagged_objects" method="get">
+            <span class="ui-icon ui-icon-tag" style="float:left"></span>
+            <input type="text" name="tag" value="" size="9">
+        </form>
+    </p>
+
 </div>
 <script>
+    
+    $(document).keypress(
+        function(e)
+        {
+            if(e.which == 47) // forward slash
+            {
+                document.tag_search.tag.focus()
+                document.tag_search.tag.select();
+            }
+        }
+    );
+    
     $('#side_menu_new_entry').button({
         icons: {
             primary: 'ui-icon-document'
@@ -21,4 +41,5 @@
             primary: 'ui-icon-note'
         }
     });
+
 </script>

@@ -4,7 +4,7 @@
 %]
 <div class="ui-widget">
     <div class="ui-widget-header">
-         <a href="/reports/daily">This Week's Entries</a>
+         <a href="/reports/daily">[% header ? header : "This Week's Entries"%]</a>
     </div>
     <div class="ui-widget-content">
         <table width="100%" class="ui-widget-content">

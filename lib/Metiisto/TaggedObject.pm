@@ -16,4 +16,16 @@ sub tag
     return ($this->tag_id());
 }
 ################################################################################
+sub object
+{
+    my $this = shift;
+    
+    my $obj_class = $this->obj_class();
+    
+    eval "require $obj_class;";
+    my $object = $obj_class->retrieve($this->obj_id());
+    
+    return ($object);
+}
+################################################################################
 1;
