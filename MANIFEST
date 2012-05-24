@@ -15,6 +15,7 @@ lib/Metiisto/Controller/Home.pm
 lib/Metiisto/Controller/Lists.pm
 lib/Metiisto/Controller/Notes.pm
 lib/Metiisto/Controller/Reports.pm
+lib/Metiisto/Controller/TaggedObjects.pm
 lib/Metiisto/Controller/Todos.pm
 lib/Metiisto/Controller/Users.pm
 lib/Metiisto/Controller/Workdays.pm
@@ -24,6 +25,9 @@ lib/Metiisto/JiraTicket.pm
 lib/Metiisto/List.pm
 lib/Metiisto/Note.pm
 lib/Metiisto/Preference.pm
+lib/Metiisto/Tag.pm
+lib/Metiisto/Taggable.pm
+lib/Metiisto/TaggedObject.pm
 lib/Metiisto/Todo.pm
 lib/Metiisto/User.pm
 lib/Metiisto/Util/Cache.pm
@@ -36,6 +40,7 @@ MANIFEST.SKIP
 public/404.html
 public/500.html
 public/css/error.css
+public/css/jquery.tagit.css
 public/css/metiisto.css
 public/css/themes/cupertino/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png
 public/css/themes/cupertino/images/ui-bg_flat_15_cd0a0a_40x100.png
@@ -161,12 +166,10 @@ public/images/metiisto_large.jpg
 public/javascripts/application.js
 public/javascripts/jquery-ui.js
 public/javascripts/jquery.js
-sql/migrations/20111019092511_create_table_preferences.pm
-sql/migrations/20111019101654_move_prefs_from_users_table_to_preferences_table.pm
-sql/migrations/20111019144300_init_workman_db_for_metiisto.pm
-sql/migrations/20111021092343_normalize_date_field_names.pm
-sql/migrations/20111110142300_SMTP_delete_auth_type_and_add_port.pm
-sql/migrations/20120312123947_deprecate_goals.pm
+public/javascripts/tag-it.js
+sql/migrations/.gitkeep
+sql/migrations/20120521130518_create_tags_table.pm
+sql/migrations/20120521130521_create_tagged_object_table.pm
 sql/schema.sql
 t/controllers.t.example
 t/lib/Metiisto/BaseTest.pm
@@ -195,10 +198,12 @@ views/lists/list.tt
 views/lists/new_edit.tt
 views/notes/list.tt
 views/notes/new_edit.tt
+views/notes/print.tt
 views/notes/show.tt
 views/reports/controls.tt
 views/reports/daily.tt
 views/reports/hours.tt
+views/reports/summary.tt
 views/reports/weekly.tt
 views/shared/filter.tt
 views/shared/footer.tt
@@ -207,7 +212,11 @@ views/shared/list/actions.tt
 views/shared/list/actions_js.tt
 views/shared/pagination.tt
 views/shared/side_menu.tt
+views/shared/tags/init.tt
+views/shared/tags/list.tt
+views/shared/tags/widget.tt
 views/shared/top_menu.tt
+views/tagged_objects/list.tt
 views/todos/list.tt
 views/todos/new_edit.tt
 views/todos/show.tt
