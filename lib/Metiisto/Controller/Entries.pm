@@ -74,11 +74,13 @@ sub new_record
         task_date  => Metiisto::Util::DateTime->new(epoch => time)
     };
     my $subjects = Metiisto::Entry->recent_subjects();
-
+    my $avail_tags = Metiisto::Tag->names();
+    
     my $out = template 'entries/new_edit', {
-        entry => $entry,
+        entry           => $entry,
         recent_subjects => $subjects,
-        categories => Metiisto::Entry->CATEGORIES,
+        categories      => Metiisto::Entry->CATEGORIES,
+        avail_tags      => $avail_tags,
     };
 
     return ($out);
@@ -100,6 +102,8 @@ sub create
     my $entry = Metiisto::Entry->insert($data);
     die "Error creating Entry" unless $entry;
 
+    $entry->update_tags(tags => params()->{'entry[tags][]'});
+
     my $out = redirect "/entries/".$entry->id();
 
     return ($out);
@@ -111,7 +115,9 @@ sub show
     my %args = @_;
 
     my $entry = Metiisto::Entry->retrieve($args{id});
-    my $out = template 'entries/show', { entry => $entry };
+    my $tags = $entry->get_tags();
+    
+    my $out = template 'entries/show', { entry => $entry, tags => $tags };
 
     return ($out);
 }
@@ -121,13 +127,17 @@ sub edit
     my $this = shift;
     my %args = @_;
 
-    my $entry = Metiisto::Entry->retrieve($args{id});
-    my $subjects = Metiisto::Entry->recent_subjects();
-
+    my $entry      = Metiisto::Entry->retrieve($args{id});
+    my $subjects   = Metiisto::Entry->recent_subjects();
+    my $entry_tags = $entry->get_tags();
+    my $avail_tags = Metiisto::Tag->names();
+    
     my $out = template 'entries/new_edit', {
-        entry => $entry,
+        entry           => $entry,
         recent_subjects => $subjects,
-        categories => Metiisto::Entry->CATEGORIES,
+        categories      => Metiisto::Entry->CATEGORIES,
+        entry_tags      => $entry_tags,
+        avail_tags      => $avail_tags,
     };
 
     return ($out);
@@ -139,6 +149,7 @@ sub update
     my %args = @_;
     
     my $entry = Metiisto::Entry->retrieve(id => $args{id});
+    $entry->update_tags(tags => params()->{'entry[tags][]'});
 
     foreach my $p (keys %{params()})
     {
@@ -161,7 +172,7 @@ sub delete
 
     my $entry = Metiisto::Entry->retrieve(id => $args{id});
     $entry->delete();
-    
+
     my $url = '/entries';
     $url .= "?filter_text=".params->{filter_text} if params->{filter_text};
 

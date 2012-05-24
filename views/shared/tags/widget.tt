@@ -1,0 +1,5 @@
+<ul id="tags">
+[% FOREACH tag IN object_tags %]
+    <li>[% tag.name %]</li>
+[% END %]
+</ul>

@@ -10,7 +10,7 @@
         <table width="100%" class="ui-widget-content">
             [% FOREACH entry IN entries %]
                 <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
-                    <td>[% entry.task_date.format('%a') %]</td>
+                    <td>[% entry.task_date.format( date_format ? date_format : '%a' ) %]</td>
                     <td>
                         [% IF entry.category == 'Ticket' %]
                             <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
@@ -18,7 +18,7 @@
                             [% entry.category %]
                         [% END %]
                     </td>
-                    <td>
+                    <td width="75%">
                         <a href="/entries/[% entry.id %]">[% entry.subject %]</a>
                     </td>
                 </tr>

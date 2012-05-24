@@ -4,7 +4,7 @@ use strict;
 
 use Metiisto::Util::DateTime;
 
-use base 'Metiisto::Base';
+use base qw(Metiisto::Base Metiisto::Taggable);
 
 use constant CATEGORIES => [
     'Meeting',
@@ -20,6 +20,7 @@ __PACKAGE__->columns(All => qw/
 /);
 __PACKAGE__->has_a_datetime('task_date');
 __PACKAGE__->has_a_datetime('entry_date');
+__PACKAGE__->init_tagging();
 ################################################################################
 sub recent_subjects
 {

@@ -71,12 +71,12 @@ sub new_record
 {
     my $this = shift;
 
-    my $note = { is_favorite => 0, is_encrypted => 0 };
-    my @all_tags = map { $_->name() } Metiisto::Tag->retrieve_all();
+    my $note       = { is_favorite => 0, is_encrypted => 0 };
+    my $avail_tags = Metiisto::Tag->names();
     
     my $out = template 'notes/new_edit', {
-        note => $note,
-        all_tags => \@all_tags,
+        note       => $note,
+        avail_tags => $avail_tags,
     };
 
     return ($out);
@@ -135,12 +135,12 @@ sub edit
 
     my $note = Metiisto::Note->retrieve($args{id});
     my $note_tags = $note->get_tags();
-    my @all_tags = map { $_->name() } Metiisto::Tag->retrieve_all();
+    my $avail_tags = Metiisto::Tag->names();
 
     my $out = template 'notes/new_edit', {
         note      => $note,
         note_tags => $note_tags,
-        all_tags  => \@all_tags,
+        avail_tags  => $avail_tags,
     };
 
     return ($out);

@@ -5,6 +5,12 @@ use strict;
 use Metiisto::Tag;
 use Metiisto::TaggedObject;
 ################################################################################
+sub init_tagging
+{
+    my $class = shift;
+    $class->add_trigger(after_delete => \&_after_delete_trigger);
+}
+################################################################################
 # ARGS:
 #   - tags => undef, string or ArrayRef of strings
 ################################################################################
@@ -72,6 +78,33 @@ sub get_tags
     my @tags = map { $_->tag() } @tos;
     
     return( wantarray ? @tags : \@tags );
+}
+################################################################################
+sub _after_delete_trigger
+{
+    my $this = shift;
+
+    my @tos = Metiisto::TaggedObject->search(
+        obj_class => ref($this),
+        obj_id    => $this->id(),
+    );
+
+    foreach my $to (@tos)
+    {
+        # Only one object is tagged with the tag and it's THIS object.
+        # So...delete the Tag and the TaggedObject
+        if (Metiisto::TaggedObject->count_where("tag_id = ?",[$to->tag()->id()]) == 1)
+        {
+            # Deleting the Tag also deletes all it's TaggedObjects
+            $to->tag()->delete();
+        }
+        # More than one object is tagged with the tag...
+        # So...only delete the TaggedObject.
+        else
+        {
+            $to->delete();
+        }
+    }
 }
 ################################################################################
 sub _normalize_tags

@@ -1,0 +1,4 @@
+[% FOREACH tag IN tags %]
+[% '&#8680;' IF loop.first %]
+<span style="border:1px dotted black">[% tag.name %]</span>
+[% END %]

@@ -10,11 +10,7 @@
         [% END %]
         <span class="ui-icon ui-icon-[% icon %]" style="float:left" id="note-[% note.id %]"></span>
         <span class="ui-icon ui-icon-print" style="float:left" id="action-print-note"/></span>
-
-        [% FOREACH tag IN tags %]
-        [% '&#8680;' IF loop.first %]
-        <span style="border:1px dotted black">[% tag.name %]</span>
-        [% END %]
+        [% PROCESS shared/tags/list.tt tags=tags %]
     </div>
     <div class="ui-widget-content">
         [% note.body | markdown %]

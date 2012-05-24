@@ -14,11 +14,7 @@
                 <input id="note-favorite" type="checkbox" name="note.is_favorite" value="1" [% note.is_favorite ? 'checked' : '' %]>
             </p>
             <p>
-                <ul id="tags">
-                [% FOREACH tag IN note_tags %]
-                    <li>[% tag.name %]</li>
-                [% END %]
-                </ul>
+                [% PROCESS shared/tags/widget.tt object_tags=note_tags %]
             </p>
             <p>
                 <b>Body:</b><br>
@@ -34,12 +30,7 @@
 <script>
     $('.button').button();
 
-    $('#tags').tagit({
-        itemName: 'note',
-        fieldName: 'tags',
-        availableTags: ["[% all_tags.join('","') %]"],
-        allowSpaces: true,
-    });
+    [% PROCESS shared/tags/init.tt object_name='note' avail_tags=avail_tags %]
 
     $('#note-favorite').button({
         text: false,

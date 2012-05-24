@@ -3,6 +3,7 @@
     <div class="ui-widget-header">
         Entries &raquo; [% entry.subject %]
         <span id="action-edit-entry" class="ui-icon ui-icon-pencil" style="float:left"></span>
+        [% PROCESS shared/tags/list.tt tags=tags %]
     </div>
     <div class="ui-widget-content">
         <b>Entry Date:</b> [% entry.entry_date.format('%b %d, %Y %I:%M%p') %]

@@ -24,7 +24,11 @@
             <b>Subject:</b>
             <input type="text" name="entry.subject" value="[% entry.subject | html %]" size="64" id="entry_subject" autocomplete="off">
             <p>
-        
+
+            <p>
+                [% PROCESS shared/tags/widget.tt object_tags=entry_tags %]
+            </p>
+
             <b>Description:</b>
             <br>
             <textarea name="entry.description" wrap="physical" rows="25" cols="80">[% entry.description %]</textarea>
@@ -49,4 +53,6 @@
     [%- END -%]
     ];
     $('#entry_subject').autocomplete({source: subject_list});
+    
+    [% PROCESS shared/tags/init.tt object_name='entry' avail_tags=avail_tags %]
 </script>

@@ -14,6 +14,7 @@ __PACKAGE__->columns(All => qw/
 __PACKAGE__->has_a_datetime('created_date');
 __PACKAGE__->has_a_datetime('updated_date');
 __PACKAGE__->has_a_datetime('deleted_date');
+__PACKAGE__->init_tagging();
 ################################################################################
 sub encrypt
 {
