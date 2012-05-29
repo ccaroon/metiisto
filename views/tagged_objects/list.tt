@@ -1,5 +1,5 @@
 <div class="ui-widget">
-    <div class="ui-widget-header" align="center">Tag Search: [% tag_name %]</div>
+    <div class="ui-widget-header">Tag Search: [% tag_name %]</div>
     <div style="float:left;width:70%">
         [% PROCESS home/entries.tt
             header="Entries"
@@ -9,9 +9,11 @@
     </div>
     
     <div style="float:left; width:30%">
-        
+
         [% PROCESS home/todos.tt %]
-        
+
+        [% PROCESS tagged_objects/lists.tt lists=list %]
+
         [% PROCESS home/notes.tt notes=note title="Notes" %]
 
     </div>
