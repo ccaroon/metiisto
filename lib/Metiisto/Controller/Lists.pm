@@ -6,6 +6,7 @@ use Data::Page;
 use Dancer ':syntax';
 use SQL::Abstract;
 
+use Metiisto::Tag;
 use Metiisto::Util::DateTime;
 
 use constant LISTS_PER_PAGE => 15;
@@ -66,9 +67,12 @@ sub new_record
 {
     my $this = shift;
 
-    my $list = {};
+    my $list       = {};
+    my $avail_tags = Metiisto::Tag->names();
+    
     my $out = template 'lists/new_edit', {
-        list => $list,
+        list       => $list,
+        avail_tags => $avail_tags,
     };
 
     return ($out);
@@ -89,6 +93,8 @@ sub create
     my $list = Metiisto::List->insert($data);
     die "Error creating List" unless $list;
 
+    $list->update_tags(tags => params()->{'list[tags][]'});
+    
     my $out = redirect "/lists/".$list->id();
 
     return ($out);
@@ -117,8 +123,11 @@ sub edit
     my %args = @_;
 
     my $list = Metiisto::List->retrieve($args{id});
+    my $avail_tags = Metiisto::Tag->names();
+    
     my $out = template 'lists/new_edit', {
-        list => $list,
+        list      => $list,
+        avail_tags=> $avail_tags,
     };
 
     return ($out);
@@ -130,7 +139,8 @@ sub update
     my %args = @_;
 
     my $list = Metiisto::List->retrieve(id => $args{id});
-
+    $list->update_tags(tags => params()->{'list[tags][]'});
+    
     foreach my $p (keys %{params()})
     {
         next unless $p =~ /^list\.(.*)$/;

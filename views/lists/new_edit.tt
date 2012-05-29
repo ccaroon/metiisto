@@ -8,6 +8,9 @@
                 <b>Name:</b> <input type="text" name="list.name" value="[% list.name %]" size="25">
             </p>
             <p>
+                [% PROCESS shared/tags/widget.tt object_tags=list.tags %]
+            </p>
+            <p>
                 <input class="button" type="submit" value="Save">
                 <a class="button" href="/lists/[% list.id %]">View</a>
             </p>
@@ -15,5 +18,8 @@
     </div>
 </div>
 <script>
+
+    [% PROCESS shared/tags/init.tt object_name='list' avail_tags=avail_tags %]
     $('.button').button();
+
 </script>

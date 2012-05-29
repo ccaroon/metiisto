@@ -6,6 +6,7 @@
     [% IF is_list %]
     <div class="ui-widget-header">
         <a href="/lists">Lists</a> &raquo; [% list.name %]
+        [% PROCESS shared/tags/list.tt tags=list.tags %]
     </div>
     [% ELSE %]
     <div class="ui-widget-header">Todos</div>

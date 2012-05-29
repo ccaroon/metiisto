@@ -8,6 +8,8 @@ use Metiisto::TaggedObject;
 sub init_tagging
 {
     my $class = shift;
+
+    $class->columns(TEMP => qw/_tags/);
     $class->add_trigger(after_delete => \&_after_delete_trigger);
 }
 ################################################################################
@@ -67,17 +69,25 @@ sub update_tags
     }
 }
 ################################################################################
-sub get_tags
+sub tags
 {
     my $this = shift;
     my $class = ref($this);
-    
-    my @tos = Metiisto::TaggedObject->search(obj_class => $class,
-        obj_id => $this->id());
-    
-    my @tags = map { $_->tag() } @tos;
-    
-    return( wantarray ? @tags : \@tags );
+
+    my $tags = $this->_tags();
+    unless ($tags)
+    {
+        my @tos = Metiisto::TaggedObject->search(
+            obj_class => $class,
+            obj_id    => $this->id()
+        );
+
+        my @tags = map { $_->tag() } @tos;
+        $tags = \@tags;
+        $this->_tags($tags);
+    }
+
+    return( $tags );
 }
 ################################################################################
 sub _after_delete_trigger

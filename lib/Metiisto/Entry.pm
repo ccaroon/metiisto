@@ -15,11 +15,14 @@ use constant CATEGORIES => [
 ];
 
 __PACKAGE__->table('entries');
-__PACKAGE__->columns(All => qw/
-    id task_date entry_date ticket_num subject description category
-/);
+
+__PACKAGE__->columns(Primary   => qw/id/);
+__PACKAGE__->columns(Essential => qw/task_date ticket_num subject category/);
+__PACKAGE__->columns(Other     => qw/entry_date description/);
+
 __PACKAGE__->has_a_datetime('task_date');
 __PACKAGE__->has_a_datetime('entry_date');
+
 __PACKAGE__->init_tagging();
 ################################################################################
 sub recent_subjects

@@ -112,7 +112,6 @@ sub show
     my %args = @_;
 
     my $note = Metiisto::Note->retrieve($args{id});
-    my $tags = $note->get_tags();
     my $print = params->{print};
     
     my $out;
@@ -122,7 +121,7 @@ sub show
     }
     else
     {
-        $out = template 'notes/show', { note => $note, tags => $tags };
+        $out = template 'notes/show', { note => $note };
     }
 
     return ($out);
@@ -134,12 +133,10 @@ sub edit
     my %args = @_;
 
     my $note = Metiisto::Note->retrieve($args{id});
-    my $note_tags = $note->get_tags();
     my $avail_tags = Metiisto::Tag->names();
 
     my $out = template 'notes/new_edit', {
-        note      => $note,
-        note_tags => $note_tags,
+        note        => $note,
         avail_tags  => $avail_tags,
     };
 

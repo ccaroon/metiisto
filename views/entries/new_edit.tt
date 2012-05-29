@@ -26,7 +26,7 @@
             <p>
 
             <p>
-                [% PROCESS shared/tags/widget.tt object_tags=entry_tags %]
+                [% PROCESS shared/tags/widget.tt object_tags=entry.tags %]
             </p>
 
             <b>Description:</b>

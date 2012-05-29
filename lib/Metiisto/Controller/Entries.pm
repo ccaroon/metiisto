@@ -115,9 +115,8 @@ sub show
     my %args = @_;
 
     my $entry = Metiisto::Entry->retrieve($args{id});
-    my $tags = $entry->get_tags();
     
-    my $out = template 'entries/show', { entry => $entry, tags => $tags };
+    my $out = template 'entries/show', { entry => $entry };
 
     return ($out);
 }
@@ -129,14 +128,12 @@ sub edit
 
     my $entry      = Metiisto::Entry->retrieve($args{id});
     my $subjects   = Metiisto::Entry->recent_subjects();
-    my $entry_tags = $entry->get_tags();
     my $avail_tags = Metiisto::Tag->names();
     
     my $out = template 'entries/new_edit', {
         entry           => $entry,
         recent_subjects => $subjects,
         categories      => Metiisto::Entry->CATEGORIES,
-        entry_tags      => $entry_tags,
         avail_tags      => $avail_tags,
     };
 

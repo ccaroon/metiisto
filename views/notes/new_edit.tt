@@ -14,7 +14,7 @@
                 <input id="note-favorite" type="checkbox" name="note.is_favorite" value="1" [% note.is_favorite ? 'checked' : '' %]>
             </p>
             <p>
-                [% PROCESS shared/tags/widget.tt object_tags=note_tags %]
+                [% PROCESS shared/tags/widget.tt object_tags=note.tags %]
             </p>
             <p>
                 <b>Body:</b><br>

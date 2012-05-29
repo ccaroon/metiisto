@@ -10,7 +10,7 @@
         [% END %]
         <span class="ui-icon ui-icon-[% icon %]" style="float:left" id="note-[% note.id %]"></span>
         <span class="ui-icon ui-icon-print" style="float:left" id="action-print-note"/></span>
-        [% PROCESS shared/tags/list.tt tags=tags %]
+        [% PROCESS shared/tags/list.tt tags=note.tags %]
     </div>
     <div class="ui-widget-content">
         [% note.body | markdown %]
