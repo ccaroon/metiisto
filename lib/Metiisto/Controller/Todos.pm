@@ -29,11 +29,15 @@ sub new_record
         priority => 1,
         list     => {id => params->{list_id}},
     };
+    my $avail_tags = Metiisto::Tag->names();
 
     my $out = $this->SUPER::new_record(
         %args,
         item          => $todo,
-        template_vars => {lists => \@lists}
+        template_vars => {
+            lists      => \@lists,
+            avail_tags => $avail_tags,
+        }
     );
 
     return ($out);
@@ -46,8 +50,15 @@ sub edit
 
     my @lists = Metiisto::List->retrieve_all();
     @lists = sort {lc $a->name() cmp lc $b->name() } @lists;
-
-    my $out = $this->SUPER::edit(%args, template_vars => {lists => \@lists});
+    my $avail_tags = Metiisto::Tag->names();
+    
+    my $out = $this->SUPER::edit(
+        %args,
+        template_vars => {
+            lists       => \@lists,
+            avail_tags  => $avail_tags,
+        }
+    );
 
     return ($out);
 }

@@ -147,6 +147,9 @@ sub create
     my $obj = $model->insert($data);
     die "Error creating $model" unless $obj;
 
+    $obj->update_tags(tags => params()->{$prefix.'[tags][]'})
+        if $obj->isa('Metiisto::Taggable');
+
     my $out = redirect "/".vars->{controller}."/".$obj->id();
 
     return ($out);
@@ -191,6 +194,10 @@ sub update
     my $obj   = $model->retrieve(id => $args{id});
 
     my $prefix = PL(vars->{controller});
+    
+    $obj->update_tags(tags => params()->{$prefix.'[tags][]'})
+        if $obj->isa('Metiisto::Taggable');
+    
     foreach my $p (keys %{params()})
     {
         next unless $p =~ /^$prefix\.(.*)$/;

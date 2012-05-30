@@ -2,18 +2,21 @@ package Metiisto::Todo;
 ################################################################################
 use strict;
 
-use base 'Metiisto::Base';
+use base qw(Metiisto::Base Metiisto::Taggable);
 
 use constant DUE_SOON => 86_400*7;
 ################################################################################
 __PACKAGE__->table('todos');
-__PACKAGE__->columns(All => qw/
-    id priority title completed completed_date due_date list_id
-    description
-/);
+
+__PACKAGE__->columns(Primary   => qw/id/);
+__PACKAGE__->columns(Essential => qw/priority title completed_date due_date/);
+__PACKAGE__->columns(Other     => qw/completed list_id description/);
+
 __PACKAGE__->has_a(list_id => 'Metiisto::List');
 __PACKAGE__->has_a_datetime('completed_date');
 __PACKAGE__->has_a_datetime('due_date');
+
+__PACKAGE__->init_tagging();
 ################################################################################
 sub list
 {

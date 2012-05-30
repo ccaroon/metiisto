@@ -9,7 +9,9 @@
             <b>Title:</b>
             <input type="text" size="42" name="todo.title" value="[% item.title %]">
             </p>
-        
+            <p>
+                [% PROCESS shared/tags/widget.tt object_tags=item.tags %]
+            </p>
             <p>
             <b>Description:</b><br>
             <textarea name="todo.description" rows="10" cols="45" wrap="physical">[% item.description %]</textarea>
@@ -62,7 +64,9 @@
             primary: 'ui-icon-check'
         }
     });
-    
+
+    [% PROCESS shared/tags/init.tt object_name='todo' avail_tags=avail_tags %]
+
     $('#todo-priority').buttonset();
     
     $( "#todo-due-on" ).datepicker({ dateFormat: 'yy-mm-dd' });

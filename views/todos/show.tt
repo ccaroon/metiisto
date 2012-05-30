@@ -8,6 +8,7 @@
         [% END %]
         <span class="[% item.completed ? 'm-strikethru' : '' %]">[% item.title %]</span>
         <span id="action-edit-todo" class="ui-icon ui-icon-pencil" style="float:left"></span>
+        [% PROCESS shared/tags/list.tt tags=item.tags %]
     </div>
     <div class="ui-widget-content">
         <p>
