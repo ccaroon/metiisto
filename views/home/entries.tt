@@ -19,7 +19,7 @@
                         [% END %]
                     </td>
                     <td width="75%">
-                        <a href="/entries/[% entry.id %]">[% entry.subject %]</a>
+                        <a href="/entries/[% entry.id %]" title="[% PROCESS shared/tags/list.tt tags=entry.tags is_tooltip=1 %]">[% entry.subject %]</a>
                     </td>
                 </tr>
             [% END %]

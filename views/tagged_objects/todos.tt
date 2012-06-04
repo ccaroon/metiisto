@@ -1,11 +1,11 @@
 <div class="ui-widget">
-    <div class="ui-widget-header">Lists</div>
+    <div class="ui-widget-header">Todos</div>
     <div class="ui-widget-content">
         <table width="100%" class="ui-widget-content">
-        [% FOREACH list IN lists %]
+        [% FOREACH todo IN todos %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                 <td>
-                    <a href="/lists/[% list.id %]" title="[% PROCESS shared/tags/list.tt tags=list.tags is_tooltip=1 %]">[% list.name %]</a>
+                    <a href="/todos/[% todo.id %]" title="[% PROCESS shared/tags/list.tt tags=todo.tags is_tooltip=1 %]" style="[% todo.completed ? 'text-decoration: line-through' : '' %]">[% todo.title %]</a>
                 </td>
             </tr>
         [% END %]
