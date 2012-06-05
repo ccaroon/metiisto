@@ -17,9 +17,7 @@
             <strong>Completed: </strong>[% item.completed_date ? item.completed_date.format : 'Pending '%]<br>
             <strong>List: </strong><a href="/lists/[% item.list.id %]">[% item.list.name %]</a><br>
         </p>
-        <p>
-            [% item.description | markdown %]
-        </p>
+        <div class="markdown">[% item.description | markdown %]</div>
     </div>
 </div>
 <script>

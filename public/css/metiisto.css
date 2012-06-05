@@ -7,3 +7,12 @@
 .m-strikethru { text-decoration: line-through !important}
 
 .m-side-menu-button { margin: 1px 2px 2px 2px; width: 95% }
+
+.markdown a {
+    border-bottom: dotted 1px grey
+}
+
+.markdown a:hover {
+    color: grey;
+    text-decoration: none;
+}

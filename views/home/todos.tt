@@ -30,7 +30,7 @@
               </tr>
               <tr id="todo-desc-[% todo.id %]" style="display:none">
                   <td>&nbsp;</td>
-                  <td>[% todo.description | markdown %]</td>
+                  <td class="markdown">[% todo.description | markdown %]</td>
               </tr>
           [% END %]
       </table>

@@ -16,7 +16,7 @@
         [% IF entry.ticket_num %]
             <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
         [% END %]
-        <p>[% entry.description | markdown %]</p>
+        <div class="markdown">[% entry.description | markdown %]</div>
     </div>
 </div>
 <script>

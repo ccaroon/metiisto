@@ -42,7 +42,7 @@
                     [% END %]
                     [% IF todo.description %]
                     <span id="action-show-desc-[% todo.id %]" class="ui-icon ui-icon-document" style="float:left"></span>
-                    <span id="desc-[% todo.id %]" class="ui-priority-secondary" style="display:none">[% todo.description | markdown %]</span>
+                    <span id="desc-[% todo.id %]" class="ui-priority-secondary markdown" style="display:none">[% todo.description | markdown %]</span>
                     <script>
                         $('#action-show-desc-[% todo.id %]').click(function() {
                             $('#desc-[% todo.id %]').toggle();
