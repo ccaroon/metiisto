@@ -13,16 +13,25 @@
 </div>
 <script>
     
-    $(document).keypress(
-        function(e)
-        {
-            if(e.which == 47) // forward slash
-            {
-                document.tag_search.tag.focus()
-                document.tag_search.tag.select();
-            }
-        }
-    );
+    // 47  -> forward slash (/)
+    // 116 -> lowercase T (t)
+    // 63  -> question mark (?)
+    //var last_key;
+    //$(document).keypress(
+    //    function(e)
+    //    {
+    //        if (e.which == 47 && last_key == 116)
+    //        {
+    //            document.tag_search.tag.focus()
+    //            document.tag_search.tag.select();
+    //            last_key = nil;
+    //        }
+    //        else
+    //        {
+    //            last_key = e.which;
+    //        }
+    //    }
+    //);
     
     $('#side_menu_new_entry').button({
         icons: {

@@ -5,8 +5,9 @@
 
     <div style="float:left;width:70%">
         [% PROCESS home/entries.tt %]
+        <p>[% PROCESS home/tag_cloud.tt %]</p>
     </div>
-    
+
     <div style="float:left; width:30%">
         [% PROCESS home/current_release.tt %]
         
@@ -18,7 +19,6 @@
     </div>
     
     <div style="clear:both">
-        [% PROCESS home/tag_cloud.tt %]
         [% PROCESS home/countdowns.tt %]
     </div>
 
