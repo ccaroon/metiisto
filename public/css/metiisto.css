@@ -16,3 +16,7 @@
     color: grey;
     text-decoration: none;
 }
+
+.tag_cloud {
+    border: dashed 1px lightgrey
+}

@@ -3,7 +3,9 @@
 
     <div>[% PROCESS home/tickets.tt %]</div>
 
-    <div style="float:left;width:70%">[% PROCESS home/entries.tt %]</div>
+    <div style="float:left;width:70%">
+        [% PROCESS home/entries.tt %]
+    </div>
     
     <div style="float:left; width:30%">
         [% PROCESS home/current_release.tt %]
@@ -15,6 +17,9 @@
         [% PROCESS home/notes.tt notes=favorite_notes title="Favorite Notes"%]
     </div>
     
-    <div style="clear:both">[% PROCESS home/countdowns.tt %]</div>
+    <div style="clear:both">
+        [% PROCESS home/tag_cloud.tt %]
+        [% PROCESS home/countdowns.tt %]
+    </div>
 
 </div>

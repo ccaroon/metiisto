@@ -118,6 +118,22 @@ sub home
         { order_by => 'task_date,entry_date' }
     );
 
+    # Data for Tag Cloud
+    my $tag_cloud = Metiisto::Util::Cache->get(key => 'tag_cloud');
+    unless ($tag_cloud)
+    {
+        my @tags = Metiisto::Tag->retrieve_all();
+        # Tag Name => Used Count
+        my %tag_data = map { $_->name() => scalar($_->objects())->count() } @tags;
+        $tag_cloud = \%tag_data;
+
+        Metiisto::Util::Cache->set(
+            key   => 'tag_cloud',
+            value => $tag_cloud,
+            ttl   => 15 * 60,
+        );
+    }
+
     my $out = template 'home/index', {
         tickets         => $tickets,
         todos           => \@todos,
@@ -125,6 +141,7 @@ sub home
         recent_notes    => \@recent_notes,
         favorite_notes  => \@fav_notes,
         countdowns      => \@countdowns,
+        tag_cloud       => $tag_cloud,
         current_release => {
             name         => $current_release_name,
             ready_points => $ready_points,

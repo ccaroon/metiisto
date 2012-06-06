@@ -1,0 +1,5 @@
+<div class="ui-widget-content tag_cloud">
+    [% FOREACH tag IN tag_cloud.pairs %]
+        <a style="font-size: [% 1 + ((tag.value / 5) * 0.4) %]em" href="/tagged_objects?tag=[% tag.key %]">[% tag.key %]</a>
+    [% END %]
+</div>

@@ -5,9 +5,10 @@ use strict;
 use base 'Metiisto::Base';
 ################################################################################
 __PACKAGE__->table('tags');
-__PACKAGE__->columns(All => qw/
-    id name
-/);
+
+__PACKAGE__->columns(Primary   => qw/id/);
+__PACKAGE__->columns(Essential => qw/name/);
+
 __PACKAGE__->has_many(objects => 'Metiisto::TaggedObject');
 ################################################################################
 sub names
