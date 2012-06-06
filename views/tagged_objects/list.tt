@@ -1,5 +1,5 @@
 <div class="ui-widget">
-    <div class="ui-widget-header">Tag Search: [% tag_name %]</div>
+    <div class="ui-widget-header">Tag Search: [% tag_name %] - [% count %] found.</div>
     <div style="float:left;width:70%">
         [% PROCESS home/entries.tt
             header="Entries"

@@ -11,6 +11,6 @@
 [%- ELSE -%]
     [% FOREACH tag IN tags %]
     [% '&#8680;' IF loop.first %]
-    <span style="border:1px dotted black">[% tag.name %]</span>
+    <a href="/tagged_objects?tag=[% tag.name %]" style="border:1px dotted black">[% tag.name %]</a>
     [% END %]
 [%- END -%]

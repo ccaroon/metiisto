@@ -21,9 +21,10 @@ sub list
     my $out;
     if (defined $tag)
     {
-        my @objects = Metiisto::TaggedObject->search(tag_id => $tag->id());
-    
-        my %template_data = (tag_name => $tag_name);
+        my @objects = $tag->objects();
+        my $count   = $tag->objects()->count();
+
+        my %template_data = (tag_name => $tag->name(), count => $count);
         foreach my $obj (@objects)
         {
             my $type = $obj->obj_class();
