@@ -5,7 +5,6 @@
 
     <div style="float:left;width:70%">
         [% PROCESS home/entries.tt %]
-        <p>[% PROCESS home/tag_cloud.tt %]</p>
     </div>
 
     <div style="float:left; width:30%">
@@ -16,6 +15,10 @@
         [% PROCESS home/notes.tt notes=recent_notes title="Recent Notes" %]
         
         [% PROCESS home/notes.tt notes=favorite_notes title="Favorite Notes"%]
+    </div>
+    
+    <div style="clear:both;float:left;width:70%">
+        <p>[% PROCESS home/tag_cloud.tt %]</p>
     </div>
     
     <div style="clear:both">

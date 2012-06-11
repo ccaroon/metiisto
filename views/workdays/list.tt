@@ -26,17 +26,17 @@
                     [% day.work_date.format("%A (%b %d, %Y)") %]
                 </td>
                 <td align="center">
-                    <span id="action-time_in-[% day.id %]" class="ui-icon ui-icon-pencil" style="float:right"></span>                    
                     <div id="view-time_in-[% day.id %]">
+                        <span class="ui-icon ui-icon-pencil" style="float:right"></span>
                         [% day.time_in.format("%I:%M %P") %]
                     </div>
-                     <div id="edit-time_in-[% day.id %]"  style="display:none">
+                     <div id="edit-time_in-[% day.id %]" style="display:none">
                         <form method="POST" action="/workdays/[% day.id %]">
                             <input id="input-time_in-[% day.id %]" type="text" name="workday.time_in" size="4" value="[% day.time_in.format("%R") %]">
                         </form>
                      </div>
                     <script>
-                        $('#action-time_in-[% day.id %]').click(function() {
+                        $('#view-time_in-[% day.id %]').click(function() {
                             $('#view-time_in-[% day.id %]').hide();
                             $('#edit-time_in-[% day.id %]').show();
                             $('#input-time_in-[% day.id %]').focus().select();
@@ -44,8 +44,8 @@
                     </script>
                 </td>
                 <td align="center">
-                    <span id="action-time_out-[% day.id %]" class="ui-icon ui-icon-pencil" style="float:right"></span>                    
                     <div id="view-time_out-[% day.id %]">
+                        <span class="ui-icon ui-icon-pencil" style="float:right"></span>
                         [% day.time_out.format("%I:%M %P") %]
                     </div>
                      <div id="edit-time_out-[% day.id %]"  style="display:none">
@@ -54,7 +54,7 @@
                         </form>
                      </div>
                     <script>
-                        $('#action-time_out-[% day.id %]').click(function() {
+                        $('#view-time_out-[% day.id %]').click(function() {
                             $('#view-time_out-[% day.id %]').hide();
                             $('#edit-time_out-[% day.id %]').show();
                             $('#input-time_out-[% day.id %]').focus().select();
