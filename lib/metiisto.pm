@@ -27,9 +27,12 @@ hook before => sub
     #       find any other way except to set a 'var'
     var env        => setting('environment');
 
-    if (!session('user') and request->path_info !~ m|^/users/login|)
+    unless (setting('environment') eq 'test')
     {
-        redirect '/users/login';
+        if (!session('user') and request->path_info !~ m|^/users/login|)
+        {
+            redirect '/users/login';
+        }
     }
 };
 ################################################################################
