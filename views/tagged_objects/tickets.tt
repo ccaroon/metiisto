@@ -1,0 +1,8 @@
+<div class="ui-widget">
+    <div class="ui-widget-header">Tickets</div>
+    <div class="ui-widget-content">
+        [% FOREACH ticket IN tickets.pairs %]
+        <a href="http://[% session.user.preferences('jira_host') %]/browse/[% ticket.key %]" title="[% ticket.value %]">[% ticket.key %]</a>
+        [% END %]
+    </div>
+</div>

@@ -6,12 +6,17 @@ use Metiisto::Util::DateTime;
 
 use base qw(Metiisto::Base Metiisto::Taggable);
 
+use constant CATEGORY_MEETING     => 'Meeting';
+use constant CATEGORY_TICKET      => 'Ticket';
+use constant CATEGORY_CODE_REVIEW => 'Code Review';
+use constant CATEGORY_OPERATIONAL => 'Operational';
+use constant CATEGORY_OTHER       => 'Other';
 use constant CATEGORIES => [
-    'Meeting',
-    'Ticket',
-    'Code Review',
-    'Operational',
-    'Other',
+    CATEGORY_MEETING,
+    CATEGORY_TICKET,
+    CATEGORY_CODE_REVIEW,
+    CATEGORY_OPERATIONAL,
+    CATEGORY_OTHER,
 ];
 
 __PACKAGE__->table('entries');

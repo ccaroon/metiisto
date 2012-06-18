@@ -21,6 +21,7 @@ sub list
     my $out;
     if (defined $tag)
     {
+        my %tickets;
         my @objects = $tag->objects();
         my $count   = $tag->objects()->count();
 
@@ -33,8 +34,17 @@ sub list
     
             $template_data{$type} = [] unless defined $template_data{$type};
             push @{$template_data{$type}}, $obj->object();
+            
+            if ($type eq 'entry'
+                and
+                $obj->object()->category() eq Metiisto::Entry->CATEGORY_TICKET
+            )
+            {
+                $tickets{$obj->object()->ticket_num()} = $obj->object()->subject();
+            }
         }
-    
+
+        $template_data{tickets} = \%tickets;
         $out = template 'tagged_objects/list', \%template_data;
     }
     else

@@ -6,12 +6,15 @@
         <!-- Just hard-coding Project ID (pid) for now -->
         <img align="absmiddle" src="http://jira.mcclatchyinteractive.com/secure/projectavatar?pid=10110"/>
         [% FOREACH ticket IN current_release.tickets %]
-            [% tix_summary = ticket.summary | html %]
-            [% fs = 1 + ((ticket.points / 7) * 0.4) %]
-            [% tix_class = ticket.status.match('(Ready for release|Closed|Rejected|Released)')
-               ? 'ui-priority-secondary m-strikethru'
-               : ''
-            %]
+        [%-
+            tix_summary = ticket.summary | html;
+
+            fs = 1 + ((ticket.points / 7) * 0.4);
+
+            tix_class = ticket.status.match('(Ready for release|Closed|Rejected|Released)')
+                ? 'ui-priority-secondary m-strikethru'
+                : '';
+        -%]
         <a class="[% tix_class %]" href="http://[% session.user.preferences('jira_host') %]/browse/[% ticket.key %]" title="[% tix_summary  _ " (" _ ticket.points _ ")" %]" style="font-size: [% fs %]em;border: dotted 1px lightgrey">[% ticket.key %]</a>
         [% END %]
     </div>

@@ -10,6 +10,8 @@
     
     <div style="float:left; width:30%">
 
+        [% PROCESS tagged_objects/tickets.tt %]
+
         [% PROCESS tagged_objects/todos.tt todos=todo %]
 
         [% PROCESS tagged_objects/lists.tt lists=list %]

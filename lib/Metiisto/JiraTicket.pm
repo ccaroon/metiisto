@@ -103,12 +103,13 @@ sub search
         foreach my $item (@{$data->{channel}->{item}})
         {
             my $t = Metiisto::JiraTicket->new(
-                key     => $item->{key},
-                summary => $item->{summary},
-                link    => $item->{link},
-                status  => $item->{status},
-                type    => $item->{type},
+                key         => $item->{key},
+                summary     => $item->{summary},
+                link        => $item->{link},
+                status      => $item->{status},
+                type        => $item->{type},
                 fix_version => $item->{fixVersion}->[0],
+                points      => 0.0,
             );
 
             foreach my $cf (@{$item->{customfields}->{customfield}})
