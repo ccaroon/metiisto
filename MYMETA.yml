@@ -1,0 +1,43 @@
+---
+abstract: 'YOUR APPLICATION ABSTRACT'
+author:
+  - 'Craig N. Caroon <youremail@example.com>'
+build_requires:
+  ExtUtils::MakeMaker: 0
+configure_requires:
+  ExtUtils::MakeMaker: 0
+dynamic_config: 0
+generated_by: 'ExtUtils::MakeMaker version 6.62, CPAN::Meta::Converter version 2.112150'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: metiisto
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  Authen::SASL: 2.15
+  Class::DBI: v3.0.17
+  Class::DBI::AbstractSearch: 0.07
+  Crypt::Blowfish: 2.12
+  Crypt::CBC: 2.3
+  Dancer: 1.3095
+  Dancer::Plugin::Database: 1.81
+  Data::Page: 2.02
+  Digest::SHA1: 2.13
+  File::Slurp: 9999.19
+  IO::Socket::SSL: 1.76
+  Lingua::EN::Inflect: 1.894
+  Moose: 2.0602
+  Net::SMTP::SSL: 1.01
+  Net::SSLeay: 1.48
+  Starman: 0.3
+  Template: 2.24
+  Template::Plugin::Markdown: 0.02
+  Test::More: 0.98
+  Text::Markdown: 1.000031
+  XML::Simple: 2.18
+  YAML: 0.81
+version: 1.0
