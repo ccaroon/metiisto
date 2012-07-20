@@ -43,21 +43,15 @@ sub home
         Metiisto::Util::Cache->set(key => 'my_tickets', value => $tickets, ttl => 60);
     }
 
-    my $ready_points = 0;
-    my $total_points = 0;
-    my $release_tickets;
-    my $release_data = Metiisto::Util::Cache->get(key => 'release_tickets');
-    if ($release_data)
-    {
-        $ready_points    = $release_data->{ready_points};
-        $total_points    = $release_data->{total_points};
-        $release_tickets = $release_data->{tickets};
-    }
-    else
+    my $release_data = Metiisto::Util::Cache->get(key => 'release_data');
+    unless ($release_data)
     {
         # TODO: don't hardcode current release filter id
-        $release_tickets = Metiisto::JiraTicket->search(
-            query => "filter=11224 AND assignee=".session->{user}->preferences('jira_username'));
+        my $release_tickets
+            = Metiisto::JiraTicket->search(query => "filter=11331");
+
+        my $total_points = 0;
+        my $ready_points = 0;
         foreach my $t (@$release_tickets)
         {
             $total_points += $t->points();
@@ -66,21 +60,24 @@ sub home
                 $ready_points += $t->points();
             }
         }
+
+        my $release_name = (scalar @$release_tickets != 0)
+            ? $release_tickets->[0]->fix_version()
+            : '?????';
         
+        $release_data = {
+            name         => $release_name,
+            tickets      => $release_tickets,
+            ready_points => $ready_points,
+            total_points => $total_points,
+        };
+
         Metiisto::Util::Cache->set(
-            key   => 'release_tickets',
-            value => {
-                tickets      => $release_tickets,
-                ready_points => $ready_points,
-                total_points => $total_points,
-            },
+            key   => 'release_data',
+            value => $release_data,
             ttl   => 10 * 60,
         );
     }
-
-    my $current_release_name = (scalar @$release_tickets != 0)
-        ? $release_tickets->[0]->fix_version()
-        : '?????';
 
     my @recent_notes = Metiisto::Note->search_where(
         {
@@ -142,12 +139,7 @@ sub home
         favorite_notes  => \@fav_notes,
         countdowns      => \@countdowns,
         tag_cloud       => $tag_cloud,
-        current_release => {
-            name         => $current_release_name,
-            ready_points => $ready_points,
-            total_points => $total_points,
-            tickets      => $release_tickets,
-        }
+        current_release => $release_data,
     };
 
     return ($out);

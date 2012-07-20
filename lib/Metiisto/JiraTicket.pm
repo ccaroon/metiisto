@@ -4,9 +4,10 @@ use strict;
 use feature 'switch';
 
 use Dancer qw(session);
-use LWP::Simple qw();
+use LWP::UserAgent;
 use Moose;
 use XML::Simple;
+$XML::Simple::PREFERRED_PARSER='XML::LibXML::SAX::Parser';
 
 use constant JIRA_URL => "http://_JIRA_HOST_/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?jqlQuery=_JIRA_QUERY_&tempMax=1000&os_username=_JIRA_USER_&os_password=_JIRA_PASS_";
 
@@ -18,6 +19,10 @@ use constant SUB_TASK_TYPES => {
     'Spec Review' => 1,
     'Bug found'   => 1
 };
+
+use constant DEFAULT_TIMEOUT => 30;
+
+my $UA = LWP::UserAgent->new(timeout => DEFAULT_TIMEOUT);
 ################################################################################
 has key => (
     is  => 'rw',
@@ -91,7 +96,10 @@ sub search
     $url =~ s/_JIRA_QUERY_/$query/;
     $url .= FIELDS;
 
-    my $xml = LWP::Simple::get($url);
+    my $timeout = $args{timeout} || DEFAULT_TIMEOUT;
+    $UA->timeout($timeout);
+    my $response = $UA->get($url);
+    my $xml = ($response->is_success()) ? $response->content() : undef;
     if ($xml)
     {
         my $data = XMLin($xml,

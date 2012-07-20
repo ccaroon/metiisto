@@ -29,6 +29,7 @@ requires:
   Digest::SHA1: 2.13
   File::Slurp: 9999.19
   IO::Socket::SSL: 1.76
+  LWP::UserAgent: 6.03
   Lingua::EN::Inflect: 1.894
   Moose: 2.0602
   Net::SMTP::SSL: 1.01
@@ -38,6 +39,7 @@ requires:
   Template::Plugin::Markdown: 0.02
   Test::More: 0.98
   Text::Markdown: 1.000031
-  XML::Simple: 2.18
+  XML::LibXML: 2.0002
+  XML::Simple: 2.2
   YAML: 0.81
 version: 1.0

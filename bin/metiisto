@@ -4,6 +4,7 @@ DIR=`dirname $0`
 APP_DIR=$DIR/..
 PID_FILE=$APP_DIR/logs/metiisto.pid
 PORT=5000
+WORKERS=7
 ################################################################################
 if [ -z $METIISTO_SERVER ]; then METIISTO_SERVER='Starman'; fi;
 if [ -z $METIISTO_ENV ]; then METIISTO_ENV='production'; fi;
@@ -18,7 +19,7 @@ function app_start
         if [ "X$1" == 'Xdevel' ]; then
             plackup -s $METIISTO_SERVER -E development -p $PORT --pid $PID_FILE -a bin/app.pl
         else
-            plackup -s $METIISTO_SERVER -E $METIISTO_ENV -p $PORT -D --pid $PID_FILE --access-log logs/$METIISTO_ENV.log --error-log logs/error.${METIISTO_ENV}.log -a bin/app.pl &> /dev/null
+            plackup -s $METIISTO_SERVER -E $METIISTO_ENV -p $PORT -D --pid $PID_FILE --access-log logs/$METIISTO_ENV.log --error-log logs/error.${METIISTO_ENV}.log -a bin/app.pl --workers $WORKERS &> /dev/null
         fi
 
         if [ -f $PID_FILE ]; then
