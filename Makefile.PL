@@ -14,8 +14,8 @@ WriteMakefile(
     PREREQ_PM => {
         'Test::More'                 => 0.98,
         'YAML'                       => 0.81,
-        'Dancer'                     => 1.3095,
-        'Dancer::Plugin::Database'   => 1.81,
+        'Dancer'                     => 1.3100,
+        'Dancer::Plugin::Database'   => 1.82,
         'Class::DBI'                 => '3.0.17',
         'Class::DBI::AbstractSearch' => 0.07,
         'Digest::SHA1'               => 2.13,
