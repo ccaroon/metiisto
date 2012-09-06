@@ -2,10 +2,15 @@
 
 --------------------------------------------------------------------------------
 
-[%- FOREACH entry IN entries %]
-## [% entry.category == 'Ticket' ? '<a href="http://' _ session.user.preferences('jira_host') _ '/browse/' _ entry.ticket_num _ '">' _ entry.ticket_num _ '</a> - ' : '' %] [% entry.subject %] ([% entry.task_date.format %]) ##
+[%- FOREACH entry_list IN entries %]
+## [% entry_list.0.category == 'Ticket' ? '<a href="http://' _ session.user.preferences('jira_host') _ '/browse/' _ entry_list.0.ticket_num _ '">' _ entry_list.0.ticket_num _ '</a> - ' : '' %] [% entry_list.0.subject %] ([% entry_list.0.task_date.format %]) ##
+[% FOREACH entry IN entry_list %]
 [% entry.description %]
+    [% UNLESS loop.last %]
+-----
 
+    [% END %]
+[% END %]
 [%- END %]
 
 [% PROCESS 'reports/controls.tt' %]

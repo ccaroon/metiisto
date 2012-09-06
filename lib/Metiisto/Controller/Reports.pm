@@ -200,21 +200,19 @@ sub _consolidate_entries
     my %entry_filter;
     foreach my $e (@$entries)
     {
-        my $main_entry = $entry_filter{$e->subject()};
-        if ($main_entry)
+        my $entry_list = $entry_filter{$e->subject()};
+        if ($entry_list)
         {
-            my $new_desc = $main_entry->description();
-            $new_desc .= "\n\n----------\n\n" . $e->description();
-            $main_entry->description($new_desc);
+            push @{$entry_list}, $e;
         }
         else
         {
-            $entry_filter{$e->subject()} = $e;
+            $entry_filter{$e->subject()} = [$e];
         }
     }
     
     my @consolidated_entries
-        = sort {$a->entry_date()->epoch() <=> $b->entry_date->epoch() }
+        = sort {$a->[0]->entry_date()->epoch() <=> $b->[0]->entry_date->epoch() }
             values %entry_filter;
 
     return (wantarray ? @consolidated_entries : \@consolidated_entries);
