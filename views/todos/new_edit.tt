@@ -50,7 +50,9 @@
         
             <p>
                 <input class="button" type="submit" value="Save">
+                [% IF item.id %]
                 <a class="button" href="/todos/[% item.id %]">View</a>
+                [% END %]
             </p>
         </form>
     </div>    

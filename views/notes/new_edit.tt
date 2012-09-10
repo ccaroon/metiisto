@@ -22,7 +22,9 @@
             </p>
             <p>
                 <input class="button" type="submit" value="Save">
+                [% IF note.id %]
                 <a class="button" href="/notes/[% note.id %]">View</a>
+                [% END %]
             </p>
         </form>
     </div>

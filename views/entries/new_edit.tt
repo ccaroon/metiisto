@@ -35,9 +35,11 @@
         
             <p>
                 <input id="button-save" type="submit" value="Save">
+                [% IF entry.id %]
                 <a id="button-view-entry" href="/entries/[% entry.id %]">View</a>
+                [% END %]
             </p>
-            
+
         </form>
     </div>
 </div>
