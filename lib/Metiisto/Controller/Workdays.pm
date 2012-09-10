@@ -26,12 +26,19 @@ sub list
 sub new_record
 {
     my $this = shift;
+    my %args = @_;
 
-    my $day = {};
-
-    my $out = template 'workdays/new_edit', {
-        day => $day,
+    my $day = {
+        work_date => Metiisto::Util::DateTime->now(),
+        time_in   => Metiisto::Util::DateTime->parse(
+            Metiisto::Workday->DEFAULT_TIME_IN),
+        time_out  => Metiisto::Util::DateTime->parse(
+            Metiisto::Workday->DEFAULT_TIME_OUT),
     };
+
+    my $out = $this->SUPER::new_record(
+        item => $day,
+    );
 
     return ($out);
 }
@@ -47,6 +54,13 @@ sub create
         my $attr = $1;
         $data->{$attr} = params->{$p};
     }
+
+    $data->{time_in}
+        = Metiisto::Util::DateTime->parse($data->{'time_in'})->format('%R');
+    $data->{time_out}
+        = Metiisto::Util::DateTime->parse($data->{'time_out'})->format('%R');
+    $data->{time_lunch} = '00:00';
+
     my $day = Metiisto::Workday->insert($data);
     die "Error creating Workday" unless $day;
 
@@ -74,7 +88,7 @@ sub edit
     my $day = Metiisto::Workday->retrieve($args{id});
 
     my $out = template 'workdays/new_edit', {
-        day => $day,
+        item => $day,
     };
 
     return ($out);

@@ -1,0 +1,31 @@
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        [% vars.action | ucfirst %] Work Day
+    </div>
+    <div class="ui-widget-content">
+        <form method="post" action="/workdays[% item.id ? '/' _ item.id : '' %]">
+            <p>
+                <b>Work Date:</b>
+                <input type="text" id="workday-target_date" name="workday.work_date" value="[% item.work_date.format_db('date_only',1) %]" size="10">
+            </p>
+            <p>
+                <b>In:</b>
+                <input type="text" name="workday.time_in" value="[% item.time_in.format('%I:%M%P') %]" size="10">
+                <br>
+                <b>Out:</b>
+                <input type="text" name="workday.time_out" value="[% item.time_out.format('%I:%M%P') %]" size="10">
+            </p>
+            <p>
+                <input class="button" type="submit" value="Save">
+                [% IF item.id %]
+                <a class="button" href="/workdays/[% item.id %]">View</a>
+                [% END %]
+            </p>
+        </form>
+    </div>
+</div>
+<script>
+    $('.button').button();
+
+    $("#workday-target_date").datepicker({ dateFormat: 'yy-mm-dd' });
+</script>
