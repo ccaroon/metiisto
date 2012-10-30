@@ -45,7 +45,7 @@ sub preferences
     map { $pref_map{$_->name()} = $_; } @prefs;
 
     my $value;
-    if ($args{name})
+    if ($args{name} && $pref_map{$args{name}})
     {
         $value = $pref_map{$args{name}}->value();
     }

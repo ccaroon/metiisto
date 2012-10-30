@@ -1,0 +1,71 @@
+Metiisto Installation
+=====================
+
+Prerequisites
+-------------
+0. git
+1. Perl
+2. MySQL
+
+Source Code
+-----------
+Pull the code from github: `git clone git://github.com/ccaroon/metiisto.git`
+
+Perl Modules
+------------
+You'll need to install the required third-party Perl modules.
+
+1. `cd metiisto`
+2. `perl Makefile.PL`
+3. You should see a list of the required Perl modules that you are missing.
+4. Use `CPAN` to install them:
+    1. `sudo cpan`
+    2. `cpan> install <REQUIRED_MODULE>`
+    3. Repeat for each missing module. You can re-run `perl Makefile.PL`
+       if necessary.
+
+Database
+--------
+1. Update database connection information in the environment configs in
+   `metiisto/environments/*.yml`
+    1. You probably only need to update the `username` and `password` settings.
+1. Create a MySQL database named `metiisto_prod`:
+    1. `mysqladmin -u<USER> -p<PASS> create metiisto_prod`
+2. If you want to do development or testing, you'll also need to create a database
+   for those environments:
+   1. `mysqladmin -u<USER> -p<PASS> create metiisto_devel`
+   2. `mysqladmin -u<USER> -p<PASS> create metiisto_test`
+3. Create the tables in the database for each environment you need. At this
+   point you should be able to run the metiisto database helper script: `bin/mdb.pl`
+    1. `cd metiisto`
+    2. `bin/mdb.pl --env production shell < sql/schema.sql`
+    3. Repeat as necessary for other environments: test and/or development
+4. The `mdb.pl` tool lets you perform the following action:
+   backup|restore|shell|migrate|create_migration|dump_schema
+
+App
+---
+Hopefully you should be able to start the Application now. There is a script in
+`metiisto/bin` called `metiisto` that will help with that.
+
+1. `cd metiisto`
+2. `bin/metiisto start`
+3. Verify it started: `bin/metiisto status`
+4. Important `bin/metiisto` commands:
+    - start
+    - stop
+    - restart
+    - status
+5. If you want, you can add `/PATH/TO/metiisto/bin` to your PATH.
+6. By default the application will start on port 5000.
+7. In your browser, go to `http://localhost:5000`
+8. If the app comes up, then you're almost done. If not, refer to the logs for
+   help debugging the problem:
+    - `metiisto/logs/error.production.log`
+    - `metiisto/logs/production.log`
+9. Clicking on most any button or link should take you to the "Create Initial User"
+   screen. Alternatively, just go to: `http://localhost:5000/users/login`
+10. Fill in the blanks and click the "Create" button.
+11. Click on your name in the top right corner to enter the Preferences screen
+    and complete the installation by configuring your preferences.
+12. Done.
