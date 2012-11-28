@@ -18,7 +18,7 @@
             </p>
             <p>
                 <b>Body:</b><br>
-                <textarea rows="25" cols="80" wrap="physical" name="note.body">[% note.body %]</textarea>                
+                <textarea rows="15" cols="80" wrap="physical" name="note.body">[% note.body %]</textarea>                
             </p>
             <p>
                 <input class="button" type="submit" value="Save">
@@ -30,6 +30,10 @@
     </div>
 </div>
 <script>
+    $(document).ready(function() {
+        $('textarea').autosize();
+    });
+
     $('.button').button();
 
     [% PROCESS shared/tags/init.tt object_name='note' avail_tags=avail_tags %]

@@ -31,7 +31,7 @@
 
             <b>Description:</b>
             <br>
-            <textarea name="entry.description" wrap="physical" rows="25" cols="80">[% entry.description %]</textarea>
+            <textarea name="entry.description" wrap="physical" rows="15" cols="80">[% entry.description %]</textarea>
         
             <p>
                 <input id="button-save" type="submit" value="Save">
@@ -44,6 +44,10 @@
     </div>
 </div>
 <script language="javascript">
+
+    $(document).ready(function() {
+        $('textarea').autosize();
+    });
 
     $('#button-view-entry').button();
     $('#button-save').button();

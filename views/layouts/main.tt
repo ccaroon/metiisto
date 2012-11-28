@@ -8,6 +8,7 @@
         <script src='/javascripts/jquery.js'></script>
         <script src='/javascripts/jquery-ui.js'></script>
         <script src='/javascripts/tag-it.js'></script>
+        <script src='/javascripts/autosize.js'></script>
     </head>
     <body>
         <!-- Header (includes Top Menu) -->
