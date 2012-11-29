@@ -20,3 +20,19 @@
 .tag_cloud {
     border: dashed 1px lightgrey
 }
+
+.form_field {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+form {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.left_label {
+    font-weight: bold;
+    float: left;
+    width: 8em;
+}

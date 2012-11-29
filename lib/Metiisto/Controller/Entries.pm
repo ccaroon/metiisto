@@ -70,7 +70,7 @@ sub new_record
     my $entry = {
         ticket_num => params->{ticket_num},
         subject    => params->{subject},
-        category   => params->{category},
+        category   => (params->{category} || Metiisto::Entry->CATEGORY_MEETING),
         task_date  => Metiisto::Util::DateTime->new(epoch => time)
     };
     my $subjects = Metiisto::Entry->recent_subjects();

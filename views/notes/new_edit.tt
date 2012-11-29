@@ -4,44 +4,88 @@
     </div>
     <div class="ui-widget-content">
         <form method="post" action="/notes[% note.id ? '/' _ note.id : '' %]">
-            <p>
-                <b>Title:</b>
-                <input type="text" name="note.title" value="[% note.title %]" size="25">
-            </p>
-            <p>
-                <b>Favorite?:</b>
-                <label for="note-favorite">Favorite?</label>
-                <input id="note-favorite" type="checkbox" name="note.is_favorite" value="1" [% note.is_favorite ? 'checked' : '' %]>
-            </p>
-            <p>
+            
+            <div class="form_field">
+                <label class="left_label" for="note_title">Title:</label>
+                <input type="text" id="note_title" name="note.title" value="[% note.title %]" size="80">
+            </div>
+
+            <div class="form_field">
+                <label class="left_label" for="note_favorite">Favorite:</label>
+                <button id="note_favorite" type="button" >&nbsp;</button>
+                <input type="hidden" id="note_favorite_value" name="note.is_favorite" value="[% note.is_favorite %]">
+            </div>
+
+            <div class="form_field">
+                <label class="left_label">Tags:</label>
                 [% PROCESS shared/tags/widget.tt object_tags=note.tags %]
-            </p>
-            <p>
-                <b>Body:</b><br>
-                <textarea rows="15" cols="80" wrap="physical" name="note.body">[% note.body %]</textarea>                
-            </p>
-            <p>
+            </div>
+            
+            <div class="form_field">
+                <label class="left_label" for="note_body">Body:</label>
+                <textarea id="note_body" rows="15" cols="80" wrap="physical" name="note.body">[% note.body %]</textarea>                
+            </div>
+            
+            <div class="form_field">
                 <input class="button" type="submit" value="Save">
                 [% IF note.id %]
                 <a class="button" href="/notes/[% note.id %]">View</a>
                 [% END %]
-            </p>
+            </div>
         </form>
     </div>
 </div>
 <script>
-    $(document).ready(function() {
-        $('textarea').autosize();
-    });
+
+    function set_favorite(on_off)
+    {
+        var options;
+        if (on_off == true)
+        {
+            options = {
+                value: 1,
+                icons: {
+                    primary: "ui-icon-star"
+                }
+            };
+        }
+        else
+        {
+            options = {
+                value: 0,
+                icons: {
+                    primary: "ui-icon-minus"
+                }
+            };
+        }
+        $( '#note_favorite').button( "option", options );
+        $( '#note_favorite').attr('value', options.value);
+        // <button> does not submit it's value, so using a hidden field to get
+        // this data back to the controller.
+        $( '#note_favorite_value').attr('value', options.value);
+    }
 
     $('.button').button();
 
     [% PROCESS shared/tags/init.tt object_name='note' avail_tags=avail_tags %]
 
-    $('#note-favorite').button({
+    $('#note_favorite').button({
         text: false,
         icons: {
-            primary: 'ui-icon-check'
+            primary: "ui-icon-minus"
+        }
+    }).click(function() {
+        // Toggle
+        if ( $( this ).attr('value') == 0 ) {
+            set_favorite(true);
+        } else {
+            set_favorite(false);
         }
     });
+
+    $(document).ready(function() {
+        $('textarea').autosize();
+        set_favorite([% note.is_favorite %]);
+    });
+
 </script>
