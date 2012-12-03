@@ -1,0 +1,25 @@
+[%-
+    #Params:
+        # id
+        # icon_on
+        # icon_off
+        # init_value
+-%]
+
+$('#[% id %]').data('icon_off', '[% icon_off %]');
+$('#[% id %]').data('icon_on', '[% icon_on %]');
+
+$('#[% id %]').button({
+    text: false,
+    icons: {
+        primary: "ui-icon-[% icon_off %]"
+    }
+}).click(function() {
+    if ( $( this ).attr('value') == 0 ) {
+        toggle_set('[% id %]', true);
+    } else {
+        toggle_set('[% id %]', false);
+    }
+});
+
+toggle_set('[% id %]', [% init_value %]);

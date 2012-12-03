@@ -5,49 +5,55 @@
 
     <div class="ui-widget-content">
         <form method="post" action="/todos[% item.id ? '/' _ item.id : '' %]">
-            <p>
-            <b>Title:</b>
-            <input type="text" size="42" name="todo.title" value="[% item.title %]">
-            </p>
-            <p>
-                [% PROCESS shared/tags/widget.tt object_tags=item.tags %]
-            </p>
-            <p>
-            <b>Description:</b><br>
-            <textarea name="todo.description" rows="10" cols="45" wrap="physical">[% item.description %]</textarea>
-            </p>
-            
-            <p>
-            <b>Priority:</b>
-            <div id="todo-priority">
-                [% FOREACH priority IN [1..10] %]
-                <input id="todo-priority-[% priority %]" type="radio" name="todo.priority" value="[% priority %]" [% item.priority == priority ? 'checked' : '' %]><label for="todo-priority-[% priority %]">[% priority %]</label>
-                [% END %]
-            </div>
-            </p>
-            
-            <p>
-            <b>Due Date:</b>
-            <input type="text" id="todo-due-on" name="todo.due_date" value="[% item.due_date.format_db('date_only',1) %]">
-            </p>
-        
-            <p>
-            <b>List:</b>
-            [% list_id = item.list.id ? item.list.id : 0 %]
-            <select name="todo.list_id">
-                <option [% list_id ? '' : 'selected' %] value="NULL">--None--</option>
-            [% FOREACH list in lists %]
-                <option [% list.id == list_id ? 'selected' : '' %] value="[% list.id %]">[% list.name %]</option>
-            [% END %]
-            </select>
-            </p>
 
-            <p>
-            <b>Completed: [% item.completed_date.format %]</b>
-            <input id="todo-completed" type="checkbox" name="todo.completed" value="1" [% item.completed ? 'checked' : '' %]>
-            <label for="todo-completed">Complete?</label>
-            </p>
-        
+            <div class="form_field">
+                <label class="left_label" for="todo_title">Title:</label>
+                <input id="todo_title" type="text" size="42" name="todo.title" value="[% item.title %]">
+            </div>
+            
+            <div class="form_field">
+                <label class="left_label">Tags:</label>
+                [% PROCESS shared/tags/widget.tt object_tags=item.tags %]
+            </div>
+            
+            <div class="form_field">
+                <label class="left_label" for="todo_desc">Description:</label>
+                <textarea id="todo_desc" name="todo.description" rows="10" cols="42" wrap="physical">[% item.description %]</textarea>
+            </div>
+
+            <div class="form_field">
+                <label class="left_label" for="todo_priority">Priority:</label>
+                <div id="todo_priority">
+                    [% FOREACH priority IN [1..10] %]
+                    <input id="todo-priority-[% priority %]" type="radio" name="todo.priority" value="[% priority %]" [% item.priority == priority ? 'checked' : '' %]><label for="todo-priority-[% priority %]">[% priority %]</label>
+                    [% END %]
+                </div>
+            </div>
+
+            <div class="form_field">
+                <label class="left_label" for="todo_due_date">Due Date:</label>
+                <input type="text" id="todo_due_date" name="todo.due_date" value="[% item.due_date.format_db('date_only',1) %]">
+            </div>
+
+            <div class="form_field">
+                <label class="left_label" for="todo_list">List:</label>
+                [% list_id = item.list.id ? item.list.id : 0 %]
+                <select id="todo_list" name="todo.list_id">
+                    <option [% list_id ? '' : 'selected' %] value="NULL">--None--</option>
+                [% FOREACH list in lists %]
+                    <option [% list.id == list_id ? 'selected' : '' %] value="[% list.id %]">[% list.name %]</option>
+                [% END %]
+                </select>
+            </div>
+
+            <div class="form_field">
+                [% PROCESS shared/toggle/widget.tt
+                    label = "Completed:"
+                    id    = "todo_completed"
+                    name  = "todo.completed"
+                %]
+            </div>
+
             <p>
                 <input class="button" type="submit" value="Save">
                 [% IF item.id %]
@@ -59,18 +65,18 @@
 </div>
 <script>
     $('.button').button();
-    
-    $('#todo-completed').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-check'
-        }
-    });
+
+    [% PROCESS shared/toggle/init.tt
+        id         = "todo_completed"
+        icon_on    = "check"
+        icon_off   = "cancel"
+        init_value = item.completed
+    %]
 
     [% PROCESS shared/tags/init.tt object_name='todo' avail_tags=avail_tags %]
 
-    $('#todo-priority').buttonset();
+    $('#todo_priority').buttonset();
     
-    $( "#todo-due-on" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    $( "#todo_due_date").datepicker({ dateFormat: 'yy-mm-dd' });
     
 </script>

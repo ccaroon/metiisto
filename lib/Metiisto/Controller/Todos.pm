@@ -28,6 +28,7 @@ sub new_record
     my $todo = {
         priority => 1,
         list     => {id => params->{list_id}},
+        completed => 0,
     };
     my $avail_tags = Metiisto::Tag->names();
 

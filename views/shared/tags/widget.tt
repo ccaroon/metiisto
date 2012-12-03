@@ -1,4 +1,4 @@
-<ul id="tags" style="width:46em">
+<ul id="tags" style="width:58%">
 [% FOREACH tag IN object_tags %]
     <li>[% tag.name %]</li>
 [% END %]

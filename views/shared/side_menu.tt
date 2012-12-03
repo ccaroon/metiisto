@@ -6,7 +6,7 @@
     <p>
         <form class="ui-widget" name="tag_search" action="/tagged_objects" method="get">
             <span class="ui-icon ui-icon-tag" style="float:left"></span>
-            <input type="text" name="tag" value="" size="9">
+            <input type="text" name="tag" value="" size="7">
         </form>
     </p>
 

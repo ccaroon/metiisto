@@ -1,0 +1,9 @@
+[%-
+    # Params:
+        # label
+        # id
+        # name
+-%]
+<label class="left_label" for="[% id %]">[% label %]</label>
+<button id="[% id %]" type="button" >&nbsp;</button>
+<input type="hidden" id="[% id %]_value" name="[% name %]" value="">
