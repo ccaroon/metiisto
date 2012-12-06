@@ -42,7 +42,7 @@
 
     [% PROCESS shared/toggle/init.tt
         id         = "note_favorite"
-        icon_on    = "check"
+        icon_on    = "star"
         icon_off   = "minus"
         init_value = note.is_favorite
     %]

@@ -4,48 +4,61 @@
     </div>
     <div class="ui-widget-content">
         <form method="post" action="/countdowns[% item.id ? '/' _ item.id : '' %]">
-            <p>
-                <b>Title:</b>
-                <input type="text" name="countdown.title" value="[% item.title %]">
-            </p>
-            <p>
-                <b>Target Date:</b>
-                <input type="text" id="countdown-target_date" name="countdown.target_date" value="[% item.target_date.format_db('date_only',1) %]" size="10">
-                <br>
-                <b>Target Time:</b>
-                <input type="text" name="countdown.target_time" value="[% item.target_date.format('%I:%M%P') %]" size="10">
-            </p>
-            <p>
-                <b>Units:</b>
-                <select name="countdown.units">
-                [% FOREACH unit IN units %]
-                    <option [% item.units == unit ? 'selected' : '' %] value="[% unit %]">[% unit | ucfirst %]s</option>
-                [% END %]
-                </select>
-            </p>
-            <p>
-                <b>On Homepage:</b>
-                <label for="countdown-homepage">On Homepage</label>
-                <input id="countdown-homepage" type="checkbox" name="countdown.on_homepage" value="1" [% item.on_homepage ? 'checked' : '' %]>
-            </p>
-            <p>
+            
+            <div class="form_field">
+                <label class="left_label" for="countdown_title">Title:</label>
+                <input type="text" id="countdown_title" name="countdown.title" value="[% item.title %]">
+            </div>
+
+            <div class="form_field">
+                <label class="left_label" for="countdown_target_date">Target Date:</label>
+                <input type="text" id="countdown_target_date" name="countdown.target_date" value="[% item.target_date.format_db('date_only',1) %]" size="10">
+            </div>
+
+            <div class="form_field">
+                <label class="left_label" for="countdown_target_time">Target Time:</label>
+                <input type="text" id="countdown_target_time" name="countdown.target_time" value="[% item.target_date.format('%I:%M%P') %]" size="10">
+            </div>
+            
+            <div class="form_field">
+                <label class="left_label" for="countdown_units">Units:</label>
+                <div id="countdown_units">
+                    [% FOREACH unit IN units %]
+                        [% checked = item.units == unit ? "checked" : "" %]
+                        <input type="radio" id="[% unit %]" name="countdown.units" [% checked %] value="[% unit %]"/><label for="[% unit %]">[% unit | ucfirst %]s</label>
+                    [% END %]
+                </div>
+            </div>
+
+            <div class="form_field">
+                [% PROCESS shared/toggle/widget.tt
+                    label = "On Homepage:"
+                    id    = "countdown_on_homepage"
+                    name  = "countdown.on_homepage"
+                %]
+            </div>
+
+            <div class="form_field">
                 <input class="button" type="submit" value="Save">
                 [% IF item.id %]
                 <a class="button" href="/countdowns/[% item.id %]">View</a>
                 [% END %]
-            </p>
+            </div>
+
         </form>
     </div>
 </div>
 <script>
     $('.button').button();
-    
-    $('#countdown-homepage').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-check'
-        }
-    });
-    
-    $("#countdown-target_date").datepicker({ dateFormat: 'yy-mm-dd' });
+
+    [% PROCESS shared/toggle/init.tt
+        id         = "countdown_on_homepage"
+        icon_on    = "check"
+        icon_off   = "cancel"
+        init_value = item.on_homepage
+    %]
+
+    $( "#countdown_units" ).buttonset();
+
+    $("#countdown_target_date").datepicker({ dateFormat: 'yy-mm-dd' });
 </script>

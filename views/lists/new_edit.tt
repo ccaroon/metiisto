@@ -4,18 +4,24 @@
     </div>
     <div class="ui-widget-content">
         <form method="post" action="/lists[% list.id ? '/' _ list.id : '' %]">
-            <p>
-                <b>Name:</b> <input type="text" name="list.name" value="[% list.name %]" size="25">
-            </p>
-            <p>
+
+            <div class="form_field">
+                <label class="left_label" for="list_name">Name:</label>
+                <input type="text" id="list_name" name="list.name" value="[% list.name %]" size="25">
+            </div>
+
+            <div class="form_field">
+                <label class="left_label">Tags:</label>
                 [% PROCESS shared/tags/widget.tt object_tags=list.tags %]
-            </p>
-            <p>
+            </div>
+
+            <div class="form_field">
                 <input class="button" type="submit" value="Save">
                 [% IF list.id %]
                 <a class="button" href="/lists/[% list.id %]">View</a>
                 [% END %]
-            </p>
+            </div>
+
         </form>
     </div>
 </div>

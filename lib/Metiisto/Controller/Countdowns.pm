@@ -18,8 +18,10 @@ sub new_record
 {
     my $this = shift;
     my %args = @_;
-    
-    my @units = keys %{Metiisto::Countdown->UNITS()};
+
+    my @units = sort
+        { Metiisto::Countdown->UNITS->{$b} <=> Metiisto::Countdown->UNITS->{$a} }
+        keys %{Metiisto::Countdown->UNITS()};
     my $countdown = { on_homepage => 0 };
 
     my $out = $this->SUPER::new_record(
@@ -52,8 +54,10 @@ sub edit
     my $this = shift;
     my %args = @_;
     
-    my @units = keys %{Metiisto::Countdown->UNITS()};
-    
+    my @units = sort
+        { Metiisto::Countdown->UNITS->{$b} <=> Metiisto::Countdown->UNITS->{$a} }
+        keys %{Metiisto::Countdown->UNITS()};
+
     my $out = $this->SUPER::edit(%args,
         template_vars => {units => \@units}
     );
