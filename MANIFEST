@@ -2,6 +2,7 @@ bin/app.pl
 bin/mdb.pl
 bin/metiisto
 config.yml
+doc/INSTALL.txt
 doc/workman2metiisto.txt
 environments/development.yml
 environments/production.yml
@@ -165,9 +166,10 @@ public/images/icons/todos.png
 public/images/icons/user.png
 public/images/metiisto.jpg
 public/images/metiisto_large.jpg
-public/javascripts/application.js
+public/javascripts/autosize.js
 public/javascripts/jquery-ui.js
 public/javascripts/jquery.js
+public/javascripts/metiisto.js
 public/javascripts/tag-it.js
 sql/migrations/.gitkeep
 sql/migrations/20120521130518_create_tags_table.pm
@@ -222,6 +224,8 @@ views/shared/side_menu.tt
 views/shared/tags/init.tt
 views/shared/tags/list.tt
 views/shared/tags/widget.tt
+views/shared/toggle/init.tt
+views/shared/toggle/widget.tt
 views/shared/top_menu.tt
 views/tagged_objects/list.tt
 views/tagged_objects/lists.tt
@@ -235,4 +239,5 @@ views/users/login.tt
 views/util/format.tt
 views/util/tools.tt
 views/workdays/list.tt
+views/workdays/new_edit.tt
 views/workdays/show.tt

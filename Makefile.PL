@@ -29,6 +29,7 @@ WriteMakefile(
         'Net::SMTP::SSL'             => 1.01,
         'Crypt::Blowfish'            => 2.12,
         'Crypt::CBC'                 => 2.30,
+        'Plack'                      => 1.0014,
         'Starman'                    => 0.3000,
         'Moose'                      => 2.0602,
         'File::Slurp'                => 9999.19,
