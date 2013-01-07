@@ -5,8 +5,8 @@
 
     <p>
         <form class="ui-widget" name="tag_search" action="/tagged_objects" method="get">
-            <span class="ui-icon ui-icon-tag" style="float:left"></span>
-            <input type="text" name="tag" value="" size="7">
+            <a href="/tags"><span class="ui-icon ui-icon-tag" style="float:left"></span></a>
+            <input type="text" name="tag" id="tag_input" value="" size="7" autocomplete="off">
         </form>
     </p>
 
@@ -51,4 +51,7 @@
         }
     });
 
+    //var tags = ['one','two','three'];
+    //$('#tag_input').autocomplete({source: tags});
+    
 </script>

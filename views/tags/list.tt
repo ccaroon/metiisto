@@ -1,0 +1,6 @@
+<div class="ui-widget">
+    <div class="ui-widget-header">Tags</div>
+    <div class="ui-widget-content">
+        [% PROCESS tags/cloud.tt %]        
+    </div>
+</div>

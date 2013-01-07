@@ -8,6 +8,7 @@ use Dancer ':syntax';
 use Metiisto::Countdown;
 use Metiisto::JiraTicket;
 use Metiisto::Note;
+#use Metiisto::Tag;
 use Metiisto::Todo;
 use Metiisto::Util::Cache;
 
@@ -115,21 +116,18 @@ sub home
         { order_by => 'task_date,entry_date' }
     );
 
-    # Data for Tag Cloud
-    my $tag_cloud = Metiisto::Util::Cache->get(key => 'tag_cloud');
-    unless ($tag_cloud)
-    {
-        my @tags = Metiisto::Tag->retrieve_all();
-        # Tag Name => Used Count
-        my %tag_data = map { $_->name() => scalar($_->objects())->count() } @tags;
-        $tag_cloud = \%tag_data;
-
-        Metiisto::Util::Cache->set(
-            key   => 'tag_cloud',
-            value => $tag_cloud,
-            ttl   => 15 * 60,
-        );
-    }
+    ## Data for Tag Cloud
+    #my $cloud_data = Metiisto::Util::Cache->get(key => 'tag_cloud_data');
+    #unless ($cloud_data)
+    #{
+    #    $cloud_data = Metiisto::Tag->cloud_data();
+    #
+    #    Metiisto::Util::Cache->set(
+    #        key   => 'tag_cloud_data',
+    #        value => $cloud_data,
+    #        ttl   => 15 * 60,
+    #    );
+    #}
 
     my $out = template 'home/index', {
         tickets         => $tickets,
@@ -138,7 +136,7 @@ sub home
         recent_notes    => \@recent_notes,
         favorite_notes  => \@fav_notes,
         countdowns      => \@countdowns,
-        tag_cloud       => $tag_cloud,
+        #cloud_data      => $cloud_data,
         current_release => $release_data,
     };
 

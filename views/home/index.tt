@@ -16,11 +16,12 @@
         
         [% PROCESS home/notes.tt notes=favorite_notes title="Favorite Notes"%]
     </div>
-    
-    <div style="clear:both;float:left;width:70%">
-        <p>[% PROCESS home/tag_cloud.tt %]</p>
+
+    <!-- <div style="clear:both;float:left;width:70%">
+        <p>[% PROCESS tags/cloud.tt %]</p>
     </div>
-    
+    -->
+
     <div style="clear:both">
         [% PROCESS home/countdowns.tt %]
     </div>

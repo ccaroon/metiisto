@@ -51,7 +51,11 @@ sub list
     {
         $out = template 'error', {
             title => "Tag Search Error",
-            message => "Tag not found: '$tag_name'"}
+            message => <<EOF,
+<p>Tag not found: '$tag_name'</p>
+<a href="/tags">View All Tags</a>
+EOF
+        }
     }
 
     return ($out);

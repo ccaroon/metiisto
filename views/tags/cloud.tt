@@ -1,0 +1,3 @@
+[% FOREACH tag IN cloud_data.pairs %]
+    <a class="ui-state-default m-not-bold" style="font-size: [% 0.85 + ((tag.value / 10) * 0.2) %]em" href="/tagged_objects?tag=[% tag.key %]">[% tag.key %]</a>
+[% END %]
