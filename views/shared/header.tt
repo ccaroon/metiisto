@@ -8,7 +8,7 @@
 <div class="ui-widget">
     <div class="ui-widget-content">
 
-        <div style="float:left; width:12%; height:50;background-color: inherit">
+        <div style="float:left; width:10%; height:50;background-color: inherit">
             <span style="font-weight:bold;font-size:xx-large">Metiisto</span>
         </div>
     
@@ -16,7 +16,11 @@
             [% PROCESS shared/top_menu.tt %]
         </div>
         
-        <div style="float:left;width:14%; height:50; background-color: inherit; text-align: right">
+        <div style="float:left;width:4%; height:50; background-color: inherit; text-align: left">
+            <img src="[% vars.weather.icon %]">
+        </div>
+                
+        <div style="float:left;width:12%; height:50; background-color: inherit; text-align: left">
             [% IF session.user %]
                 <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
             [% ELSE %]
@@ -24,6 +28,8 @@
             [% END %]
             <br>
             [% Date.format(date.now, "%A - %b %d, %Y") %]
+            <br>
+            [% vars.weather.text %] &#x2014; [% vars.weather.temp %]&#xb0; F
         </div>
     </div>
 </div>

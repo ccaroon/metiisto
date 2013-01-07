@@ -37,6 +37,7 @@ WriteMakefile(
         'XML::Simple'                => 2.20,
         'Lingua::EN::Inflect'        => 1.894,
         'LWP::UserAgent'             => 6.03,
+        'LWP::Simple'                => 6.00,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'metiisto-*' },

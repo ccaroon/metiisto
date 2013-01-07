@@ -43,6 +43,7 @@
             "Digest::SHA1" : "2.13",
             "File::Slurp" : "9999.19",
             "IO::Socket::SSL" : "1.76",
+            "LWP::Simple" : "6",
             "LWP::UserAgent" : "6.03",
             "Lingua::EN::Inflect" : "1.894",
             "Moose" : "2.0602",

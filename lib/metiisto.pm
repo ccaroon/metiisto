@@ -16,6 +16,7 @@ use Metiisto::Controller::Countdowns;
 use Metiisto::Controller::Reports;
 use Metiisto::Controller::Tags;
 use Metiisto::Controller::TaggedObjects;
+use Metiisto::Weather;
 ################################################################################
 hook before => sub
 {
@@ -27,6 +28,9 @@ hook before => sub
     # NOTE: I want to access the "environment" setting in my templates. I can't
     #       find any other way except to set a 'var'
     var env        => setting('environment');
+
+    my $weather = Metiisto::Weather->current();
+    var weather => $weather;
 
     unless (setting('environment') eq 'test')
     {

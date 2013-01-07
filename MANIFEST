@@ -17,6 +17,7 @@ lib/Metiisto/Controller/Lists.pm
 lib/Metiisto/Controller/Notes.pm
 lib/Metiisto/Controller/Reports.pm
 lib/Metiisto/Controller/TaggedObjects.pm
+lib/Metiisto/Controller/Tags.pm
 lib/Metiisto/Controller/Todos.pm
 lib/Metiisto/Controller/Users.pm
 lib/Metiisto/Controller/Workdays.pm
@@ -34,6 +35,7 @@ lib/Metiisto/User.pm
 lib/Metiisto/Util/Cache.pm
 lib/Metiisto/Util/DateTime.pm
 lib/Metiisto/Util/DBMigration.pm
+lib/Metiisto/Weather.pm
 lib/Metiisto/Workday.pm
 Makefile.PL
 MANIFEST			This list of files
@@ -198,7 +200,6 @@ views/home/current_release.tt
 views/home/entries.tt
 views/home/index.tt
 views/home/notes.tt
-views/home/tag_cloud.tt
 views/home/tickets.tt
 views/home/todos.tt
 views/index.tt
@@ -231,6 +232,8 @@ views/tagged_objects/list.tt
 views/tagged_objects/lists.tt
 views/tagged_objects/tickets.tt
 views/tagged_objects/todos.tt
+views/tags/cloud.tt
+views/tags/list.tt
 views/todos/list.tt
 views/todos/new_edit.tt
 views/todos/show.tt
