@@ -12,7 +12,7 @@
             <span style="font-weight:bold;font-size:xx-large">Metiisto</span>
         </div>
     
-        <div style="float:left; width:74%; height:50; text-align: center;background-color: inherit">
+        <div style="float:left; width:73%; height:50; text-align: center;background-color: inherit">
             [% PROCESS shared/top_menu.tt %]
         </div>
         
@@ -20,7 +20,7 @@
             <img src="[% vars.weather.icon %]">
         </div>
                 
-        <div style="float:left;width:12%; height:50; background-color: inherit; text-align: left">
+        <div style="float:left;width:13%; height:50; background-color: inherit; text-align: left">
             [% IF session.user %]
                 <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
             [% ELSE %]
