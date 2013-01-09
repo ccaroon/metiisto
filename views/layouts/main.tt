@@ -1,4 +1,5 @@
 [% USE Date %]
+<!DOCTYPE html>
 <html>
     <head>
         <title>Metiisto - [% vars.controller| ucfirst %]</title>

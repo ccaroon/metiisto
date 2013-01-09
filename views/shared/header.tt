@@ -17,7 +17,9 @@
         </div>
         
         <div style="float:left;width:4%; height:50; background-color: inherit; text-align: left">
-            <img src="[% vars.weather.icon %]">
+            [% IF vars.weather %]
+            <a href="[% vars.weather.url %]"><img src="[% vars.weather.icon %]" title="[% vars.weather.title %]"></a>
+            [% END %]
         </div>
                 
         <div style="float:left;width:13%; height:50; background-color: inherit; text-align: left">
@@ -28,8 +30,10 @@
             [% END %]
             <br>
             [% Date.format(date.now, "%A - %b %d, %Y") %]
+            [% IF vars.weather %]
             <br>
             [% vars.weather.text %] &#x2014; [% vars.weather.temp %]&#xb0; F
+            [% END %]
         </div>
     </div>
 </div>

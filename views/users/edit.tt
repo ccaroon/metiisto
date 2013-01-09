@@ -2,46 +2,103 @@
 <form method="post" action="/users/[% user.id %]/edit">    
     <div class="ui-widget-header">Information</div>
     <div class="ui-widget-content">
-        <p>Name: <input type="text" name="user.name" size="32" value="[% user.name %]"></p>
-        <p>Email: <input type="text" name="user.email" size="32" value="[% user.email %]"></p>
+        <div class="form_field" >
+            <label class="left_label" for="user_name">Name:</label>
+            <input type="text" id="user_name" name="user.name" size="32" value="[% user.name %]">
+        </div>
+
+        <div class="form_field" >
+            <label class="left_label" for="user_email">Email:</label>
+            <input type="text" id="user_email" name="user.email" size="32" value="[% user.email %]">
+        </div>
+
+        <div class="form_field" >
+            <label class="left_label" for="user_location">Location:</label>
+            <input type="text" id="user_location" name="user.location" size="32" value="[% user.location %]"><button id="help-location">Help : Location</button>
+            <div id="help-location-dialog" title="Help : Location">
+                <p>Location is specified using a Yahoo! WOEID (Where On Earth ID).</p>
+
+                <a href="http://woeid.rosselliot.co.nz">Click Here to look up the WOEID for your location.</a>
+            </div>
+        </div>
     </div>
 
-    <p>
+    <br/>
+
     <div class="ui-widget-header">Misc Settings</div>
     <div class="ui-widget-content">
-        <p>
-        Main Theme:
-        <select name="user.preferences.theme">
-            [% FOREACH theme IN themes %]
-                [% selected = user.preferences('theme') == theme ? "selected" : "" %]
-                <option [% selected %] value="[% theme %]">[% theme | ucfirst %]</option>
-            [% END %]
-        </select>
-        </p>
-        <p>Encryption Pass-phrase: <input type="text" size="56" maxlength="56" name="user.preferences.encryption_passphrase" value="[% user.preferences('encryption_passphrase') %]"></p>
-        <p>Report Recipients: <input type="text" size="64" name="user.preferences.report_recipients" value="[% user.preferences('report_recipients') %]"></p>
+        
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_theme">Theme:</label>
+            <select id="user_pref_theme" name="user.preferences.theme">
+                [% FOREACH theme IN themes %]
+                    [% selected = user.preferences('theme') == theme ? "selected" : "" %]
+                    <option [% selected %] value="[% theme %]">[% theme | ucfirst %]</option>
+                [% END %]
+            </select>
+        </div>
+        
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_passphrase">Passphrase:</label>
+            <input type="text" size="56" maxlength="56" id="user_pref_passphrase" name="user.preferences.encryption_passphrase" value="[% user.preferences('encryption_passphrase') %]">
+        </div>
+
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_report_recpt">Report Emails:</label>
+            <input type="text" size="64" id="user_pref_report_recpt" name="user.preferences.report_recipients" value="[% user.preferences('report_recipients') %]">
+        </div>
     </div>
-    </p>
+
+    <br/>
     
-    <p>
     <div class="ui-widget-header">Jira Config</div>
     <div class="ui-widget-content">
-        <p>Host: <input type="text" name="user.preferences.jira_host" size="32" value="[% user.preferences('jira_host') %]"></p>
-        <p>User: <input type="text" name="user.preferences.jira_username" value="[% user.preferences('jira_username') %]"></p>
-        <p>Password: <input type="text" name="user.preferences.jira_password" value="[% user.preferences('jira_password') %]"></p>
-        <p>Filter Id: <input type="text" name="user.preferences.jira_filter_id" value="[% user.preferences('jira_filter_id') %]"></p>
-    </div>
-    </p>
         
-    <p>
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_jira_host">Host:</label>
+            <input type="text" id="user_pref_jira_host" name="user.preferences.jira_host" size="32" value="[% user.preferences('jira_host') %]">
+        </div>
+        
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_jira_user">User:</label>
+            <input type="text" id="user_pref_jira_user" name="user.preferences.jira_username" size="32" value="[% user.preferences('jira_username') %]">
+        </div>
+        
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_jira_pass">Password:</label>
+            <input type="text" id="user_pref_jira_pass" name="user.preferences.jira_password" size="32" value="[% user.preferences('jira_password') %]">
+        </div>
+        
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_jira_filter_id">Filter Id:</label>
+            <input type="text" id="user_pref_jira_filter_id" name="user.preferences.jira_filter_id" size="32" value="[% user.preferences('jira_filter_id') %]">
+        </div>
+    </div>
+
+    <br/>
+
     <div class="ui-widget-header">Email Config</div>
     <div class="ui-widget-content">
-        <p>SMTP Host: <input type="text" name="user.preferences.smtp_host" value="[% user.preferences('smtp_host') %]"></p>
-        <p>SMTP Port: <input type="text" name="user.preferences.smtp_port" value="[% user.preferences('smtp_port') %]"></p>
-        <p>SMTP User: <input type="text" name="user.preferences.smtp_user" value="[% user.preferences('smtp_user') %]"></p>
-        <p>SMTP Password: <input type="text" name="user.preferences.smtp_pass" value="[% user.preferences('smtp_pass') %]"></p>
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_smtp_host">SMTP Host:</label>
+            <input type="text" id="user_pref_smtp_host" name="user.preferences.smtp_host" size="32" value="[% user.preferences('smtp_host') %]">
+        </div>
+        
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_smtp_port">SMTP Port:</label>
+            <input type="text" id="user_pref_smtp_port" name="user.preferences.smtp_port" size="32" value="[% user.preferences('smtp_port') %]">
+        </div>
+        
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_smtp_user">SMTP User:</label>
+            <input type="text" id="user_pref_smtp_user" name="user.preferences.smtp_user" size="32" value="[% user.preferences('smtp_user') %]">
+        </div>
+        
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_smtp_pass">SMTP Passwd:</label>
+            <input type="text" id="user_pref_smtp_pass" name="user.preferences.smtp_pass" size="32" value="[% user.preferences('smtp_pass') %]">
+        </div>
     </div>
-    </p>
 
     <p>
         <input id="button-save-user" type="submit" value="Save">
@@ -52,6 +109,24 @@
 </div>
 
 <script>
+    $('#help-location').button({
+        text: false,
+        icons: {
+            primary: 'ui-icon-help'
+        }
+    }).click(function () {
+        $('#help-location-dialog').dialog('open');
+        return (false);
+    });
+
+    $('#help-location-dialog').dialog({
+        resizable: false,
+        width: 450,
+        module: true,
+        autoOpen: false,
+        position: {my: "center", at: "center", of: $('#help-location')}
+    });
+
     $('#button-save-user').button();
     $('#button-logout').button();
 </script>

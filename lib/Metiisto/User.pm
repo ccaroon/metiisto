@@ -10,7 +10,7 @@ use base 'Metiisto::Base';
 ################################################################################
 __PACKAGE__->table('users');
 __PACKAGE__->columns(All => qw/
-    id name user_name password email
+    id name user_name password email location
 /);
 __PACKAGE__->has_many(_prefs => 'Metiisto::Preference');
 ################################################################################

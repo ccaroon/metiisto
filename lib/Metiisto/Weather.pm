@@ -5,27 +5,32 @@ use strict;
 use LWP::Simple;
 use XML::Simple;
 
-use constant YAHOO_WEATHER_ID => '12769146';
+use constant CACHE_TTL => 30 * 60;
 ################################################################################
 sub current
 {
     my $class = shift;
+    my %args  = @_;
 
-    my $data = Metiisto::Util::Cache->get(key => 'weather_data');
+    my $cache_key = "weather_data_$args{location}";
+
+    my $data = Metiisto::Util::Cache->get(key => $cache_key);
     unless ($data)
     {
-        $data = $class->_fetch_data();
+        $data = $class->_fetch_data(location => $args{location});
         Metiisto::Util::Cache->set(
-            key   => 'weather_data',
+            key   => $cache_key,
             value => $data,
-            ttl   => 30 * 60
+            ttl   => CACHE_TTL
         );
     }
 
     my %weather = (
-        icon => "http://l.yimg.com/a/i/us/we/52/$data->{'yweather:condition'}->{code}.gif",
-        text => $data->{'yweather:condition'}->{text},
-        temp => $data->{'yweather:condition'}->{temp}
+        icon  => "http://l.yimg.com/a/i/us/we/52/$data->{'yweather:condition'}->{code}.gif",
+        text  => $data->{'yweather:condition'}->{text},
+        temp  => $data->{'yweather:condition'}->{temp},
+        title => $data->{title},
+        url   => $data->{link}
     );
 
     return (wantarray ? %weather : \%weather);
@@ -34,8 +39,9 @@ sub current
 sub _fetch_data
 {
     my $class = shift;
-print STDERR "=====> Weather.pm #37 --> GETTING WEATHER DATA \n";
-    my $xml = get('http://weather.yahooapis.com/forecastrss?w='.YAHOO_WEATHER_ID);
+    my %args = @_;
+
+    my $xml = get('http://weather.yahooapis.com/forecastrss?w='.$args{location});
     my $data = XMLin($xml);
 
     return($data->{channel}->{item});
@@ -44,8 +50,8 @@ print STDERR "=====> Weather.pm #37 --> GETTING WEATHER DATA \n";
 1;
 __END__
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-                <rss version="2.0" xmlns:yweather="http://xml.weather.yahoo.com/ns/rss/1.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#">
-                        <channel>
+<rss version="2.0" xmlns:yweather="http://xml.weather.yahoo.com/ns/rss/1.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#">
+<channel>
 
 <title>Yahoo! Weather - Raleigh, NC</title>
 <link>http://us.rd.yahoo.com/dailynews/rss/weather/Raleigh__NC/*http://weather.yahoo.com/forecast/USNC0107_f.html</link>
@@ -59,33 +65,33 @@ __END__
 <yweather:atmosphere humidity="54"  visibility="10"  pressure="30.42"  rising="1" />
 <yweather:astronomy sunrise="7:24 am"   sunset="5:15 pm"/>
 <image>
-<title>Yahoo! Weather</title>
-<width>142</width>
-<height>18</height>
-<link>http://weather.yahoo.com</link>
-<url>http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif</url>
+    <title>Yahoo! Weather</title>
+    <width>142</width>
+    <height>18</height>
+    <link>http://weather.yahoo.com</link>
+    <url>http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif</url>
 </image>
 <item>
-<title>Conditions for Raleigh, NC at 10:49 am EST</title>
-<geo:lat>35.74</geo:lat>
-<geo:long>-78.72</geo:long>
-<link>http://us.rd.yahoo.com/dailynews/rss/weather/Raleigh__NC/*http://weather.yahoo.com/forecast/USNC0107_f.html</link>
-<pubDate>Mon, 07 Jan 2013 10:49 am EST</pubDate>
-<yweather:condition  text="Partly Cloudy"  code="30"  temp="46"  date="Mon, 07 Jan 2013 10:49 am EST" />
-<description><![CDATA[
-<img src="http://l.yimg.com/a/i/us/we/52/30.gif"/><br />
-<b>Current Conditions:</b><br />
-Partly Cloudy, 46 F<BR />
-<BR /><b>Forecast:</b><BR />
-Mon - Sunny. High: 50 Low: 28<br />
-Tue - Partly Cloudy. High: 54 Low: 43<br />
-<br />
-<a href="http://us.rd.yahoo.com/dailynews/rss/weather/Raleigh__NC/*http://weather.yahoo.com/forecast/USNC0107_f.html">Full Forecast at Yahoo! Weather</a><BR/><BR/>
-(provided by <a href="http://www.weather.com" >The Weather Channel</a>)<br/>
-]]></description>
-<yweather:forecast day="Mon" date="7 Jan 2013" low="28" high="50" text="Sunny" code="32" />
-<yweather:forecast day="Tue" date="8 Jan 2013" low="43" high="54" text="Partly Cloudy" code="30" />
-<guid isPermaLink="false">USNC0107_2013_01_08_7_00_EST</guid>
+    <title>Conditions for Raleigh, NC at 10:49 am EST</title>
+    <geo:lat>35.74</geo:lat>
+    <geo:long>-78.72</geo:long>
+    <link>http://us.rd.yahoo.com/dailynews/rss/weather/Raleigh__NC/*http://weather.yahoo.com/forecast/USNC0107_f.html</link>
+    <pubDate>Mon, 07 Jan 2013 10:49 am EST</pubDate>
+    <yweather:condition  text="Partly Cloudy"  code="30"  temp="46"  date="Mon, 07 Jan 2013 10:49 am EST" />
+    <description><![CDATA[
+    <img src="http://l.yimg.com/a/i/us/we/52/30.gif"/><br />
+    <b>Current Conditions:</b><br />
+    Partly Cloudy, 46 F<BR />
+    <BR /><b>Forecast:</b><BR />
+    Mon - Sunny. High: 50 Low: 28<br />
+    Tue - Partly Cloudy. High: 54 Low: 43<br />
+    <br />
+    <a href="http://us.rd.yahoo.com/dailynews/rss/weather/Raleigh__NC/*http://weather.yahoo.com/forecast/USNC0107_f.html">Full Forecast at Yahoo! Weather</a><BR/><BR/>
+    (provided by <a href="http://www.weather.com" >The Weather Channel</a>)<br/>
+    ]]></description>
+    <yweather:forecast day="Mon" date="7 Jan 2013" low="28" high="50" text="Sunny" code="32" />
+    <yweather:forecast day="Tue" date="8 Jan 2013" low="43" high="54" text="Partly Cloudy" code="30" />
+    <guid isPermaLink="false">USNC0107_2013_01_08_7_00_EST</guid>
 </item>
 </channel>
 </rss>

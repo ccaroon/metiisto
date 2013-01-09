@@ -7,7 +7,7 @@ my %CACHE;
 sub set
 {
     my $class = shift;
-    my %args = @_;
+    my %args  = @_;
 
     $args{ttl} ||= 60;
 
@@ -23,7 +23,7 @@ sub set
 sub get
 {
     my $class = shift;
-    my %args = @_;
+    my %args  = @_;
     
     my $data = $CACHE{$args{key}};
 
@@ -35,10 +35,25 @@ sub get
     else
     {
         # Expired. Clear from cache.
-        undef $CACHE{$args{key}};
+        $class->clear(key => $args{key});
     }
 
     return ($value);
+}
+################################################################################
+sub clear
+{
+    my $class = shift;
+    my %args  = @_;
+
+    undef $CACHE{$args{key}};
+}
+################################################################################
+sub destroy
+{
+    my $class = shift;
+
+    %CACHE = ();
 }
 ################################################################################
 1;

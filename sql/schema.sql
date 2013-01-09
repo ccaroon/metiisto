@@ -104,6 +104,7 @@ CREATE TABLE `users` (
   `user_name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL DEFAULT '',
+  `location` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
