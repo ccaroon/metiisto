@@ -18,20 +18,27 @@ sub current
     unless ($data)
     {
         $data = $class->_fetch_data(location => $args{location});
-        Metiisto::Util::Cache->set(
-            key   => $cache_key,
-            value => $data,
-            ttl   => CACHE_TTL
-        );
+        if ($data)
+        {
+            Metiisto::Util::Cache->set(
+                key   => $cache_key,
+                value => $data,
+                ttl   => CACHE_TTL
+            );
+        }
     }
 
-    my %weather = (
-        icon  => "http://l.yimg.com/a/i/us/we/52/$data->{'yweather:condition'}->{code}.gif",
-        text  => $data->{'yweather:condition'}->{text},
-        temp  => $data->{'yweather:condition'}->{temp},
-        title => $data->{title},
-        url   => $data->{link}
-    );
+    my %weather;
+    if ($data)
+    {
+        %weather = (
+            icon  => "http://l.yimg.com/a/i/us/we/52/$data->{'yweather:condition'}->{code}.gif",
+            text  => $data->{'yweather:condition'}->{text},
+            temp  => $data->{'yweather:condition'}->{temp},
+            title => $data->{title},
+            url   => $data->{link}
+        );
+    }
 
     return (wantarray ? %weather : \%weather);
 }
@@ -41,10 +48,16 @@ sub _fetch_data
     my $class = shift;
     my %args = @_;
 
-    my $xml = get('http://weather.yahooapis.com/forecastrss?w='.$args{location});
-    my $data = XMLin($xml);
+    my $data = undef;
 
-    return($data->{channel}->{item});
+    my $xml = get('http://weather.yahooapis.com/forecastrss?w='.$args{location});
+    if ($xml)
+    {
+        $data = XMLin($xml);
+        $data = $data->{channel}->{item};
+    }
+
+    return($data);
 }
 ################################################################################
 1;
