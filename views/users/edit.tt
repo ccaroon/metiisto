@@ -1,5 +1,5 @@
+<form method="post" action="/users/[% user.id %]/edit">
 <div class="ui-widget">
-<form method="post" action="/users/[% user.id %]/edit">    
     <div class="ui-widget-header">Information</div>
     <div class="ui-widget-content">
         <div class="form_field" >
@@ -105,8 +105,8 @@
         <a id="button-logout" href="/users/logout">Logout</a>
     </p>
 
-</form>
 </div>
+</form>
 
 <script>
     $('#help-location').button({

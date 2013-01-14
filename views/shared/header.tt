@@ -8,21 +8,21 @@
 <div class="ui-widget">
     <div class="ui-widget-content">
 
-        <div style="float:left; width:10%; height:50;background-color: inherit">
-            <span style="font-weight:bold;font-size:xx-large">Metiisto</span>
+        <div style="float:left; width:10%; height:55px; background-color: inherit">
+            <span style="font-weight:bold;line-height:55px;font-size:xx-large;vertical-align: middle">Metiisto</span>
         </div>
-    
-        <div style="float:left; width:73%; height:50; text-align: center;background-color: inherit">
+
+        <div style="float:left; width:73%; height:55px; text-align: center;background-color: inherit">
             [% PROCESS shared/top_menu.tt %]
         </div>
         
-        <div style="float:left;width:4%; height:50; background-color: inherit; text-align: left">
+        <div style="float:left;width:4%; height:55px; background-color: inherit; text-align: left">
             [% IF vars.weather %]
             <a href="[% vars.weather.url %]"><img src="[% vars.weather.icon %]" title="[% vars.weather.title %]"></a>
             [% END %]
         </div>
                 
-        <div style="float:left;width:13%; height:50; background-color: inherit; text-align: left">
+        <div style="float:left;width:13%; height:55px; background-color: inherit; text-align: left">
             [% IF session.user %]
                 <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
             [% ELSE %]

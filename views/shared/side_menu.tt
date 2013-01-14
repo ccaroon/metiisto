@@ -1,15 +1,16 @@
 <div class="ui-widget">
-    <a id="side_menu_new_entry" class="m-side-menu-button" href="/entries/new">New Entry</a>
-    <a id="side_menu_new_todo" class="m-side-menu-button" href="/todos/new">New Todo</a>
-    <a id="side_menu_new_note" class="m-side-menu-button" href="/notes/new">New Note</a>
-
-    <p>
-        <form class="ui-widget" name="tag_search" action="/tagged_objects" method="get">
-            <a href="/tags"><span class="ui-icon ui-icon-tag" style="float:left"></span></a>
-            <input type="text" name="tag" id="tag_input" value="" size="7" autocomplete="off">
-        </form>
-    </p>
-
+    <div class="ui-widget-content">
+        <a id="side_menu_new_entry" class="m-side-menu-button" href="/entries/new">New Entry</a>
+        <a id="side_menu_new_todo" class="m-side-menu-button" href="/todos/new">New Todo</a>
+        <a id="side_menu_new_note" class="m-side-menu-button" href="/notes/new">New Note</a>
+    
+        <p>
+            <form class="ui-widget" name="tag_search" action="/tagged_objects" method="get">
+                <a href="/tags"><span class="ui-icon ui-icon-tag" style="float:left"></span></a>
+                <input type="text" name="tag" id="tag_input" value="" size="7" autocomplete="off">
+            </form>
+        </p>
+    </div>
 </div>
 <script>
     

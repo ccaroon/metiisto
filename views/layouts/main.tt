@@ -17,7 +17,7 @@
         [% PROCESS shared/header.tt %]
 
         <!-- Side Menu -->
-        <div style="clear:both; float:left; width:10%; background-color: white">
+        <div style="clear:both; float:left; width:10%;">
             [% PROCESS shared/side_menu.tt %]
         </div>
 
