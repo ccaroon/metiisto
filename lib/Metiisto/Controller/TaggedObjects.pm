@@ -3,9 +3,6 @@ package Metiisto::Controller::TaggedObjects;
 use strict;
 
 use Dancer ':syntax';
-
-use Metiisto::Util::DateTime;
-
 use base 'Metiisto::Controller::Base';
 
 use Metiisto::Tag;
@@ -49,10 +46,34 @@ sub list
     }
     else
     {
+        my $dym_html = '';
+
+        my @matches = Metiisto::Tag->search_like(name => "%$tag_name%");
+        if (@matches)
+        {
+            my %cloud_data;
+            map {$cloud_data{$_->name()} = $_->objects()->count()} @matches;
+
+            my $cloud_html = template 'tags/cloud.tt',
+                {
+                    cloud_data => \%cloud_data
+                },
+                { layout => undef };
+
+            $dym_html =<<EOF;
+<p>
+    Did You Mean:
+    <br>
+    $cloud_html
+</p>
+EOF
+        }
+
         $out = template 'error', {
             title => "Tag Search Error",
             message => <<EOF,
 <p>Tag not found: '$tag_name'</p>
+$dym_html
 <a href="/tags">View All Tags</a>
 EOF
         }

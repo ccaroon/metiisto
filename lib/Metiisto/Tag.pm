@@ -8,6 +8,7 @@ __PACKAGE__->table('tags');
 
 __PACKAGE__->columns(Primary   => qw/id/);
 __PACKAGE__->columns(Essential => qw/name/);
+__PACKAGE__->columns(Stringify => qw/name/);
 
 __PACKAGE__->has_many(objects => 'Metiisto::TaggedObject');
 ################################################################################
