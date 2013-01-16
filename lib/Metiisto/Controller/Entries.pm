@@ -4,6 +4,7 @@ use strict;
 
 use Data::Page;
 use Dancer ':syntax';
+use SQL::Abstract;
 
 use constant ENTRIES_PER_PAGE => 21;
 
@@ -24,15 +25,15 @@ sub list
             # OR
             { description => { 'regexp', params->{filter_text} } },
         ];
-
-        $total_entries
-            = Metiisto::Entry->count_where("description regexp '".params->{filter_text}."'");
     }
     else
     {
         $conditions    = {1=>1};
-        $total_entries = Metiisto::Entry->count();
     }
+
+    my $sql_abs = SQL::Abstract->new();
+    my ($where, @binds) = $sql_abs->where($conditions);
+    $total_entries = Metiisto::Entry->count_where($where, \@binds);
 
     my $page = Data::Page->new();
     $page->total_entries($total_entries);
