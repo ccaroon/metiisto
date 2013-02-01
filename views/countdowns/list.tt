@@ -13,6 +13,7 @@
             <tr class="ui-widget-header">
                 <th>Preview</th>
                 <th>Target Date</th>
+                <th>Realtime</th>
                 <th>On Homepage</th>
                 <th>Actions</th>
             </tr>
@@ -25,6 +26,7 @@
                     <a href="/countdowns/[% countdown.id %]"><strong>[% countdown.title %]</strong></a>
                 </td>
                 <td align="center">[% countdown.target_date.format("%b %d, %Y %I:%M:%S %p") %]</td>
+                <td align="center">[% countdown.is_real_time ? 'Yes' : 'No' %]</td>
                 <td align="center">[% countdown.on_homepage ? 'Yes' : 'No' %]</td>
                 <td align="center">
                     [% PROCESS shared/list/actions.tt

@@ -32,6 +32,14 @@
 
             <div class="form_field">
                 [% PROCESS shared/toggle/widget.tt
+                    label = "Realtime:"
+                    id    = "countdown_is_real_time"
+                    name  = "countdown.is_real_time"
+                %]
+            </div>
+
+            <div class="form_field">
+                [% PROCESS shared/toggle/widget.tt
                     label = "On Homepage:"
                     id    = "countdown_on_homepage"
                     name  = "countdown.on_homepage"
@@ -56,6 +64,13 @@
         icon_on    = "check"
         icon_off   = "cancel"
         init_value = item.on_homepage
+    %]
+    
+    [% PROCESS shared/toggle/init.tt
+        id         = "countdown_is_real_time"
+        icon_on    = "check"
+        icon_off   = "cancel"
+        init_value = item.is_real_time
     %]
 
     $( "#countdown_units" ).buttonset();

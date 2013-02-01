@@ -8,6 +8,7 @@
             <b>Title:</b> [% item.title %]<br>
             <b>Target date:</b> [% item.target_date.format("%b %d, %Y %I:%M:%S %p") %]<br>
             <b>Display units:</b> [% item.english_units %]<br>
+            <b>Realtime:</b> [% item.is_real_time ? 'Yes' : 'No' %]<br>
             <b>Display on homepage:</b> [% item.on_homepage ? 'Yes' : 'No' %]<br>
         </p>
     </div>

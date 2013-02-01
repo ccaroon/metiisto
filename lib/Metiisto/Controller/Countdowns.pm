@@ -22,7 +22,7 @@ sub new_record
     my @units = sort
         { Metiisto::Countdown->UNITS->{$b} <=> Metiisto::Countdown->UNITS->{$a} }
         keys %{Metiisto::Countdown->UNITS()};
-    my $countdown = { on_homepage => 0 };
+    my $countdown = { on_homepage => 0, is_real_time => 0 };
 
     my $out = $this->SUPER::new_record(
         %args,
@@ -76,7 +76,8 @@ sub update
     my $out = $this->SUPER::update(%args,
         pre_obj_update => sub {
             my $obj = shift;
-            $obj->on_homepage(0) unless params->{'countdown.on_homepage'};        
+            $obj->is_real_time(0) unless params->{'countdown.is_real_time'};
+            $obj->on_homepage(0) unless params->{'countdown.on_homepage'};
         }
     );
 

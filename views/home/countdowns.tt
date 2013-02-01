@@ -8,12 +8,31 @@
     [%- FOREACH countdown IN countdowns -%]
         [%- fract_entity = fraction_entity(countdown.time_left) -%]
         <span class="ui-widget-content">
+            [% IF countdown.is_real_time && countdown.time_left > 0 %]
             <abbr title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]" style="border: none">
-            <strong>[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]</strong>
+            <strong id="time_left_[% countdown.id %]">00:00:00</strong>
+            Until
+            <strong>[% countdown.title %]</strong>
+            </abbr>
+            <script>
+                $(document).ready(
+                    setInterval(
+                        function () {
+                            var time_str = time_left(new Date([% countdown.target_date.epoch * 1000 %]));
+                            $('#time_left_[% countdown.id %]').html(time_str);
+                        },
+                        1000                
+                    )
+                );
+            </script>
+            [% ELSE %]
+            <abbr title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]" style="border: none">
+            <strong id="time_left_[% countdown.id %]">[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]</strong>
             [% countdown.english_units %]
             [% countdown.time_left >= 0 ? "Until" : "Since" %]
             <strong>[% countdown.title %]</strong>
             </abbr>
+            [% END %]
         </span>
         &nbsp;
         [% count = count + 1 %]
@@ -23,4 +42,34 @@
     [%- END -%]
     </div>
 </div>
+<script>
+    // Compute interval between NOW and target_date and return in HH::MM::SS fmt
+    function time_left(target_date)
+    {
+        var now_ms  = new Date().valueOf();
+        var date_ms = target_date.valueOf();
+        var secs = Math.round((date_ms - now_ms) / 1000);
 
+        secs = (secs >= 0 ) ? secs : 0;
+
+        return (format_HMS(secs))
+    }
+    
+    // Formats num_secs as HH::MM::SS string
+    function format_HMS(num_secs)
+    {
+        var hours = Math.floor(num_secs / 3600);
+        num_secs = num_secs % 3600;
+        
+        var mins = Math.floor(num_secs / 60);
+        var secs = num_secs % 60;
+        
+        return (
+            ((hours > 9) ? hours : '0' + hours)
+            + ':' +
+            ((mins > 9)  ? mins  : '0' + mins)
+            + ':' +
+            ((secs > 9)  ? secs  : '0' + secs)
+        );
+    }
+</script>

@@ -28,7 +28,7 @@ use base 'Metiisto::Base';
 ################################################################################
 __PACKAGE__->table('countdowns');
 __PACKAGE__->columns(All => qw/
-    id title target_date units on_homepage
+    id title target_date units on_homepage is_real_time
 /);
 __PACKAGE__->has_a_datetime('target_date');
 ################################################################################
