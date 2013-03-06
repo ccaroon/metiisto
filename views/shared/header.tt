@@ -29,7 +29,7 @@
                 <a href="/users/login">Log In</a>
             [% END %]
             <br>
-            [% Date.format(date.now, "%A - %b %d, %Y") %]
+            [% Date.format(date.now, "%a - %b %d, %Y") %]
             [% IF vars.weather %]
             <br>
             [% vars.weather.text %] &#x2014; [% vars.weather.temp %]&#xb0; F

@@ -10,7 +10,7 @@
         <span class="ui-widget-content">
             [% IF countdown.is_real_time && countdown.time_left > 0 %]
             <abbr title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]" style="border: none">
-            <strong id="time_left_[% countdown.id %]">00:00:00</strong>
+            <strong id="time_left_[% countdown.id %]">00:00:00:00</strong>
             Until
             <strong>[% countdown.title %]</strong>
             </abbr>
@@ -43,7 +43,7 @@
     </div>
 </div>
 <script>
-    // Compute interval between NOW and target_date and return in HH::MM::SS fmt
+    // Compute interval between NOW and target_date formated as DD:HH::MM::SS
     function time_left(target_date)
     {
         var now_ms  = new Date().valueOf();
@@ -52,12 +52,15 @@
 
         secs = (secs >= 0 ) ? secs : 0;
 
-        return (format_HMS(secs))
+        return (format_DHMS(secs))
     }
     
-    // Formats num_secs as HH::MM::SS string
-    function format_HMS(num_secs)
+    // Formats num_secs as DD:HH::MM::SS string
+    function format_DHMS(num_secs)
     {
+        var days = Math.floor(num_secs / 86400);
+        num_secs = num_secs % 86400;
+        
         var hours = Math.floor(num_secs / 3600);
         num_secs = num_secs % 3600;
         
@@ -65,6 +68,8 @@
         var secs = num_secs % 60;
         
         return (
+            ((days > 9) ? days : '0' + days)
+            + ':' +
             ((hours > 9) ? hours : '0' + hours)
             + ':' +
             ((mins > 9)  ? mins  : '0' + mins)
