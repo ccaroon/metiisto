@@ -98,6 +98,8 @@ sub create
         my $attr = $1;
         $data->{$attr} = params->{$p};
     }
+    $data->{time_spent} = delete($data->{'time_spent.hours'})
+        . ':' . delete($data->{'time_spent.minutes'});
     $data->{entry_date} = Metiisto::Util::DateTime->now()->format_db();
 
     my $entry = Metiisto::Entry->insert($data);
@@ -149,12 +151,18 @@ sub update
     my $entry = Metiisto::Entry->retrieve(id => $args{id});
     $entry->update_tags(tags => params()->{'entry[tags][]'});
 
-    foreach my $p (keys %{params()})
+    my $params = params();
+    my $time_spent = (delete $params->{'entry.time_spent.hours'})
+        . ':' . (delete$params->{'entry.time_spent.minutes'});
+    $entry->time_spent($time_spent);
+
+    foreach my $p (keys %{$params})
     {
         next unless $p =~ /^entry\.(.*)$/;
         my $attr = $1;
-        $entry->$attr(params->{$p});
+        $entry->$attr($params->{$p});
     }
+
     my $cnt = $entry->update();
     die "Error saving Entry($args{id})" unless $cnt;
 

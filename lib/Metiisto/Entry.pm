@@ -22,7 +22,7 @@ use constant CATEGORIES => [
 __PACKAGE__->table('entries');
 
 __PACKAGE__->columns(Primary   => qw/id/);
-__PACKAGE__->columns(Essential => qw/task_date ticket_num subject category/);
+__PACKAGE__->columns(Essential => qw/task_date ticket_num subject category time_spent/);
 __PACKAGE__->columns(Other     => qw/entry_date description/);
 
 __PACKAGE__->has_a_datetime('task_date');

@@ -36,6 +36,21 @@
             </div>
 
             <div class="form_field">
+                <label class="left_label" for="entry_time_spent_hours">Time Spent:</label>
+                [% ts = entry.time_spent.split(':') %]
+                <select id="entry_time_spent_hours" name="entry.time_spent.hours">
+                    [% FOREACH hour IN [0..8] %]
+                        <option [% hour == (ts.0+0) ? 'selected' : '' %] value="[% hour %]">[% hour %]</option>
+                    [% END %]  
+                </select>h
+                <select id="entry_time_spent_minutes" name="entry.time_spent.minutes">
+                    [% FOREACH min IN [0,5,10,15,20,25,30,35,40,45,50,55] %]
+                        <option [% min == (ts.1+0) ? 'selected' : '' %] value="[% min %]">[% min %]</option>
+                    [% END %]                  
+                </select>m
+            </div>
+            
+            <div class="form_field">
                 <label class="left_label" for="entry_description">Description:</label>
                 <textarea id="entry_description" name="entry.description" wrap="physical" rows="15" cols="80">[% entry.description %]</textarea>
             </div>

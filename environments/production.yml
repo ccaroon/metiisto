@@ -21,8 +21,8 @@ plugins:
         database: 'metiisto_prod'
         host: 'localhost'
         port: 3306
-        username: 'ccaroon'
-        password: 'Vepkef21'
+        username: 'root'
+        password: ''
         connection_check_threshold: 10
         dbi_params:
             RaiseError: 1
