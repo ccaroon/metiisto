@@ -2,12 +2,16 @@
 
 [% PROCESS 'reports/hours.tt' %]
 --------------------------------------------------------------------------------
-[% FOREACH day_list IN entries %]
-[% NEXT unless day_list.0 %]
-## [% day_list.0.task_date.format('%A') %] ##
+[% FOREACH dataset IN entries %]
+[%
+    day_list = dataset.day_list;
+    time_spent = dataset.time_spent;
+    NEXT unless day_list.0;
+%]
+## [% day_list.0.task_date.format('%A') %] -- [% time_spent %] ##
 
 [% FOREACH entry in day_list %]
-#### [% entry.ticket_num ? '<a href="http://' _ session.user.preferences('jira_host') _ '/browse/' _ entry.ticket_num _ '">' _ entry.ticket_num _ '</a> - ' : '' %] [% entry.subject %] ####
+#### [% entry.ticket_num ? '<a href="http://' _ session.user.preferences('jira_host') _ '/browse/' _ entry.ticket_num _ '">' _ entry.ticket_num _ '</a> - ' : '' %] [% entry.subject %] ([% entry.time_spent %])####
 
 [% entry.description %]
 

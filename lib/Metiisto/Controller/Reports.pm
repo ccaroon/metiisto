@@ -28,15 +28,25 @@ sub daily
     while (my $e = $iterator->next())
     {
         my $index = $e->task_date()->format("%w");
-        my $day_list = $entries[$index];
+        my $entry = $entries[$index];
+
+        my $day_list = $entry->{day_list};
         unless ($day_list)
         {
             $day_list = [];
-            $entries[$index] = $day_list;
+            $entries[$index] = {time_spent => 0, day_list => $day_list};
         }
         
+        $entry->{time_spent}
+            += Metiisto::Util::DateTime->timestr_to_minutes(time_str => $e->time_spent());
+
         push @$day_list, $e;
     }
+    # FIXME: An 'undef' is getting into @entries somehow
+    shift @entries unless defined $entries[0];
+
+    map {$_->{time_spent} = Metiisto::Util::DateTime->minutes_to_timestr(min => $_->{time_spent})}
+        @entries;
 
     my $out = template "/reports/daily",
     {
