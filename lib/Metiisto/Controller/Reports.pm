@@ -30,13 +30,13 @@ sub daily
         my $index = $e->task_date()->format("%w");
         my $entry = $entries[$index];
 
-        my $day_list = $entry->{day_list};
-        unless ($day_list)
+        unless ($entry)
         {
-            $day_list = [];
-            $entries[$index] = {time_spent => 0, day_list => $day_list};
+            $entry = {time_spent => 0, day_list => []};
+            $entries[$index] = $entry;
         }
-        
+
+        my $day_list = $entry->{day_list};
         $entry->{time_spent}
             += Metiisto::Util::DateTime->timestr_to_minutes(time_str => $e->time_spent());
 
