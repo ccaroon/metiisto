@@ -22,6 +22,7 @@ CREATE TABLE `entries` (
   `subject` varchar(255) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `category` varchar(255) NOT NULL DEFAULT 'Other',
+  `time_spent` time not null default '00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB;
