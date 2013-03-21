@@ -88,11 +88,28 @@ sub mark_complete
     my %args = @_;
 
     my $todo = Metiisto::Todo->retrieve(id => $args{id});
-    $todo->completed_date(Metiisto::Util::DateTime->now());
-    $todo->completed(1);
-    $todo->update();
+    $todo->mark_complete();
 
     return (redirect request->referer);
+}
+################################################################################
+sub _munge_params
+{
+    my $this = shift;
+    my %args = @_;
+
+    my $params = $args{params};
+
+    my $count = delete $params->{'todo.repeat_duration.count'};
+    my $units = delete $params->{'todo.repeat_duration.units'};
+
+    $params->{'todo.repeat_duration'} = undef;
+    unless ($units eq 'none')
+    {
+        $params->{'todo.repeat_duration'} = $count . ' ' . $units;
+    }
+
+    return ($params);
 }
 ################################################################################
 1;

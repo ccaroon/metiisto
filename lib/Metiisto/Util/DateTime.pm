@@ -2,11 +2,13 @@ package Metiisto::Util::DateTime;
 ################################################################################
 use strict;
 
+use feature 'switch';
+
 use Date::Format;
 use Date::Parse;
 use Moose;
 
-use constant DAY => 86_400;
+use constant DAY   => 86_400;
 
 use constant FORMAT_DB_DATE     => '%Y-%m-%d';
 use constant FORMAT_DB_DATETIME =>  FORMAT_DB_DATE . ' %H:%M:%S';
@@ -43,6 +45,29 @@ sub monday
     my $monday = $for_date->epoch() - (86_400 * ($week_day-1));
 
     return (Metiisto::Util::DateTime->new(epoch => $monday));
+
+}
+################################################################################
+sub add
+{
+    my $this = shift;
+    my %args = @_;
+
+    given ($args{units})
+    {
+        when (/days?/i) {
+            $this->add_days(days => $args{count});
+        }
+        when (/weeks?/i) {
+            $this->add_days(days => $args{count} * 7);
+        }
+        when (/months?/i) {
+            $this->add_days(days => $args{count} * 30);
+        }
+        when (/years?/i) {
+            $this->add_days(days => $args{count} * 365);
+        }
+    }
 }
 ################################################################################
 sub add_days
@@ -52,7 +77,7 @@ sub add_days
 
     my $current_epoch = $this->epoch();
     $this->epoch($current_epoch + ($args{days} * DAY));
-    
+
     return($this);
 }
 ################################################################################

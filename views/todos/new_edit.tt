@@ -47,6 +47,20 @@
             </div>
 
             <div class="form_field">
+                [% matches = item.repeat_duration.match('^(\d)+\s+(.*)$') %]
+                <label class="left_label" for="todo_repeat_count">Repeat:</label>
+                <input id="todo_repeat_count" type="text" name="todo.repeat_duration.count" value="[% matches.0 %]" size="2">
+<!-- '[% matches.0 %]' '[% matches.1 %]' -->
+                <select id="todo_repeat_units" name="todo.repeat_duration.units">
+                    <option value="none">--None--</option>
+                    <option [% (matches.1 == 'day')   ? 'selected' : '' %] value="day">Days</option>
+                    <option [% (matches.1 == 'week')  ? 'selected' : '' %] value="week">Weeks</option>
+                    <option [% (matches.1 == 'month') ? 'selected' : '' %] value="month">Months</option>
+                    <option [% (matches.1 == 'year')  ? 'selected' : '' %] value="year">Years</option>
+                </select>
+            </div>
+
+            <div class="form_field">
                 [% PROCESS shared/toggle/widget.tt
                     label = "Completed:"
                     id    = "todo_completed"

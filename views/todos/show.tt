@@ -16,6 +16,7 @@
             <strong>Due: </strong>[% item.due_date.format %]<br>
             <strong>Completed: </strong>[% item.completed_date ? item.completed_date.format : 'Pending '%]<br>
             <strong>List: </strong><a href="/lists/[% item.list.id %]">[% item.list.name %]</a><br>
+            <strong>Repeat: </strong>[% item.repeat_duration %]<br>
         </p>
         <div class="markdown">[% item.description | markdown %]</div>
     </div>

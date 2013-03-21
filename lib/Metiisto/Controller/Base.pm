@@ -128,20 +128,22 @@ sub create
 
     my $data = {};
     my $prefix = PL(vars->{controller});
-    foreach my $p (keys %{params()})
+    
+    my $params = $this->_munge_params(params => {params()});
+    foreach my $p (keys %{$params})
     {
         next unless $p =~ /^$prefix\.(.*)$/;
         my $attr = $1;
-        
+
         my $value;
-        given (params->{$p})
+        given ($params->{$p})
         {
             when ('NULL') { $value = undef }
             when ('')     { $value = undef }
-            default       { $value = params->{$p} }
+            default       { $value = $params->{$p} }
         }
 
-        $data->{$attr} = $value;
+        $data->{$attr} = $value;        
     }
 
     my $obj = $model->insert($data);
@@ -194,21 +196,22 @@ sub update
     my $obj   = $model->retrieve(id => $args{id});
 
     my $prefix = PL(vars->{controller});
-    
+
     $obj->update_tags(tags => params()->{$prefix.'[tags][]'})
         if $obj->isa('Metiisto::Taggable');
-    
-    foreach my $p (keys %{params()})
+
+    my $params = $this->_munge_params(params => {params()});
+    foreach my $p (keys %{$params})
     {
         next unless $p =~ /^$prefix\.(.*)$/;
         my $attr = $1;
 
         my $value;
-        given (params->{$p})
+        given ($params->{$p})
         {
             when ('NULL') { $value = undef }
             when ('')     { $value = undef }
-            default       { $value = params->{$p} }
+            default       { $value = $params->{$p} }
         }
 
         $obj->$attr($value);
@@ -307,6 +310,14 @@ sub declare_routes
         my $out = $c->update(id => params->{id});
         return ($out);
     };
+}
+################################################################################
+sub _munge_params
+{
+    my $this = shift;
+    my %args = @_;
+
+    return ($args{params});
 }
 ################################################################################
 sub _model
