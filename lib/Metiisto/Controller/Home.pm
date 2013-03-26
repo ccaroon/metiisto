@@ -49,7 +49,7 @@ sub home
     {
         # TODO: don't hardcode current release filter id
         my $release_tickets
-            = Metiisto::JiraTicket->search(query => "filter=11331");
+            = Metiisto::JiraTicket->search(query => "filter=14231");
 
         my $total_points = 0;
         my $ready_points = 0;

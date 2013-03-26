@@ -5,14 +5,16 @@ use feature 'switch';
 
 use Dancer qw(session);
 use LWP::UserAgent;
+use HTTP::Request;
 use Moose;
 use XML::Simple;
 $XML::Simple::PREFERRED_PARSER='XML::LibXML::SAX::Parser';
 
-use constant JIRA_URL => "http://_JIRA_HOST_/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?jqlQuery=_JIRA_QUERY_&tempMax=1000&os_username=_JIRA_USER_&os_password=_JIRA_PASS_";
+#use constant JIRA_URL => "http://_JIRA_HOST_/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?jqlQuery=_JIRA_QUERY_&tempMax=1000&os_username=_JIRA_USER_&os_password=_JIRA_PASS_";
+use constant JIRA_URL => "http://_JIRA_HOST_/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?jqlQuery=_JIRA_QUERY_";
 
 # customfield_10020 == Points
-use constant FIELDS => '&field=key&field=summary&field=link&field=status&field=type&field=fixVersions&field=parent&field=customfield_10020';
+#use constant FIELDS => '&field=key&field=summary&field=link&field=status&field=type&field=fixVersions&field=parent&field=customfield_10020';
 
 use constant SUB_TASK_TYPES => {
     'Sub-task'    => 1,
@@ -49,11 +51,6 @@ has link => (
     isa => 'Str',
 );
 
-#has description => (
-#    is  => 'rw',
-#    isa => 'Str',
-#);
-
 has sub_tasks => (
     is      => 'rw',
     isa     => 'ArrayRef[Metiisto::JiraTicket]',
@@ -68,11 +65,6 @@ has points => (
     is  => 'rw',
     isa => 'Maybe[Num]',
 );
-
-#has assignee => (
-#    is  => 'rw',
-#    isa => 'Maybe[Str]',
-#);
 
 has fix_version => (
     is  => 'rw',
@@ -91,14 +83,22 @@ sub search
     my $query = $args{query};
 
     $url =~ s/_JIRA_HOST_/session->{user}->preferences('jira_host')/e;
-    $url =~ s/_JIRA_USER_/session->{user}->preferences('jira_username')/e;
-    $url =~ s/_JIRA_PASS_/session->{user}->preferences('jira_password')/e;
+    #$url =~ s/_JIRA_USER_/session->{user}->preferences('jira_username')/e;
+    #$url =~ s/_JIRA_PASS_/session->{user}->preferences('jira_password')/e;
     $url =~ s/_JIRA_QUERY_/$query/;
-    $url .= FIELDS;
+    #$url .= FIELDS;
+
+    my $req = HTTP::Request->new( GET => $url );
+    $req->headers()->authorization_basic(
+        session->{user}->preferences('jira_username'),
+        session->{user}->preferences('jira_password')
+    );
 
     my $timeout = $args{timeout} || DEFAULT_TIMEOUT;
     $UA->timeout($timeout);
-    my $response = $UA->get($url);
+    #my $response = $UA->get($url);
+    my $response = $UA->request($req);
+
     my $xml = ($response->is_success()) ? $response->content() : undef;
     if ($xml)
     {
@@ -122,7 +122,7 @@ sub search
 
             foreach my $cf (@{$item->{customfields}->{customfield}})
             {
-                if ($cf->{customfieldname} eq 'Points')
+                if ($cf->{customfieldname} eq 'Story Points')
                 {
                     $t->points($cf->{customfieldvalues}->{customfieldvalue});
                     last;
@@ -153,6 +153,11 @@ sub search
                 $tickets{$st->{ticket}->key()} = $st->{ticket};
             }
         }
+    }
+    else
+    {
+        print STDERR "WARN - Unable to complete Jira Search Request: "
+            . $response->message() ."\n";
     }
 
     my @tickets = values %tickets;

@@ -72,7 +72,8 @@ sub new_record
         ticket_num => params->{ticket_num},
         subject    => params->{subject},
         category   => (params->{category} || Metiisto::Entry->CATEGORY_MEETING),
-        task_date  => Metiisto::Util::DateTime->new(epoch => time)
+        task_date  => Metiisto::Util::DateTime->new(epoch => time),
+        time_spent => '0:0'
     };
     my $subjects = Metiisto::Entry->recent_subjects();
     my $avail_tags = Metiisto::Tag->names();
