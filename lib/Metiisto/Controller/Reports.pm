@@ -18,43 +18,43 @@ sub daily
     my %args = @_;
 
     # Workdays
-    my $days = Metiisto::Workday->find_week(date => params->{date});
+    my $work_days = Metiisto::Workday->find_week(date => params->{date});
 
     # Entries
-    my $iterator = Metiisto::Entry->find_week(date => params->{date});
+    my $entry_it = Metiisto::Entry->find_week(date => params->{date});
     # Fetch and organize into a ARRAY of ARRAYs ordered by week day number
     # Sunday == 0, Monday == 1, etc..
-    my @entries;
-    while (my $e = $iterator->next())
+    my @days;
+    while (my $e = $entry_it->next())
     {
         my $index = $e->task_date()->format("%w");
-        my $entry = $entries[$index];
+        my $daily_data = $days[$index];
 
-        unless ($entry)
+        unless ($daily_data)
         {
-            $entry = {time_spent => 0, day_list => []};
-            $entries[$index] = $entry;
+            $daily_data = {time_spent => 0, entries => []};
+            $days[$index] = $daily_data;
         }
 
-        my $day_list = $entry->{day_list};
-        $entry->{time_spent}
+        my $entries = $daily_data->{entries};
+        $daily_data->{time_spent}
             += Metiisto::Util::DateTime->timestr_to_minutes(time_str => $e->time_spent());
 
-        push @$day_list, $e;
+        push @$entries, $e;
     }
-    # FIXME: An 'undef' is getting into @entries somehow
-    shift @entries unless defined $entries[0];
+    # Some days may not have any data. Remove them from the list.
+    @days = grep {defined $_} @days;
 
     map {$_->{time_spent} = Metiisto::Util::DateTime->minutes_to_timestr(min => $_->{time_spent})}
-        @entries;
+        @days;
 
     my $out = template "/reports/daily",
     {
         title       => 'Daily Report',
         name        => 'daily',
         no_controls => $args{no_controls},
-        work_days   => $days,
-        entries     => \@entries,
+        work_days   => $work_days,
+        days        => \@days,
     },
     {layout => undef};
 
