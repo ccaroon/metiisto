@@ -36,3 +36,21 @@ form {
     float: left;
     width: 10%;
 }
+
+#header_weather {
+    font-size: small;
+}
+
+#layout_footer {
+    width: 100%;
+    position: fixed;
+    left: 0px;
+    bottom: 2px;
+}
+
+#home_countdowns {
+    width: 100%;
+    position: fixed;
+    left: 0px;
+    bottom: 23px;
+}

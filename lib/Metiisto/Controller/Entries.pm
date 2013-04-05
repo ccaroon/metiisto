@@ -6,7 +6,7 @@ use Data::Page;
 use Dancer ':syntax';
 use SQL::Abstract;
 
-use constant ENTRIES_PER_PAGE => 21;
+use constant ENTRIES_PER_PAGE => 20;
 
 use base 'Metiisto::Controller::Base';
 

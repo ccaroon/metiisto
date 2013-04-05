@@ -21,19 +21,20 @@
             <a href="[% vars.weather.url %]"><img src="[% vars.weather.icon %]" title="[% vars.weather.title %]"></a>
             [% END %]
         </div>
-                
+
         <div style="float:left;width:13%; height:55px; background-color: inherit; text-align: left">
             [% IF session.user %]
                 <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
             [% ELSE %]
                 <a href="/users/login">Log In</a>
             [% END %]
-            <br>
-            [% Date.format(date.now, "%a - %b %d, %Y") %]
-            [% IF vars.weather %]
-            <br>
-            [% vars.weather.text %] &#x2014; [% vars.weather.temp %]&#xb0; F
-            [% END %]
+            <div id="header_weather">
+                [% Date.format(date.now, "%a - %b %d, %Y") %]
+                [% IF vars.weather %]
+                <br>
+                [% vars.weather.text %] &#x2014; [% vars.weather.temp %]&#xb0; F
+                [% END %]                
+            </div>
         </div>
     </div>
 </div>

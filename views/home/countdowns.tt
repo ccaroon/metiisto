@@ -36,7 +36,7 @@
         </span>
         &nbsp;
         [% count = count + 1 %]
-        [% IF count % 4 == 0 %]
+        [% IF count % 5 == 0 %]
             <br>
         [% END %]
     [%- END -%]

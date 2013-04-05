@@ -1,7 +1,6 @@
 <div class="ui-widget">
-    <div class="ui-widget-header" style="text-align:center">
+    <div class="ui-widget-header" style="text-align:center;font-size: smaller">
             [% settings.appname %] &copy; Craig N. Caroon 2005-[% Date.format(date.now, "%Y")%]
-            <br>
-            Powered by <a href="http://perldancer.org">Dancer</a> v[% dancer_version %]
+            (Powered by <a href="http://perldancer.org">Dancer</a> v[% dancer_version %])
     </div>
 </div>

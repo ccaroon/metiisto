@@ -17,16 +17,16 @@
         [% PROCESS shared/header.tt %]
 
         <!-- Side Menu -->
-        <div style="clear:both; float:left; width:10%;">
+        <div id="layout_side_menu" style="clear:both; float:left; width:10%;">
             [% PROCESS shared/side_menu.tt %]
         </div>
 
         <!-- Main Content -->
-        <div style="float:left; width:90%; background-color:white">
+        <div id="layout_content" style="float:left; width:90%; background-color:white">
             [% content %]
         </div>
-
+    
         <!-- Footer -->
-        <div style="clear: both">[% PROCESS shared/footer.tt %]</div>
+        <div id="layout_footer" >[% PROCESS shared/footer.tt %]</div>
     </body>
 </html>
