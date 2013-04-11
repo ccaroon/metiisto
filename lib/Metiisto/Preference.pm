@@ -12,6 +12,7 @@ use constant THEMES => [
     'flick',
     'humanity',
     'pepper-grinder',
+    'red',
     'redmond',
     'smoothness',
     'ui-lightness',
