@@ -177,26 +177,20 @@ sub color
     my $color = 'black';
     given ($this->status())
     {
-        when(/Design\/Verify/) {
-            $color = '#999900';
-        }
-        when(/Coding/) {
-            $color = 'green';
-        }
         when(/In Progress/) {
-            $color = 'green';
+            $color = 'blue';
+        }
+        when(/In Testing/) {
+            $color = '#bbbb00';
         }
         when(/Hold/) {
             $color = 'red';
         }
-        when(/Code Review/) {
-            $color = 'blue';
-        }
-        when(/Ready for QA/) {
+        when(/CI\/Build Deployment /) {
             $color = 'purple';
         }
-        when(/Verified/) {
-            $color = 'darkgreen';
+        when(/Ready for Release/) {
+            $color = 'green';
         }
     }
 
