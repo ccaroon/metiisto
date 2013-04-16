@@ -160,7 +160,7 @@ sub search
             . $response->message() ."\n";
     }
 
-    my @tickets = values %tickets;
+    my @tickets = map {$tickets{$_}} (sort {$a cmp $b} keys %tickets);
     return (wantarray ? @tickets : \@tickets);    
 }
 ################################################################################
