@@ -32,7 +32,7 @@
                     [% IF todo.completed %]
                         <span class="ui-icon ui-icon-check"></span>
                     [% ELSE %]
-                        <a class="action-button-mark-complete" href="/todos/[% todo.id %]/mark_complete">Mark Complete</a>
+                        <a href="/todos/[% todo.id %]/mark_complete"><span class='ui-icon ui-icon-circlesmall-close'></span></a>
                     [% END %]
                 </td>
                 <td class="[% todo.overdue AND NOT todo.completed ? 'ui-state-error' : '' %]">
@@ -40,8 +40,11 @@
                     [% IF (todo.due_soon OR todo.overdue) AND NOT todo.completed %]
                         <span class="ui-icon ui-icon-alert" style="float:right"></span>
                     [% END %]
+                    [% IF todo.repeat_duration %]
+                        <span class="ui-icon ui-icon-clock" style="float:right"></span>
+                    [% END %]
                     [% IF todo.description %]
-                    <span id="action-show-desc-[% todo.id %]" class="ui-icon ui-icon-document" style="float:left"></span>
+                    <span id="action-show-desc-[% todo.id %]" class="ui-icon ui-icon-document" style="float:right"></span>
                     <span id="desc-[% todo.id %]" class="ui-priority-secondary markdown" style="display:none">[% todo.description | markdown %]</span>
                     <script>
                         $('#action-show-desc-[% todo.id %]').click(function() {
@@ -76,14 +79,5 @@
 </div>
 <script>
     $('.button').button();
-
     [% PROCESS shared/list/actions_js.tt %]
-
-    $('.action-button-mark-complete').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-radio-on'
-        }
-    });
-
 </script>

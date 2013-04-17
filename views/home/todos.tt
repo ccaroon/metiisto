@@ -11,15 +11,18 @@
          [% FOREACH todo in todos %]
               <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
                   <td width="5%" align="center">
-                      <a href="/todos/[% todo.id %]/mark_complete"><span class='ui-icon ui-icon-check'>[% todo.priority %]</span></a>
+                      <a href="/todos/[% todo.id %]/mark_complete"><span class='ui-icon ui-icon-circlesmall-close'>[% todo.priority %]</span></a>
                   </td>
                   <td class="[% todo.overdue ? 'ui-state-error' : '' %]">
                       <abbr style='border:none' title='([% todo.priority %]) [% todo.due_date ? todo.due_date.format('%b %d, %Y') : 'No Due Date' %]'><a href="/todos/[% todo.id %]">[% todo.title %]</a></abbr>
                       [% IF todo.due_soon OR todo.overdue %]
                         <span class="ui-icon ui-icon-alert" style="float:right"></span>
                       [% END %]
+                      [% IF todo.repeat_duration %]
+                        <span class="ui-icon ui-icon-clock" style="float:right"></span>
+                      [% END %]
                       [% IF todo.description %]
-                      <span id="action-show-todo-desc-[% todo.id %]" class="ui-icon ui-icon-document" style="float:left"></span>
+                      <span id="action-show-todo-desc-[% todo.id %]" class="ui-icon ui-icon-document" style="float:right"></span>
                         <script>
                             $('#action-show-todo-desc-[% todo.id %]').click(function() {
                                 $('#todo-desc-[% todo.id %]').toggle();
