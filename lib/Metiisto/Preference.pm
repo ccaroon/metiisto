@@ -10,12 +10,10 @@ use base 'Metiisto::Base';
 use constant THEMES => [
     'cupertino',
     'flick',
-    'humanity',
     'pepper-grinder',
     'redmond',
     'simply-red',
     'smoothness',
-    'ui-lightness',
 ];
 
 use constant DEFAULT_PREFS => [
