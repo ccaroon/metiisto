@@ -70,9 +70,15 @@
         </div>
         
         <div class="form_field" >
-            <label class="left_label" for="user_pref_jira_filter_id">Filter Id:</label>
-            <input type="text" id="user_pref_jira_filter_id" name="user.preferences.jira_filter_id" size="32" value="[% user.preferences('jira_filter_id') %]">
+            <label class="left_label" for="user_pref_jira_tickets_filter_id">Tickets Filter:</label>
+            <input type="text" id="user_pref_jira_tickets_filter_id" name="user.preferences.jira_tickets_filter_id" size="32" value="[% user.preferences('jira_tickets_filter_id') %]">
         </div>
+        
+        <div class="form_field" >
+            <label class="left_label" for="user_pref_jira_current_release_filter_id">Current Release Filter:</label>
+            <input type="text" id="user_pref_jira_current_release_filter_id" name="user.preferences.jira_current_release_filter_id" size="32" value="[% user.preferences('jira_current_release_filter_id') %]">
+        </div>
+        
     </div>
 
     <br/>

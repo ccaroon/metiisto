@@ -40,16 +40,15 @@ sub home
     unless ($tickets)
     {
         $tickets = Metiisto::JiraTicket->search(
-            query => "filter=".session->{user}->preferences('jira_filter_id'));
+            query => "filter=".session->{user}->preferences('jira_tickets_filter_id'));
         Metiisto::Util::Cache->set(key => 'my_tickets', value => $tickets, ttl => 60);
     }
 
     my $release_data = Metiisto::Util::Cache->get(key => 'release_data');
     unless ($release_data)
     {
-        # TODO: don't hardcode current release filter id
-        my $release_tickets
-            = Metiisto::JiraTicket->search(query => "filter=14231");
+        my $release_tickets = Metiisto::JiraTicket->search(
+            query => "filter=".session->{user}->preferences('jira_current_release_filter_id'));
 
         my $total_points = 0;
         my $ready_points = 0;
