@@ -4,7 +4,7 @@
     </div>
     <div class="ui-widget-content">
         <!-- Just hard-coding Project ID (pid) for now -->
-        <img align="absmiddle" src="http://[% session.user.preferences('jira_host') %]/secure/projectavatar?pid=10571"/>
+        <img align="absmiddle" src="http://[% session.user.preferences('jira_host') %]/secure/projectavatar?pid=10303"/>
         [% FOREACH ticket IN current_release.tickets %]
         [%-
             tix_summary = ticket.summary | html;
