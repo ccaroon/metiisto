@@ -7,7 +7,7 @@
 
             <div class="form_field">
                 <label class="left_label" for="list_name">Name:</label>
-                <input type="text" id="list_name" name="list.name" value="[% list.name %]" size="25">
+                <input type="text" id="list_name" name="list.name" value="[% list.name %]" size="25" autofocus >
             </div>
 
             <div class="form_field">

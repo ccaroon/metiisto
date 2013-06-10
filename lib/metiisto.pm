@@ -22,9 +22,16 @@ hook before => sub
 {
     # undef is for the leading slash
     my (undef,$controller,$id,$action) = split '/', request->path_info, 4;
+    # Handle action that's not on a specific item: /controller/action
+    unless ($action)
+    {
+        $action = $id;
+        $id     = undef;
+    }
     var controller => $controller;
     var id         => $id;
     var action     => $action;
+
     # NOTE: I want to access the "environment" setting in my templates. I can't
     #       find any other way except to set a 'var'
     var env        => setting('environment');

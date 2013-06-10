@@ -12,7 +12,7 @@
 
             <div class="form_field">
                 <label class="left_label" for="entry_ticket_num">Ticket Number:</label>
-                <input type="text" id="entry_ticket_num" name="entry.ticket_num" value="[% entry.ticket_num %]">
+                <input type="text" id="entry_ticket_num" name="entry.ticket_num" value="[% entry.ticket_num %]" autofocus>
             </div>
 
             <div class="form_field">

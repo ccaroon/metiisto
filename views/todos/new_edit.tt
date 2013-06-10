@@ -8,7 +8,7 @@
 
             <div class="form_field">
                 <label class="left_label" for="todo_title">Title:</label>
-                <input id="todo_title" type="text" size="42" name="todo.title" value="[% item.title %]">
+                <input id="todo_title" type="text" size="42" name="todo.title" value="[% item.title %]" autofocus >
             </div>
             
             <div class="form_field">
