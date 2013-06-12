@@ -10,7 +10,7 @@
         <span class="ui-widget-content">
             [% IF countdown.is_real_time && countdown.time_left > 0 %]
             <abbr title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]" style="border: none">
-            <strong id="time_left_[% countdown.id %]">00:00:00:00</strong>
+            <i style="font-weight:bold" id="time_left_[% countdown.id %]">00:00:00:00</i>
             Until
             <strong>[% countdown.title %]</strong>
             </abbr>
@@ -27,10 +27,19 @@
             </script>
             [% ELSE %]
             <abbr title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]" style="border: none">
-            <strong id="time_left_[% countdown.id %]">[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]</strong>
-            [% countdown.english_units %]
-            [% countdown.time_left >= 0 ? "Until" : "Since" %]
-            <strong>[% countdown.title %]</strong>
+                [% IF countdown.time_left > 0 %]
+                    <i style="font-weight:bold" id="time_left_[% countdown.id %]">[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]
+                    [% countdown.english_units %]
+                    </i>
+                    Until
+                    <strong>[% countdown.title %]</strong>
+                [% ELSE %]
+                    <strong>[% countdown.title %]</strong>
+                    <i id="time_left_[% countdown.id %]">[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]
+                    [% countdown.english_units %]
+                    Ago
+                    </i>
+                [% END %]
             </abbr>
             [% END %]
         </span>
