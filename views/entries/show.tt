@@ -17,7 +17,9 @@
             <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
         [% END %]
         <br>
-        <b>Time Spent:</b> [% entry.time_spent %]
+        [% IF session.user.preferences('track_time') == 'true' %]
+            <b>Time Spent:</b> [% entry.time_spent %]
+        [% END %]
         <div class="markdown">[% entry.description | markdown %]</div>
     </div>
 </div>

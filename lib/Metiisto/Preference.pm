@@ -18,6 +18,7 @@ use constant THEMES => [
 
 use constant DEFAULT_PREFS => [
     {theme                 => 'humanity'},
+    {track_time            => 'false'},
     {jira_host             => 'www.yourjirahost.com'},
     {jira_username         => 'Jira Username Here'},
     {jira_password         => 'Jira Password Here'},

@@ -3,6 +3,7 @@
     <div id="user-settings">
         <ul>
             <li><a href="#user-information">User Information</a></li>
+            <li><a href="#entries-prefs">Entries Prefs</a></li>
             <li><a href="#misc">Misc</a></li>
             <li><a href="#jira-config">Jira Config</a></li>
             <li><a href="#email-config">Email Config</a></li>
@@ -26,6 +27,14 @@
 
                     <a href="http://woeid.rosselliot.co.nz">Click Here to look up the WOEID for your location.</a>
                 </div>
+            </div>
+        </div>
+
+        <div id="entries-prefs" class="ui-widget-content">
+            <div class="form_field" >
+                <label class="left_label" for="entries-track-time-on">Track Time:</label>
+                <input type="radio" id="entries-track-time-on" name="user.preferences.track_time" [% user.preferences('track_time') == 'true' ? 'checked' : '' %] value="true"> On
+                <input type="radio" id="entries-track-time-off" name="user.preferences.track_time" [% user.preferences('track_time') == 'false' ? 'checked' : '' %] value="false"> Off
             </div>
         </div>
 

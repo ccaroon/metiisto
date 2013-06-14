@@ -35,20 +35,25 @@
                 [% PROCESS shared/tags/widget.tt object_tags=entry.tags %]
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="entry_time_spent_hours">Time Spent:</label>
-                [% ts = entry.time_spent.split(':') %]
-                <select id="entry_time_spent_hours" name="entry.time_spent.hours">
-                    [% FOREACH hour IN [0..8] %]
-                        <option [% hour == (ts.0+0) ? 'selected' : '' %] value="[% hour %]">[% hour %]</option>
-                    [% END %]  
-                </select>h
-                <select id="entry_time_spent_minutes" name="entry.time_spent.minutes">
-                    [% FOREACH min IN [0,5,10,15,20,25,30,35,40,45,50,55] %]
-                        <option [% min == (ts.1+0) ? 'selected' : '' %] value="[% min %]">[% min %]</option>
-                    [% END %]                  
-                </select>m
-            </div>
+            [% ts = entry.time_spent.split(':') %]
+            [% IF session.user.preferences('track_time') == 'true' %]
+                <div class="form_field">
+                    <label class="left_label" for="entry_time_spent_hours">Time Spent:</label>
+                    <select id="entry_time_spent_hours" name="entry.time_spent.hours">
+                        [% FOREACH hour IN [0..8] %]
+                            <option [% hour == (ts.0+0) ? 'selected' : '' %] value="[% hour %]">[% hour %]</option>
+                        [% END %]  
+                    </select>h
+                    <select id="entry_time_spent_minutes" name="entry.time_spent.minutes">
+                        [% FOREACH min IN [0,5,10,15,20,25,30,35,40,45,50,55] %]
+                            <option [% min == (ts.1+0) ? 'selected' : '' %] value="[% min %]">[% min %]</option>
+                        [% END %]                  
+                    </select>m
+                </div>
+            [% ELSE %]
+                <input type="hidden" name="entry.time_spent.hours" value="[% (ts.0+0) %]">
+                <input type="hidden" name="entry.time_spent.minutes" value="[% (ts.1+0) %]">
+            [% END %]
             
             <div class="form_field">
                 <label class="left_label" for="entry_description">Description:</label>

@@ -53,6 +53,7 @@ sub daily
         title       => 'Daily Report',
         name        => 'daily',
         no_controls => $args{no_controls},
+        show_time_spent => (session->{user}->preferences('track_time') eq 'true' ? 1 : 0),
         work_days   => $work_days,
         days        => \@days,
     },
