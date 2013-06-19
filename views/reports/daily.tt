@@ -8,10 +8,10 @@
     time_spent = day.time_spent;
     NEXT unless entries.0;
 %]
-## [% entries.0.task_date.format('%A') %] [% show_time_spent ? ' -- ' _ time_spent : '' %] ##
+# [% entries.0.task_date.format('%A') %] [% show_time_spent ? ' -- ' _ time_spent : '' %] #
 
 [% FOREACH entry in entries %]
-#### [% entry.ticket_num ? '<a href="http://' _ session.user.preferences('jira_host') _ '/browse/' _ entry.ticket_num _ '">' _ entry.ticket_num _ '</a> - ' : '' %] [% entry.subject %] [% show_time_spent ? '(' _ entry.time_spent _ ')' : '' %] ####
+### [% entry.ticket_num ? '<a href="http://' _ session.user.preferences('jira_host') _ '/browse/' _ entry.ticket_num _ '">' _ entry.ticket_num _ '</a> - ' : '' %] [% entry.subject %] [% show_time_spent ? '(' _ entry.time_spent _ ')' : '' %] ###
 
 [% entry.description %]
 

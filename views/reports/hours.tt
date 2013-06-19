@@ -1,4 +1,4 @@
-## Hours ##
+# Hours #
 [% total = 0 %]
 [%- FOREACH day IN work_days -%]
 [% day_hours = day.total_hours %]

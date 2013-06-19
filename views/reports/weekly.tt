@@ -7,13 +7,13 @@
 [%- FOREACH item IN entries.pairs %]
     [%- IF item.value.size > 0 %]
 
-## [% item.key %] ##
+# [% item.key %] #
     [%- FOREACH entry_list IN item.value %]
         [%- SWITCH item.key %]
         [%- CASE ['Code Review', 'Meeting'] %]
 * [% entry_list.0.subject %] [% entry_list.size > 1 ? ' x ' _ entry_list.size : '' %]
         [%- CASE %]
-#### [% item.key == 'Ticket' ? '<a href="http://' _ session.user.preferences('jira_host') _ '/browse/' _ entry_list.0.ticket_num _ '">' _ entry_list.0.ticket_num _ '</a> - ' : '' %] [% entry_list.0.subject %] ####
+### [% item.key == 'Ticket' ? '<a href="http://' _ session.user.preferences('jira_host') _ '/browse/' _ entry_list.0.ticket_num _ '">' _ entry_list.0.ticket_num _ '</a> - ' : '' %] [% entry_list.0.subject %] ###
 [% FOREACH entry IN entry_list %]
 [% entry.description %]
     [% UNLESS loop.last %]
