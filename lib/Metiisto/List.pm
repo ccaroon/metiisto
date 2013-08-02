@@ -23,4 +23,14 @@ sub completed_items
     return (wantarray ? @items : \@items);
 }
 ################################################################################
+sub incomplete_items
+{
+    my $this = shift;
+
+    my @items = $this->items();
+    @items = grep {!$_->completed()} @items;
+    
+    return (wantarray ? @items : \@items);    
+}
+################################################################################
 1;

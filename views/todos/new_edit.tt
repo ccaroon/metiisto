@@ -22,6 +22,17 @@
             </div>
 
             <div class="form_field">
+                <label class="left_label" for="todo_parent">Parent:</label>
+                <select id="todo_parent" name="todo.parent_id">
+                    <option value="NULL">--None--</option>
+                [% FOREACH li in item.list.incomplete_items %]
+                    [% NEXT IF li.id == item.id %]
+                    <option [% li.id == item.parent.id ? 'selected' : '' %] value="[% li.id %]">[% li.title %]</option>
+                [% END %]
+                </select>
+            </div>
+
+            <div class="form_field">
                 <label class="left_label" for="todo_priority">Priority:</label>
                 <div id="todo_priority">
                     [% FOREACH priority IN [1..10] %]
