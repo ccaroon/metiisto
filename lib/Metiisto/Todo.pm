@@ -12,11 +12,14 @@ __PACKAGE__->table('todos');
 
 __PACKAGE__->columns(Primary   => qw/id/);
 __PACKAGE__->columns(Essential => qw/priority title completed_date due_date/);
-__PACKAGE__->columns(Other     => qw/completed list_id description repeat_duration/);
+__PACKAGE__->columns(Other     => qw/completed list_id description repeat_duration parent_id/);
 
 __PACKAGE__->has_a(list_id => 'Metiisto::List');
 __PACKAGE__->has_a_datetime('completed_date');
 __PACKAGE__->has_a_datetime('due_date');
+
+__PACKAGE__->has_a(parent_id => 'Metiisto::Todo');
+__PACKAGE__->has_many(sub_tasks => 'Metiisto::Todo', { order_by => 'priority, due_date' });
 
 __PACKAGE__->init_tagging();
 ################################################################################
@@ -56,6 +59,7 @@ sub overdue
     return($overdue);
 }
 ################################################################################
+# TODO: If has sub_tasks, mark those complete too
 sub mark_complete
 {
     my $this = shift;

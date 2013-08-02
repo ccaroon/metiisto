@@ -3,42 +3,30 @@ package Metiisto::Test::Factory;
 use strict;
 
 use lib "$ENV{METIISTO_HOME}/lib";
+use lib "$ENV{METIISTO_HOME}/t/lib";
 use Metiisto::Util::DateTime;
+
+use constant CLASS_MAP => {
+    countdown => 'Metiisto::Test::Factory::Countdown',
+    todo      => 'Metiisto::Test::Factory::Todo',
+};
 
 my @INSTANCE_CACHE;
 ################################################################################
 sub create
 {
     my $class = shift;
-    my %args = @_;
+    my $thing = shift;
+    my $attrs = shift;
 
-    my $method = $args{class};
-    $method =~ s/::/_/g;
-    die "$class does not know how to create '$args{class}'"
-        unless $class->can($method);
-    my $instance = $class->$method(%args);
+    my $factory = CLASS_MAP->{$thing};
+    die "Factory: Don't know how to create '$thing'." unless $factory;
+    eval "require $factory";
 
-    return ($instance);
-}
-################################################################################
-sub Metiisto_Countdown
-{
-    my $class = shift;
-    my %args = @_;
-    
-    my $iclass = $args{class};
-    
-    my $target_date = Metiisto::Util::DateTime->now();
-    $target_date->add_days(days => 5);
-    my $c = $iclass->insert({
-        title       => 'Countdown '.int rand 1_000,
-        target_date => $target_date,
-        units       => $iclass->UNIT_DAY,
-        on_homepage => 1,
-    });
-    push @INSTANCE_CACHE, $c;
+    my $obj = $factory->instance($attrs);
+    push @INSTANCE_CACHE, $obj;
 
-    return ($c);
+    return ($obj);
 }
 ################################################################################
 sub cleanup
@@ -49,6 +37,8 @@ sub cleanup
     {
         $inst->delete();
     }
+
+    @INSTANCE_CACHE = ();
 }
 ################################################################################
 1;

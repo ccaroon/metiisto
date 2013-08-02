@@ -14,7 +14,7 @@ sub test_time_left : Test(7)
 {
     my $this = shift;
 
-    my $c = Metiisto::Test::Factory->create(class => TESTED_CLASS);
+    my $c = Metiisto::Test::Factory->create(countdown => {});
     my %expected = (
         year   => 5,
         month  => 5,
@@ -44,7 +44,7 @@ sub test_english_units : Test(1)
 {
     my $this = shift;
 
-    my $c = Metiisto::Test::Factory->create(class => TESTED_CLASS);
+    my $c = Metiisto::Test::Factory->create(countdown => {});
     is $c->english_units(), 'Days', 'should return correct units as english string';
 }
 ################################################################################

@@ -14,7 +14,7 @@ use base 'Metiisto::Controller::Base';
 __PACKAGE__->setup_list_handler(
     filter_fields      => ['title'],
     order_by           => 'completed, completed_date desc, priority',
-    default_conditions => { list_id => undef },
+    default_conditions => { list_id => undef, parent_id => undef },
 );
 ################################################################################
 sub new_record

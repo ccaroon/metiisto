@@ -16,5 +16,6 @@ use Test::Class;
 use Metiisto::CountdownTest;
 #use Metiisto::PreferenceTest;
 use Metiisto::Util::DateTimeTest;
+use Metiisto::TodoTest;
 ################################################################################
 Test::Class->runtests();
