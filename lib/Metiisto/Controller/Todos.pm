@@ -25,9 +25,10 @@ sub new_record
     my @lists = Metiisto::List->retrieve_all();
     @lists = sort {lc $a->name() cmp lc $b->name() } @lists;
 
+    my $list = Metiisto::List->retrieve(params->{list_id});
     my $todo = {
-        priority => 1,
-        list     => Metiisto::List->retrieve(params->{list_id}),
+        priority  => 1,
+        list      => $list,
         completed => 0,
     };
     my $avail_tags = Metiisto::Tag->names();
