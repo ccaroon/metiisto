@@ -25,7 +25,9 @@
             
             <div class="form_field">
                 <label class="left_label" for="note_body">Body:</label>
-                <textarea id="note_body" rows="15" cols="80" wrap="physical" name="note.body">[% note.body %]</textarea>                
+                <div style="width:75%">
+                    <textarea id="note_body" name="note.body">[% note.body %]</textarea>
+                </div>
             </div>
             
             <div class="form_field">
@@ -49,8 +51,13 @@
 
     [% PROCESS shared/tags/init.tt object_name='note' avail_tags=avail_tags %]
 
-    $(document).ready(function() {
-        $('textarea').autosize();
+    var editor = CodeMirror.fromTextArea(document.getElementById("note_body"), {
+        dragDrop: false,
+        mode: 'markdown',
+        lineNumbers: true,
+        theme: "default",
+        extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"},
+        styleActiveLine: true
     });
 
 </script>

@@ -11,6 +11,18 @@
         <script src='/javascripts/tag-it.js'></script>
         <script src='/javascripts/autosize.js'></script>
         <script src='/javascripts/metiisto.js'></script>
+
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="/codemirror/lib/codemirror.css">
+        <style>
+          .CodeMirror {
+            border: 1px solid #eee;
+          }
+          .CodeMirror pre { padding-left: 5px; line-height: 1.25; }
+        </style>
+        <script src="/codemirror/lib/codemirror.js"></script>
+        <script src="/codemirror/mode/markdown/markdown.js"></script>
+        <script src="/codemirror/addon/selection/active-line.js"></script>
     </head>
     <body>
         <!-- Header (includes Top Menu) -->
