@@ -25,9 +25,7 @@
             
             <div class="form_field">
                 <label class="left_label" for="note_body">Body:</label>
-                <div style="width:75%">
-                    <textarea id="note_body" name="note.body">[% note.body %]</textarea>
-                </div>
+                <textarea id="note_body" name="note.body">[% note.body %]</textarea>
             </div>
             
             <div class="form_field">
@@ -54,7 +52,7 @@
     var editor = CodeMirror.fromTextArea(document.getElementById("note_body"), {
         dragDrop: false,
         mode: 'markdown',
-        lineNumbers: true,
+        lineNumbers: false,
         lineWrapping: true,
         theme: "default",
         extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"},

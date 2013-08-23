@@ -57,7 +57,7 @@
             
             <div class="form_field">
                 <label class="left_label" for="entry_description">Description:</label>
-                <textarea id="entry_description" name="entry.description" wrap="physical" rows="15" cols="80">[% entry.description %]</textarea>
+                <textarea id="entry_description" name="entry.description">[% entry.description %]</textarea>
             </div>
 
             <div class="form_field">
@@ -72,10 +72,6 @@
 </div>
 <script language="javascript">
 
-    $(document).ready(function() {
-        $('textarea').autosize();
-    });
-
     $( "#entry_category" ).buttonset();
 
     $('#button-view-entry').button();
@@ -88,6 +84,16 @@
     [%- END -%]
     ];
     $('#entry_subject').autocomplete({source: subject_list});
+
+    var editor = CodeMirror.fromTextArea(document.getElementById("entry_description"), {
+        dragDrop: false,
+        mode: 'markdown',
+        lineNumbers: false,
+        lineWrapping: true,
+        theme: "default",
+        extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"},
+        styleActiveLine: true
+    });
     
     [% PROCESS shared/tags/init.tt object_name='entry' avail_tags=avail_tags %]
 </script>
