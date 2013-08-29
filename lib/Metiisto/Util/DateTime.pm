@@ -6,7 +6,7 @@ use feature 'switch';
 
 use Date::Format;
 use Date::Parse;
-use Moose;
+use Moo;
 
 use constant DAY   => 86_400;
 
@@ -16,7 +16,7 @@ use constant FORMAT_TIME        => "%I:%M%p";
 ################################################################################
 has epoch => (
     is  => 'rw',
-    isa => 'Int',
+    isa => sub { die "'epoch' must be an integer." unless $_[0] =~ /^\d+$/ },
 );
 ################################################################################
 sub parse

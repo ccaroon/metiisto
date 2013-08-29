@@ -6,7 +6,8 @@ use feature 'switch';
 use Dancer qw(session);
 use LWP::UserAgent;
 use HTTP::Request;
-use Moose;
+use Moo;
+use Scalar::Util qw(looks_like_number);
 use XML::Simple;
 $XML::Simple::PREFERRED_PARSER='XML::LibXML::SAX::Parser';
 
@@ -36,47 +37,46 @@ my $UA = LWP::UserAgent->new(
 ################################################################################
 has key => (
     is  => 'rw',
-    isa => 'Str',
 );
 
 has summary => (
     is  => 'rw',
-    isa => 'Str',
 );
 
 has type => (
     is  => 'rw',
-    isa => 'Str',
 );
 
 has status => (
     is  => 'rw',
-    isa => 'Str',
 );
 
 has link => (
     is  => 'rw',
-    isa => 'Str',
 );
 
 has sub_tasks => (
-    is      => 'rw',
-    isa     => 'ArrayRef[Metiisto::JiraTicket]',
-    default => sub { [] },
-    traits  => ['Array'],
-    handles => {
-        add_sub_task => 'push',
-    }
+    is  => 'rw',
+    isa => sub {
+        my $st = shift;
+        die "'sub_tasks' must be an ArrayRef." unless ref($st) eq 'ARRAY';
+    },
+    default => sub {
+        my $this = shift;
+        $this->sub_tasks([]);
+    },
 );
 
 has points => (
     is  => 'rw',
-    isa => 'Maybe[Num]',
+    isa => sub { 
+        my $p = shift; 
+        die "'points' must be a number." unless (!defined($p) or looks_like_number($p))
+    },
 );
 
 has fix_version => (
     is  => 'rw',
-    isa => 'Maybe[Str]',
 );
 ################################################################################
 sub search
@@ -170,6 +170,14 @@ sub search
 
     my @tickets = map {$tickets{$_}} (sort {$a cmp $b} keys %tickets);
     return (wantarray ? @tickets : \@tickets);    
+}
+################################################################################
+sub add_sub_task
+{
+    my $this     = shift;
+    my $sub_task = shift;
+
+    push @{$this->sub_tasks()}, $sub_task;
 }
 ################################################################################
 sub is_sub_task
