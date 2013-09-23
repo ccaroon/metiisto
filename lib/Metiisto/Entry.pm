@@ -56,11 +56,11 @@ sub find_week
 
     my $conditions = $args{where} || {};
 
-    my $start_date = Metiisto::Util::DateTime->monday(for_date => $args{date});
-    my $mon_str = $start_date->format_db(date_only => 1);
-    $start_date->add_days(days => 4);
-    my $fri_str = $start_date->format_db(date_only => 1);
-    $conditions->{task_date} = { 'between' => [$mon_str, $fri_str] };
+    my $start_date = Metiisto::Util::DateTime->sunday(for_date => $args{date});
+    my $start_str = $start_date->format_db(date_only => 1);
+    $start_date->add_days(days => 6);
+    my $end_str = $start_date->format_db(date_only => 1);
+    $conditions->{task_date} = { 'between' => [$start_str, $end_str] };
 
     my @search_opts = (
         $conditions,

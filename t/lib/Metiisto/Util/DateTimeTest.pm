@@ -42,6 +42,33 @@ sub test_undef_dt: Test(4)
     is $dt->format("%c"), undef, "formatting an 'empty' instance should return undef";
 }
 ################################################################################
+sub test_day_of_the_week : Test(7)
+{
+    my $this = shift;
+
+    foreach my $day qw(sunday monday tuesday wednesday thursday friday saturday) {
+        my $date = TESTED_CLASS->day_of_the_week(day => $day);
+        my $day_name = time2str("%A", $date->epoch());
+        is $day_name, (ucfirst $day), "Should indicate that the day is '$day'";
+    }
+}
+################################################################################
+sub test_sunday : Test(2)
+{
+    my $this = shift;
+    
+    my $date = TESTED_CLASS->sunday();
+    
+    my $week_day = time2str("%w", time);
+    my $sunday = time - (86_400 * ($week_day-0));
+    is $date->format_db(date_only => 1), time2str("%Y-%m-%d", $sunday),
+        "Should find this Sunday if not given 'for_date'";
+
+    $date = TESTED_CLASS->sunday(for_date => "2013-09-25");
+    is $date->format_db(date_only => 1), '2013-09-22',
+        "Should find correct sunday for a given date.";
+}
+################################################################################
 sub test_monday : Test(2)
 {
     my $this = shift;

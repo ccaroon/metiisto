@@ -13,6 +13,15 @@ use constant DAY   => 86_400;
 use constant FORMAT_DB_DATE     => '%Y-%m-%d';
 use constant FORMAT_DB_DATETIME =>  FORMAT_DB_DATE . ' %H:%M:%S';
 use constant FORMAT_TIME        => "%I:%M%p";
+use constant DAYS_OF_THE_WEEK   => {
+    sunday    => 0,
+    monday    => 1,
+    tuesday   => 2,
+    wednesday => 3,
+    thursday  => 4,
+    friday    => 5,
+    saturday  => 6
+};
 ################################################################################
 has epoch => (
     is  => 'rw',
@@ -33,18 +42,37 @@ sub parse
     return($dt);
 }
 ################################################################################
+sub sunday
+{
+    my $class = shift;
+    my %args = @_;
+
+    return($class->day_of_the_week(%args, day => 'sunday'));
+}
+################################################################################
 sub monday
 {
     my $class = shift;
     my %args = @_;
 
+    return($class->day_of_the_week(%args, day => 'monday'));
+}
+################################################################################
+sub day_of_the_week
+{
+    my $class = shift;
+    my %args = @_;
+
+    my $day_name = lc $args{day};
+    my $day_num  = DAYS_OF_THE_WEEK->{$day_name};
+
     my $for_date = $args{for_date}
         ? Metiisto::Util::DateTime->parse($args{for_date})
         : Metiisto::Util::DateTime->now();
     my $week_day = $for_date->format("%w");
-    my $monday = $for_date->epoch() - (86_400 * ($week_day-1));
+    my $day_epoch = $for_date->epoch() - (DAY * ($week_day-$day_num));
 
-    return (Metiisto::Util::DateTime->new(epoch => $monday));
+    return (Metiisto::Util::DateTime->new(epoch => $day_epoch));
 
 }
 ################################################################################
