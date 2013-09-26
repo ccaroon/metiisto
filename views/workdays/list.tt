@@ -25,6 +25,7 @@
                     [% END %]
                     [% day.work_date.format("%A (%b %d, %Y)") %]
                 </td>
+                <!-- Time In -->
                 <td align="center">
                     <div id="view-time_in-[% day.id %]">
                         <span class="ui-icon ui-icon-pencil" style="float:right"></span>
@@ -43,6 +44,7 @@
                         });
                     </script>
                 </td>
+                <!-- Time Out -->
                 <td align="center">
                     <div id="view-time_out-[% day.id %]">
                         <span class="ui-icon ui-icon-pencil" style="float:right"></span>
@@ -61,7 +63,25 @@
                         });
                     </script>
                 </td>
-                <td align="center">[% day.time_lunch.format("%R") %]</td>
+                <!-- Time Lunch -->
+                <td align="center">
+                    <div id="view-time_lunch-[% day.id %]">
+                        <span class="ui-icon ui-icon-pencil" style="float:right"></span>
+                        [% day.time_lunch %]
+                    </div>
+                     <div id="edit-time_lunch-[% day.id %]" style="display:none">
+                        <form method="POST" action="/workdays/[% day.id %]">
+                            <input id="input-time_lunch-[% day.id %]" type="text" name="workday.time_lunch" size="4" value="[% day.time_lunch.format("%R") %]">
+                        </form>
+                     </div>
+                    <script>
+                        $('#view-time_lunch-[% day.id %]').click(function() {
+                            $('#view-time_lunch-[% day.id %]').hide();
+                            $('#edit-time_lunch-[% day.id %]').show();
+                            $('#input-time_lunch-[% day.id %]').focus().select();
+                        });
+                    </script>
+                </td>
                 <td align="center">[% day.total_hours %]</td>
                 <td width="20%" align="center">
                     <button id="button-regular-[% day.id %]" class="button-regular-day" value="/workdays/[% day.id %]/set_day_type?type=regular;date=[% params.date %]">Regular</button>

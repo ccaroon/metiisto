@@ -23,7 +23,6 @@ __PACKAGE__->columns(All => qw/
 __PACKAGE__->has_a_datetime('work_date');
 __PACKAGE__->has_a_datetime('time_in');
 __PACKAGE__->has_a_datetime('time_out');
-__PACKAGE__->has_a_datetime('time_lunch');
 ################################################################################
 sub find_week
 {
@@ -100,11 +99,12 @@ sub day_type
 sub total_hours
 {
     my $this = shift;
-    
-    my $seconds = $this->time_out()->epoch() - $this->time_in()->epoch();
-    my $hours = $seconds / 3600;
 
-# TODO: need to substract time_lunch
+    my ($lh, $lm, $ls) = split /:/, $this->time_lunch(), 3;
+    my $lunch_seconds = ($lh * 60 * 60) + ($lm * 60) + $ls;
+
+    my $seconds = $this->time_out()->epoch() - $this->time_in()->epoch();
+    my $hours = ($seconds - $lunch_seconds) / 3600;
 
     return (sprintf("%0.2f", $hours));
 }
