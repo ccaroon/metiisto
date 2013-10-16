@@ -15,7 +15,9 @@
                 <th>Note</th>
                 <th>Actions</th>
             </tr>
+            [% grand_total_hours = 0 %]
             [% FOREACH day in days %]
+            [% grand_total_hours = grand_total_hours + day.total_hours %]
             [% is_today = day.work_date.format("%D") == today.format("%D") ? 1 : 0 %]
             <tr class="[% cycle('ui-state-default m-not-bold','NONE') %] [% is_today ? 'm-bold' : '' %]">
                 <td width="20%">
@@ -145,8 +147,13 @@
                 </td>
             </tr>
             [% END  %]
+            <tr class="ui-state-default" style="font-size: larger">
+                <td colspan="4">Total:</td>
+                <td align="center">[% grand_total_hours %]</td>
+                <td colspan="3"></td>
+            </tr>
         </table>
-        
+
         <p align="center">
             <a class="button" href="/workdays/generate_week?date=[% params.date %]">Generate Week</a>
             <a class="button" href="/workdays/new">Add</a>
