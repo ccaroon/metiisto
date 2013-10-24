@@ -61,10 +61,15 @@ sub home
             }
         }
 
-        my $release_name = (scalar @$release_tickets != 0)
-            ? $release_tickets->[0]->fix_version()
-            : '?????';
-        
+        my $release_name = '?????';
+        foreach my $ticket (@$release_tickets)
+        {
+            if ($ticket->fix_version()) {
+                $release_name = $ticket->fix_version();
+                last;
+            }
+        }
+
         $release_data = {
             name         => $release_name,
             tickets      => $release_tickets,
