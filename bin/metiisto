@@ -4,7 +4,7 @@ DIR=`dirname $0`
 APP_DIR=$DIR/..
 PID_FILE=$APP_DIR/logs/metiisto.pid
 PORT=5000
-WORKERS=7
+WORKERS=2
 ################################################################################
 if [ -z $METIISTO_SERVER ]; then METIISTO_SERVER='Starman'; fi;
 if [ -z $METIISTO_ENV ]; then METIISTO_ENV='production'; fi;

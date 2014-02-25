@@ -2,3 +2,4 @@ Makefile
 sessions
 logs
 metiisto.sublime-workspace
+.DS_Store
