@@ -5,6 +5,7 @@ use Dancer::Plugin::Database;
 
 our $VERSION = '1.0';
 
+use Metiisto::Controller::API;
 use Metiisto::Controller::Home;
 use Metiisto::Controller::Entries;
 use Metiisto::Controller::Users;

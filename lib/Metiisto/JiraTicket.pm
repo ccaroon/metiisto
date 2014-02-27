@@ -213,4 +213,22 @@ sub color
     return ($color);
 }
 ################################################################################
+sub TO_JSON 
+{
+    my $this = shift;
+
+    my @sub_tasks = map {$_->TO_JSON()} @{$this->sub_tasks()};
+
+    return ({
+        key       => $this->key(),
+        summary   => $this->summary(),
+        type      => $this->type(),
+        points    => $this->points(),
+        link      => $this->link(),
+        status    => $this->status(),
+        sub_tasks => \@sub_tasks,
+        color     => $this->color()
+    });
+}
+################################################################################
 1;

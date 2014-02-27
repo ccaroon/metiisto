@@ -11,6 +11,7 @@
         <link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css" />
 
         <!-- JavaScript -->
+        <script src='/javascripts/ejs_production.js'></script>
         <script src='/javascripts/jquery.js'></script>
         <script src='/javascripts/jquery-ui.js'></script>
         <script src='/javascripts/tag-it.js'></script>

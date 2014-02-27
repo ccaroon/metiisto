@@ -17,6 +17,8 @@ session_name: metiisto_session
 # about unicode within your app when this setting is set (recommended).
 charset: "UTF-8"
 
+serializer: JSON
+
 # template engine
 # simple: default and very basic template engine
 # template_toolkit: Template Toolkit
@@ -26,3 +28,6 @@ engines:
         encoding:  'utf8'
         start_tag: '[%'
         end_tag:   '%]'
+    JSON:
+        allow_blessed:   '1'
+        convert_blessed: '1'

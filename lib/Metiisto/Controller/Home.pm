@@ -36,14 +36,6 @@ sub home
         { order_by => 'priority' }
     );
 
-    my $tickets = Metiisto::Util::Cache->get(key => 'my_tickets');
-    unless ($tickets)
-    {
-        $tickets = Metiisto::JiraTicket->search(
-            query => "filter=".session->{user}->preferences('jira_tickets_filter_id'));
-        Metiisto::Util::Cache->set(key => 'my_tickets', value => $tickets, ttl => 60);
-    }
-
     my $release_data = Metiisto::Util::Cache->get(key => 'release_data');
     unless ($release_data)
     {
@@ -134,7 +126,6 @@ sub home
     #}
 
     my $out = template 'home/index', {
-        tickets         => $tickets,
         todos           => \@todos,
         entries         => \@entries,
         recent_notes    => \@recent_notes,
@@ -152,7 +143,6 @@ sub declare_routes
     my $class = shift;
     
     get '/home' => sub {
-
         my $c = Metiisto::Controller::Home->new();
         my $out = $c->home();
 
