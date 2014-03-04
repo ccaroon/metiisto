@@ -1,8 +1,8 @@
 [% PROCESS util/tools.tt %]
 <script>
 
-    $.ajax('/api/tickets').done(function (data) {
-        template = new EJS({url: '/templates/widgets/tickets.ejs'});
+    $.ajax('/api/my_tickets').done(function (data) {
+        template = new EJS({url: '/templates/widgets/my_tickets.ejs'});
         html = template.render({
             tickets: data
         });
@@ -27,6 +27,5 @@
         <a href="http://[% session.user.preferences('jira_host') %]">Tickets</a>
     </div>
     <div class="ui-widget-content" id="tickets-widget-content">
-        Loading...
     </div>
 </div>

@@ -9,7 +9,7 @@ use Metiisto::Util::Cache;
 
 use base 'Metiisto::Controller::Base';
 ################################################################################
-sub tickets 
+sub my_tickets 
 {
     my $this = shift;
 
@@ -28,9 +28,9 @@ sub declare_routes
 {
     my $class = shift;
     
-    get '/api/tickets' => sub {
+    get '/api/my_tickets' => sub {
         my $c = Metiisto::Controller::API->new();
-        my $out = $c->tickets();
+        my $out = $c->my_tickets();
 
         return ($out);
     };
