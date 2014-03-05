@@ -1,0 +1,21 @@
+<div class="ui-widget-header">
+    Current Release (<%= current_release.name %>) <%= current_release.ready_points %>/<%= current_release.total_points %> pts.
+</div>
+<div class="ui-widget-content">
+    <!-- Just hard-coding Project ID (pid) for now -->
+    <img align="absmiddle" src="http://<%= jira_host %>/secure/projectavatar?pid=10303"/>
+    <% for (var i = 0; i < current_release.tickets.length; i+=1) { %>
+    <%
+        var ticket = current_release.tickets[i];
+
+        var tix_summary = ticket.summary;
+
+        var fs = 1 + ((ticket.points / 7) * 0.4);
+
+        var tix_class = ticket.status.match(/(Ready for Release|Closed|Rejected|Released)/)
+            ? 'ui-priority-secondary m-strikethru'
+            : '';
+    %>
+    <a class="<%= tix_class %>" href="http://<%= jira_host %>/browse/<%= ticket.key %>" title="<%= tix_summary  + " (" + ticket.points + ")" %>" style="font-size: <%= fs %>em;border: dotted 1px lightgrey"><%= ticket.key %></a>
+    <% } %>
+</div>

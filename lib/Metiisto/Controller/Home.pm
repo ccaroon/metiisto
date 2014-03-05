@@ -6,11 +6,9 @@ use Date::Format;
 use Dancer ':syntax';
 
 use Metiisto::Countdown;
-use Metiisto::JiraTicket;
 use Metiisto::Note;
-#use Metiisto::Tag;
 use Metiisto::Todo;
-use Metiisto::Util::Cache;
+use Metiisto::Util::DateTime;
 
 use base 'Metiisto::Controller::Base';
 ################################################################################
@@ -35,46 +33,6 @@ sub home
         due_date  => undef,
         { order_by => 'priority' }
     );
-
-    my $release_data = Metiisto::Util::Cache->get(key => 'release_data');
-    unless ($release_data)
-    {
-        my $release_tickets = Metiisto::JiraTicket->search(
-            query => "filter=".session->{user}->preferences('jira_current_release_filter_id'));
-
-        my $total_points = 0;
-        my $ready_points = 0;
-        foreach my $t (@$release_tickets)
-        {
-            $total_points += $t->points();
-            if ($t->status() =~ /(Ready for Release|Closed|Rejected)/)
-            {
-                $ready_points += $t->points();
-            }
-        }
-
-        my $release_name = '?????';
-        foreach my $ticket (@$release_tickets)
-        {
-            if ($ticket->fix_version()) {
-                $release_name = $ticket->fix_version();
-                last;
-            }
-        }
-
-        $release_data = {
-            name         => $release_name,
-            tickets      => $release_tickets,
-            ready_points => $ready_points,
-            total_points => $total_points,
-        };
-
-        Metiisto::Util::Cache->set(
-            key   => 'release_data',
-            value => $release_data,
-            ttl   => 10 * 60,
-        );
-    }
 
     my @recent_notes = Metiisto::Note->search_where(
         {
@@ -101,38 +59,20 @@ sub home
         { order_by => 'target_date' }
     );
 
-    # Figure out date of Monday
-    # TODO: replace with call to DateTime->monday()?
-    my $wday = time2str("%w", time());
-    my $monday = time() - ($wday * 86400);
+    my $date = Metiisto::Util::DateTime->sunday();
     my @entries = Metiisto::Entry->search_where(
         {
-            task_date => {'>=', time2str("%Y-%m-%d", $monday)}
+            task_date => {'>=', $date->format_db(date_only => 1)}
         },
         { order_by => 'task_date,entry_date' }
     );
-
-    ## Data for Tag Cloud
-    #my $cloud_data = Metiisto::Util::Cache->get(key => 'tag_cloud_data');
-    #unless ($cloud_data)
-    #{
-    #    $cloud_data = Metiisto::Tag->cloud_data();
-    #
-    #    Metiisto::Util::Cache->set(
-    #        key   => 'tag_cloud_data',
-    #        value => $cloud_data,
-    #        ttl   => 15 * 60,
-    #    );
-    #}
 
     my $out = template 'home/index', {
         todos           => \@todos,
         entries         => \@entries,
         recent_notes    => \@recent_notes,
         favorite_notes  => \@fav_notes,
-        countdowns      => \@countdowns,
-        #cloud_data      => $cloud_data,
-        current_release => $release_data,
+        countdowns      => \@countdowns
     };
 
     return ($out);

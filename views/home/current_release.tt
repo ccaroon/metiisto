@@ -1,21 +1,18 @@
-<div class="ui-widget">
+<script>
+
+    $.ajax('/api/current_release_data').done(function (data) {
+        template = new EJS({url: '/templates/widgets/current_release.ejs'});
+        html = template.render({
+            current_release: data,
+            jira_host: "[% session.user.preferences('jira_host') %]"
+        });
+        $('#current-release-widget-content').html(html);
+    });
+
+</script>
+
+<div class="ui-widget" id="current-release-widget-content">
     <div class="ui-widget-header">
-        Current Release ([% current_release.name %]) [% current_release.ready_points %]/[% current_release.total_points %] pts.
-    </div>
-    <div class="ui-widget-content">
-        <!-- Just hard-coding Project ID (pid) for now -->
-        <img align="absmiddle" src="http://[% session.user.preferences('jira_host') %]/secure/projectavatar?pid=10303"/>
-        [% FOREACH ticket IN current_release.tickets %]
-        [%-
-            tix_summary = ticket.summary | html;
-
-            fs = 1 + ((ticket.points / 7) * 0.4);
-
-            tix_class = ticket.status.match('(Ready for Release|Closed|Rejected|Released)')
-                ? 'ui-priority-secondary m-strikethru'
-                : '';
-        -%]
-        <a class="[% tix_class %]" href="http://[% session.user.preferences('jira_host') %]/browse/[% ticket.key %]" title="[% tix_summary  _ " (" _ ticket.points _ ")" %]" style="font-size: [% fs %]em;border: dotted 1px lightgrey">[% ticket.key %]</a>
-        [% END %]
+        Current Release
     </div>
 </div>
