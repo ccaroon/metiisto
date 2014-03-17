@@ -20,8 +20,8 @@
             <td>&nbsp;</td>
             <td colspan="1">
                 <table border="0">
-                    <% for (var i = 0; i < ticket.sub_tasks.length; i+=1) { %>
-                        <% var sub = ticket.sub_tasks[i] %>
+                    <% for (var j = 0; j < ticket.sub_tasks.length; j+=1) { %>
+                        <% var sub = ticket.sub_tasks[j] %>
                         <tr>
                             <td align="center">
                                 <a href="/entries/new?ticket_num=<%= sub.key %>&subject=<%= encodeURIComponent(sub.summary) %>&category=Ticket"><span class="ui-icon ui-icon-arrowreturnthick-1-s"></span></a>

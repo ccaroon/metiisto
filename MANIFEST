@@ -9,6 +9,7 @@ environments/production.yml
 environments/test.yml
 lib/metiisto.pm
 lib/Metiisto/Base.pm
+lib/Metiisto/Controller/API.pm
 lib/Metiisto/Controller/Base.pm
 lib/Metiisto/Controller/Countdowns.pm
 lib/Metiisto/Controller/Entries.pm
@@ -270,10 +271,13 @@ public/images/icons/user.png
 public/images/metiisto.jpg
 public/images/metiisto_large.jpg
 public/javascripts/autosize.js
+public/javascripts/ejs_production.js
 public/javascripts/jquery-ui.js
 public/javascripts/jquery.js
 public/javascripts/metiisto.js
 public/javascripts/tag-it.js
+public/templates/widgets/current_release.ejs
+public/templates/widgets/my_tickets.ejs
 sql/migrations/.gitkeep
 sql/migrations/20120521130518_create_tags_table.pm
 sql/migrations/20120521130521_create_tagged_object_table.pm

@@ -37,7 +37,7 @@
             "Class::DBI::AbstractSearch" : "0.07",
             "Crypt::Blowfish" : "2.12",
             "Crypt::CBC" : "2.3",
-            "Dancer" : "1.3117",
+            "Dancer" : "1.3121",
             "Dancer::Plugin::Database" : "1.82",
             "Data::Page" : "2.02",
             "Digest::SHA1" : "2.13",
@@ -46,18 +46,18 @@
             "LWP::Simple" : "6",
             "LWP::UserAgent" : "6.03",
             "Lingua::EN::Inflect" : "1.894",
-            "Moo" : "1.003",
+            "Moo" : "1.004002",
             "Net::SMTP::SSL" : "1.01",
             "Net::SSLeay" : "1.48",
-            "Plack" : "1.0029",
-            "Starman" : "0.4006",
-            "Template" : "2.24",
+            "Plack" : "1.003",
+            "Starman" : "0.4008",
+            "Template" : "2.25",
             "Template::Plugin::Markdown" : "0.02",
-            "Test::More" : "0.98",
+            "Test::More" : "1.001002",
             "Text::Markdown" : "1.000031",
             "XML::LibXML" : "2.0002",
             "XML::Simple" : "2.2",
-            "YAML" : "0.81"
+            "YAML" : "0.9"
          }
       }
    },
