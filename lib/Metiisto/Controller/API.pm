@@ -7,6 +7,10 @@ use Dancer ':syntax';
 use Metiisto::JiraTicket;
 use Metiisto::Util::Cache;
 
+# TTLs in seconds
+use constant MY_TICKETS_TTL      => 15 * 60;
+use constant CURRENT_RELEASE_TTL =>  4 * (60*60);
+
 use base 'Metiisto::Controller::Base';
 ################################################################################
 sub my_tickets 
@@ -18,7 +22,8 @@ sub my_tickets
     {
         $tickets = Metiisto::JiraTicket->search(
             query => "filter=".session->{user}->preferences('jira_tickets_filter_id'));
-        Metiisto::Util::Cache->set(key => 'my_tickets', value => $tickets, ttl => 60);
+        Metiisto::Util::Cache->set(key => 'my_tickets', 
+            value => $tickets, ttl => MY_TICKETS_TTL);
     }
 
     return ($tickets);
@@ -64,7 +69,7 @@ sub current_release_data
         Metiisto::Util::Cache->set(
             key   => 'current_release_data',
             value => $data,
-            ttl   => 10 * 60,
+            ttl   => CURRENT_RELEASE_TTL
         );
     }
 
