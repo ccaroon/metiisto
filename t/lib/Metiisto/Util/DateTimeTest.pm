@@ -46,7 +46,7 @@ sub test_day_of_the_week : Test(7)
 {
     my $this = shift;
 
-    foreach my $day qw(sunday monday tuesday wednesday thursday friday saturday) {
+    foreach my $day (qw|sunday monday tuesday wednesday thursday friday saturday|) {
         my $date = TESTED_CLASS->day_of_the_week(day => $day);
         my $day_name = time2str("%A", $date->epoch());
         is $day_name, (ucfirst $day), "Should indicate that the day is '$day'";
