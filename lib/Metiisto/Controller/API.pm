@@ -8,8 +8,8 @@ use Metiisto::JiraTicket;
 use Metiisto::Util::Cache;
 
 # TTLs in seconds
-use constant MY_TICKETS_TTL      => 15 * 60;
-use constant CURRENT_RELEASE_TTL =>  4 * (60*60);
+use constant DEFAULT_TTL_MY_TICKETS      => 5 * 60;      # 5 minutes
+use constant DEFAULT_TTL_CURRENT_RELEASE => 1 * (60*60); # 1 hour
 
 use base 'Metiisto::Controller::Base';
 ################################################################################
@@ -22,8 +22,10 @@ sub my_tickets
     {
         $tickets = Metiisto::JiraTicket->search(
             query => "filter=".session->{user}->preferences('jira_tickets_filter_id'));
+
+        my $ttl = session->{user}->preferences('jira_my_tickets_cache_ttl') || DEFAULT_TTL_MY_TICKETS;
         Metiisto::Util::Cache->set(key => 'my_tickets', 
-            value => $tickets, ttl => MY_TICKETS_TTL);
+            value => $tickets, ttl => $ttl);
     }
 
     return ($tickets);
@@ -66,10 +68,11 @@ sub current_release_data
             total_points => $total_points,
         };
 
+        my $ttl = session->{user}->preferences('jira_current_release_cache_ttl') || DEFAULT_TTL_CURRENT_RELEASE;
         Metiisto::Util::Cache->set(
             key   => 'current_release_data',
             value => $data,
-            ttl   => CURRENT_RELEASE_TTL
+            ttl   => $ttl
         );
     }
 

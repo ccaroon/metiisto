@@ -17,7 +17,7 @@ function app_start
         echo "Already running: `cat $PID_FILE`";
     else
         if [ "X$1" == 'Xdevel' ]; then
-            plackup -s $METIISTO_SERVER -E development -p $PORT --pid $PID_FILE -a bin/app.pl
+            plackup -s $METIISTO_SERVER -E development -p $PORT --pid $PID_FILE -a bin/app.pl --workers 1
         else
             plackup -s $METIISTO_SERVER -E $METIISTO_ENV -p $PORT -D --pid $PID_FILE --access-log logs/$METIISTO_ENV.log --error-log logs/error.${METIISTO_ENV}.log -a bin/app.pl --workers $WORKERS &> /dev/null
         fi

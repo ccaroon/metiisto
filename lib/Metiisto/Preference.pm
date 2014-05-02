@@ -19,13 +19,18 @@ use constant THEMES => [
 use constant DEFAULT_PREFS => [
     {theme                 => 'humanity'},
     {track_time            => 'false'},
-    {jira_host             => 'www.yourjirahost.com'},
-    {jira_username         => 'Jira Username Here'},
-    {jira_password         => 'Jira Password Here'},
-    {jira_tickets_filter_id                => '1'},
-    {jira_current_release_filter_id        => '2'},
+
+    {jira_host                      => 'www.yourjirahost.com'},
+    {jira_username                  => 'Jira Username Here'},
+    {jira_password                  => 'Jira Password Here'},
+    {jira_tickets_filter_id         => '1'},
+    {jira_current_release_filter_id => '2'},
+    {jira_my_tickets_cache_ttl      => 5 * 60},      # 5 minutes
+    {jira_current_release_cache_ttl => 1 * (60*60)}, # 1 hour
+
     {report_recipients     => 'name@email.com,other_name@emai.com'},
     {encryption_passphrase => 'CURRENTLY NOT USED'},
+
     {smtp_host             => 'smtp.google.com'},
     {smtp_port             => '142'},
     {smtp_user             => 'SMTP Username'},

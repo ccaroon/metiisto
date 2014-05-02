@@ -87,7 +87,17 @@
                 <label class="left_label" for="user_pref_jira_current_release_filter_id">Current Release Filter:</label>
                 <input type="text" id="user_pref_jira_current_release_filter_id" name="user.preferences.jira_current_release_filter_id" size="32" value="[% user.preferences('jira_current_release_filter_id') %]">
             </div>
-            
+
+            <div class="form_field" >
+                <label class="left_label" for="user_pref_jira_my_tickets_cache_ttl">My Tickets Cache TTL:</label>
+                <input type="text" id="user_pref_jira_my_tickets_cache_ttl" name="user.preferences.jira_my_tickets_cache_ttl" size="32" value="[% user.preferences('jira_my_tickets_cache_ttl') %]">
+            </div>
+
+            <div class="form_field" >
+                <label class="left_label" for="user_pref_jira_current_release_cache_ttl">Current Release Cache TTL:</label>
+                <input type="text" id="user_pref_jira_current_release_cache_ttl" name="user.preferences.jira_current_release_cache_ttl" size="32" value="[% user.preferences('jira_current_release_cache_ttl') %]">
+            </div>
+
         </div>
 
         <div id="email-config" class="ui-widget-content">
