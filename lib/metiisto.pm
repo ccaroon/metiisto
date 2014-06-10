@@ -15,6 +15,7 @@ use Metiisto::Controller::Lists;
 use Metiisto::Controller::Notes;
 use Metiisto::Controller::Countdowns;
 use Metiisto::Controller::Reports;
+use Metiisto::Controller::Stickies;
 use Metiisto::Controller::Tags;
 use Metiisto::Controller::TaggedObjects;
 use Metiisto::Weather;

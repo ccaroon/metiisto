@@ -152,7 +152,7 @@ sub create
     $obj->update_tags(tags => params()->{$prefix.'[tags][]'})
         if $obj->isa('Metiisto::Taggable');
 
-    my $out = redirect "/".vars->{controller}."/".$obj->id();
+    my $out = $this->_post_create_action($obj);
 
     return ($out);
 }
@@ -310,6 +310,14 @@ sub declare_routes
         my $out = $c->update(id => params->{id});
         return ($out);
     };
+}
+##############################################################################
+sub _post_create_action
+{
+    my $this = shift;
+    my $obj  = shift;
+
+    return (redirect "/".vars->{controller}."/".$obj->id());
 }
 ################################################################################
 sub _munge_params

@@ -1,0 +1,25 @@
+<link href="/css/sticky_note.css" rel="stylesheet" type="text/css" />
+[%
+    PROCESS util/tools.tt;
+%]
+<div class="ui-widget">
+
+    <div class="ui-widget-header">Stickies</div>
+    <div class="ui-widget-content" align="center">
+        [% PROCESS shared/filter.tt %]
+        [% PROCESS shared/pagination.tt page_data=pagination %]
+    </div>
+    <div class="ui-widget-content">
+        <ul class="sticky_notes">
+        [% FOREACH sticky in items %]
+        <li>
+            <div>
+                <h2 style="text-align:center">[% sticky.created_date.format("%b %d, %Y %l:%M%P") %]</h2>
+                <p>[% sticky.body %]</p>
+            </div>
+        </li>
+        [% END %]
+        </ul>
+    </div>    
+
+</div>
