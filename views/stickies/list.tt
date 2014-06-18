@@ -14,7 +14,12 @@
         [% FOREACH sticky in items %]
         <li>
             <div>
-                <h2 style="text-align:center">[% sticky.created_date.format("%b %d, %Y %l:%M%P") %]</h2>
+                <span class="ui-icon ui-icon-circle-close" onClick="$('#delete-sticky-[% sticky.id %]').submit()" style="float:right">
+                    <form id="delete-sticky-[% sticky.id %]" method="get" action="/stickies/[% sticky.id %]/delete"></form>
+                </span>
+                <h2 style="text-align:center">
+                    [% sticky.created_date.format("%b %d, %Y %l:%M%P") %]
+                </h2>
                 <p>[% sticky.body %]</p>
             </div>
         </li>
