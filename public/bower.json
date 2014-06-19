@@ -1,0 +1,24 @@
+{
+  "name": "Metiisto",
+  "version": "1.0.0",
+  "homepage": "https://github.com/ccaroon/metiisto",
+  "authors": [
+    "Craig N. Caroon"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "octicons": "~2.0.2",
+    "jquery": "2.0.0",
+    "jquery-ui": "1.10.3",
+    "tag-it": "*",
+    "codemirror": "3.16"
+  }
+}

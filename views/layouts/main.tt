@@ -5,23 +5,22 @@
         <title>Metiisto - [% vars.controller| ucfirst %]</title>
 
         <!-- CSS -->
-        <link rel="stylesheet" href="/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="/bower_components/codemirror/lib/codemirror.css">
         <link href="/css/themes/[% session.user ? session.user.preferences('theme') : 'smoothness' %]/theme.css" rel="stylesheet" type="text/css" />
         <link href="/css/metiisto.css" rel="stylesheet" type="text/css" />
-        <link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css" />
+        <link href="/bower_components/tag-it/css/jquery.tagit.css" rel="stylesheet" type="text/css" />
 
         <!-- JavaScript -->
         <script src='/javascripts/ejs_production.js'></script>
-        <script src='/javascripts/jquery.js'></script>
-        <script src='/javascripts/jquery-ui.js'></script>
-        <script src='/javascripts/tag-it.js'></script>
-        <script src='/javascripts/autosize.js'></script>
+        <script src='/bower_components/jquery/jquery.min.js'></script>
+        <script src='/bower_components/jquery-ui/ui/minified/jquery-ui.min.js'></script>
+        <script src='/bower_components/tag-it/js/tag-it.min.js'></script>
         <script src='/javascripts/metiisto.js'></script>
 
         <!-- Code Mirror: Core, modes and add-ons -->
-        <script src="/codemirror/lib/codemirror.js"></script>
-        <script src="/codemirror/mode/markdown/markdown.js"></script>
-        <script src="/codemirror/addon/selection/active-line.js"></script>
+        <script src="/bower_components/codemirror/lib/codemirror.js"></script>
+        <script src="/bower_components/codemirror/mode/markdown/markdown.js"></script>
+        <script src="/bower_components/codemirror/addon/selection/active-line.js"></script>
     </head>
     <body>
         <!-- Header (includes Top Menu) -->
