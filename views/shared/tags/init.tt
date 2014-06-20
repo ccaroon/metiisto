@@ -1,6 +1,5 @@
 $('#tags').tagit({
-    itemName: '[% object_name %]',
-    fieldName: 'tags',
+    fieldName: '[% object_name %][tags][]',
     availableTags: ["[% avail_tags.join('","') %]"],
     allowSpaces: true,
 });
