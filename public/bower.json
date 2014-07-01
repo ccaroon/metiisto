@@ -15,10 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "octicons": "~2.0.2",
     "jquery": "2.0.0",
     "jquery-ui": "1.10.3",
     "tag-it": "*",
-    "codemirror": "3.16"
+    "codemirror": "3.16",
+    "font-awesome": "~4.1.0",
+    "pure": "~0.5.0"
   }
 }

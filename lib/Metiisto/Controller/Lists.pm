@@ -9,7 +9,7 @@ use SQL::Abstract;
 use Metiisto::Tag;
 use Metiisto::Util::DateTime;
 
-use constant LISTS_PER_PAGE => 15;
+use constant LISTS_PER_PAGE => 18;
 
 use base 'Metiisto::Controller::Base';
 

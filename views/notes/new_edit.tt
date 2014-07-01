@@ -3,14 +3,14 @@
         [% vars.action | ucfirst %] Note
     </div>
     <div class="ui-widget-content">
-        <form method="post" action="/notes[% note.id ? '/' _ note.id : '' %]">
+        <form class="pure-form pure-form-aligned" method="post" action="/notes[% note.id ? '/' _ note.id : '' %]">
             
-            <div class="form_field">
-                <label class="left_label" for="note_title">Title:</label>
+            <div class="pure-control-group">
+                <label for="note_title">Title:</label>
                 <input type="text" id="note_title" name="note.title" value="[% note.title %]" size="80" autofocus>
             </div>
 
-            <div class="form_field">
+            <div class="pure-control-group">
                 [% PROCESS shared/toggle/widget.tt
                     label = "Favorite:"
                     id    = "note_favorite"
@@ -18,17 +18,17 @@
                 %]
             </div>
 
-            <div class="form_field">
-                <label class="left_label">Tags:</label>
+            <div class="pure-control-group">
+                <label for="tags" style="float:left;">Tags:</label>
                 [% PROCESS shared/tags/widget.tt object_tags=note.tags %]
             </div>
             
-            <div class="form_field">
-                <label class="left_label" for="note_body">Body:</label>
+            <div class="pure-control-group">
+                <label for="note_body" style="float:left;">Body:</label>
                 <textarea id="note_body" name="note.body">[% note.body %]</textarea>
             </div>
             
-            <div class="form_field">
+            <div class="pure-controls">
                 <input class="button" type="submit" value="Save">
                 [% IF note.id %]
                 <a class="button" href="/notes/[% note.id %]">View</a>
@@ -43,7 +43,7 @@
     [% PROCESS shared/toggle/init.tt
         id         = "note_favorite"
         icon_on    = "star"
-        icon_off   = "minus"
+        icon_off   = "star-o"
         init_value = note.is_favorite
     %]
 

@@ -3,6 +3,8 @@ package Metiisto::Tag;
 use strict;
 
 use base 'Metiisto::Base';
+
+use List::Util qw(shuffle);
 ################################################################################
 __PACKAGE__->table('tags');
 
@@ -27,6 +29,12 @@ sub cloud_data
     my %args  = @_;
 
     my @tags = Metiisto::Tag->retrieve_all();
+
+    if ($args{limit}) {
+        @tags = shuffle @tags;
+        splice @tags, $args{limit};
+    }
+
     # Tag Name => Used Count
     my %cloud_data = map { $_->name() => scalar($_->objects())->count() } @tags;
 

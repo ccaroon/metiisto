@@ -3,24 +3,24 @@
         [% vars.action | ucfirst %] Work Day
     </div>
     <div class="ui-widget-content">
-        <form method="post" action="/workdays[% item.id ? '/' _ item.id : '' %]">
+        <form class="pure-form pure-form-aligned" method="post" action="/workdays[% item.id ? '/' _ item.id : '' %]">
 
-            <div class="form_field">
-                <label class="left_label" for="workday_target_date">Work Date:</label>
+            <div class="pure-control-group">
+                <label for="workday_target_date">Work Date:</label>
                 <input type="text" id="workday_target_date" name="workday.work_date" value="[% item.work_date.format_db('date_only',1) %]" size="10">
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="workday_time_in">In:</label>
+            <div class="pure-control-group">
+                <label for="workday_time_in">In:</label>
                 <input type="text" id="workday_time_in" name="workday.time_in" value="[% item.time_in.format('%I:%M%P') %]" size="10">
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="workday_time_out">Out:</label>
+            <div class="pure-control-group">
+                <label for="workday_time_out">Out:</label>
                 <input type="text" id="workday_time_out" name="workday.time_out" value="[% item.time_out.format('%I:%M%P') %]" size="10">
             </div>
 
-            <div class="form_field">
+            <div class="pure-controls">
                 <input class="button" type="submit" value="Save">
                 [% IF item.id %]
                 <a class="button" href="/workdays/[% item.id %]">View</a>

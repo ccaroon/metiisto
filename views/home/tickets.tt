@@ -9,17 +9,6 @@
         $('#tickets-widget-content').html(html);
     });
 
-    function toggle_sub_tasks(cid)
-    {
-        if ($('#sub_task-'+cid).is(':hidden'))
-        {
-            $('#sub_task-'+cid).show();
-        }
-        else
-        {
-            $('#sub_task-'+cid).hide();
-        }
-    }
 </script>
 
 <div class="ui-widget">
@@ -27,5 +16,6 @@
         <a href="http://[% session.user.preferences('jira_host') %]">Tickets</a>
     </div>
     <div class="ui-widget-content" id="tickets-widget-content">
+        <i class="fa fa-spinner fa-spin fa-2x"></i>
     </div>
 </div>

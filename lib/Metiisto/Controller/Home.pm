@@ -7,6 +7,7 @@ use Dancer ':syntax';
 
 use Metiisto::Countdown;
 use Metiisto::Note;
+use Metiisto::Tag;
 use Metiisto::Todo;
 use Metiisto::Util::DateTime;
 
@@ -67,12 +68,15 @@ sub home
         { order_by => 'task_date,entry_date' }
     );
 
+    my $cloud_data = Metiisto::Tag->cloud_data(limit => 25);
+
     my $out = template 'home/index', {
         todos           => \@todos,
         entries         => \@entries,
         recent_notes    => \@recent_notes,
         favorite_notes  => \@fav_notes,
-        countdowns      => \@countdowns
+        countdowns      => \@countdowns,
+        cloud_data      => $cloud_data
     };
 
     return ($out);

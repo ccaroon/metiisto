@@ -1,8 +1,8 @@
 [% USE Markdown %]
 <div class="ui-widget">
     <div class="ui-widget-header">
+        <i id="action-edit-entry" class="fa fa-edit">&nbsp;</i>
         Entries &raquo; [% entry.subject %]
-        <span id="action-edit-entry" class="ui-icon ui-icon-pencil" style="float:left"></span>
         [% PROCESS shared/tags/list.tt tags=entry.tags %]
     </div>
     <div class="ui-widget-content">

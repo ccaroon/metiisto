@@ -3,19 +3,19 @@
         [% vars.action | ucfirst %] List
     </div>
     <div class="ui-widget-content">
-        <form method="post" action="/lists[% list.id ? '/' _ list.id : '' %]">
+        <form class="pure-form pure-form-aligned" method="post" action="/lists[% list.id ? '/' _ list.id : '' %]">
 
-            <div class="form_field">
-                <label class="left_label" for="list_name">Name:</label>
+            <div class="pure-control-group">
+                <label for="list_name">Name:</label>
                 <input type="text" id="list_name" name="list.name" value="[% list.name %]" size="25" autofocus >
             </div>
 
-            <div class="form_field">
-                <label class="left_label">Tags:</label>
+            <div class="pure-control-group">
+                <label for="tags" style="float:left;">Tags:</label>
                 [% PROCESS shared/tags/widget.tt object_tags=list.tags %]
             </div>
 
-            <div class="form_field">
+            <div class="pure-controls">
                 <input class="button" type="submit" value="Save">
                 [% IF list.id %]
                 <a class="button" href="/lists/[% list.id %]">View</a>

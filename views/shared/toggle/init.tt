@@ -9,12 +9,8 @@
 $('#[% id %]').data('icon_off', '[% icon_off %]');
 $('#[% id %]').data('icon_on', '[% icon_on %]');
 
-$('#[% id %]').button({
-    text: false,
-    icons: {
-        primary: "ui-icon-[% icon_off %]"
-    }
-}).click(function() {
+$('#[% id %]').button({ text: false})
+.click(function() {
     if ( $( this ).attr('value') == 0 ) {
         toggle_set('[% id %]', true);
     } else {

@@ -6,6 +6,11 @@ use LWP::Simple;
 use XML::Simple;
 
 use constant CACHE_TTL => 30 * 60;
+use constant WI_ICON_MAP => {
+    "Cloudy"        => 'wi-cloudy',
+    "Mostly Cloudy" => 'wi-day-cloudy',
+    "Partly Cloudy" => 'wi-day-sunny-overcast'
+};
 ################################################################################
 sub current
 {
@@ -32,15 +37,27 @@ sub current
     if ($data)
     {
         %weather = (
-            icon  => "http://l.yimg.com/a/i/us/we/52/$data->{'yweather:condition'}->{code}.gif",
-            text  => $data->{'yweather:condition'}->{text},
-            temp  => $data->{'yweather:condition'}->{temp},
-            title => $data->{title},
-            url   => $data->{link}
+            icon    => "http://l.yimg.com/a/i/us/we/52/$data->{'yweather:condition'}->{code}.gif",
+            wi_icon => $class->text2wi_icon($data->{'yweather:condition'}->{text}),
+            text    => $data->{'yweather:condition'}->{text},
+            temp    => $data->{'yweather:condition'}->{temp},
+            title   => $data->{title},
+            url     => $data->{link}
         );
     }
 
     return (wantarray ? %weather : \%weather);
+}
+################################################################################
+# Convert text to 'weather-icon' icon name
+################################################################################
+sub text2wi_icon
+{
+    my $class = shift;
+    my $text  = shift;
+    my $icon  = WI_ICON_MAP->{$text} || 'wi-alien';
+
+    return ($icon);
 }
 ################################################################################
 sub _fetch_data

@@ -1,4 +1,4 @@
-<form method="post" action="/users/[% user.id %]/edit">
+<form class="pure-form pure-form-aligned" method="post" action="/users/[% user.id %]/edit">
 <div class="ui-widget">
     <div id="user-settings">
         <ul>
@@ -9,19 +9,19 @@
             <li><a href="#email-config">Email Config</a></li>
         </ul>
         <div id="user-information" class="ui-widget-content">
-            <div class="form_field" >
-                <label class="left_label" for="user_name">Name:</label>
+            <div class="pure-control-group" >
+                <label for="user_name">Name:</label>
                 <input type="text" id="user_name" name="user.name" size="32" value="[% user.name %]">
             </div>
 
-            <div class="form_field" >
-                <label class="left_label" for="user_email">Email:</label>
+            <div class="pure-control-group" >
+                <label for="user_email">Email:</label>
                 <input type="text" id="user_email" name="user.email" size="32" value="[% user.email %]">
             </div>
 
-            <div class="form_field" >
-                <label class="left_label" for="user_location">Location:</label>
-                <input type="text" id="user_location" name="user.location" size="32" value="[% user.location %]"><button id="help-location">Help : Location</button>
+            <div class="pure-control-group" >
+                <label for="user_location">Location:</label>
+                <input type="text" id="user_location" name="user.location" size="32" value="[% user.location %]"><button id="help-location"><i class="fa fa-question"></i></button>
                 <div id="help-location-dialog" title="Help : Location">
                     <p>Location is specified using a Yahoo! WOEID (Where On Earth ID).</p>
 
@@ -31,8 +31,8 @@
         </div>
 
         <div id="entries-prefs" class="ui-widget-content">
-            <div class="form_field" >
-                <label class="left_label" for="entries-track-time-on">Track Time:</label>
+            <div class="pure-control-group" >
+                <label for="entries-track-time-on">Track Time:</label>
                 <input type="radio" id="entries-track-time-on" name="user.preferences.track_time" [% user.preferences('track_time') == 'true' ? 'checked' : '' %] value="true"> On
                 <input type="radio" id="entries-track-time-off" name="user.preferences.track_time" [% user.preferences('track_time') == 'false' ? 'checked' : '' %] value="false"> Off
             </div>
@@ -40,8 +40,8 @@
 
         <div id="misc" class="ui-widget-content">
             
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_theme">Theme:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_theme">Theme:</label>
                 <select id="user_pref_theme" name="user.preferences.theme">
                     [% FOREACH theme IN themes %]
                         [% selected = user.preferences('theme') == theme ? "selected" : "" %]
@@ -50,83 +50,83 @@
                 </select>
             </div>
             
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_passphrase">Passphrase:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_passphrase">Passphrase:</label>
                 <input type="text" size="56" maxlength="56" id="user_pref_passphrase" name="user.preferences.encryption_passphrase" value="[% user.preferences('encryption_passphrase') %]">
             </div>
 
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_report_recpt">Report Emails:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_report_recpt">Report Emails:</label>
                 <input type="text" size="64" id="user_pref_report_recpt" name="user.preferences.report_recipients" value="[% user.preferences('report_recipients') %]">
             </div>
         </div>
         
         <div id="jira-config" class="ui-widget-content">
             
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_jira_host">Host:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_jira_host">Host:</label>
                 <input type="text" id="user_pref_jira_host" name="user.preferences.jira_host" size="32" value="[% user.preferences('jira_host') %]">
             </div>
             
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_jira_user">User:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_jira_user">User:</label>
                 <input type="text" id="user_pref_jira_user" name="user.preferences.jira_username" size="32" value="[% user.preferences('jira_username') %]">
             </div>
             
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_jira_pass">Password:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_jira_pass">Password:</label>
                 <input type="text" id="user_pref_jira_pass" name="user.preferences.jira_password" size="32" value="[% user.preferences('jira_password') %]">
             </div>
             
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_jira_tickets_filter_id">Tickets Filter:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_jira_tickets_filter_id">Tickets Filter:</label>
                 <input type="text" id="user_pref_jira_tickets_filter_id" name="user.preferences.jira_tickets_filter_id" size="32" value="[% user.preferences('jira_tickets_filter_id') %]">
             </div>
             
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_jira_current_release_filter_id">Current Release Filter:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_jira_current_release_filter_id">Current Release Filter:</label>
                 <input type="text" id="user_pref_jira_current_release_filter_id" name="user.preferences.jira_current_release_filter_id" size="32" value="[% user.preferences('jira_current_release_filter_id') %]">
             </div>
 
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_jira_my_tickets_cache_ttl">My Tickets Cache TTL:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_jira_my_tickets_cache_ttl">My Tickets Cache TTL:</label>
                 <input type="text" id="user_pref_jira_my_tickets_cache_ttl" name="user.preferences.jira_my_tickets_cache_ttl" size="32" value="[% user.preferences('jira_my_tickets_cache_ttl') %]">
             </div>
 
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_jira_current_release_cache_ttl">Current Release Cache TTL:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_jira_current_release_cache_ttl">Current Release Cache TTL:</label>
                 <input type="text" id="user_pref_jira_current_release_cache_ttl" name="user.preferences.jira_current_release_cache_ttl" size="32" value="[% user.preferences('jira_current_release_cache_ttl') %]">
             </div>
 
         </div>
 
         <div id="email-config" class="ui-widget-content">
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_smtp_host">SMTP Host:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_smtp_host">SMTP Host:</label>
                 <input type="text" id="user_pref_smtp_host" name="user.preferences.smtp_host" size="32" value="[% user.preferences('smtp_host') %]">
             </div>
             
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_smtp_port">SMTP Port:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_smtp_port">SMTP Port:</label>
                 <input type="text" id="user_pref_smtp_port" name="user.preferences.smtp_port" size="32" value="[% user.preferences('smtp_port') %]">
             </div>
             
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_smtp_user">SMTP User:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_smtp_user">SMTP User:</label>
                 <input type="text" id="user_pref_smtp_user" name="user.preferences.smtp_user" size="32" value="[% user.preferences('smtp_user') %]">
             </div>
             
-            <div class="form_field" >
-                <label class="left_label" for="user_pref_smtp_pass">SMTP Passwd:</label>
+            <div class="pure-control-group" >
+                <label for="user_pref_smtp_pass">SMTP Passwd:</label>
                 <input type="text" id="user_pref_smtp_pass" name="user.preferences.smtp_pass" size="32" value="[% user.preferences('smtp_pass') %]">
             </div>
         </div>
     </div>
 
-    <p>
+    <div class="pure-controls">
         <input id="button-save-user" type="submit" value="Save">
         <a id="button-logout" href="/users/logout">Logout</a>
-    </p>
+    </div>
 
 </div>
 </form>
@@ -135,12 +135,8 @@
 
     $('#user-settings').tabs();
 
-    $('#help-location').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-help'
-        }
-    }).click(function () {
+    $('#help-location').button({ text: false })
+    .click(function () {
         $('#help-location-dialog').dialog('open');
         return (false);
     });

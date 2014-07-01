@@ -12,7 +12,7 @@
 </script>
 
 <div class="ui-widget" id="current-release-widget-content">
-    <div class="ui-widget-header">
-        Current Release
+    <div class="ui-widget-content">
+        <i class="fa fa-spinner fa-spin fa-2x"></i>
     </div>
 </div>

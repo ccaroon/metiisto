@@ -1,32 +1,23 @@
 /******************************************************************************/
 function toggle_set(elem_name, on_off)
 {
-    var elem_id = '#'+elem_name;
+    var elem_id = '#'+elem_name,
+        value,
+        icon;
 
-    var options;
     if (on_off == true)
     {
-        var icon = $(elem_id).data('icon_on');
-        options = {
-            value: 1,
-            icons: {
-                primary: "ui-icon-"+icon
-            }
-        };
+        icon = $(elem_id).data('icon_on');
+        value = 1;
     }
     else
     {
-        var icon = $(elem_id).data('icon_off');
-        options = {
-            value: 0,
-            icons: {
-                primary: "ui-icon-"+icon
-            }
-        };
+        icon = $(elem_id).data('icon_off');
+        value = 0;
     }
-    $( elem_id ).button( "option", options );
-    $( elem_id ).attr('value', options.value);
+    $( elem_id ).attr('value', value);
+    $( elem_id ).html('<i class="fa fa-'+icon+'"></i>');
     // <button> does not submit it's value, so using a hidden field to get
     // this data back to the controller.
-    $( elem_id+'_value').attr('value', options.value);
+    $( elem_id+'_value').attr('value', value);
 }

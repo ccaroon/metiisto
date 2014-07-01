@@ -1,12 +1,25 @@
-.ui-widget {margin: 2px 2px 2px 2px}
-.ui-widget a { text-decoration:none }
-.ui-widget a:hover { text-decoration:underline }
-.m-not-bold { font-weight: normal !important }
-.m-pagination { text-decoration: none; padding: 0 2 0 2 }
+a:link { text-decoration: none; }
+a:hover {text-decoration: underline;}
+
+body {
+    font-size: 12px;
+}
+
+.pure-form-aligned .pure-control-group .ui-buttonset label {
+    width: inherit;
+    margin: 0px -3px 0px -3px;
+}
+
+.m-container {
+    padding-top: 5px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 5px;
+}
+
+.m-pagination { text-decoration: none; padding: 0px 5px 0px 5px }
 .m-bold { font-weight: bolder !important}
 .m-strikethru { text-decoration: line-through !important}
-
-.m-side-menu-button { margin: 1px 2px 2px 2px; width: 95% }
 
 .markdown a {
     border-bottom: dotted 1px grey
@@ -21,11 +34,6 @@
     border: dashed 1px lightgrey
 }
 
-.form_field {
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
 /*CodeMirror Overrides*/
 .CodeMirror {
     font-size: 12px;
@@ -34,21 +42,6 @@
 }
 
 .CodeMirror pre { padding-left: 5px; line-height: 1.25; }
-
-form {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.left_label {
-    font-weight: bold;
-    float: left;
-    width: 12%;
-}
-
-#header_weather {
-    font-size: small;
-}
 
 #layout_footer {
     width: 100%;

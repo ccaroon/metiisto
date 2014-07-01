@@ -5,17 +5,19 @@
     <div class="ui-widget-header">Lists</div>
     <div class="ui-widget-content" align="center">
         [% PROCESS shared/filter.tt %]
-        [% PROCESS shared/pagination.tt page_data=pagination %]
+        <p>[% PROCESS shared/pagination.tt page_data=pagination %]</p>
     </div>
     <div class="ui-widget-content">
-        <table width="100%"  class="ui-widget-content">
-            <tr class="ui-widget-header">
-                <th>Name</th>
-                <th>Items</th>
-                <th>Actions</th>
-            </tr>
+        <table width="100%"  class="pure-table pure-table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Items</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
             [% FOREACH list in lists %]
-            <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
+            <tr>
                 <td width="70%"><a href="/lists/[% list.id %]">[% list.name %]</a></td>
                 <td>[% list.completed_items.size OR 0 %]/[% list.items.size OR 0 %]</td>
                 <td align="center">

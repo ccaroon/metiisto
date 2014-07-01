@@ -6,26 +6,30 @@
         [%IF login_error %]
             <span class="ui-state-error">[% login_error %]</span>
         [% END %]
-        <form  method="post" action="/users/login">
-            <p>
+        <form class="pure-form pure-form-aligned" method="post" action="/users/login">
+            <div class="pure-control-group">
                 <img src="/images/icons/user.png" border="0">
                 Username: <input type="text" name="user_name">
-            </p>
-            <p>
+            </div>
+            <div class="pure-control-group">
                 <img src="/images/icons/lock_on.png" border="0">
                 Password: <input type="password" name="password">
-            </p>
+            </div>
+
             [% IF is_create %]
-            <p>
+            <div class="pure-control-group">
                 <img src="/images/icons/user.png" border="0">
                 Real Name: <input type="text" name="name">
-            </p>
-            <p>
+            </div>
+            <div class="pure-control-group">
                 <img src="/images/icons/email.png" border="0">
                 Email: <input type="text" name="email">
-            </p>
+            </div>
             [% END %]
-            <input id="button-create-login" type="submit" value="[% is_create ? "Create" : "Login" %]">
+
+            <div class="pure-controls">
+                <input id="button-create-login" type="submit" value="[% is_create ? "Create" : "Login" %]">
+            </div>
         </form>
     </div>
 </div>

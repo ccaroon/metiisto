@@ -7,45 +7,23 @@ $(function () {
         autoOpen: false,
     });
     
-    $('.action-view').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-search'
-        }
-    });
-    
-    $('.action-edit').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-pencil'
-        }
-    });
-    
-    $('.action-delete').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-trash'
-        }
-    }).click(function () {
+    $('.action-view').button({ text: false });    
+    $('.action-edit').button({ text: false });
+    $('.action-delete').button({ text: false})
+    .click(function () {
         var id = this.value;
         $('#dialog-confirm-delete-'+id).dialog('open');
     });
 
-    $('.action-confirm-delete').button({
-        icons: {
-            primary: 'ui-icon-trash'
-        }
-    }).click(
-        function () {
-            window.location = this.value;
-        }
-    )
+    $('.action-confirm-delete').button({})
+    .click(function () {
+        window.location = this.value;
+    });
     
-    $('.action-cancel-delete').button().click(
-        function () {
-            var id = this.value;
-            $('#dialog-confirm-delete-'+id).dialog('close');
-        }
-    )
+    $('.action-cancel-delete').button()
+    .click(function () {
+        var id = this.value;
+        $('#dialog-confirm-delete-'+id).dialog('close');
+    });
 
 });

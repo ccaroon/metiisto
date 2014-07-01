@@ -1,4 +1,3 @@
-<link href="/css/sticky_note.css" rel="stylesheet" type="text/css" />
 [%
     PROCESS util/tools.tt;
 %]
@@ -7,16 +6,16 @@
     <div class="ui-widget-header">Stickies</div>
     <div class="ui-widget-content" align="center">
         [% PROCESS shared/filter.tt %]
-        [% PROCESS shared/pagination.tt page_data=pagination %]
+        <p>[% PROCESS shared/pagination.tt page_data=pagination %]</p>
     </div>
-    <div class="ui-widget-content">
-        <ul class="sticky_notes">
+    <div class="ui-widget-content sticky_notes">
+        <ul>
         [% FOREACH sticky in items %]
         <li>
             <div>
-                <span class="ui-icon ui-icon-circle-close" onClick="$('#delete-sticky-[% sticky.id %]').submit()" style="float:right">
+                <i class="fa fa-trash-o" onClick="$('#delete-sticky-[% sticky.id %]').submit()" style="float:right">
                     <form id="delete-sticky-[% sticky.id %]" method="get" action="/stickies/[% sticky.id %]/delete"></form>
-                </span>
+                </i>
                 <h2 style="text-align:center">
                     [% sticky.created_date.format("%b %d, %Y %l:%M%P") %]
                 </h2>

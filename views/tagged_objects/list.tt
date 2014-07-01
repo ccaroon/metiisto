@@ -1,23 +1,25 @@
 <div class="ui-widget">
     <div class="ui-widget-header">Tag Search: [% tag_name %] - [% count %] found.</div>
-    <div style="float:left;width:70%">
-        [% PROCESS home/entries.tt
-            header="Entries"
-            entries=entry
-            date_format='%b %d, %Y'
-        %]
+    <div class="ui-widget-content">
+        <div class="pure-g">
+            <div class="pure-u-3-4">
+                [% PROCESS home/entries.tt
+                    header="Entries"
+                    entries=entry
+                    date_format='%b %d, %Y'
+                %]
+            </div>
+            <div class="pure-u-1-4">
+
+                [% PROCESS tagged_objects/tickets.tt %]
+
+                [% PROCESS tagged_objects/todos.tt todos=todo %]
+
+                [% PROCESS tagged_objects/lists.tt lists=list %]
+
+                [% PROCESS home/notes.tt notes=note title="Notes" %]
+
+            </div>
+        </div>
     </div>
-    
-    <div style="float:left; width:30%">
-
-        [% PROCESS tagged_objects/tickets.tt %]
-
-        [% PROCESS tagged_objects/todos.tt todos=todo %]
-
-        [% PROCESS tagged_objects/lists.tt lists=list %]
-
-        [% PROCESS home/notes.tt notes=note title="Notes" %]
-
-    </div>
-
 </div>

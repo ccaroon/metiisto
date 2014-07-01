@@ -11,7 +11,7 @@ use SQL::Abstract;
 
 my %LIST;
 use constant LIST_DEFAULTS => {
-    entries_per_page   => 15,
+    entries_per_page   => 18,
     filter_fields      => undef,
     order_by           => 'id',
     default_conditions => undef,

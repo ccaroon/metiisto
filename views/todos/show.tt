@@ -1,13 +1,13 @@
 [% USE Markdown %]
 <div class="ui-widget">
     <div class="ui-widget-header">
+        <i id="action-edit-todo" class="fa fa-edit">&nbsp;</i>
         [% IF item.list.id %]
             <a href="/lists">Lists</a> &raquo; <a href="/lists/[% item.list.id %]">[% item.list.name %]</a> &raquo; 
         [% ELSE %]
             <a href="/todos">Todos</a> &raquo; 
         [% END %]
         <span class="[% item.completed ? 'm-strikethru' : '' %]">[% item.title %]</span>
-        <span id="action-edit-todo" class="ui-icon ui-icon-pencil" style="float:left"></span>
         [% PROCESS shared/tags/list.tt tags=item.tags %]
     </div>
     <div class="ui-widget-content">

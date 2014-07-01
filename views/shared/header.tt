@@ -1,39 +1,23 @@
 [% USE Date; %]
-[% IF vars.env != 'production' %]
-<div align="center">
-    <span class="ui-state-error" align="center">Note: You are using the <strong>[% vars.env %]</strong> environment.</span>
-</div>
-[% END %]
-
-<div class="ui-widget">
-    <div class="ui-widget-content">
-
-        <div style="float:left; width:10%; height:55px; background-color: inherit">
-            <span style="font-weight:bold;line-height:55px;font-size:xx-large;vertical-align: middle">Metiisto</span>
-        </div>
-
-        <div style="float:left; width:73%; height:55px; text-align: center;background-color: inherit">
-            [% PROCESS shared/top_menu.tt %]
-        </div>
-        
-        <div style="float:left;width:4%; height:55px; background-color: inherit; text-align: left">
-            [% IF vars.weather %]
-            <a href="[% vars.weather.url %]"><img src="[% vars.weather.icon %]" title="[% vars.weather.title %]"></a>
-            [% END %]
-        </div>
-
-        <div style="float:left;width:13%; height:55px; background-color: inherit; text-align: left">
-            [% IF session.user %]
-                <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
-            [% ELSE %]
-                <a href="/users/login">Log In</a>
-            [% END %]
-            <div id="header_weather">
+<div class="pure-g" style="font-size: 1.1em">
+    <div class="pure-u-4-5">[% PROCESS shared/top_menu.tt %]</div>
+    <div class="pure-u-1-5">
+        <div class="ui-widget">
+            <div class="ui-widget-header">
+                [% IF session.user %]
+                    <a href="/users/[% session.user.id %]/edit">[% session.user.name %]</a>
+                [% ELSE %]
+                    <a href="/users/login">Log In</a>
+                [% END %]
+            </div>
+            <div class="ui-widget-content">
                 [% Date.format(date.now, "%a - %b %d, %Y") %]
                 [% IF vars.weather %]
-                <br>
-                [% vars.weather.text %] &#x2014; [% vars.weather.temp %]&#xb0; F
-                [% END %]                
+                    | <span title="[% vars.weather.text %]">
+                        <i class="wi [% vars.weather.wi_icon %]"></i>
+                        [% vars.weather.temp %]&#xb0;
+                      </span>
+                [% END %]
             </div>
         </div>
     </div>

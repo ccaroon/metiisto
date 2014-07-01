@@ -1,9 +1,9 @@
 <div class="ui-widget">
     <div class="ui-widget-header">Todos</div>
     <div class="ui-widget-content">
-        <table width="100%" class="ui-widget-content">
+        <table width="100%" class="pure-table pure-table-striped">
         [% FOREACH todo IN todos %]
-            <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
+            <tr>
                 <td>
                     <a href="/todos/[% todo.id %]" title="[% PROCESS shared/tags/list.tt tags=todo.tags is_tooltip=1 %]" style="[% todo.completed ? 'text-decoration: line-through' : '' %]">[% todo.title %]</a>
                 </td>

@@ -6,9 +6,15 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="/bower_components/codemirror/lib/codemirror.css">
-        <link href="/css/themes/[% session.user ? session.user.preferences('theme') : 'smoothness' %]/theme.css" rel="stylesheet" type="text/css" />
-        <link href="/css/metiisto.css" rel="stylesheet" type="text/css" />
+        <link href="/bower_components/jquery-ui/themes/[% session.user ? session.user.preferences('theme') : 'smoothness' %]/jquery-ui.min.css" rel="stylesheet" type="text/css" />
         <link href="/bower_components/tag-it/css/jquery.tagit.css" rel="stylesheet" type="text/css" />
+        <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="/bower_components/pure/pure-min.css" rel="stylesheet" type="text/css" />
+
+        <link href="/weather-icons/css/weather-icons.min.css" rel="stylesheet" type="text/css" />
+
+        <link href="/css/metiisto.css" rel="stylesheet" type="text/css" />
+        <link href="/css/sticky_note.css" rel="stylesheet" type="text/css" />
 
         <!-- JavaScript -->
         <script src='/javascripts/ejs_production.js'></script>
@@ -23,20 +29,24 @@
         <script src="/bower_components/codemirror/addon/selection/active-line.js"></script>
     </head>
     <body>
-        <!-- Header (includes Top Menu) -->
+
+        <div class="m-container">
         [% PROCESS shared/header.tt %]
-
-        <!-- Side Menu -->
-        <div id="layout_side_menu" style="clear:both; float:left; width:10%;">
-            [% PROCESS shared/side_menu.tt %]
         </div>
 
-        <!-- Main Content -->
-        <div id="layout_content" style="float:left; width:90%; background-color:white">
-            [% content %]
+<!--         <div class="pure-g">
+            <div class="pure-u-1-12">
+                <div style="padding: 5px 0px 5px 25px;">
+                    [% PROCESS shared/side_menu.tt %]
+                </div>
+            </div>
+            <div class="pure-u-11-12"> -->
+                <div class="m-container">
+                [% content %]
+                </div>
+<!--             </div>
         </div>
-    
-        <!-- Footer -->
+ -->
         <div id="layout_footer" >[% PROCESS shared/footer.tt %]</div>
     </body>
 </html>

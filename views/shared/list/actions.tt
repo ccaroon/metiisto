@@ -1,11 +1,11 @@
 [% UNLESS no_view %]
-<a class="action-view" href="/[% controller %]/[% item_id %]">View</a>
+<a class="action-view" href="/[% controller %]/[% item_id %]"><i class="fa fa-search"></i></a>
 [% END %]
 [% UNLESS no_edit %]
-<a class="action-edit" href="/[% controller %]/[% item_id %]/edit">Edit</a>
+<a class="action-edit" href="/[% controller %]/[% item_id %]/edit"><i class="fa fa-edit"></i></a>
 [% END %]
 [% UNLESS no_delete %]
-<button class="action-delete" value="[% item_id %]" >Delete</button>
+<button class="action-delete" value="[% item_id %]" ><i class="fa fa-trash-o"></i></button>
 <div id="dialog-confirm-delete-[% item_id %]" class="dialog-confirm-delete" title=" Confirm Delete" align="center">
     <p>
         <strong>[% delete_message | html %]</strong>

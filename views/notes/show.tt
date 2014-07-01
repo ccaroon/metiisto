@@ -1,15 +1,15 @@
 [% USE Markdown %]
 <div class="ui-widget">
     <div class="ui-widget-header">
-        Notes &raquo; <span class="[% note.deleted_date ? 'm-strikethru' : '' %]">[% note.title %]</span>
-        <span id="action-edit-note" class="ui-icon ui-icon-pencil" style="float:left"></span>
+        <i id="action-edit-note" class="fa fa-edit">&nbsp;</i>
         [% IF note.is_encrypted %]
-            [% icon = 'locked'%]
+            [% icon = 'lock'%]
         [% ELSE %]
-            [% icon = 'unlocked'%]
+            [% icon = 'unlock'%]
         [% END %]
-        <span class="ui-icon ui-icon-[% icon %]" style="float:left" id="note-[% note.id %]"></span>
-        <span class="ui-icon ui-icon-print" style="float:left" id="action-print-note"/></span>
+        <i class="fa fa-[% icon %]" id="note-[% note.id %]">&nbsp;</i>
+        <i class="fa fa-print" id="action-print-note"/>&nbsp;</i>
+        Notes &raquo; <span class="[% note.deleted_date ? 'm-strikethru' : '' %]">[% note.title %]</span>
         [% PROCESS shared/tags/list.tt tags=note.tags %]
     </div>
     <div class="ui-widget-content markdown">

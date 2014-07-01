@@ -14,3 +14,4 @@ Makefile$
 ^cover_db
 ^.*\.log
 ^.*\.swp$
+.DS_Store

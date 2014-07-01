@@ -1,7 +1,7 @@
 <div class="ui-widget">
     <div class="ui-widget-header">
+        <i id="action-edit-countdown" class="fa fa-edit">&nbsp;</i>
         Countdowns &raquo; [% item.title %]
-        <span id="action-edit-countdown" class="ui-icon ui-icon-pencil" style="float:left"></span>
     </div>
     <div class="ui-widget-content">
         <p>

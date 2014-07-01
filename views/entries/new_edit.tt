@@ -3,42 +3,42 @@
         [% vars.action | ucfirst %] Entry
     </div>
     <div class="ui-widget-content">
-        <form method="post" action="/entries[% entry.id ? '/' _ entry.id : '' %]">
+        <form class="pure-form pure-form-aligned" method="post" action="/entries[% entry.id ? '/' _ entry.id : '' %]">
 
-            <div class="form_field" >
-                <label class="left_label" for="entry_task_date">Task Date:</label>
+            <div class="pure-control-group" >
+                <label for="entry_task_date">Task Date:</label>
                 <input type="text" id="entry_task_date" name="entry.task_date" value="[% entry.task_date.format_db('date_only',1) %]">                
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="entry_ticket_num">Ticket Number:</label>
+            <div class="pure-control-group">
+                <label for="entry_ticket_num">Ticket Number:</label>
                 <input type="text" id="entry_ticket_num" name="entry.ticket_num" value="[% entry.ticket_num %]" autofocus>
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="entry_category">Category:</label>
-                <div id="entry_category">
+            <div class="pure-control-group">
+                <label for="entry_category">Category:</label>
+                <span id="entry_category">
                     [% FOREACH cat IN categories %]
                         [% checked = entry.category == cat ? "checked" : "" %]
                         <input type="radio" id="[% cat %]" name="entry.category" [% checked %] value="[% cat %]"/><label for="[% cat %]">[% cat %]</label>
                     [% END %]
-                </div>
+                </span>
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="entry_subject">Subject:</label>
+            <div class="pure-control-group">
+                <label for="entry_subject">Subject:</label>
                 <input type="text" name="entry.subject" value="[% entry.subject | html %]" size="80" id="entry_subject" autocomplete="off">
             </div>
 
-            <div class="form_field">
-                <label class="left_label">Tags:</label>
+            <div class="pure-control-group">
+                <label for="tags" style="float:left;">Tags:</label>
                 [% PROCESS shared/tags/widget.tt object_tags=entry.tags %]
             </div>
 
             [% ts = entry.time_spent.split(':') %]
             [% IF session.user.preferences('track_time') == 'true' %]
-                <div class="form_field">
-                    <label class="left_label" for="entry_time_spent_hours">Time Spent:</label>
+                <div class="pure-control-group">
+                    <label for="entry_time_spent_hours">Time Spent:</label>
                     <select id="entry_time_spent_hours" name="entry.time_spent.hours">
                         [% FOREACH hour IN [0..8] %]
                             <option [% hour == (ts.0+0) ? 'selected' : '' %] value="[% hour %]">[% hour %]</option>
@@ -55,12 +55,12 @@
                 <input type="hidden" name="entry.time_spent.minutes" value="[% (ts.1+0) %]">
             [% END %]
             
-            <div class="form_field">
-                <label class="left_label" for="entry_description">Description:</label>
+            <div class="pure-control-group">
+                <label for="entry_description" style="float:left;">Description:</label>
                 <textarea id="entry_description" name="entry.description">[% entry.description %]</textarea>
             </div>
 
-            <div class="form_field">
+            <div class="pure-controls">
                 <input id="button-save" type="submit" value="Save">
                 [% IF entry.id %]
                 <a id="button-view-entry" href="/entries/[% entry.id %]">View</a>

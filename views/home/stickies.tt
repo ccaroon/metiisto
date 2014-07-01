@@ -3,16 +3,21 @@
         <a href="/stickies">Stickies</a>
     </div>
     <div class="ui-widget-content">
-        <div style="width: 75%; margin: 0 auto">
-            <form method="post" action="/stickies">
-                <div class="form_field">
-                    <textarea cols="40" id="sticky_body" name="sticky.body"></textarea>
-                    <button type="submit">Add</button>
-                </div>
-            </form>
-            <form class="ui-widget" name="filter" action="/stickies" method="get">
-                Search: <input type="text" name="filter_text" size="5">
-            </form>
-        </div>
+        <form id="sticky_note_form" class="pure-form" method="post" action="/stickies">
+            <textarea cols="19" rows="8" id="sticky_body" name="sticky.body"></textarea>
+        </form>
+        <form class="pure-form" method="get" action="/stickies">
+            <button type="button" onClick="add_sticky()">Add</button>
+            <i class="fa fa-search"></i>
+            <input type="text" name="filter_text" size="5" class="pure-input-rounded">
+        </form>
     </div>
 </div>
+
+<script>
+    $('button').button();
+
+    function add_sticky () {
+        $('#sticky_note_form').submit();
+    }
+</script>

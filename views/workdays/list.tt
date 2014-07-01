@@ -4,34 +4,36 @@
 <div class="ui-widget">
     <div class="ui-widget-header">Work Days</div>
     <div class="ui-widget-content">
-        <table width="100%" class="ui-widget-content">
-            <tr class="ui-widget-header" >
-                <th>Date</th>
-                <th>In</th>
-                <th>Out</th>
-                <th>Lunch</th>
-                <th>Hours</th>
-                <th>Day Type</th>
-                <th>Note</th>
-                <th>Actions</th>
-            </tr>
+        <table width="100%" class="pure-table pure-table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>In</th>
+                    <th>Out</th>
+                    <th>Lunch</th>
+                    <th>Hours</th>
+                    <th>Day Type</th>
+                    <th>Note</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
             [% grand_total_hours = 0 %]
             [% FOREACH day in days %]
             [% grand_total_hours = grand_total_hours + day.total_hours %]
             [% is_today = day.work_date.format("%D") == today.format("%D") ? 1 : 0 %]
-            <tr class="[% cycle('ui-state-default m-not-bold','NONE') %] [% is_today ? 'm-bold' : '' %]">
+            <tr class="[% is_today ? 'm-bold' : '' %]">
                 <td width="20%">
                     [% IF is_today %]
-                        <span class="ui-icon ui-icon-calendar" style="float:left;"></span>
-                        <span class="ui-icon ui-icon-calendar" style="float:right;"></span>
+                        <i class="fa fa-calendar-o" style="float:left;">&nbsp;</i>
+                        <i class="fa fa-calendar-o" style="float:right;"></i>
                     [% END %]
                     [% day.work_date.format("%A (%b %d, %Y)") %]
                 </td>
                 <!-- Time In -->
                 <td align="center">
                     <div id="view-time_in-[% day.id %]">
-                        <span class="ui-icon ui-icon-pencil" style="float:right"></span>
                         [% day.time_in.format("%I:%M %P") %]
+                        <i class="fa fa-edit"></i>
                     </div>
                      <div id="edit-time_in-[% day.id %]" style="display:none">
                         <form method="POST" action="/workdays/[% day.id %]">
@@ -49,8 +51,8 @@
                 <!-- Time Out -->
                 <td align="center">
                     <div id="view-time_out-[% day.id %]">
-                        <span class="ui-icon ui-icon-pencil" style="float:right"></span>
                         [% day.time_out.format("%I:%M %P") %]
+                        <i class="fa fa-edit"></i>
                     </div>
                      <div id="edit-time_out-[% day.id %]"  style="display:none">
                         <form method="POST" action="/workdays/[% day.id %]">
@@ -68,8 +70,8 @@
                 <!-- Time Lunch -->
                 <td align="center">
                     <div id="view-time_lunch-[% day.id %]">
-                        <span class="ui-icon ui-icon-pencil" style="float:right"></span>
                         [% day.time_lunch %]
+                        <i class="fa fa-edit"></i>
                     </div>
                      <div id="edit-time_lunch-[% day.id %]" style="display:none">
                         <form method="POST" action="/workdays/[% day.id %]">
@@ -86,10 +88,10 @@
                 </td>
                 <td align="center">[% day.total_hours %]</td>
                 <td width="20%" align="center">
-                    <button id="button-regular-[% day.id %]" class="button-regular-day" value="/workdays/[% day.id %]/set_day_type?type=regular;date=[% params.date %]">Regular</button>
-                    <button id="button-holiday-[% day.id %]" class="button-holiday-day" value="/workdays/[% day.id %]/set_day_type?type=holiday;date=[% params.date %]">Holiday</button>
-                    <button id="button-vacation-[% day.id %]" class="button-vacation-day" value="/workdays/[% day.id %]/set_day_type?type=vacation;date=[% params.date %]">Vacation</button>
-                    <button id="button-sick-[% day.id %]" class="button-sick-day" value="/workdays/[% day.id %]/set_day_type?type=sick;date=[% params.date %]">Sick</button>
+                    <button id="button-regular-[% day.id %]" class="button-regular-day" value="/workdays/[% day.id %]/set_day_type?type=regular;date=[% params.date %]"><i class="fa fa-clock-o"></i></button>
+                    <button id="button-holiday-[% day.id %]" class="button-holiday-day" value="/workdays/[% day.id %]/set_day_type?type=holiday;date=[% params.date %]"><i class="fa fa-flag"></i></button>
+                    <button id="button-vacation-[% day.id %]" class="button-vacation-day" value="/workdays/[% day.id %]/set_day_type?type=vacation;date=[% params.date %]"><i class="fa fa-plane"></i></button>
+                    <button id="button-sick-[% day.id %]" class="button-sick-day" value="/workdays/[% day.id %]/set_day_type?type=sick;date=[% params.date %]"><i class="fa fa-ambulance"></i></button>
                     [% IF day.is_holiday %]
                     <script>
                         $(function () {
@@ -117,7 +119,7 @@
                     [% END %]
                 </td>
                 <td align="center" width="20%">
-                    <span id="action-note-[% day.id %]" class="ui-icon ui-icon-pencil" style="float:right"></span>                    
+                    <i id="action-note-[% day.id %]" class="fa fa-edit" style="float:right;"></i>
                     <div id="view-note-[% day.id %]">
                         [% day.note %]
                     </div>
@@ -171,33 +173,10 @@
         window.location = url;
     }
     
-    $('.button-regular-day').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-clock',
-        }
-    }).click(set_day_type);
-
-    $('.button-holiday-day').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-flag',
-        }
-    }).click(set_day_type);
-    
-    $('.button-vacation-day').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-suitcase',
-        }
-    }).click(set_day_type);
-    
-    $('.button-sick-day').button({
-        text: false,
-        icons: {
-            primary: 'ui-icon-clipboard',
-        }
-    }).click(set_day_type);
+    $('.button-regular-day').button({ text: false }).click(set_day_type);
+    $('.button-holiday-day').button({ text: false }).click(set_day_type);
+    $('.button-vacation-day').button({ text: false }).click(set_day_type);
+    $('.button-sick-day').button({ text: false }).click(set_day_type);
 
     [% PROCESS shared/list/actions_js.tt %]
 

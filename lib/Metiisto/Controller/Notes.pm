@@ -9,7 +9,7 @@ use SQL::Abstract;
 use Metiisto::Util::DateTime;
 
 use constant ENCRYPTION_KEY => 'Hello World!';
-use constant NOTES_PER_PAGE => 15;
+use constant NOTES_PER_PAGE => 18;
 
 use base 'Metiisto::Controller::Base';
 
@@ -110,6 +110,9 @@ sub show
     my %args = @_;
 
     my $note = Metiisto::Note->retrieve($args{id});
+    if ($note->is_encrypted()) {
+        $note->decrypt(key => ENCRYPTION_KEY);
+    }
     my $print = params->{print};
     
     my $out;
@@ -187,9 +190,9 @@ sub encrypt
     my $this = shift;
     my %args = @_;
 
-    my $note = Metiisto::Note->retrieve(id => $args{id});
-    $note->encrypt(key => ENCRYPTION_KEY);
-    $note->update();
+    # my $note = Metiisto::Note->retrieve(id => $args{id});
+    # $note->encrypt(key => ENCRYPTION_KEY);
+    # $note->update();
 
     return (redirect request->referer);
 }
@@ -199,9 +202,9 @@ sub decrypt
     my $this = shift;
     my %args = @_;
 
-    my $note = Metiisto::Note->retrieve(id => $args{id});
-    $note->decrypt(key => ENCRYPTION_KEY);
-    $note->update();
+    # my $note = Metiisto::Note->retrieve(id => $args{id});
+    # $note->decrypt(key => ENCRYPTION_KEY);
+    # $note->update();
 
     return (redirect request->referer);
 }

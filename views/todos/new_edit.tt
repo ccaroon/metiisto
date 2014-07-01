@@ -4,25 +4,25 @@
     </div>
 
     <div class="ui-widget-content">
-        <form method="post" action="/todos[% item.id ? '/' _ item.id : '' %]">
+        <form class="pure-form pure-form-aligned" method="post" action="/todos[% item.id ? '/' _ item.id : '' %]">
 
-            <div class="form_field">
-                <label class="left_label" for="todo_title">Title:</label>
+            <div class="pure-control-group">
+                <label for="todo_title">Title:</label>
                 <input id="todo_title" type="text" size="42" name="todo.title" value="[% item.title %]" autofocus >
             </div>
             
-            <div class="form_field">
-                <label class="left_label">Tags:</label>
+            <div class="pure-control-group">
+                <label for="tags" style="float:left;">Tags:</label>
                 [% PROCESS shared/tags/widget.tt object_tags=item.tags %]
             </div>
             
-            <div class="form_field">
-                <label class="left_label" for="todo_desc">Description:</label>
+            <div class="pure-control-group">
+                <label for="todo_desc">Description:</label>
                 <textarea id="todo_desc" name="todo.description" rows="10" cols="42" wrap="physical">[% item.description %]</textarea>
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="todo_parent">Parent:</label>
+            <div class="pure-control-group">
+                <label for="todo_parent">Parent:</label>
                 <select id="todo_parent" name="todo.parent_id">
                     <option value="NULL">--None--</option>
                 [% FOREACH li in item.list.incomplete_items %]
@@ -32,22 +32,22 @@
                 </select>
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="todo_priority">Priority:</label>
-                <div id="todo_priority">
+            <div class="pure-control-group">
+                <label for="todo_priority">Priority:</label>
+                <span id="todo_priority">
                     [% FOREACH priority IN [1..10] %]
                     <input id="todo-priority-[% priority %]" type="radio" name="todo.priority" value="[% priority %]" [% item.priority == priority ? 'checked' : '' %]><label for="todo-priority-[% priority %]">[% priority %]</label>
                     [% END %]
-                </div>
+                </span>
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="todo_due_date">Due Date:</label>
+            <div class="pure-control-group">
+                <label for="todo_due_date">Due Date:</label>
                 <input type="text" id="todo_due_date" name="todo.due_date" value="[% item.due_date.format_db('date_only',1) %]">
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="todo_list">List:</label>
+            <div class="pure-control-group">
+                <label for="todo_list">List:</label>
                 [% list_id = item.list.id ? item.list.id : 0 %]
                 <select id="todo_list" name="todo.list_id">
                     <option [% list_id ? '' : 'selected' %] value="NULL">--None--</option>
@@ -57,9 +57,9 @@
                 </select>
             </div>
 
-            <div class="form_field">
+            <div class="pure-control-group">
                 [% matches = item.repeat_duration.match('^(\d)+\s+(.*)$') %]
-                <label class="left_label" for="todo_repeat_count">Repeat:</label>
+                <label for="todo_repeat_count">Repeat:</label>
                 <input id="todo_repeat_count" type="text" name="todo.repeat_duration.count" value="[% matches.0 %]" size="2">
 <!-- '[% matches.0 %]' '[% matches.1 %]' -->
                 <select id="todo_repeat_units" name="todo.repeat_duration.units">
@@ -71,7 +71,7 @@
                 </select>
             </div>
 
-            <div class="form_field">
+            <div class="pure-control-group">
                 [% PROCESS shared/toggle/widget.tt
                     label = "Completed:"
                     id    = "todo_completed"
@@ -79,12 +79,12 @@
                 %]
             </div>
 
-            <p>
+            <div class="pure-controls">
                 <input class="button" type="submit" value="Save">
                 [% IF item.id %]
                 <a class="button" href="/todos/[% item.id %]">View</a>
                 [% END %]
-            </p>
+            </div>
         </form>
     </div>    
 </div>
@@ -93,8 +93,8 @@
 
     [% PROCESS shared/toggle/init.tt
         id         = "todo_completed"
-        icon_on    = "check"
-        icon_off   = "cancel"
+        icon_on    = "check-square-o"
+        icon_off   = "square-o"
         init_value = item.completed
     %]
 

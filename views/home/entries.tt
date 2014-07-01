@@ -5,11 +5,12 @@
 <div class="ui-widget">
     <div class="ui-widget-header">
          <a href="/reports/daily">[% header ? header : "This Week's Entries"%]</a>
+         <a href="/entries/new"><i class="fa fa-plus"></i></a>
     </div>
     <div class="ui-widget-content">
-        <table width="100%" class="ui-widget-content">
+        <table width="100%" class="pure-table pure-table-striped">
             [% FOREACH entry IN entries %]
-                <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
+                <tr>
                     <td>[% entry.task_date.format( date_format ? date_format : '%a' ) %]</td>
                     <td>
                         [% IF entry.category == 'Ticket' %]

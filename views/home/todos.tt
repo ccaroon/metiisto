@@ -1,41 +1,41 @@
 [%
-   USE Markdown;
-   PROCESS util/tools.tt
+    USE Markdown;
+    PROCESS util/tools.tt
 %]
 <div class="ui-widget">
-   <div class="ui-widget-header">
-      <a href="/todos">Todos</a>
-   </div>
-   <div class="ui-widget-content">
-      <table width="100%" class="ui-widget-content">
-         [% FOREACH todo in todos %]
-              <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
-                  <td width="5%" align="center">
-                      <a href="/todos/[% todo.id %]/mark_complete"><span class='ui-icon ui-icon-circlesmall-close'>[% todo.priority %]</span></a>
-                  </td>
-                  <td class="[% todo.overdue ? 'ui-state-error' : '' %]">
-                      <abbr style='border:none' title='([% todo.priority %]) [% todo.due_date ? todo.due_date.format('%b %d, %Y') : 'No Due Date' %]'><a href="/todos/[% todo.id %]">[% todo.title %]</a></abbr>
-                      [% IF todo.due_soon OR todo.overdue %]
-                        <span class="ui-icon ui-icon-alert" style="float:right"></span>
-                      [% END %]
-                      [% IF todo.repeat_duration %]
-                        <span class="ui-icon ui-icon-clock" style="float:right"></span>
-                      [% END %]
-                      [% IF todo.description %]
-                      <span id="action-show-todo-desc-[% todo.id %]" class="ui-icon ui-icon-document" style="float:right"></span>
-                        <script>
-                            $('#action-show-todo-desc-[% todo.id %]').click(function() {
-                                $('#todo-desc-[% todo.id %]').toggle();
-                            });
-                        </script>
-                      [% END %]
-                  </td>
-              </tr>
-              <tr id="todo-desc-[% todo.id %]" style="display:none">
-                  <td>&nbsp;</td>
-                  <td class="markdown">[% todo.description | markdown %]</td>
-              </tr>
-          [% END %]
-      </table>
-   </div>
+    <div class="ui-widget-header">
+       Todos
+       <a href="/todos/new"><i class="fa fa-plus"></i></a>
+    </div>
+    <div class="ui-widget-content">
+        <table width="100%" class="pure-table pure-table-striped">
+        [% FOREACH todo in todos %]
+            <tr>
+              <td width="5%" align="center">
+                  <a href="/todos/[% todo.id %]/mark_complete"><i class='fa fa-square-o'></i></a>
+              </td>
+              <td class="[% todo.overdue ? 'ui-state-error' : '' %]">
+                  <abbr style='border:none' title='([% todo.priority %]) [% todo.due_date ? todo.due_date.format('%b %d, %Y') : 'No Due Date' %]'><a href="/todos/[% todo.id %]">[% todo.title %]</a></abbr>
+                  [% IF todo.due_soon OR todo.overdue %]
+                    <i class="fa fa-exclamation-triangle" style="float:right">&nbsp;</i>
+                  [% END %]
+                  [% IF todo.repeat_duration %]
+                    <i class="fa fa-clock-o" style="float:right">&nbsp;</i>
+                  [% END %]
+                  [% IF todo.description %]
+                  <i id="action-show-todo-desc-[% todo.id %]" class="fa fa-file-text-o" style="float:right">&nbsp;</i>
+                    <script>
+                        $('#action-show-todo-desc-[% todo.id %]').click(function() {
+                            $('#todo-desc-[% todo.id %]').toggle();
+                        });
+                    </script>
+                  [% END %]
+                  <div id="todo-desc-[% todo.id %]" style="display:none">
+                    <span class="markdown">[% todo.description | markdown %]</span>
+                  </div>
+              </td>
+            </tr>
+        [% END %]
+        </table>
+    </div>
 </div>

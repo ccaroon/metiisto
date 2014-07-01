@@ -3,25 +3,25 @@
         [% vars.action | ucfirst %] Countdown
     </div>
     <div class="ui-widget-content">
-        <form method="post" action="/countdowns[% item.id ? '/' _ item.id : '' %]">
+        <form class="pure-form pure-form-aligned" method="post" action="/countdowns[% item.id ? '/' _ item.id : '' %]">
             
-            <div class="form_field">
-                <label class="left_label" for="countdown_title">Title:</label>
+            <div class="pure-control-group">
+                <label for="countdown_title">Title:</label>
                 <input type="text" id="countdown_title" name="countdown.title" value="[% item.title %]" autofocus >
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="countdown_target_date">Target Date:</label>
+            <div class="pure-control-group">
+                <label for="countdown_target_date">Target Date:</label>
                 <input type="text" id="countdown_target_date" name="countdown.target_date" value="[% item.target_date.format_db('date_only',1) %]" size="10">
             </div>
 
-            <div class="form_field">
-                <label class="left_label" for="countdown_target_time">Target Time:</label>
+            <div class="pure-control-group">
+                <label for="countdown_target_time">Target Time:</label>
                 <input type="text" id="countdown_target_time" name="countdown.target_time" value="[% item.target_date.format('%I:%M%P') %]" size="10">
             </div>
             
-            <div class="form_field">
-                <label class="left_label" for="countdown_units">Units:</label>
+            <div class="pure-control-group">
+                <label for="countdown_units" style="float:left;">Units:</label>
                 <div id="countdown_units">
                     [% FOREACH unit IN units %]
                         [% checked = item.units == unit ? "checked" : "" %]
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="form_field">
+            <div class="pure-control-group">
                 [% PROCESS shared/toggle/widget.tt
                     label = "Realtime:"
                     id    = "countdown_is_real_time"
@@ -38,7 +38,7 @@
                 %]
             </div>
 
-            <div class="form_field">
+            <div class="pure-control-group">
                 [% PROCESS shared/toggle/widget.tt
                     label = "On Homepage:"
                     id    = "countdown_on_homepage"
@@ -46,7 +46,7 @@
                 %]
             </div>
 
-            <div class="form_field">
+            <div class="pure-controls">
                 <input class="button" type="submit" value="Save">
                 [% IF item.id %]
                 <a class="button" href="/countdowns/[% item.id %]">View</a>
@@ -61,15 +61,15 @@
 
     [% PROCESS shared/toggle/init.tt
         id         = "countdown_on_homepage"
-        icon_on    = "check"
-        icon_off   = "cancel"
+        icon_on    = "check-square-o"
+        icon_off   = "square-o"
         init_value = item.on_homepage
     %]
     
     [% PROCESS shared/toggle/init.tt
         id         = "countdown_is_real_time"
-        icon_on    = "check"
-        icon_off   = "cancel"
+        icon_on    = "check-square-o"
+        icon_off   = "square-o"
         init_value = item.is_real_time
     %]
 

@@ -1,15 +1,16 @@
 <div class="ui-widget">
     <div class="ui-widget-header">
         [% title %]
+        <a href="/notes/new"><i class="fa fa-plus"></i></a>
     </div>
     <div class="ui-widget-content">
-        <table width="100%" class="ui-widget-content">
+        <table width="100%" class="pure-table pure-table-striped">
         [% FOREACH note IN notes %]
-            <tr class="[% cycle('ui-state-default m-not-bold','NONE') %]">
+            <tr>
                 <td width="1%">
                     [% note.is_encrypted ?
-                      '<span class="ui-icon ui-icon-locked"></span>' :
-                      '<span class="ui-icon ui-icon-unlocked"></span>'
+                      '<i class="fa fa-lock"></i>' :
+                      '<i class="fa fa-unlock"></i>'
                     %]
                 </td>
                 <td>

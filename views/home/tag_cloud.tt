@@ -1,0 +1,12 @@
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        <a href="/tags">Tags</a>
+    </div>
+    <div class="ui-widget-content">
+        [% PROCESS tags/cloud.tt %]
+        <form class="pure-form" name="tag_search" action="/tagged_objects" method="get">
+            <a href="/tags"><i class="fa fa-tag"></i></a>
+            <input type="text" name="tag" id="tag_input" class="pure-input-rounded" value="" size="7" autocomplete="off">
+        </form>        
+    </div>
+</div>

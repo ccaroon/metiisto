@@ -1,13 +1,21 @@
-<span id="top_menu">
-    <a class="top_menu_item" href="/home"><img src="/images/icons/home.png" border="0"></a>
-    <a class="top_menu_item" href="/entries"><img src="/images/icons/entries.png" border="0"></a>
-    <a class="top_menu_item" href="/workdays"><img src="/images/icons/hours.png" border="0"></a>
-    <a class="top_menu_item" href="/lists"><img src="/images/icons/lists.png" border="0"></a>
-    <a class="top_menu_item" href="/todos"><img src="/images/icons/todos.png" border="0"></a>
-    <a class="top_menu_item" href="/notes"><img src="/images/icons/notes.png" border="0"></a>
-    <a class="top_menu_item" href="/countdowns"><img src="/images/icons/countdowns.png" border="0"></a>
-    <a class="top_menu_item" href="/reports/weekly"><img src="/images/icons/reports.png" border="0"></a>
-</span>
-<script>
-	$('.top_menu_item').button();
-</script>
+<div class="pure-menu pure-menu-open pure-menu-horizontal" style="font-size:1.4em">
+    <a href="/home" class="pure-menu-heading" style="padding: 0px 25px 0px 0px">
+        [% IF vars.env != 'production' %]
+        <i class="fa fa-warning" style="color:red;"></i>
+        [% END %]
+        Metiisto
+        [% IF vars.env != 'production' %]
+        <i class="fa fa-warning" style="color:red;"></i>
+        [% END %]
+    </a>
+    <ul>
+        <li><a style="padding: 5px 10px 5px 10px" href="/home"><i class="fa fa-home fa-1x"></i>Home</a></li>
+        <li><a style="padding: 5px 10px 5px 10px" href="/entries"><i class="fa fa-book fa-1x"></i>Entries</a></li>
+        <li><a style="padding: 5px 10px 5px 10px" href="/workdays"><i class="fa fa-clock-o fa-1x"></i>Hours</a></li>
+        <li><a style="padding: 5px 10px 5px 10px" href="/lists"><i class="fa fa-list-alt fa-1x"></i>Lists</a></li>
+        <li><a style="padding: 5px 10px 5px 10px" href="/todos"><i class="fa fa-lightbulb-o fa-1x"></i>Todos</a></li>
+        <li><a style="padding: 5px 10px 5px 10px" href="/notes"><i class="fa fa-file-text-o fa-1x"></i>Notes</a></li>
+        <li><a style="padding: 5px 10px 5px 10px" href="/countdowns"><i class="fa fa-calendar fa-1x"></i>Countdowns</a></li>
+        <li><a style="padding: 5px 5px 5px 5px" href="/reports/weekly"><i class="fa fa-bar-chart-o fa-1x"></i>Report</a></li>
+    </ul>
+</div>

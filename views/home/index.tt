@@ -1,13 +1,13 @@
 [% PROCESS util/format.tt %]
-<div class="ui-widget">
+<div class="pure-g">
 
-    <div>[% PROCESS home/tickets.tt %]</div>
+    <div class="pure-u-1-1">[% PROCESS home/tickets.tt %]</div>
 
-    <div style="float:left;width:70%">
+    <div class="pure-u-3-4">
         [% PROCESS home/entries.tt %]
     </div>
 
-    <div style="float:left; width:30%">
+    <div class="pure-u-1-4">
         [% PROCESS home/current_release.tt %]
         
         [% PROCESS home/todos.tt %]
@@ -16,16 +16,15 @@
         
         [% PROCESS home/notes.tt notes=favorite_notes title="Favorite Notes"%]
 
-        [% PROCESS home/stickies.tt %]
+        <div class="pure-g">
+            <div class="pure-u-1-2">[% PROCESS home/stickies.tt %]</div>
+            <div class="pure-u-1-2">[% PROCESS home/tag_cloud.tt %]</div>
+        </div>
     </div>
-
-    <!-- <div style="clear:both;float:left;width:70%">
-        <p>[% PROCESS tags/cloud.tt %]</p>
-    </div>
-    -->
+   
     
     <!-- Countdowns -->
-    <div id="home_countdowns">
+    <div id="home_countdowns" class="pure-u-1-1">
         [% PROCESS home/countdowns.tt %]
     </div>
 

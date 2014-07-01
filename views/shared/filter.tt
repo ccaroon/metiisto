@@ -1,3 +1,7 @@
+<form class="pure-form" name="filter" action="/[% vars.controller %]" method="get">
+    <i class="fa fa-search">&nbsp;</i><input type="text" name="filter_text" value="[% params.filter_text %]" class="pure-input-rounded">
+    <button type="button" onClick="document.filter.filter_text.value=null;submit();">Clear</button>
+</form>
 <script language="javascript">
     $(document).keypress(
         function(e)
@@ -9,8 +13,6 @@
             }
         }
     );
+
+    $('button').button();
 </script>
-<form class="ui-widget" name="filter" action="/[% vars.controller %]" method="get">
-    Filter: <input type="text" name="filter_text" value="[% params.filter_text %]">
-    <input type="button" value="Clear" onClick="document.filter.filter_text.value=null;submit();">
-</form>

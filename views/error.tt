@@ -1,17 +1,13 @@
 <div class="ui-widget">
     <div class="ui-widget-header">
-        <span class="ui-icon ui-icon-alert" style="float:left"></span>
+        <i class="fa fa-alert"></i>
         [% title ? title : vars.controller _ " Error" %]
     </div>
     <div class="ui-widget-content ui-state-error">
         <p>[% message %]</p>
     </div>
-    <p><a id="error-back-button" href="[% request.referer %]">Back</a></p>
+    <p><a id="error-back-button" href="[% request.referer %]"><i class="fa fa-arrow-left"></i></a></p>
 </div>
 <script>
-    $('#error-back-button').button({
-        icons: {
-            primary: 'ui-icon-arrowreturnthick-1-w'
-        }
-    });
+    $('#error-back-button').button();
 </script>

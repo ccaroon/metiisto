@@ -8,12 +8,30 @@ use Metiisto::User;
 use base 'Metiisto::Base';
 
 use constant THEMES => [
+    'black-tie',
+    'blitzer',
     'cupertino',
+    'dark-hive',
+    'dot-luv',
+    'eggplant',
+    'excite-bike',
     'flick',
+    'hot-sneaks',
+    'humanity',
+    'le-frog',
+    'mint-choc',
+    'overcast',
     'pepper-grinder',
     'redmond',
-    'simply-red',
     'smoothness',
+    'south-street',
+    'start',
+    'sunny',
+    'swanky-purse',
+    'trontastic',
+    'ui-darkness',
+    'ui-lightness',
+    'vader'
 ];
 
 use constant DEFAULT_PREFS => [
