@@ -5,11 +5,12 @@ use strict;
 use LWP::Simple;
 use XML::Simple;
 
-use constant CACHE_TTL => 30 * 60;
+use constant CACHE_TTL => 15 * 60;
 use constant WI_ICON_MAP => {
     "Cloudy"        => 'wi-cloudy',
     "Mostly Cloudy" => 'wi-day-cloudy',
-    "Partly Cloudy" => 'wi-day-sunny-overcast'
+    "Partly Cloudy" => 'wi-day-sunny-overcast',
+    "Fair"          => 'wi-day-sunny'
 };
 ################################################################################
 sub current
