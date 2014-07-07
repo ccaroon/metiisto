@@ -1,28 +1,19 @@
 
-.sticky_notes ul li {
-  list-style:none;
-}
-
 .sticky_notes ul {
   overflow:hidden;
   padding:3em;
 }
 
 .sticky_notes ul li {
+  list-style:none;
   margin:1em;
   float:left;
-}
-
-.sticky_notes ul li h2 {
-  font-size:140%;
-  font-weight:bold;
-  padding-bottom:10px;
 }
 
 .sticky_notes ul li div {
   text-decoration:none;
   color:#000;
-  background:#FFBBBB;
+  background:#D0E068;
   display:block;
   height:15em;
   width:15em;
@@ -38,13 +29,25 @@
   -moz-transform:rotate(-6deg);
 }
 
+.sticky_notes ul li div h2 {
+  font-family:Chalkboard, 'Comic Sans', sans-serif;
+  font-size:140%;
+  font-weight:bold;
+  padding-bottom:10px;
+  text-align:center;
+}
+
+.sticky_notes ul li div pre {
+  font-family:Chalkboard, 'Comic Sans', sans-serif;
+}
+
 .sticky_notes ul li:nth-child(even) div {
   -o-transform:rotate(4deg);
   -webkit-transform:rotate(4deg);
   -moz-transform:rotate(4deg);
   position:relative;
   top:5px;
-  background:#FF8888;
+  background:#AE86BC;
 }
 
 .sticky_notes ul li:nth-child(3n) div {
@@ -53,7 +56,7 @@
   -moz-transform:rotate(-3deg);
   position:relative;
   top:-5px;
-  background:#FFFFFF;
+  background:#EE5E9F;
 }
 
 .sticky_notes ul li:nth-child(5n) div {
@@ -62,4 +65,5 @@
   -moz-transform:rotate(5deg);
   position:relative;
   top:-10px;
+  background:#FCF0AD;
 }

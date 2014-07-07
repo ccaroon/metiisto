@@ -16,10 +16,8 @@
                 <i class="fa fa-trash-o" onClick="$('#delete-sticky-[% sticky.id %]').submit()" style="float:right">
                     <form id="delete-sticky-[% sticky.id %]" method="get" action="/stickies/[% sticky.id %]/delete"></form>
                 </i>
-                <h2 style="text-align:center">
-                    [% sticky.created_date.format("%b %d, %Y %l:%M%P") %]
-                </h2>
-                <p>[% sticky.body %]</p>
+                <h2>[% sticky.created_date.format("%b %d, %Y %l:%M%P") %]</h2>
+                <p><pre>[% sticky.body %]</pre></p>
             </div>
         </li>
         [% END %]
