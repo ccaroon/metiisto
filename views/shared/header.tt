@@ -15,8 +15,8 @@
                 [% IF vars.weather %]
                     | <span title="[% vars.weather.text %]">
                         <i class="wi [% vars.weather.wi_icon %]"></i>
-                        [% vars.weather.temp %]&#xb0;
-                      </span>
+                        <a href="[% vars.weather.url %]">[% vars.weather.temp %]&#xb0;</a>
+                    </span>
                 [% END %]
             </div>
         </div>

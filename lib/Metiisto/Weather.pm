@@ -7,12 +7,14 @@ use JSON::XS;
 
 use constant CACHE_TTL => 5 * 60;
 use constant WI_ICON_MAP => {
-    "Cloudy"        => 'wi-cloudy',
-    "Mostly Cloudy" => 'wi-day-cloudy',
-    "Partly Cloudy" => 'wi-day-sunny-overcast',
-    "Fair"          => 'wi-day-sunny',
-    "Rain"          => 'wi-rain',
-    "Overcast"      => 'wi-cloudy'
+    "Cloudy"           => 'wi-cloudy',
+    "Mostly Cloudy"    => 'wi-day-cloudy',
+    "Partly Cloudy"    => 'wi-day-sunny-overcast',
+    "Scattered Clouds" => 'wi-day-sunny-overcast',
+    "Fair"             => 'wi-day-sunny',
+    "Rain"             => 'wi-rain',
+    "Overcast"         => 'wi-cloudy',
+    "Thunderstorm"     => 'wi-thunderstorm'
 };
 ################################################################################
 sub current
@@ -42,7 +44,8 @@ sub current
         %weather = (
             wi_icon => $class->text2wi_icon($data->{weather}),
             text    => $data->{weather},
-            temp    => $data->{temp_f}
+            temp    => $data->{temp_f},
+            url     => $data->{ob_url}
         );
     }
 
@@ -67,7 +70,7 @@ sub _fetch_data
 
     my $data = undef;
     # TODO: make API key a preference
-    my $json = get("http://api.wunderground.com/api/8f4b19c7f8963947/conditions/q/NC/$args{location}.json");
+    my $json = get("http://api.wunderground.com/api/8f4b19c7f8963947/conditions/q/$args{location}.json");
     if ($json)
     {
         $data = decode_json $json;
