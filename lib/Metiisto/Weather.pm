@@ -7,14 +7,15 @@ use JSON::XS;
 
 use constant CACHE_TTL => 5 * 60;
 use constant WI_ICON_MAP => {
-    "Cloudy"           => 'wi-cloudy',
-    "Mostly Cloudy"    => 'wi-day-cloudy',
-    "Partly Cloudy"    => 'wi-day-sunny-overcast',
-    "Scattered Clouds" => 'wi-day-sunny-overcast',
-    "Fair"             => 'wi-day-sunny',
-    "Rain"             => 'wi-rain',
-    "Overcast"         => 'wi-cloudy',
-    "Thunderstorm"     => 'wi-thunderstorm'
+    "Cloudy"                       => 'wi-cloudy',
+    "Mostly Cloudy"                => 'wi-day-cloudy',
+    "Partly Cloudy"                => 'wi-day-sunny-overcast',
+    "Scattered Clouds"             => 'wi-day-sunny-overcast',
+    "Fair"                         => 'wi-day-sunny',
+    "Rain"                         => 'wi-rain',
+    "Overcast"                     => 'wi-cloudy',
+    "Thunderstorm"                 => 'wi-thunderstorm',
+    "Light Thunderstorms and Rain" => "wi-storm-showers"
 };
 ################################################################################
 sub current
