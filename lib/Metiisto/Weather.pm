@@ -13,6 +13,7 @@ use constant WI_ICON_MAP => {
     "Scattered Clouds"             => 'wi-day-sunny-overcast',
     "Fair"                         => 'wi-day-sunny',
     "Rain"                         => 'wi-rain',
+    "Light Rain"                   => 'wi-sprinkle',
     "Overcast"                     => 'wi-cloudy',
     "Thunderstorm"                 => 'wi-thunderstorm',
     "Light Thunderstorms and Rain" => "wi-storm-showers"

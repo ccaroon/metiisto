@@ -21,6 +21,9 @@ body {
 .m-bold { font-weight: bolder !important}
 .m-strikethru { text-decoration: line-through !important}
 
+.markdown {
+    margin: 1em 0em 1em 0em
+}
 .markdown a {
     border-bottom: dotted 1px grey
 }
@@ -28,6 +31,10 @@ body {
 .markdown a:hover {
     color: grey;
     text-decoration: none;
+}
+
+.markdown ul {
+    margin: inherit;
 }
 
 .tag_cloud {
