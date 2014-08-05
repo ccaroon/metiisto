@@ -13,8 +13,11 @@
         [% FOREACH sticky in items %]
         <li>
             <div>
-                <i class="fa fa-trash-o" onClick="$('#delete-sticky-[% sticky.id %]').submit()" style="float:right">
+                <i class="fa fa-trash-o" title="Delete" onClick="$('#delete-sticky-[% sticky.id %]').submit()" style="float:right">
                     <form id="delete-sticky-[% sticky.id %]" method="get" action="/stickies/[% sticky.id %]/delete"></form>
+                </i>
+                <i class="fa fa-file-text-o" title="Convert to Note" onClick="$('#convert-sticky-[% sticky.id %]').submit()">
+                    <form id="convert-sticky-[% sticky.id %]" method="get" action="/stickies/[% sticky.id %]/convert_to_note"></form>
                 </i>
                 <h2>[% sticky.created_date.format("%b %d, %Y %l:%M%P") %]</h2>
                 <p><pre>[% sticky.body %]</pre></p>

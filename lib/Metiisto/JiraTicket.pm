@@ -148,7 +148,7 @@ sub search
         }
 
         # Match sub-tasks to parent ticket.
-        foreach my $st (@sub_tasks)
+        foreach my $st (sort {$a->{ticket}->key() cmp $b->{ticket}->key()} @sub_tasks)
         {
             if ($tickets{$st->{parent}})
             {
