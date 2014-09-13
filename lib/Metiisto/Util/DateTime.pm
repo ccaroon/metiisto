@@ -2,8 +2,6 @@ package Metiisto::Util::DateTime;
 ################################################################################
 use strict;
 
-use feature 'switch';
-
 use Date::Format;
 use Date::Parse;
 use Moo;
@@ -81,20 +79,17 @@ sub add
     my $this = shift;
     my %args = @_;
 
-    given ($args{units})
-    {
-        when (/days?/i) {
-            $this->add_days(days => $args{count});
-        }
-        when (/weeks?/i) {
-            $this->add_days(days => $args{count} * 7);
-        }
-        when (/months?/i) {
-            $this->add_days(days => $args{count} * 30);
-        }
-        when (/years?/i) {
-            $this->add_days(days => $args{count} * 365);
-        }
+    if ($args{units} =~ /days?/i) {
+        $this->add_days(days => $args{count});
+    }
+    elsif ($args{units} =~ /weeks?/i) {
+        $this->add_days(days => $args{count} * 7);
+    }
+    elsif ($args{units} =~ /months?/i) {
+        $this->add_days(days => $args{count} * 30);
+    }
+    elsif ($args{units} =~ /years?/i) {
+        $this->add_days(days => $args{count} * 365);
     }
 }
 ################################################################################

@@ -1,7 +1,6 @@
 package Metiisto::JiraTicket;
 ################################################################################
 use strict;
-use feature 'switch';
 
 use Dancer qw(session);
 use LWP::UserAgent;
@@ -191,23 +190,20 @@ sub color
     my $this = shift;
 
     my $color = 'black';
-    given ($this->status())
-    {
-        when(/In Progress/) {
-            $color = 'blue';
-        }
-        when(/In Testing/) {
-            $color = '#bbbb00';
-        }
-        when(/Hold/) {
-            $color = 'red';
-        }
-        when(/CI\/Build Deployment /) {
-            $color = 'purple';
-        }
-        when(/Ready for Release/) {
-            $color = 'green';
-        }
+    if ($this->status() =~ /In Progress/) {
+        $color = 'blue';
+    }
+    elsif ($this->status() =~ /In Testing/) {
+        $color = '#bbbb00';
+    }
+    elsif ($this->status() =~ /Hold/) {
+        $color = 'red';
+    }
+    elsif ($this->status() =~ /CI\/Build Deployment /) {
+        $color = 'purple';
+    }
+    elsif ($this->status() =~ /Ready for Release/) {
+        $color = 'green';
     }
 
     return ($color);

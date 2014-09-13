@@ -1,7 +1,6 @@
 package Metiisto::Workday;
 ################################################################################
 use strict;
-use feature 'switch';
 
 use base 'Metiisto::Base';
 
@@ -61,18 +60,16 @@ sub day_type
         $this->is_holiday(0);
         $this->is_sick_day(0);
         
-        given ($new_type)
-        {
-            when (DAY_TYPE_HOLIDAY) {
-                $this->is_holiday(1);
-            }
-            when (DAY_TYPE_VACATION) {
-                $this->is_vacation(1);
-            }
-            when (DAY_TYPE_SICK) {
-                $this->is_sick_day(1);
-            }
+        if ($new_type == DAY_TYPE_HOLIDAY) {
+            $this->is_holiday(1);
         }
+        elsif ($new_type == DAY_TYPE_VACATION) {
+            $this->is_vacation(1);
+        }
+        elsif ($new_type == DAY_TYPE_SICK) {
+            $this->is_sick_day(1);
+        }
+
         $type = $new_type;
     }
     # Get

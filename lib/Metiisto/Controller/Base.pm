@@ -1,6 +1,6 @@
 package Metiisto::Controller::Base;
 ################################################################################
-use feature 'switch';
+use strict;
 
 use Dancer ':syntax';
 
@@ -135,12 +135,9 @@ sub create
         next unless $p =~ /^$prefix\.(.*)$/;
         my $attr = $1;
 
-        my $value;
-        given ($params->{$p})
-        {
-            when ('NULL') { $value = undef }
-            when ('')     { $value = undef }
-            default       { $value = $params->{$p} }
+        my $value = $params->{$p};
+        if ($params->{$p} eq 'NULL' or $params->{$p} eq '') {
+            $value = undef;
         }
 
         $data->{$attr} = $value;        
@@ -206,12 +203,9 @@ sub update
         next unless $p =~ /^$prefix\.(.*)$/;
         my $attr = $1;
 
-        my $value;
-        given ($params->{$p})
-        {
-            when ('NULL') { $value = undef }
-            when ('')     { $value = undef }
-            default       { $value = $params->{$p} }
+        my $value = $params->{$p};
+        if ($params->{$p} eq 'NULL' or $params->{$p} eq '') {
+            $value = undef;
         }
 
         $obj->$attr($value);

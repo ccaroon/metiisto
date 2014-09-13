@@ -10,6 +10,7 @@ CREATE TABLE `countdowns` (
   `target_date` datetime NOT NULL,
   `units` varchar(255) NOT NULL DEFAULT 'day',
   `on_homepage` tinyint(1) NOT NULL DEFAULT '0',
+  `is_real_time` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
@@ -22,7 +23,7 @@ CREATE TABLE `entries` (
   `subject` varchar(255) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `category` varchar(255) NOT NULL DEFAULT 'Other',
-  `time_spent` time not null default '00:00:00',
+  `time_spent` time NOT NULL DEFAULT '00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB;
@@ -66,6 +67,15 @@ CREATE TABLE `schema_migrations` (
   UNIQUE KEY `uk_version` (`version`)
 ) ENGINE=InnoDB;
 
+-- stickies
+CREATE TABLE `stickies` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `body` text NOT NULL,
+  `created_date` datetime NOT NULL,
+  `updated_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
 -- tagged_object
 CREATE TABLE `tagged_object` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -95,6 +105,8 @@ CREATE TABLE `todos` (
   `due_date` date DEFAULT NULL,
   `list_id` bigint(20) unsigned DEFAULT NULL,
   `description` varchar(1024) DEFAULT NULL,
+  `repeat_duration` varchar(16) DEFAULT NULL,
+  `parent_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 

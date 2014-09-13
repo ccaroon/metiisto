@@ -44,7 +44,6 @@ Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 metiisto.sublime-project
-metiisto.sublime-workspace
 MYMETA.json
 MYMETA.yml
 public/404.html
@@ -1213,6 +1212,13 @@ public/javascripts/ejs_production.js
 public/javascripts/metiisto.js
 public/templates/widgets/current_release.ejs
 public/templates/widgets/my_tickets.ejs
+public/weather-icons/css/weather-icons.css
+public/weather-icons/css/weather-icons.min.css
+public/weather-icons/fonts/weathericons-regular-webfont.eot
+public/weather-icons/fonts/weathericons-regular-webfont.svg
+public/weather-icons/fonts/weathericons-regular-webfont.ttf
+public/weather-icons/fonts/weathericons-regular-webfont.woff
+public/weather-icons/fonts/WeatherIcons-Regular.otf
 sql/migrations/.gitkeep
 sql/migrations/20120521130518_create_tags_table.pm
 sql/migrations/20120521130521_create_tagged_object_table.pm

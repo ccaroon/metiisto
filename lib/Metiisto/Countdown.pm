@@ -2,8 +2,6 @@ package Metiisto::Countdown;
 ################################################################################
 use strict;
 
-use feature 'switch';
-
 use constant UNIT_YEAR   => 'year';
 use constant UNIT_MONTH  => 'month';
 use constant UNIT_WEEK   => 'week';
@@ -40,15 +38,26 @@ sub time_left
     my $secs_diff = $this->target_date()->epoch() - $now;
 
     my $time_left;
-    given ($this->units())
-    {
-        when (UNIT_YEAR)   { $time_left = $secs_diff / (86400*365); }
-        when (UNIT_MONTH)  { $time_left = $secs_diff / (86400*30); }
-        when (UNIT_WEEK)   { $time_left = $secs_diff / (86400*7); }
-        when (UNIT_DAY)    { $time_left = $secs_diff / 86400; }
-        when (UNIT_HOUR)   { $time_left = $secs_diff / 3600; }
-        when (UNIT_MINUTE) { $time_left = $secs_diff / 60; }
-        when (UNIT_SECOND) { $time_left = $secs_diff; }
+    if ($this->units() eq UNIT_YEAR) {
+        $time_left = $secs_diff / (86400*365);
+    }
+    elsif ($this->units() eq UNIT_MONTH) {
+        $time_left = $secs_diff / (86400*30);
+    }
+    elsif ($this->units() eq UNIT_WEEK) {
+        $time_left = $secs_diff / (86400*7);
+    }
+    elsif ($this->units() eq UNIT_DAY) {
+        $time_left = $secs_diff / 86400;
+    }
+    elsif ($this->units() eq UNIT_HOUR) {
+        $time_left = $secs_diff / 3600;
+    }
+    elsif ($this->units() eq UNIT_MINUTE) {
+        $time_left = $secs_diff / 60;
+    }
+    elsif ($this->units() eq UNIT_SECOND) {
+        $time_left = $secs_diff;
     }
 
     # Auto-adjust units
@@ -66,12 +75,17 @@ sub time_left
         my $base = int abs($time_left);
         my $frac = abs($time_left) - $base;
 
-        given ($frac)
-        {
-            when ($_ >= 0.00 && $_ < 0.25) { $time_left = $base + 0.00; }
-            when ($_ >= 0.25 && $_ < 0.50) { $time_left = $base + 0.25; }
-            when ($_ >= 0.50 && $_< 0.75)  { $time_left = $base + 0.50; }
-            when ($_ >= 0.75 && $_< 1.00)  { $time_left = $base + 0.75; }
+        if ($frac >= 0.00 && $frac < 0.25) {
+            $time_left = $base + 0.00;
+        }
+        elsif ($frac >= 0.25 && $frac < 0.50) {
+            $time_left = $base + 0.25;
+        }
+        elsif ($frac >= 0.50 && $frac< 0.75) {
+            $time_left = $base + 0.50;
+        }
+        elsif ($frac >= 0.75 && $frac< 1.00) {
+            $time_left = $base + 0.75;
         }
 
         $time_left *= -1 if $is_neg;
