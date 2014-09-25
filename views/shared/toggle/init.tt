@@ -12,10 +12,10 @@ $('#[% id %]').data('icon_on', '[% icon_on %]');
 $('#[% id %]').button({ text: false})
 .click(function() {
     if ( $( this ).attr('value') == 0 ) {
-        toggle_set('[% id %]', true);
+        Metiisto.toggle_set('[% id %]', true);
     } else {
-        toggle_set('[% id %]', false);
+        Metiisto.toggle_set('[% id %]', false);
     }
 });
 
-toggle_set('[% id %]', [% init_value %]);
+Metiisto.toggle_set('[% id %]', [% init_value %]);

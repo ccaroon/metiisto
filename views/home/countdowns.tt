@@ -1,24 +1,20 @@
 [%
     USE Math;
     PROCESS util/format.tt;
-    count = 0;
 %]
-<div class="ui-widget">
-    <div>
+<div class="pure-g">
     [%- FOREACH countdown IN countdowns -%]
         [%- fract_entity = fraction_entity(countdown.time_left) -%]
-        <span class="ui-widget-content">
+        <div class="m-countdown pure-u-1-12">
             [% IF countdown.is_real_time && countdown.time_left > 0 %]
-            <abbr title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]" style="border: none">
-            <i style="font-weight:bold" id="time_left_[% countdown.id %]">00:00:00:00</i>
-            Until
             <strong>[% countdown.title %]</strong>
-            </abbr>
+            <br>
+            In <i style="font-weight:bold" id="time_left_[% countdown.id %]">00:00:00:00</i>
             <script>
                 $(document).ready(
                     setInterval(
                         function () {
-                            var time_str = time_left(new Date([% countdown.target_date.epoch * 1000 %]));
+                            var time_str = Metiisto.countDowns.compute_time_left(new Date([% countdown.target_date.epoch * 1000 %]));
                             $('#time_left_[% countdown.id %]').html(time_str);
                         },
                         1000                
@@ -26,64 +22,21 @@
                 );
             </script>
             [% ELSE %]
-            <abbr title="[% countdown.target_date.format("%b %d, %Y @ %l:%M%P") %]" style="border: none">
                 [% IF countdown.time_left > 0 %]
-                    <i style="font-weight:bold" id="time_left_[% countdown.id %]">[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]
+                    <strong>[% countdown.title %]</strong>
+                    <br>
+                    In <i style="font-weight:bold" id="time_left_[% countdown.id %]">[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]
                     [% countdown.english_units %]
                     </i>
-                    Until
-                    <strong>[% countdown.title %]</strong>
                 [% ELSE %]
                     <strong>[% countdown.title %]</strong>
+                    <br>
                     <i id="time_left_[% countdown.id %]">[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]
                     [% countdown.english_units %]
                     Ago
                     </i>
                 [% END %]
-            </abbr>
             [% END %]
-        </span>
-        &nbsp;
-        [% count = count + 1 %]
-        [% IF count % 5 == 0 %]
-            <br>
-        [% END %]
+        </div>
     [%- END -%]
-    </div>
 </div>
-<script>
-    // Compute interval between NOW and target_date formated as DD:HH::MM::SS
-    function time_left(target_date)
-    {
-        var now_ms  = new Date().valueOf();
-        var date_ms = target_date.valueOf();
-        var secs = Math.round((date_ms - now_ms) / 1000);
-
-        secs = (secs >= 0 ) ? secs : 0;
-
-        return (format_DHMS(secs))
-    }
-    
-    // Formats num_secs as DD:HH::MM::SS string
-    function format_DHMS(num_secs)
-    {
-        var days = Math.floor(num_secs / 86400);
-        num_secs = num_secs % 86400;
-        
-        var hours = Math.floor(num_secs / 3600);
-        num_secs = num_secs % 3600;
-        
-        var mins = Math.floor(num_secs / 60);
-        var secs = num_secs % 60;
-        
-        return (
-            ((days > 9) ? days : '0' + days)
-            + ':' +
-            ((hours > 9) ? hours : '0' + hours)
-            + ':' +
-            ((mins > 9)  ? mins  : '0' + mins)
-            + ':' +
-            ((secs > 9)  ? secs  : '0' + secs)
-        );
-    }
-</script>

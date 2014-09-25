@@ -22,7 +22,6 @@
         </div>
     </div>
    
-    
     <!-- Countdowns -->
     <div id="home_countdowns" class="pure-u-1-1">
         [% PROCESS home/countdowns.tt %]

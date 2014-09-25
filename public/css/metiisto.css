@@ -21,6 +21,13 @@ body {
 .m-bold { font-weight: bolder !important}
 .m-strikethru { text-decoration: line-through !important}
 
+.m-countdown {
+    border: lightgray 1px solid;
+    text-align: center;
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
 .markdown {
     margin: 1em 0em 1em 0em
 }
@@ -58,8 +65,8 @@ body {
 }
 
 #home_countdowns {
-    width: 100%;
+    width: 99%;
     position: fixed;
-    left: 0px;
+    left: 50px;
     bottom: 23px;
 }
