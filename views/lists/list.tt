@@ -19,7 +19,7 @@
             [% FOREACH list in lists %]
             <tr>
                 <td width="70%"><a href="/lists/[% list.id %]">[% list.name %]</a></td>
-                <td>[% list.completed_items.size OR 0 %]/[% list.items.size OR 0 %]</td>
+                <td>[% list.completed_items.size OR 0 %]/[% list.item_count OR 0 %]</td>
                 <td align="center">
                     [% PROCESS shared/list/actions.tt
                         controller = 'lists'

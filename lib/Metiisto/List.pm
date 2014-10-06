@@ -13,6 +13,14 @@ __PACKAGE__->has_many(items => 'Metiisto::Todo', { order_by => 'completed,priori
 
 __PACKAGE__->init_tagging();
 ################################################################################
+sub item_count
+{
+    my $this = shift;
+
+    my $count = $this->items();
+    return ($count);
+}
+################################################################################
 sub completed_items
 {
     my $this = shift;
