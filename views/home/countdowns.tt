@@ -5,7 +5,7 @@
 <div class="pure-g">
     [%- FOREACH countdown IN countdowns -%]
         [%- fract_entity = fraction_entity(countdown.time_left) -%]
-        <div class="m-countdown pure-u-1-12">
+        <div class="m-countdown pure-u-1-12" title="[%= countdown.target_date.format('%b %d, %Y @ %l:%M%P') %]">
             [% IF countdown.is_real_time && countdown.time_left > 0 %]
             <strong>[% countdown.title %]</strong>
             <br>
