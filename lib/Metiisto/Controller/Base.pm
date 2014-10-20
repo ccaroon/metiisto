@@ -204,7 +204,7 @@ sub update
         my $attr = $1;
 
         my $value = $params->{$p};
-        if ($params->{$p} eq 'NULL' or $params->{$p} eq '') {
+        if (!(defined $value) or $value eq 'NULL' or $value eq '') {
             $value = undef;
         }
 

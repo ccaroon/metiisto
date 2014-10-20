@@ -1,0 +1,26 @@
+doctype
+head
+  title progrecss workbench
+  link(rel="stylesheet", href="css/progrecss.min.css")
+body
+  h1 let's make progrecss
+  button#actionButton Play/Pause
+  script(src="js/progrecss.js")
+  script.
+    (function(){
+      var myprogrecss = new progrecss (document.body, {
+        color: 'red',
+        percent: 0,
+        position: 'fixed',
+        reverse: true,
+        mock: {
+            staggered: true,
+            startMockOnCreate: true,
+            mockDuration: 10
+        }
+      });
+      document.getElementById('actionButton')
+        .addEventListener('click', function(e) {
+          myprogrecss.togglePause();
+        });
+    })();

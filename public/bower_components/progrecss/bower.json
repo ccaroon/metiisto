@@ -1,0 +1,25 @@
+{
+  "name": "progrecss",
+  "main": "dist/progrecss.css",
+  "version": "1.4.0",
+  "homepage": "http://jh3y.github.io/progre-c-ss",
+  "authors": [
+    "jh3y"
+  ],
+  "description": "Pure CSS progress bars with minimal effort!",
+  "keywords": [
+    "progrecss",
+    "progress",
+    "css",
+    "less"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/vendor",
+    "test",
+    "tests"
+  ]
+}
