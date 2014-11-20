@@ -2,6 +2,8 @@
     Current Release (<%= current_release.name %>) <%= current_release.ready_points %>/<%= current_release.total_points %> pts.
 </div>
 <div class="ui-widget-content">
+    <div class="progrecss blue bottom" data-progrecss="<%= Math.round((current_release.ready_points/current_release.total_points) * 100) %>"></div>
+
     <!-- Just hard-coding Project ID (pid) for now -->
     <img align="absmiddle" src="http://<%= jira_host %>/secure/projectavatar?pid=12103"/>
     <% for (var i = 0; i < current_release.tickets.length; i+=1) { %>
