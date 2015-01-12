@@ -11,6 +11,7 @@ use constant ENTRIES_PER_PAGE => 18;
 use base 'Metiisto::Controller::Base';
 
 use Metiisto::Entry;
+use Metiisto::Util::DateTime;
 ################################################################################
 sub list
 {
@@ -186,6 +187,76 @@ sub delete
     my $out = redirect $url;
 
     return ($out);
+}
+################################################################################
+sub stats_meetings
+{
+    my $this = shift;
+    my $sql_abs = SQL::Abstract->new();
+    my %counts;
+
+    my $this_year = params->{year} || Metiisto::Util::DateTime->now()->format("%Y");
+    my $last_year = $this_year - 1;
+
+    $counts{$this_year} = [];
+    $counts{$last_year} = [];
+
+    foreach my $year ($last_year, $this_year) {
+        foreach my $month (1..12) {
+            my $last_day  = Metiisto::Util::DateTime::MONTHS->[$month-1]->{days};
+            my $from_date = Metiisto::Util::DateTime->parse("$month-1-$year");
+            my $to_date   = Metiisto::Util::DateTime->parse("$month-$last_day-$year");
+
+            my ($where, @binds) = $sql_abs->where(
+                {
+                    task_date => { 'between' => [
+                                                    $from_date->format_db(date_only => 1),
+                                                    $to_date->format_db(date_only => 1)
+                                                ]
+                                 },
+                    category => { '=' => [Metiisto::Entry::CATEGORY_MEETING] }
+                }
+            );
+
+            $counts{$year}->[$month-1] = Metiisto::Entry->count_where($where, \@binds);
+        }
+    }
+
+    my $out = template 'entries/stats/meetings', { 
+        this_year => $this_year,
+        last_year => $last_year,
+        months    => Metiisto::Util::DateTime::MONTHS,
+        previous_year => $counts{$last_year},
+        current_year  => $counts{$this_year}
+    };
+
+    return ($out);
+}
+################################################################################
+sub declare_routes
+{
+    my $class = shift;
+    
+    get "/entries/stats/:name" => sub {
+        my $c = $class->new();
+        
+        my $out;
+        my $method = 'stats_' . params->{name};
+        if ($c->can($method))
+        {
+            $out = $c->$method();
+        }
+        else
+        {
+            $out = template 'error', {
+                message => "Unknown stats name: '$method'.",
+            };
+        }
+
+        return ($out);
+    };
+
+    $class->SUPER::declare_routes();
 }
 ################################################################################
 1;

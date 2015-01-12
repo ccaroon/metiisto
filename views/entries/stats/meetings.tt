@@ -1,0 +1,24 @@
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        Meetings Stats by Month from [% last_year %] to [% this_year %]
+    </div>
+    <div class="ui-widget-content">
+        [% FOREACH month IN months %]
+            <div style="padding: 5px">
+            [% month_num  = loop.index() %]
+            [% month_name = month.name %]
+            [% last_year_progress = month_name _ "-" _ last_year %]
+            [% this_year_progress = month_name _ "-" _ this_year %]
+            <div>
+                <strong>[% month_name %]</strong>
+                <div id="[% last_year_progress %]" class="last-year-progress"></div>
+                <div id="[% this_year_progress %]" class="this-year-progress"></div>
+            </div>
+            <script>
+                 $( "#[% last_year_progress %]" ).progressbar({value: [% previous_year.$month_num %]});
+                 $( "#[% this_year_progress %]" ).progressbar({value: [% current_year.$month_num %]});
+            </script>
+            </div>
+        [% END %]
+    </div>
+</div>
