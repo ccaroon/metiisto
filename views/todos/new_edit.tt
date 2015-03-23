@@ -43,7 +43,9 @@
 
             <div class="pure-control-group">
                 <label for="todo_due_date">Due Date:</label>
-                <input type="text" id="todo_due_date" name="todo.due_date" value="[% item.due_date.format_db('date_only',1) %]">
+                <input type="text" id="todo_due_date" name="todo.due_date" size="10" value="[% item.due_date.format_db('date_only',1) %]">
+                <label for="todo_due_time">Due Time:</label>
+                <input type="text" id="todo_due_time" name="todo.due_time" size="10" value="[% item.due_date.format_time() %]">
             </div>
 
             <div class="pure-control-group">

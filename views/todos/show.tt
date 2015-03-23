@@ -13,7 +13,7 @@
     <div class="ui-widget-content">
         <p>
             <strong>Priority: </strong>[% item.priority %]<br>
-            <strong>Due: </strong>[% item.due_date.format %]<br>
+            <strong>Due: </strong>[% item.due_date.format %] [% item.due_date.format_time %]<br>
             <strong>Completed: </strong>[% item.completed_date ? item.completed_date.format : 'Pending '%]<br>
             <strong>List: </strong><a href="/lists/[% item.list.id %]">[% item.list.name %]</a><br>
             <strong>Repeat: </strong>[% item.repeat_duration %]<br>

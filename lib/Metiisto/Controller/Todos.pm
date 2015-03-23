@@ -101,6 +101,13 @@ sub _munge_params
 
     my $params = $args{params};
 
+    # Due Date & Time
+    my $due_time = delete $params->{'todo.due_time'};
+    if ($due_time) {
+        $params->{'todo.due_date'} .= Metiisto::Util::DateTime->parse($due_time)->format(' %R');
+    }
+
+    # Repeat
     my $count = delete $params->{'todo.repeat_duration.count'};
     my $units = delete $params->{'todo.repeat_duration.units'};
 

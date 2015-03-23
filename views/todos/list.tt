@@ -55,7 +55,11 @@
                     </script>
                     [% END %]
                 </td>
-                <td align="center">[% todo.due_date.format() %]</td>
+                <td align="center">
+                    [% IF todo.due_date %]
+                    [% todo.due_date.format() %] @ [% todo.due_date.format_time() %]
+                    [% END %]
+                </td>
                 <td align="center">
                     [% IF todo.completed %]
                     [% todo.completed_date.format() %]
