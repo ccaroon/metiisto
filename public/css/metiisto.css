@@ -70,3 +70,11 @@ body {
     left: 50px;
     bottom: 23px;
 }
+
+#top-menu .top-menu-item-text {
+    padding: 5px 10px 5px 10px;
+}
+
+#top-menu .top-menu-item-icon {
+    padding-right: 3px;
+}

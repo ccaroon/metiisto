@@ -8,14 +8,14 @@
         <i class="fa fa-warning" style="color:red;"></i>
         [% END %]
     </a>
-    <ul>
-        <li><a style="padding: 5px 10px 5px 10px" href="/home"><i class="fa fa-home fa-1x"></i>Home</a></li>
-        <li><a style="padding: 5px 10px 5px 10px" href="/entries"><i class="fa fa-book fa-1x"></i>Entries</a></li>
-        <li><a style="padding: 5px 10px 5px 10px" href="/workdays"><i class="fa fa-clock-o fa-1x"></i>Hours</a></li>
-        <li><a style="padding: 5px 10px 5px 10px" href="/lists"><i class="fa fa-list-alt fa-1x"></i>Lists</a></li>
-        <li><a style="padding: 5px 10px 5px 10px" href="/todos"><i class="fa fa-lightbulb-o fa-1x"></i>Todos</a></li>
-        <li><a style="padding: 5px 10px 5px 10px" href="/notes"><i class="fa fa-file-text-o fa-1x"></i>Notes</a></li>
-        <li><a style="padding: 5px 10px 5px 10px" href="/countdowns"><i class="fa fa-calendar fa-1x"></i>Countdowns</a></li>
-        <li><a style="padding: 5px 5px 5px 5px" href="/reports/weekly"><i class="fa fa-bar-chart-o fa-1x"></i>Report</a></li>
+    <ul id="top-menu">
+        <li><a class="top-menu-item-text" href="/home"><i class="top-menu-item-icon fa fa-home fa-1x"></i>Home</a></li>
+        <li><a class="top-menu-item-text" href="/entries"><i class="top-menu-item-icon fa fa-book fa-1x"></i>Entries</a></li>
+        <li><a class="top-menu-item-text" href="/workdays"><i class="top-menu-item-icon fa fa-clock-o fa-1x"></i>Hours</a></li>
+        <li><a class="top-menu-item-text" href="/lists"><i class="top-menu-item-icon fa fa-list-alt fa-1x"></i>Lists</a></li>
+        <li><a class="top-menu-item-text" href="/todos"><i class="top-menu-item-icon fa fa-lightbulb-o fa-1x"></i>Todos</a></li>
+        <li><a class="top-menu-item-text" href="/notes"><i class="top-menu-item-icon fa fa-file-text-o fa-1x"></i>Notes</a></li>
+        <li><a class="top-menu-item-text" href="/countdowns"><i class="top-menu-item-icon fa fa-calendar fa-1x"></i>Countdowns</a></li>
+        <li><a class="top-menu-item-text" href="/reports/weekly"><i class="top-menu-item-icon fa fa-bar-chart-o fa-1x"></i>Report</a></li>
     </ul>
 </div>
