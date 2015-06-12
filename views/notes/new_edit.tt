@@ -2,7 +2,7 @@
     <div class="ui-widget-header">
         [% vars.action | ucfirst %] Note
     </div>
-    <div class="ui-widget-content">
+    <div class="ui-widget-content m-form-body">
         <form class="pure-form pure-form-aligned" method="post" action="/notes[% note.id ? '/' _ note.id : '' %]">
             
             <div class="pure-control-group">

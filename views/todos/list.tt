@@ -10,7 +10,7 @@
     </div>
     [% ELSE %]
     <div class="ui-widget-header">Todos</div>
-    <div class="ui-widget-content" align="center">
+    <div class="ui-widget-content m-form-body" align="center">
         [% PROCESS shared/filter.tt %]
         <p>[% PROCESS shared/pagination.tt page_data=pagination %]</p>
     </div>

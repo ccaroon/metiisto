@@ -28,6 +28,10 @@ body {
     margin-bottom: 2px;
 }
 
+.m-form-body {
+    padding: 5px;
+}
+
 .markdown {
     margin: 1em 0em 1em 0em
 }

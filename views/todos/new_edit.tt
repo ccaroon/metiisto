@@ -3,7 +3,7 @@
         [% vars.action | ucfirst %] Todo
     </div>
 
-    <div class="ui-widget-content">
+    <div class="ui-widget-content m-form-body">
         <form class="pure-form pure-form-aligned" method="post" action="/todos[% item.id ? '/' _ item.id : '' %]">
 
             <div class="pure-control-group">
