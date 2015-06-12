@@ -103,7 +103,7 @@ sub total_hours
     my $seconds = $this->time_out()->epoch() - $this->time_in()->epoch();
     my $hours = ($seconds - $lunch_seconds) / 3600;
 
-    return (sprintf("%0.2f", $hours));
+    return ($hours);
 }
 ################################################################################
 1;

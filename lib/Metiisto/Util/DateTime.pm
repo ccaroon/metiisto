@@ -158,27 +158,14 @@ sub format_db
 ################################################################################
 sub timestr_to_minutes
 {
-    my $this = shift;
-    my %args = @_;
+    my $class = shift;
+    my %args  = @_;
     
     my ($h, $m, undef) = split /:/, $args{time_str};
     
     my $min = $m + ($h * 60);
     
     return ($min);
-}
-################################################################################
-sub minutes_to_timestr
-{
-    my $this = shift;
-    my %args = @_;
-    
-    my $total_min = $args{min};
-    
-    my $hours = int ($total_min / 60);
-    my $min   = $total_min % 60;
-    
-    return ("${hours}h ${min}m");
 }
 ################################################################################
 1;

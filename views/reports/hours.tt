@@ -1,9 +1,14 @@
 # Hours #
-[% total = 0 %]
+
+[% 
+    USE Formatter;
+    total = 0 
+%]
+
 [%- FOREACH day IN work_days -%]
 [% day_hours = day.total_hours %]
 [% total = total + day_hours -%]
-* [% day.work_date.format("%m/%d") %]:  [% day.time_in.format("%I:%M%p") %] - [% day.time_out.format("%I:%M%p") %] ([% day_hours | format("%.2f") %])  [% day.note %]
+* [% day.work_date.format("%m/%d") %]:  [% day.time_in.format("%I:%M%p") %] - [% day.time_out.format("%I:%M%p") %] ([% Formatter.minutes_to_timestr(day_hours * 60) %])  [% day.note %]
 [%- END %]
 
-Total: [% total | format("%.2f") %]
+Total: [% Formatter.minutes_to_timestr(total*60) %]

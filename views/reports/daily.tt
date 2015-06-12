@@ -1,3 +1,7 @@
+[%
+    USE Formatter;
+%]
+
 [% PROCESS 'reports/controls.tt' report='daily' %]
 
 [% PROCESS 'reports/hours.tt' %]
@@ -5,7 +9,7 @@
 [% FOREACH day IN days %]
 [%
     entries    = day.entries;
-    time_spent = day.time_spent;
+    time_spent = Formatter.minutes_to_timestr(day.time_spent);
     NEXT unless entries.0;
 %]
 # [% entries.0.task_date.format('%A') %] [% show_time_spent ? ' -- ' _ time_spent : '' %] #

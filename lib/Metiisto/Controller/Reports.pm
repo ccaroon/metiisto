@@ -45,9 +45,6 @@ sub daily
     # Some days may not have any data. Remove them from the list.
     @days = grep {defined $_} @days;
 
-    map {$_->{time_spent} = Metiisto::Util::DateTime->minutes_to_timestr(min => $_->{time_spent})}
-        @days;
-
     my $out = template "/reports/daily",
     {
         title       => 'Daily Report',
