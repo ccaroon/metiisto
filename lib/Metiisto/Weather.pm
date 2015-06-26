@@ -7,19 +7,19 @@ use JSON::XS;
 
 use constant CACHE_TTL => 5 * 60;
 use constant WI_ICON_MAP => {
-    'Clear'                        => 'wi-day-sunny',
-    'Cloudy'                       => 'wi-cloudy',
-    'Fair'                         => 'wi-day-sunny',
-    'Fog'                          => 'wi-fog',
-    'Haze'                         => 'wi-fog',
-    'Light Rain'                   => 'wi-sprinkle',
-    'Light Thunderstorms and Rain' => 'wi-storm-showers',
-    'Mostly Cloudy'                => 'wi-day-cloudy',
-    'Overcast'                     => 'wi-cloudy',
-    'Partly Cloudy'                => 'wi-day-sunny-overcast',
-    'Rain'                         => 'wi-rain',
-    'Scattered Clouds'             => 'wi-day-sunny-overcast',
-    'Thunderstorm'                 => 'wi-thunderstorm'
+    'clear'                        => 'wi-day-sunny',
+    'cloudy'                       => 'wi-cloudy',
+    'fair'                         => 'wi-day-sunny',
+    'fog'                          => 'wi-fog',
+    'haze'                         => 'wi-fog',
+    'light rain'                   => 'wi-sprinkle',
+    'light thunderstorms and rain' => 'wi-storm-showers',
+    'mostly cloudy'                => 'wi-day-cloudy',
+    'overcast'                     => 'wi-cloudy',
+    'partly cloudy'                => 'wi-day-sunny-overcast',
+    'rain'                         => 'wi-rain',
+    'scattered clouds'             => 'wi-day-sunny-overcast',
+    'thunderstorm'                 => 'wi-thunderstorm'
 };
 ################################################################################
 sub current
@@ -46,8 +46,9 @@ sub current
     my %weather;
     if ($data)
     {
+        my $icon_text = $data->{weather} || $data->{icon};
         %weather = (
-            wi_icon => $class->text2wi_icon($data->{weather}),
+            wi_icon => $class->text2wi_icon(lc($icon_text)),
             text    => $data->{weather},
             temp    => $data->{temp_f},
             url     => $data->{ob_url}
