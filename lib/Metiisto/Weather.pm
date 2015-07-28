@@ -51,7 +51,7 @@ sub current
             wi_icon => $class->text2wi_icon(lc($icon_text)),
             text    => $data->{weather},
             temp    => $data->{temp_f},
-            url     => $data->{ob_url}
+            url     => $data->{forecast_url}
         );
     }
 
