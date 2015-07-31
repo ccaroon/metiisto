@@ -26,16 +26,44 @@ use base 'Metiisto::Base';
 ################################################################################
 __PACKAGE__->table('countdowns');
 __PACKAGE__->columns(All => qw/
-    id title target_date units on_homepage is_real_time
+    id title start_date end_date units on_homepage is_real_time
 /);
-__PACKAGE__->has_a_datetime('target_date');
+__PACKAGE__->has_a_datetime('start_date');
+__PACKAGE__->has_a_datetime('end_date');
 ################################################################################
-sub time_left
+sub has_started {
+    my $this = shift;
+    my $now  = time();
+    
+    my $has_started = $now >= $this->start_date()->epoch() ? 1 : 0;
+    
+    return ($has_started);
+}
+################################################################################
+sub is_ongoing {
+    my $this = shift;
+    
+    my $is_ongoing = $this->has_started() && !$this->has_ended() ? 1 : 0;
+
+    return ($is_ongoing);
+}
+################################################################################
+sub has_ended {
+    my $this = shift;
+    my $now  = time();
+
+    my $has_ended = $now >= $this->end_date()->epoch() ? 1 : 0;    
+
+    return ($has_ended);
+}
+################################################################################
+sub _interval
 {
     my $this = shift;
+    my $date = shift;
 
     my $now = time();
-    my $secs_diff = $this->target_date()->epoch() - $now;
+    my $secs_diff = $date->epoch() - $now;
 
     my $time_left;
     if ($this->units() eq UNIT_YEAR) {
@@ -66,11 +94,11 @@ sub time_left
         my $new_unit = UNITS->{$this->units()} + 1;
         $this->units($UNITS_INDEX{$new_unit});
         $this->update();
-        $time_left = $this->time_left();
+        $time_left = $this->_interval($date);
     }
     else #Round to the nearest quarter unit
     {
-        my $is_neg = ($time_left < 0.0) ? 1 : 0;
+        # my $is_neg = ($time_left < 0.0) ? 1 : 0;
 
         my $base = int abs($time_left);
         my $frac = abs($time_left) - $base;
@@ -88,20 +116,56 @@ sub time_left
             $time_left = $base + 0.75;
         }
 
-        $time_left *= -1 if $is_neg;
+        # $time_left *= -1 if $is_neg;
     }
 
-    return ($time_left);
+    return (abs($time_left));
 }
 ################################################################################
 sub english_units
 {
     my $this = shift;
+    my $date = shift;
 
     my $units = ucfirst $this->units();
-    $units .= 's' if abs($this->time_left()) > 1;
+    $units .= 's' if abs($this->_interval($date)) > 1;
     
     return ($units);
 }
+################################################################################
+sub format
+{
+    my $this  = shift;
+    my %parts = (
+        title       => $this->title(),
+        has_started => 0,
+        is_ongoing  => 0,
+        has_ended   => 0
+    );
+
+    if ($this->has_ended()) {
+        $parts{units}       = $this->english_units($this->end_date());
+        $parts{interval}    = $this->_interval($this->end_date());
+        $parts{has_started} = 1;
+        $parts{has_ended}   = 1;
+    }
+    elsif ($this->is_ongoing()) {
+        $parts{units}       = $this->english_units($this->end_date());
+        $parts{interval}    = $this->_interval($this->end_date());
+        $parts{has_started} = 1;
+        $parts{is_ongoing}  = 1;
+    }
+    else {
+        $parts{units}       = $this->english_units($this->start_date());
+        $parts{interval}    = $this->_interval($this->start_date());
+    }
+
+    return (\%parts);
+}
+################################################################################
+# sub to_string
+# {
+#     my $this = shift;
+# }
 ################################################################################
 1;

@@ -93,7 +93,10 @@ sub add
     my $this = shift;
     my %args = @_;
 
-    if ($args{units} =~ /days?/i) {
+    if ($args{units} =~ /hours?/i) {
+        $this->add_days(days => $args{count} / 24);
+    }
+    elsif ($args{units} =~ /days?/i) {
         $this->add_days(days => $args{count});
     }
     elsif ($args{units} =~ /weeks?/i) {

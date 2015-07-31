@@ -4,9 +4,10 @@
 %]
 <div class="pure-g">
     [%- FOREACH countdown IN countdowns -%]
-        [%- fract_entity = fraction_entity(countdown.time_left) -%]
-        <div class="m-countdown pure-u-1-12" title="[%= countdown.target_date.format('%b %d, %Y @ %l:%M%P') %]">
-            [% IF countdown.is_real_time && countdown.time_left > 0 %]
+        [%- parts = countdown.format -%]
+        [%- fract_entity = fraction_entity(parts.interval) -%]
+        <div class="m-countdown pure-u-1-12" title="[%= countdown.start_date.format('%b %d, %Y @ %l:%M%P') %]">
+            [% IF countdown.is_real_time && !parts.has_started %]
             <strong>[% countdown.title %]</strong>
             <br>
             In <i style="font-weight:bold" id="time_left_[% countdown.id %]">00:00:00:00</i>
@@ -14,7 +15,7 @@
                 $(document).ready(
                     setInterval(
                         function () {
-                            var time_str = Metiisto.countDowns.compute_time_left(new Date([% countdown.target_date.epoch * 1000 %]));
+                            var time_str = Metiisto.countDowns.compute_time_left(new Date([% countdown.start_date.epoch * 1000 %]));
                             $('#time_left_[% countdown.id %]').html(time_str);
                         },
                         1000                
@@ -22,21 +23,24 @@
                 );
             </script>
             [% ELSE %]
-                [% IF countdown.time_left > 0 %]
-                    <strong>[% countdown.title %]</strong>
-                    <br>
-                    In <i style="font-weight:bold" id="time_left_[% countdown.id %]">[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]
-                    [% countdown.english_units %]
+                <strong>[% countdown.title %]</strong>
+                <br>
+                [% IF !parts.has_started %]
+                    Starts In <i style="font-weight:bold" id="time_left_[% countdown.id %]">[% Math.int(parts.interval) _ fract_entity %]
+                    [% parts.units %]
+                    </i>
+                [% ELSIF parts.is_ongoing %]
+                    Ends In <i style="font-weight:bold" id="time_left_[% countdown.id %]">[% Math.int(parts.interval) _ fract_entity %]
+                    [% parts.units %]
                     </i>
                 [% ELSE %]
-                    <strong>[% countdown.title %]</strong>
-                    <br>
-                    <i id="time_left_[% countdown.id %]">[% Math.int(Math.abs(countdown.time_left)) _ fract_entity %]
-                    [% countdown.english_units %]
+                    <i id="time_left_[% countdown.id %]">[% Math.int(parts.interval) _ fract_entity %]
+                    [% parts.units %]
                     Ago
                     </i>
                 [% END %]
             [% END %]
         </div>
+
     [%- END -%]
 </div>

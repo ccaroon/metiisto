@@ -57,7 +57,7 @@ sub home
 
     my @countdowns = Metiisto::Countdown->search_where(
         { on_homepage => {'=', 1},  },
-        { order_by => 'target_date' }
+        { order_by => 'start_date' }
     );
 
     my $date = Metiisto::Util::DateTime->sunday();

@@ -11,13 +11,17 @@
             </div>
 
             <div class="pure-control-group">
-                <label for="countdown_target_date">Target Date:</label>
-                <input type="text" id="countdown_target_date" name="countdown.target_date" value="[% item.target_date.format_db('date_only',1) %]" size="10">
+                <label for="countdown_start_date">Start Date:</label>
+                <input type="text" id="countdown_start_date" name="countdown.start_date" value="[% item.start_date.format_db('date_only',1) %]" size="10">
+                <label for="countdown_start_time">Start Time:</label>
+                <input type="text" id="countdown_start_time" name="countdown.start_time" value="[% item.start_date.format('%I:%M%P') %]" size="10">
             </div>
-
+            
             <div class="pure-control-group">
-                <label for="countdown_target_time">Target Time:</label>
-                <input type="text" id="countdown_target_time" name="countdown.target_time" value="[% item.target_date.format('%I:%M%P') %]" size="10">
+                <label for="countdown_end_date">End Date:</label>
+                <input type="text" id="countdown_end_date" name="countdown.end_date" value="[% item.end_date.format_db('date_only',1) %]" size="10">
+                <label for="countdown_end_time">End Time:</label>
+                <input type="text" id="countdown_end_time" name="countdown.end_time" value="[% item.end_date.format('%I:%M%P') %]" size="10">
             </div>
             
             <div class="pure-control-group">
@@ -75,5 +79,6 @@
 
     $( "#countdown_units" ).buttonset();
 
-    $("#countdown_target_date").datepicker({ dateFormat: 'yy-mm-dd' });
+    $("#countdown_start_date").datepicker({ dateFormat: 'yy-mm-dd' });
+    $("#countdown_end_date").datepicker({ dateFormat: 'yy-mm-dd' });
 </script>

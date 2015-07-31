@@ -13,7 +13,8 @@
             <thead>
                 <tr>
                     <th>Preview</th>
-                    <th>Target Date</th>
+                    <th>Start</th>
+                    <th>End</th>
                     <th>Realtime</th>
                     <th>On Homepage</th>
                     <th>Actions</th>
@@ -22,12 +23,10 @@
             [% FOREACH countdown IN items %]
             <tr>
                 <td>
-                    <strong>[% Math.int(Math.abs(countdown.time_left)) _ fraction_entity(countdown.time_left) %]</strong>
-                    [% countdown.english_units %]
-                    [% countdown.time_left >= 0 ? "Until" : "Since" %]
-                    <a href="/countdowns/[% countdown.id %]"><strong>[% countdown.title %]</strong></a>
+                    [% countdown.title %]
                 </td>
-                <td align="center">[% countdown.target_date.format("%b %d, %Y %I:%M:%S %p") %]</td>
+                <td align="center">[% countdown.start_date.format("%b %d, %Y %I:%M:%S %p") %]</td>
+                <td align="center">[% countdown.end_date.format("%b %d, %Y %I:%M:%S %p") %]</td>
                 <td align="center">[% countdown.is_real_time ? 'Yes' : 'No' %]</td>
                 <td align="center">[% countdown.on_homepage ? 'Yes' : 'No' %]</td>
                 <td align="center">

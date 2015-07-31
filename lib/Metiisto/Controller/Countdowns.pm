@@ -11,7 +11,7 @@ use base 'Metiisto::Controller::Base';
 use Metiisto::Countdown;
 
 __PACKAGE__->setup_list_handler(
-    order_by => 'target_date',
+    order_by => 'start_date',
 );
 ################################################################################
 sub new_record
@@ -37,11 +37,17 @@ sub create
 {
     my $this = shift;
 
-    # Add the target_time to the target_date db field.
-    params->{'countdown.target_date'}
+    # Add the start_time to the start_date db field.
+    params->{'countdown.start_date'}
         .= ' '
         # NOTE: Not sure why I have to convert to 24h time.
-        . Metiisto::Util::DateTime->parse(delete params->{'countdown.target_time'})
+        . Metiisto::Util::DateTime->parse(delete params->{'countdown.start_time'})
+        ->format('%R');
+        
+    params->{'countdown.end_date'}
+        .= ' '
+        # NOTE: Not sure why I have to convert to 24h time.
+        . Metiisto::Util::DateTime->parse(delete params->{'countdown.end_time'})
         ->format('%R');
 
     my $out = $this->SUPER::create();
@@ -70,8 +76,11 @@ sub update
     my $this = shift;
     my %args = @_;
 
-    params->{'countdown.target_date'}
-        .= ' ' . delete params->{'countdown.target_time'};
+    params->{'countdown.start_date'}
+        .= ' ' . delete params->{'countdown.start_time'};
+        
+    params->{'countdown.end_date'}
+        .= ' ' . delete params->{'countdown.end_time'};
 
     my $out = $this->SUPER::update(%args,
         pre_obj_update => sub {
