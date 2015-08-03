@@ -10,34 +10,53 @@ use Test::More;
 use base 'Metiisto::BaseTest';
 use constant TESTED_CLASS => 'Metiisto::Countdown';
 ################################################################################
-sub test_time_remaining : Test(7)
+# sub test_time_remaining : Test(7)
+# {
+#     my $this = shift;
+# 
+#     my $c = Metiisto::Test::Factory->create(countdown => {});
+#     my %expected = (
+#         year   => 5,
+#         month  => 5,
+#         week   => 5,
+#         day    => 5,
+#         hour   => 5 * 24,
+#         minute => 7_200,
+#         second => 432_000,
+#     );
+#     foreach my $unit (sort keys %{TESTED_CLASS->UNITS})
+#     {
+#         my $adjustment = 0.25;
+#         $adjustment = 1 if $unit eq 'second';
+# 
+#         $c->units($unit);
+# 
+#         ok((
+#             $c->time_remaining($c->start_date()) == $expected{$unit} - $adjustment
+#                             or
+#             $c->time_remaining($c->start_date()) == $expected{$unit}),
+#             "time left should be correct for '$unit'"
+#         );
+#     }
+# }
+################################################################################
+sub test_auto_unit_adjust : Tests 
 {
     my $this = shift;
+    
+    my $c = Metiisto::Test::Factory->create(countdown => {
+        start_date => "2015-08-03 09:00:00",
+        end_date   => "2015-08-03 17:00:00",
+        units      => Metiisto::Countdown->UNIT_YEAR
+    });
+    
+    my $parts = $c->as_hash();
+use Data::Dumper;
+local $Data::Dumper::Maxdepth=2;
+print STDERR '=====> Begin Dump \$parts <====='."\n";
+print STDERR Dumper $parts;
+print STDERR '=====> End Dump \$parts <====='."\n";
 
-    my $c = Metiisto::Test::Factory->create(countdown => {});
-    my %expected = (
-        year   => 5,
-        month  => 5,
-        week   => 5,
-        day    => 5,
-        hour   => 5 * 24,
-        minute => 7_200,
-        second => 432_000,
-    );
-    foreach my $unit (sort keys %{TESTED_CLASS->UNITS})
-    {
-        my $adjustment = 0.25;
-        $adjustment = 1 if $unit eq 'second';
-
-        $c->units($unit);
-
-        ok((
-            $c->time_remaining($c->start_date()) == $expected{$unit} - $adjustment
-                            or
-            $c->time_remaining($c->start_date()) == $expected{$unit}),
-            "time left should be correct for '$unit'"
-        );
-    }
 }
 ################################################################################
 sub test_has_started : Test(2)
@@ -95,12 +114,12 @@ sub test_is_ongoing : Test(3)
     is $future_day->is_ongoing(), 0, "Countdown should not be ongoing";
 }
 ################################################################################
-sub test_english_units : Test(1)
-{
-    my $this = shift;
-
-    my $c = Metiisto::Test::Factory->create(countdown => {});
-    is $c->english_units(), 'Days', 'should return correct units as english string';
-}
+# sub test_english_units : Test(1)
+# {
+#     my $this = shift;
+# 
+#     my $c = Metiisto::Test::Factory->create(countdown => {});
+#     is $c->english_units(), 'Days', 'should return correct units as english string';
+# }
 ################################################################################
 1;

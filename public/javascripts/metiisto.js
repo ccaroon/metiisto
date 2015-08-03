@@ -30,7 +30,7 @@ Metiisto.countDowns = {
         var date_ms = target_date.valueOf();
         var secs = Math.round((date_ms - now_ms) / 1000);
 
-        secs = (secs >= 0 ) ? secs : 0;
+        secs = (secs >= 0 ) ? secs : Math.abs(secs);
 
         return (Metiisto.countDowns.format_DHMS(secs))
     },
