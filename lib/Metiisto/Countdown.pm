@@ -91,12 +91,11 @@ sub _interval
     # Auto-adjust units
     my $adjust_value    = -1;
     my $limit_value     = UNIT_SECOND;
-    my $needs_adjusting = abs($time_left) < UNITS->{$this->units()}->{max};
-print STDERR "=====> time [$time_left] unit [".$this->units()."] adjust[$adjust_value] limit [$limit_value] needs [$needs_adjusting] \n";
+    my $needs_adjusting = abs($time_left) < 1.0;
     if ($time_left < 0) {
         $adjust_value    = 1;
         $limit_value     = UNIT_YEAR;
-        $needs_adjusting = abs($time_left) > UNITS->{$this->units()}->{max};
+        $needs_adjusting = abs($time_left) >= UNITS->{$this->units()}->{max};
     }
 
     if ($this->units() ne $limit_value && $needs_adjusting)
