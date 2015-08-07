@@ -4,7 +4,7 @@
 %]
 <div class="pure-g">
     [%- FOREACH countdown IN countdowns -%]
-        [%- parts = countdown.as_hash -%]
+        [%- parts = countdown.current_state -%]
         [%- fract_entity = fraction_entity(parts.interval) -%]
         <div class="m-countdown pure-u-1-12" title="[%= countdown.start_date.format('%b %d, %Y @ %l:%M%P') %]">
             [% IF countdown.is_real_time %]

@@ -12,13 +12,13 @@ use constant UNIT_SECOND => 'second';
     
 use constant UNITS =>
 {
-    UNIT_YEAR()   => {id => 7, max => 9_999_999},
-    UNIT_MONTH()  => {id => 6, max => 12},
-    UNIT_WEEK()   => {id => 5, max => 4},
-    UNIT_DAY()    => {id => 4, max => 7},
-    UNIT_HOUR()   => {id => 3, max => 24},
-    UNIT_MINUTE() => {id => 2, max => 60},
-    UNIT_SECOND() => {id => 1, max => 60},
+    UNIT_YEAR()   => {id => 7, max => 9_999_999.0},
+    UNIT_MONTH()  => {id => 6, max => 12.0},
+    UNIT_WEEK()   => {id => 5, max => 4.0},
+    UNIT_DAY()    => {id => 4, max => 7.0},
+    UNIT_HOUR()   => {id => 3, max => 24.0},
+    UNIT_MINUTE() => {id => 2, max => 60.0},
+    UNIT_SECOND() => {id => 1, max => 60.0},
 };
 my %UNITS_INDEX = map {UNITS->{$_}->{id} => $_} keys %{UNITS()};
 
@@ -89,16 +89,21 @@ sub _interval
     }
 
     # Auto-adjust units
-    my $adjust_value    = -1;
-    my $limit_value     = UNIT_SECOND;
-    my $needs_adjusting = abs($time_left) < 1.0;
-    if ($time_left < 0) {
+    my $adjust_value;
+    my $limit_value;
+    my $needs_adjusting = 0;
+    if (abs($time_left) < 1.0) {
+        $needs_adjusting = 1;
+        $adjust_value    = -1;
+        $limit_value     = UNIT_SECOND;
+    }
+    elsif (abs($time_left) >= UNITS->{$this->units()}->{max}) {
+        $needs_adjusting = 1;
         $adjust_value    = 1;
         $limit_value     = UNIT_YEAR;
-        $needs_adjusting = abs($time_left) >= UNITS->{$this->units()}->{max};
     }
 
-    if ($this->units() ne $limit_value && $needs_adjusting)
+    if ($needs_adjusting && $this->units() ne $limit_value)
     {
         my $new_unit = UNITS->{$this->units()}->{id} + $adjust_value;
         $this->units($UNITS_INDEX{$new_unit});
@@ -136,13 +141,14 @@ sub english_units
     my $this = shift;
     my $date = shift;
 
+    my $i = $this->_interval($date);
     my $units = ucfirst $this->units();
-    $units .= 's' if abs($this->_interval($date)) > 1;
+    $units .= 's' if abs($i) > 1;
     
     return ($units);
 }
 ################################################################################
-sub as_hash
+sub current_state
 {
     my $this  = shift;
     my %parts = (
@@ -171,10 +177,5 @@ sub as_hash
 
     return (\%parts);
 }
-################################################################################
-# sub to_string
-# {
-#     my $this = shift;
-# }
 ################################################################################
 1;
