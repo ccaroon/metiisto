@@ -87,6 +87,7 @@ sub _interval
     elsif ($this->units() eq UNIT_SECOND) {
         $time_left = $secs_diff;
     }
+    $time_left = sprintf("%0.1f", $time_left);
 
     # Auto-adjust units
     my $adjust_value;
