@@ -7,7 +7,8 @@
 CREATE TABLE `countdowns` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `target_date` datetime NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
   `units` varchar(255) NOT NULL DEFAULT 'day',
   `on_homepage` tinyint(1) NOT NULL DEFAULT '0',
   `is_real_time` tinyint(1) NOT NULL DEFAULT '0',
@@ -102,7 +103,7 @@ CREATE TABLE `todos` (
   `title` varchar(255) NOT NULL,
   `completed` tinyint(1) NOT NULL DEFAULT '0',
   `completed_date` datetime DEFAULT NULL,
-  `due_date` date DEFAULT NULL,
+  `due_date` datetime DEFAULT NULL,
   `list_id` bigint(20) unsigned DEFAULT NULL,
   `description` varchar(1024) DEFAULT NULL,
   `repeat_duration` varchar(16) DEFAULT NULL,

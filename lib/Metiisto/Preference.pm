@@ -43,6 +43,7 @@ use constant DEFAULT_PREFS => [
     {jira_password                  => 'Jira Password Here'},
     {jira_tickets_filter_id         => '1'},
     {jira_current_release_filter_id => '2'},
+    {jira_project_id                => '3'},
     {jira_my_tickets_cache_ttl      => 5 * 60},      # 5 minutes
     {jira_current_release_cache_ttl => 1 * (60*60)}, # 1 hour
 

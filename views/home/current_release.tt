@@ -4,7 +4,8 @@
         template = new EJS({url: '/templates/widgets/current_release.ejs'});
         html = template.render({
             current_release: data,
-            jira_host: "[% session.user.preferences('jira_host') %]"
+            jira_host: "[% session.user.preferences('jira_host') %]",
+            jira_project_id: "[% session.user.preferences('jira_project_id') %]"
         });
         $('#current-release-widget-content').html(html);
     });

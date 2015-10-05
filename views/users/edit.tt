@@ -79,6 +79,11 @@
             </div>
             
             <div class="pure-control-group" >
+                <label for="user_pref_jira_project_id">Project ID:</label>
+                <input type="text" id="user_pref_jira_project_id" name="user.preferences.jira_project_id" size="32" value="[% user.preferences('jira_project_id') %]">
+            </div>
+            
+            <div class="pure-control-group" >
                 <label for="user_pref_jira_tickets_filter_id">Tickets Filter:</label>
                 <input type="text" id="user_pref_jira_tickets_filter_id" name="user.preferences.jira_tickets_filter_id" size="32" value="[% user.preferences('jira_tickets_filter_id') %]">
             </div>
