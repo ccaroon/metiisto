@@ -14,7 +14,7 @@ use constant UNITS =>
 {
     UNIT_YEAR()   => {id => 7, max => 9_999_999.0},
     UNIT_MONTH()  => {id => 6, max => 12.0},
-    UNIT_WEEK()   => {id => 5, max => 4.0},
+    UNIT_WEEK()   => {id => 5, max => 4.01},
     UNIT_DAY()    => {id => 4, max => 7.0},
     UNIT_HOUR()   => {id => 3, max => 24.0},
     UNIT_MINUTE() => {id => 2, max => 60.0},
