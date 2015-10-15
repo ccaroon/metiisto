@@ -20,6 +20,7 @@
     "tag-it": "*",
     "codemirror": "3.16",
     "font-awesome": "~4.3.0",
+    "weather-icons": "~2.0.10",
     "pure": "~0.5.0",
     "progrecss": "~1.4.0"
   }

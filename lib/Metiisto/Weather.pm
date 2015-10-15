@@ -2,7 +2,7 @@ package Metiisto::Weather;
 ################################################################################
 use strict;
 
-use LWP::Simple;
+use LWP::UserAgent;
 use JSON::XS;
 
 use constant CACHE_TTL => 5 * 60;
@@ -74,11 +74,13 @@ sub _fetch_data
     my $class = shift;
     my %args = @_;
 
-    my $data = undef;
+    my $ua = LWP::UserAgent->new(timeout => 5);
+
     # TODO: make API key a preference
-    my $json = get("http://api.wunderground.com/api/8f4b19c7f8963947/conditions/q/$args{location}.json");
-    if ($json)
-    {
+    my $data = undef;
+    my $response = $ua->get("http://api.wunderground.com/api/8f4b19c7f8963947/conditions/q/$args{location}.json");
+    if ($response->is_success()) {
+        my $json = $response->content();
         $data = decode_json $json;
         $data = $data->{current_observation};
     }
