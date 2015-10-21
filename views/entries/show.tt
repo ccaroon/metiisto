@@ -20,7 +20,7 @@
         [% IF session.user.preferences('track_time') == 'true' %]
             <b>Time Spent:</b> [% entry.time_spent %]
         [% END %]
-        <div class="markdown">[% entry.description | markdown %]</div>
+        <div class="markdown-body">[% entry.description | markdown %]</div>
     </div>
 </div>
 <script>

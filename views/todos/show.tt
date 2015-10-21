@@ -18,7 +18,7 @@
             <strong>List: </strong><a href="/lists/[% item.list.id %]">[% item.list.name %]</a><br>
             <strong>Repeat: </strong>[% item.repeat_duration %]<br>
         </p>
-        <div class="markdown">[% item.description | markdown %]</div>
+        <div class="markdown-body">[% item.description | markdown %]</div>
     </div>
 </div>
 <script>

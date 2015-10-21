@@ -14,7 +14,9 @@
         <link href="/bower_components/progrecss/progrecss.min.css" rel="stylesheet" type="text/css" />
 
         <link href="/bower_components/weather-icons/css/weather-icons.min.css" rel="stylesheet" type="text/css" />
-
+        
+        <link href="/bower_components/github-markdown-css/github-markdown.css" rel="stylesheet" type="text/css" />
+        
         <link href="/css/metiisto.css" rel="stylesheet" type="text/css" />
         <link href="/css/sticky_note.css" rel="stylesheet" type="text/css" />
 

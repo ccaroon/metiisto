@@ -32,7 +32,7 @@ body {
     padding: 5px;
 }
 
-.markdown {
+/*.markdown {
     margin: 1em 0em 1em 0em
 }
 .markdown a {
@@ -46,6 +46,11 @@ body {
 
 .markdown ul {
     margin: inherit;
+}*/
+
+.markdown-body {
+    font-size: 14px;
+    margin: 1em 0em 1em 0em;
 }
 
 .tag_cloud {
