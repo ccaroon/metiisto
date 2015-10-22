@@ -51,6 +51,7 @@ body {
 .markdown-body {
     font-size: 14px;
     margin: 1em 0em 1em 0em;
+    line-height: 1.2;
 }
 
 .tag_cloud {
