@@ -102,6 +102,9 @@ sub edit
         $out = template 'users/edit', {
             user       => $user,
             themes     => Metiisto::Preference->THEMES,
+            about      => {
+                version => $metiisto::VERSION
+            }
         };
     }
 

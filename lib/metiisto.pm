@@ -3,7 +3,7 @@ package metiisto;
 use Dancer ':syntax';
 use Dancer::Plugin::Database;
 
-our $VERSION = '1.0';
+our $VERSION = '1.0.0';
 
 use Metiisto::Controller::API;
 use Metiisto::Controller::Home;

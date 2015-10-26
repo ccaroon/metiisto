@@ -7,6 +7,7 @@
             <li><a href="#misc">Misc</a></li>
             <li><a href="#jira-config">Jira Config</a></li>
             <li><a href="#email-config">Email Config</a></li>
+            <li><a href="#about">About</a></li>
         </ul>
         <div id="user-information" class="ui-widget-content">
             <div class="pure-control-group" >
@@ -125,6 +126,11 @@
                 <label for="user_pref_smtp_pass">SMTP Passwd:</label>
                 <input type="text" id="user_pref_smtp_pass" name="user.preferences.smtp_pass" size="32" value="[% user.preferences('smtp_pass') %]">
             </div>
+        </div>
+        <div id="about" class="ui-widget-content">
+            <h4>Metiisto v[% about.version %]</h4>
+            <a href="https://github.com/ccaroon/metiisto">View on GitHub</a>
+            <p>Powered by <a href="http://perldancer.org">Dancer</a> v[% dancer_version %]</p>
         </div>
     </div>
 
