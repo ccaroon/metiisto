@@ -1,9 +1,9 @@
 package metiisto;
 ################################################################################
-use Dancer ':syntax';
-use Dancer::Plugin::Database;
+use Dancer2 ':syntax';
+use Dancer2::Plugin::Database;
 
-our $VERSION = '1.0.0';
+our $VERSION = '2.0.0';
 
 use Metiisto::Controller::API;
 use Metiisto::Controller::Home;

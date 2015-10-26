@@ -2,7 +2,8 @@ package Metiisto::Controller::API;
 ################################################################################
 use strict;
 
-use Dancer ':syntax';
+use Dancer2 ':syntax';
+use Dancer2 appname => 'metiisto';
 
 use Metiisto::JiraTicket;
 use Metiisto::Util::Cache;

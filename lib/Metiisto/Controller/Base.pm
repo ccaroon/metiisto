@@ -2,7 +2,8 @@ package Metiisto::Controller::Base;
 ################################################################################
 use strict;
 
-use Dancer ':syntax';
+use Dancer2 ':syntax';
+use Dancer2 appname => 'metiisto';
 
 use Clone qw(clone);
 use Data::Page;

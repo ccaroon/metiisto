@@ -7,7 +7,7 @@ use Date::Format;
 use File::Slurp;
 use Getopt::Long;
 
-# *MUST* come before 'use Dancer::*' so that Dancer gets the correct environment
+# *MUST* come before 'use Dancer2::*' so that Dancer gets the correct environment
 BEGIN
 {
     my $env;
@@ -17,8 +17,8 @@ BEGIN
     $ENV{METIISTO_ENV} = $env;
     $ENV{DANCER_ENVIRONMENT} = $ENV{METIISTO_ENV};
 }
-use Dancer ':script';
-use Dancer::Plugin::Database;
+use Dancer2 ':script';
+use Dancer2::Plugin::Database;
 
 use constant MIGRATE_NONE  => 'None';
 use constant MIGRATE_UP    => 'Up';

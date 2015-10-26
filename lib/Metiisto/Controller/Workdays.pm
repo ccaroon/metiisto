@@ -2,7 +2,8 @@ package Metiisto::Controller::Workdays;
 ################################################################################
 use strict;
 
-use Dancer ':syntax';
+use Dancer2 ':syntax';
+use Dancer2 appname => 'metiisto';
 
 use base 'Metiisto::Controller::Base';
 

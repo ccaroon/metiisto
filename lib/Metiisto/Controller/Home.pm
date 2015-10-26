@@ -3,7 +3,8 @@ package Metiisto::Controller::Home;
 use strict;
 
 use Date::Format;
-use Dancer ':syntax';
+use Dancer2 ':syntax';
+use Dancer2 appname => 'metiisto';
 
 use Metiisto::Countdown;
 use Metiisto::Note;

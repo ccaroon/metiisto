@@ -3,7 +3,8 @@ package Metiisto::Controller::Notes;
 use strict;
 
 use Data::Page;
-use Dancer ':syntax';
+use Dancer2 ':syntax';
+use Dancer2 appname => 'metiisto';
 use SQL::Abstract;
 
 use Metiisto::Util::DateTime;

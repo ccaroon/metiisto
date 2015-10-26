@@ -2,7 +2,8 @@ package Metiisto::Controller::Users;
 ################################################################################
 use strict;
 
-use Dancer ':syntax';
+use Dancer2 ':syntax';
+use Dancer2 appname => 'metiisto';
 
 use Metiisto::User;
 
@@ -103,7 +104,8 @@ sub edit
             user       => $user,
             themes     => Metiisto::Preference->THEMES,
             about      => {
-                version => $metiisto::VERSION
+                version      => $metiisto::VERSION,
+                perl_version => $^V
             }
         };
     }

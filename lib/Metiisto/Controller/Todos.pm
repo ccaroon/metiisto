@@ -2,7 +2,9 @@ package Metiisto::Controller::Todos;
 ################################################################################
 use strict;
 
-use Dancer ':syntax';
+use Dancer2 ':syntax';
+use Dancer2 appname => 'metiisto';
+
 use SQL::Abstract;
 
 use Metiisto::List;

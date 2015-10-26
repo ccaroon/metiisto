@@ -2,7 +2,7 @@ package Metiisto::JiraTicket;
 ################################################################################
 use strict;
 
-use Dancer qw(session);
+use Dancer2;
 use LWP::UserAgent;
 use HTTP::Request;
 use Moo;

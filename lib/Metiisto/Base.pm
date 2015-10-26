@@ -3,7 +3,7 @@ package Metiisto::Base;
 use strict;
 
 use Class::DBI::AbstractSearch;
-use Dancer::Plugin::Database;
+use Dancer2::Plugin::Database;
 
 use Metiisto::Util::DateTime;
 use base 'Class::DBI';

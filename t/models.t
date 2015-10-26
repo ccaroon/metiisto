@@ -7,7 +7,7 @@ BEGIN
     $ENV{METIISTO_ENV}       = 'test';
     $ENV{DANCER_ENVIRONMENT} = $ENV{METIISTO_ENV};
 }
-use Dancer ':script';
+use Dancer2 ':script';
 
 use lib "$ENV{METIISTO_HOME}/t/lib";
 

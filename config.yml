@@ -24,10 +24,12 @@ serializer: JSON
 # template_toolkit: Template Toolkit
 template: "template_toolkit"
 engines:
-    template_toolkit:
-        encoding:  'utf8'
-        start_tag: '[%'
-        end_tag:   '%]'
-    JSON:
-        allow_blessed:   '1'
-        convert_blessed: '1'
+    template:
+        template_toolkit:
+            encoding:  'utf8'
+            start_tag: '[%'
+            end_tag:   '%]'
+    serializer:
+        JSON:
+            allow_blessed:   '1'
+            convert_blessed: '1'
