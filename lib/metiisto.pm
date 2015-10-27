@@ -1,6 +1,6 @@
 package metiisto;
 ################################################################################
-use Dancer2 ':syntax';
+use Dancer2 appname => 'metiisto';
 use Dancer2::Plugin::Database;
 
 our $VERSION = '2.0.0';
@@ -18,6 +18,21 @@ use Metiisto::Controller::Reports;
 use Metiisto::Controller::Stickies;
 use Metiisto::Controller::Tags;
 use Metiisto::Controller::TaggedObjects;
+
+Metiisto::Controller::API->init();
+Metiisto::Controller::Home->init();
+Metiisto::Controller::Entries->init();
+Metiisto::Controller::Users->init();
+Metiisto::Controller::Workdays->init();
+Metiisto::Controller::Todos->init();
+Metiisto::Controller::Lists->init();
+Metiisto::Controller::Notes->init();
+Metiisto::Controller::Countdowns->init();
+Metiisto::Controller::Reports->init();
+Metiisto::Controller::Stickies->init();
+Metiisto::Controller::Tags->init();
+Metiisto::Controller::TaggedObjects->init();
+
 use Metiisto::Weather;
 ################################################################################
 hook before => sub
@@ -38,19 +53,19 @@ hook before => sub
     #       find any other way except to set a 'var'
     var env        => setting('environment');
 
-    my $user = session('user');
-    if ($user)
-    {
-        if ($user->location())
-        {
-            my $weather = Metiisto::Weather->current(location => $user->location());
-            var weather => $weather;
-        }
-    }
-    else
-    {
-        redirect '/users/login' unless request->path_info =~ m|^/users/login|;
-    }
+    # my $user = session('user');
+    # if ($user)
+    # {
+    #     if ($user->location())
+    #     {
+    #         my $weather = Metiisto::Weather->current(location => $user->location());
+    #         var weather => $weather;
+    #     }
+    # }
+    # else
+    # {
+    #     redirect '/users/login' unless request->path_info =~ m|^/users/login|;
+    # }
 };
 ################################################################################
 # Default Route

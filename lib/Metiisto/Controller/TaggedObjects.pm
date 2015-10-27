@@ -2,7 +2,6 @@ package Metiisto::Controller::TaggedObjects;
 ################################################################################
 use strict;
 
-use Dancer2 ':syntax';
 use Dancer2 appname => 'metiisto';
 
 use base 'Metiisto::Controller::Base';

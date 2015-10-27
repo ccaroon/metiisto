@@ -46,7 +46,7 @@ has type => (
     is  => 'rw',
 );
 
-has status => (
+has state => (
     is  => 'rw',
 );
 
@@ -121,7 +121,7 @@ sub search
                 key         => $item->{key},
                 summary     => $item->{summary},
                 link        => $item->{link},
-                status      => $item->{status},
+                state       => $item->{state},
                 type        => $item->{type},
                 fix_version => $item->{fixVersion}->[0],
                 points      => 0.0,
@@ -190,19 +190,19 @@ sub color
     my $this = shift;
 
     my $color = 'black';
-    if ($this->status() =~ /In Progress/) {
+    if ($this->state() =~ /In Progress/) {
         $color = 'blue';
     }
-    elsif ($this->status() =~ /In Testing/) {
+    elsif ($this->state() =~ /In Testing/) {
         $color = '#bbbb00';
     }
-    elsif ($this->status() =~ /Hold/) {
+    elsif ($this->state() =~ /Hold/) {
         $color = 'red';
     }
-    elsif ($this->status() =~ /CI\/Build Deployment /) {
+    elsif ($this->state() =~ /CI\/Build Deployment /) {
         $color = 'purple';
     }
-    elsif ($this->status() =~ /Ready for Release/) {
+    elsif ($this->state() =~ /Ready for Release/) {
         $color = 'green';
     }
 
@@ -221,7 +221,7 @@ sub TO_JSON
         type      => $this->type(),
         points    => $this->points(),
         link      => $this->link(),
-        status    => $this->status(),
+        state    => $this->state(),
         sub_tasks => \@sub_tasks,
         color     => $this->color()
     });

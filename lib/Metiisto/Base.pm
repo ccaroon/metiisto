@@ -3,6 +3,7 @@ package Metiisto::Base;
 use strict;
 
 use Class::DBI::AbstractSearch;
+use Dancer2 appname => 'metiisto';
 use Dancer2::Plugin::Database;
 
 use Metiisto::Util::DateTime;

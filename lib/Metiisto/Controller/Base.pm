@@ -2,7 +2,6 @@ package Metiisto::Controller::Base;
 ################################################################################
 use strict;
 
-use Dancer2 ':syntax';
 use Dancer2 appname => 'metiisto';
 
 use Clone qw(clone);
@@ -28,7 +27,7 @@ sub new
     return ($this);
 }
 ################################################################################
-sub import
+sub init
 {
     my $class = shift;
     $class->declare_routes();

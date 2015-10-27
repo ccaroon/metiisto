@@ -2,7 +2,6 @@ package Metiisto::Controller::Reports;
 ################################################################################
 use strict;
 
-use Dancer2 ':syntax';
 use Dancer2 appname => 'metiisto';
 
 use Net::SMTP::SSL;

@@ -2,7 +2,6 @@ package Metiisto::Controller::Countdowns;
 ################################################################################
 use strict;
 
-use Dancer2 ':syntax';
 use Dancer2 appname => 'metiisto';
 
 use Metiisto::Util::DateTime;

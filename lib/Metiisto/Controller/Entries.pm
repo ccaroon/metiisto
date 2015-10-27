@@ -3,7 +3,6 @@ package Metiisto::Controller::Entries;
 use strict;
 
 use Data::Page;
-use Dancer2 ':syntax';
 use Dancer2 appname => 'metiisto';
 use SQL::Abstract;
 
