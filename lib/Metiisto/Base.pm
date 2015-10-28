@@ -3,7 +3,7 @@ package Metiisto::Base;
 use strict;
 
 use Class::DBI::AbstractSearch;
-use Dancer2 appname => 'metiisto';
+use Dancer2 appname => 'metiisto', "!get";
 use Dancer2::Plugin::Database;
 
 use Metiisto::Util::DateTime;
@@ -45,6 +45,15 @@ sub has_a_datetime
             return ($dt->format_db());
         },
     );
+}
+################################################################################
+# Because Dancer2 surfaces a "get" method on anything that 'uses' it, there is a
+# clash between Dancer2's "get" and Class::DBI's "get".
+# This method is a work around to force $self->get() to use Class::DBI's "get".
+################################################################################
+sub get {
+    my $self = shift;
+    $self->SUPER::get(@_);
 }
 ################################################################################
 # TODO: HACK, HACK!!

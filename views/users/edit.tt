@@ -132,7 +132,7 @@
             <div>
                 <ul>
                     <li><a href="http://www.perl.org">Perl</a> [% about.perl_version %]</li>
-                    <li><a href="http://perldancer.org">Dancer</a> v[% dancer_version %]</li>
+                    <li><a href="http://perldancer.org">Dancer2</a> v[% dancer_version %]</li>
                 </ul>
             </div>
             <p><a href="https://github.com/ccaroon/metiisto">View on GitHub</a></p>

@@ -53,19 +53,19 @@ hook before => sub
     #       find any other way except to set a 'var'
     var env        => setting('environment');
 
-    # my $user = session('user');
-    # if ($user)
-    # {
-    #     if ($user->location())
-    #     {
-    #         my $weather = Metiisto::Weather->current(location => $user->location());
-    #         var weather => $weather;
-    #     }
-    # }
-    # else
-    # {
-    #     redirect '/users/login' unless request->path_info =~ m|^/users/login|;
-    # }
+    my $user = session('user');
+    if ($user)
+    {
+        if ($user->location())
+        {
+            my $weather = Metiisto::Weather->current(location => $user->location());
+            var weather => $weather;
+        }
+    }
+    else
+    {
+        redirect '/users/login' unless request->path_info =~ m|^/users/login|;
+    }
 };
 ################################################################################
 # Default Route

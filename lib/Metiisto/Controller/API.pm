@@ -2,7 +2,7 @@ package Metiisto::Controller::API;
 ################################################################################
 use strict;
 
-use Dancer2 appname => 'metiisto';
+use Dancer2;
 set serializer => 'JSON';
 
 use Metiisto::JiraTicket;
