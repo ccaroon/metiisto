@@ -24,9 +24,9 @@
                 <label for="user_location">Location:</label>
                 <input type="text" id="user_location" name="user.location" size="32" value="[% user.location %]"><button id="help-location"><i class="fa fa-question"></i></button>
                 <div id="help-location-dialog" title="Help : Location">
-                    <p>Location is specified using a Yahoo! WOEID (Where On Earth ID).</p>
+                    <p>Location is specified using a Weather Underground Station ID. The Station ID should be prefixed with 'pws:'.</p>
 
-                    <a href="http://woeid.rosselliot.co.nz">Click Here to look up the WOEID for your location.</a>
+                    <a href="http://www.wunderground.com/weatherstation/ListStations.asp">Click Here to look up your WU Station ID.</a>
                 </div>
             </div>
         </div>
