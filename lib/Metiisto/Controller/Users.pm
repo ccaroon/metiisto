@@ -116,7 +116,7 @@ sub logout
 {
     my $this = shift;
 
-    session->destroy();
+    app->destroy_session();
     my $out = template 'users/login';
 
     return ($out);

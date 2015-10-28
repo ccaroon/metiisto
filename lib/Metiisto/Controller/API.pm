@@ -22,9 +22,9 @@ sub my_tickets
     unless ($tickets)
     {
         $tickets = Metiisto::JiraTicket->search(
-            query => "filter=".session->{user}->preferences('jira_tickets_filter_id'));
+            query => "filter=".session('user')->preferences('jira_tickets_filter_id'));
 
-        my $ttl = session->{user}->preferences('jira_my_tickets_cache_ttl') || DEFAULT_TTL_MY_TICKETS;
+        my $ttl = session('user')->preferences('jira_my_tickets_cache_ttl') || DEFAULT_TTL_MY_TICKETS;
         Metiisto::Util::Cache->set(key => 'my_tickets', 
             value => $tickets, ttl => $ttl);
     }
@@ -40,7 +40,7 @@ sub current_release_data
     unless ($data)
     {
         my $release_tickets = Metiisto::JiraTicket->search(
-            query => "filter=".session->{user}->preferences('jira_current_release_filter_id'));
+            query => "filter=".session('user')->preferences('jira_current_release_filter_id'));
 
         my $total_points = 0;
         my $ready_points = 0;
@@ -69,7 +69,7 @@ sub current_release_data
             total_points => $total_points,
         };
 
-        my $ttl = session->{user}->preferences('jira_current_release_cache_ttl') || DEFAULT_TTL_CURRENT_RELEASE;
+        my $ttl = session('user')->preferences('jira_current_release_cache_ttl') || DEFAULT_TTL_CURRENT_RELEASE;
         Metiisto::Util::Cache->set(
             key   => 'current_release_data',
             value => $data,
@@ -84,14 +84,14 @@ sub declare_routes
 {
     my $class = shift;
     
-    get '/api/my_tickets' => sub {
+    get '/my_tickets' => sub {
         my $c = Metiisto::Controller::API->new();
         my $out = $c->my_tickets();
 
         return ($out);
     };
 
-    get '/api/current_release_data' => sub {
+    get '/current_release_data' => sub {
         my $c = Metiisto::Controller::API->new();
         my $out = $c->current_release_data();
 

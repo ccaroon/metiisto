@@ -17,7 +17,7 @@ BEGIN
     $ENV{METIISTO_ENV} = $env;
     $ENV{DANCER_ENVIRONMENT} = $ENV{METIISTO_ENV};
 }
-use Dancer2 ':script';
+use Dancer2 appname => 'metiisto';
 use Dancer2::Plugin::Database;
 
 use constant MIGRATE_NONE  => 'None';

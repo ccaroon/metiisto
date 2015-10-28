@@ -51,7 +51,7 @@ sub daily
         title       => 'Daily Report',
         name        => 'daily',
         no_controls => $args{no_controls},
-        show_time_spent => (session->{user}->preferences('track_time') eq 'true' ? 1 : 0),
+        show_time_spent => (session('user')->preferences('track_time') eq 'true' ? 1 : 0),
         work_days   => $work_days,
         days        => \@days,
     },
@@ -152,19 +152,19 @@ sub email
 
     eval
     {
-        my $smtp_user = session->{user}->preferences('smtp_user');
-        my $from      = session->{user}->email();
-        my $user_name = session->{user}->name();
-        my $to        = session->{user}->preferences('report_recipients');
+        my $smtp_user = session('user')->preferences('smtp_user');
+        my $from      = session('user')->email();
+        my $user_name = session('user')->name();
+        my $to        = session('user')->preferences('report_recipients');
 
         my $smtp = Net::SMTP::SSL->new(
-            session->{user}->preferences('smtp_host'),
-            Port  => session->{user}->preferences('smtp_port'),
+            session('user')->preferences('smtp_host'),
+            Port  => session('user')->preferences('smtp_port'),
             Debug => 0
         );
         die "Unable to connect to SMTP server" unless $smtp;
 
-        $smtp->auth($smtp_user, session->{user}->preferences('smtp_pass'))
+        $smtp->auth($smtp_user, session('user')->preferences('smtp_pass'))
             or die "Authentication failed!";
 
         $smtp->mail("$smtp_user\n");

@@ -2,7 +2,7 @@ package Metiisto::JiraTicket;
 ################################################################################
 use strict;
 
-use Dancer2;
+use Dancer2 appname => 'metiisto';
 use LWP::UserAgent;
 use HTTP::Request;
 use Moo;
@@ -82,24 +82,23 @@ sub search
 {
     my $class = shift;
     my %args = @_;
-    
     my %tickets;
     my @sub_tasks;
     
     my $url = JIRA_URL;
     my $query = $args{query};
 
-    $url =~ s/_JIRA_HOST_/session->{user}->preferences('jira_host')/e;
-    $url =~ s/_JIRA_USER_/session->{user}->preferences('jira_username')/e;
-    $url =~ s/_JIRA_PASS_/session->{user}->preferences('jira_password')/e;
+    $url =~ s/_JIRA_HOST_/session('user')->preferences('jira_host')/e;
+    $url =~ s/_JIRA_USER_/session('user')->preferences('jira_username')/e;
+    $url =~ s/_JIRA_PASS_/session('user')->preferences('jira_password')/e;
     $url =~ s/_JIRA_QUERY_/$query/;
     #$url .= FIELDS;
     my $req = HTTP::Request->new( GET => $url );
     
     # Use Basic Auth. instead of user/pass in URL
     #$req->headers()->authorization_basic(
-    #    session->{user}->preferences('jira_username'),
-    #    session->{user}->preferences('jira_password')
+    #    session('user')->preferences('jira_username'),
+    #    session('user')->preferences('jira_password')
     #);
 
     my $timeout = $args{timeout} || DEFAULT_TIMEOUT;

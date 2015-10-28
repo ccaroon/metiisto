@@ -1,11 +1,9 @@
 package metiisto;
 ################################################################################
 use Dancer2 appname => 'metiisto';
-use Dancer2::Plugin::Database;
 
 our $VERSION = '2.0.0';
 
-use Metiisto::Controller::API;
 use Metiisto::Controller::Home;
 use Metiisto::Controller::Entries;
 use Metiisto::Controller::Users;
@@ -19,7 +17,6 @@ use Metiisto::Controller::Stickies;
 use Metiisto::Controller::Tags;
 use Metiisto::Controller::TaggedObjects;
 
-Metiisto::Controller::API->init();
 Metiisto::Controller::Home->init();
 Metiisto::Controller::Entries->init();
 Metiisto::Controller::Users->init();

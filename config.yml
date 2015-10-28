@@ -11,7 +11,6 @@ appname: "metiisto"
 layout: "main"
 
 session: YAML
-session_name: metiisto_session
 
 # when the charset is set to UTF-8 Dancer will handle for you
 # all the magic of encoding and decoding. You should not care
@@ -23,11 +22,9 @@ charset: "UTF-8"
 # template_toolkit: Template Toolkit
 template: "template_toolkit"
 engines:
-    # template:
-    #     template_toolkit:
-    #         encoding:  'utf8'
-    #         start_tag: '[%'
-    #         end_tag:   '%]'
+    session:
+        YAML:
+            cookie_name: metiisto_session
     serializer:
         JSON:
             allow_blessed:   '1'
