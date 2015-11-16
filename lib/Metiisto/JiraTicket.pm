@@ -38,6 +38,10 @@ has key => (
     is  => 'rw',
 );
 
+has parent_key => (
+    is => 'rw'
+);
+
 has summary => (
     is  => 'rw',
 );
@@ -119,6 +123,7 @@ sub search
         {
             my $t = Metiisto::JiraTicket->new(
                 key         => $item->{key},
+                parent_key  => $item->{parent},
                 summary     => $item->{summary},
                 link        => $item->{link},
                 status      => $item->{status},
@@ -216,14 +221,15 @@ sub TO_JSON
     my @sub_tasks = map {$_->TO_JSON()} @{$this->sub_tasks()};
 
     return ({
-        key       => $this->key(),
-        summary   => $this->summary(),
-        type      => $this->type(),
-        points    => $this->points(),
-        link      => $this->link(),
-        status    => $this->status(),
-        sub_tasks => \@sub_tasks,
-        color     => $this->color()
+        key        => $this->key(),
+        parent_key => $this->parent_key(),
+        summary    => $this->summary(),
+        type       => $this->type(),
+        points     => $this->points(),
+        link       => $this->link(),
+        status     => $this->status(),
+        sub_tasks  => \@sub_tasks,
+        color      => $this->color()
     });
 }
 ################################################################################

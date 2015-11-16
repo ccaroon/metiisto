@@ -14,7 +14,8 @@
                     <td>[% entry.task_date.format( date_format ? date_format : '%a' ) %]</td>
                     <td>
                         [% IF entry.category == 'Ticket' %]
-                            <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
+                            [% sep = entry.parent_ticket ? " / " : "" %]
+                            <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.parent_ticket %]">[% entry.parent_ticket %]</a>[% sep %]<a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
                         [% ELSE %]
                             [% entry.category %]
                         [% END %]

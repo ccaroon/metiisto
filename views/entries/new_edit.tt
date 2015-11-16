@@ -14,6 +14,11 @@
                 <label for="entry_ticket_num">Ticket Number:</label>
                 <input type="text" id="entry_ticket_num" name="entry.ticket_num" value="[% entry.ticket_num %]" autofocus>
             </div>
+            
+            <div class="pure-control-group">
+                <label for="entry_parent_ticket">Parent:</label>
+                <input type="text" id="entry_parent_ticket" name="entry.parent_ticket" value="[% entry.parent_ticket %]" autofocus>
+            </div>
 
             <div class="pure-control-group">
                 <label for="entry_category">Category:</label>
