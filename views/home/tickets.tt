@@ -4,7 +4,8 @@
     $.ajax('/api/my_tickets').done(function (data) {
         template = new EJS({url: '/templates/widgets/my_tickets.ejs'});
         html = template.render({
-            tickets: data
+            tickets: data,
+            jira_host: "[%= session.user.preferences('jira_host') %]"
         });
         $('#tickets-widget-content').html(html);
     });

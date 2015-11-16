@@ -17,6 +17,11 @@
             <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
         [% END %]
         <br>
+        <b>Parent: </b>
+        [% IF entry.parent_ticket %]
+            <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.parent_ticket %]">[% entry.parent_ticket %]</a>
+        [% END %]
+        <br>
         [% IF session.user.preferences('track_time') == 'true' %]
             <b>Time Spent:</b> [% entry.time_spent %]
         [% END %]
