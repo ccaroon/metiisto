@@ -4,6 +4,7 @@ use Dancer2 appname => 'metiisto';
 
 our $VERSION = '2.0.0';
 
+use Metiisto::Controller::API with => { session => engine('session') };
 use Metiisto::Controller::Home;
 use Metiisto::Controller::Entries;
 use Metiisto::Controller::Users;

@@ -19,7 +19,7 @@ WriteMakefile(
         'Crypt::CBC'                 => 2.33,
         'DBD::mysql'                 => 4.032,
         'DBI'                        => 1.634,
-        'Dancer2'                    => 0.16300,
+        'Dancer2'                    => 0.16500,
         'Dancer2::Plugin::Database'  => 2.13,
         'Data::Page'                 => 2.02,
         'Digest::SHA1'               => 2.13,

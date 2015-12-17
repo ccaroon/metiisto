@@ -12,19 +12,45 @@ use Metiisto::Util::Cache;
 use constant DEFAULT_TTL_MY_TICKETS      => 5 * 60;      # 5 minutes
 use constant DEFAULT_TTL_CURRENT_RELEASE => 1 * (60*60); # 1 hour
 
-use base 'Metiisto::Controller::Base';
+# use base 'Metiisto::Controller::Base';
+################################################################################
+sub new
+{
+    my $class = shift;
+    my $this  = {};
+    
+    bless $this, $class;
+    
+    return ($this);
+}
+################################################################################
+sub init
+{
+    my $class = shift;
+    $class->declare_routes();
+}
 ################################################################################
 sub my_tickets 
 {
     my $this = shift;
 
+# my $c = config;#cookie('metiisto_session');
+# use Data::Dumper;
+# local $Data::Dumper::Maxdepth=4;
+# print STDERR '=====> Begin Dump \$c <====='."\n";
+# print STDERR Dumper $c;
+# print STDERR '=====> End Dump \$c <====='."\n";
+
     my $tickets = Metiisto::Util::Cache->get(key => 'my_tickets');
+print STDERR "=====> here 2 \n";
     unless ($tickets)
     {
+print STDERR "=====> here 3 - no tickets in cache \n";
         $tickets = Metiisto::JiraTicket->search(
             query => "filter=".session('user')->preferences('jira_tickets_filter_id'));
-
+print STDERR "=====> here 4 - after ticket search \n";
         my $ttl = session('user')->preferences('jira_my_tickets_cache_ttl') || DEFAULT_TTL_MY_TICKETS;
+print STDERR "=====> here 5 - ttl [$ttl] \n";
         Metiisto::Util::Cache->set(key => 'my_tickets', 
             value => $tickets, ttl => $ttl);
     }

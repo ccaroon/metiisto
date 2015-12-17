@@ -22,6 +22,9 @@ charset: "UTF-8"
 # template_toolkit: Template Toolkit
 template: "template_toolkit"
 engines:
+    template:
+        template_toolkit:
+            INCLUDE_PATH: 'views'
     session:
         YAML:
             cookie_name: metiisto_session
