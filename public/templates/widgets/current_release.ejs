@@ -14,7 +14,7 @@
 
         var fs = 1 + ((ticket.points / 7) * 0.4);
 
-        var tix_class = ticket.status.match(/(Ready for Release|Closed|Rejected|Released)/)
+        var tix_class = ticket.status.match(/(Ready for Release|Closed|Rejected|Released|Resolved)/)
             ? 'ui-priority-secondary m-strikethru'
             : '';
     %>

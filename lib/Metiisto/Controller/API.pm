@@ -46,7 +46,7 @@ sub current_release_data
         foreach my $t (@$release_tickets)
         {
             $total_points += $t->points();
-            if ($t->status() =~ /(Ready for Release|Closed|Rejected)/)
+            if ($t->status() =~ /(Ready for Release|Closed|Rejected|Released|Resolved)/)
             {
                 $ready_points += $t->points();
             }
