@@ -22,12 +22,13 @@
                 <table border="0">
                     <% for (var j = 0; j < ticket.sub_tasks.length; j+=1) { %>
                         <% var sub = ticket.sub_tasks[j] %>
+                        <% var sub_sep = sub.parent_key ? " / " : "" %>
                         <tr>
                             <td align="center">
-                                <a href="/entries/new?ticket_num=<%= sub.key %>&subject=<%= encodeURIComponent(sub.summary) %>&category=Ticket"><i class="fa fa-arrow-down"></i></a>
+                                <a href="/entries/new?ticket_num=<%= sub.key %>&parent_ticket=<%= sub.parent_key %>&subject=<%= encodeURIComponent(sub.summary) %>&category=Ticket"><i class="fa fa-arrow-down"></i></a>
                             </td>
                             <td>
-                                <a href="<%= sub.link %>"><%= sub.key %> - <%= sub.summary %></a>&nbsp;&nbsp;(<font color="<%= sub.color %>"><%= sub.status %></font>)
+                                <a href="http://<%= jira_host %>/browse/<%= sub.parent_key %>"><%= sub.parent_key %></a><%= sub_sep %><a href="<%= sub.link %>"><%= sub.key %> - <%= sub.summary %></a>&nbsp;&nbsp;(<font color="<%= sub.color %>"><%= sub.status %></font>)
                             </td>
                         </tr>
                     <% } %>
