@@ -6,17 +6,12 @@ use Dancer ':syntax';
 use base 'Metiisto::Controller::Base';
 
 use Metiisto::Tag;
-################################################################################
-sub list
-{
-    my $this = shift;
 
-    my $data = Metiisto::Tag->cloud_data();
-
-    my $out = template 'tags/list', { cloud_data => $data };
-
-    return ($out);
-}
+__PACKAGE__->setup_list_handler(
+    order_by => 'name',
+    entries_per_page => 25,
+    filter_fields      => ['name']
+);
 ################################################################################
 sub declare_routes
 {

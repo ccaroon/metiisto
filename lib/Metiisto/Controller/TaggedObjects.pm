@@ -5,6 +5,8 @@ use strict;
 use Dancer ':syntax';
 use base 'Metiisto::Controller::Base';
 
+use Lingua::EN::Inflect qw(PL);
+
 use Metiisto::Tag;
 use Metiisto::TaggedObject;
 ################################################################################
@@ -12,6 +14,7 @@ sub list
 {
     my $this = shift;
     my $tag_name = params()->{tag};
+    my $tag_type = params()->{type};
     
     my $tag = Metiisto::Tag->retrieve(name => $tag_name);
     
@@ -20,15 +23,23 @@ sub list
     {
         my %tickets;
         my @objects = $tag->objects();
-        my $count   = $tag->objects()->count();
+        my $count   = 0;
+        my %valid_types;
 
-        my %template_data = (tag_name => $tag->name(), count => $count);
+        my %template_data = (tag_name => $tag->name(), tag_type => $tag_type);
         foreach my $obj (@objects)
         {
             my $type = $obj->obj_class();
             $type =~ s/^Metiisto:://;
             $type = lc $type;
-    
+            $valid_types{$type} = ucfirst PL($type);
+
+            if ($tag_type) {
+                next unless $type eq $tag_type;                
+            }
+
+            $count++;
+
             $template_data{$type} = [] unless defined $template_data{$type};
             push @{$template_data{$type}}, $obj->object();
             
@@ -41,8 +52,16 @@ sub list
             }
         }
 
+        my @types = sort keys %valid_types;
+        $template_data{types} = \%valid_types;
+        $template_data{count} = $count;
         $template_data{tickets} = \%tickets;
-        $out = template 'tagged_objects/list', \%template_data;
+        if ($tag_type) {
+            $out = template "tagged_objects/list_by_type", \%template_data;
+        }
+        else {
+            $out = template 'tagged_objects/list', \%template_data;
+        }
     }
     else
     {

@@ -1,6 +1,25 @@
+[%
+    PROCESS util/tools.tt;
+%]
 <div class="ui-widget">
+
     <div class="ui-widget-header">Tags</div>
-    <div class="ui-widget-content">
-        [% PROCESS tags/cloud.tt %]        
+    <div class="ui-widget-content m-form-body" align="center">
+        [% PROCESS shared/filter.tt %]
+        <p>[% PROCESS shared/pagination.tt page_data=pagination %]</p>
     </div>
+    <div class="ui-widget-content">
+        <table width="100%" class="pure-table pure-table-striped">
+            <thead>
+                <tr>
+                    <th width="75%">Name</th>
+                </tr>
+            </thead>
+            [% FOREACH tag IN items %]
+            <tr>
+                <td><a href="/tagged_objects?tag=[% tag.name %]">[% tag.name %]</a></td>
+            </tr>
+            [% END %]
+        </table>
+    </div>    
 </div>

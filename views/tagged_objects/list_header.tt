@@ -1,0 +1,17 @@
+<div class="ui-widget-header">
+    <a href="/tags">Tags</a> &raquo;
+    <a href="/tagged_objects?tag=[% tag_name %]">[% tag_name %]</a> &raquo;
+    [% tag_type | ucfirst %] ([% count %])
+</div>
+<div class="ui-widget-content">
+    <div class="m-tag-type-select">
+        <span id="type_select">
+            [% FOREACH type IN types.keys.sort %]
+                <input type="button" value="[% types.$type %]" onClick="window.location='/tagged_objects?tag=[% tag_name %]&type=[% type %]'">
+            [% END %]
+        </span>
+    </div>
+</div>
+<script language="javascript">
+    $( "#type_select" ).buttonset();
+</script>

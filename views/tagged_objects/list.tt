@@ -1,5 +1,5 @@
 <div class="ui-widget">
-    <div class="ui-widget-header">Tag Search: [% tag_name %] - [% count %] found.</div>
+    [% PROCESS tagged_objects/list_header.tt %]
     <div class="ui-widget-content">
         <div class="pure-g">
             <div class="pure-u-3-4">

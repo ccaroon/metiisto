@@ -14,7 +14,7 @@
                     %]
                 </td>
                 <td>
-                    <a href="/notes/[% note.id %]" title="[% PROCESS shared/tags/list.tt tags=note.tags is_tooltip=1 %]">[% note.title %]</a>
+                    <a href="/notes/[% note.id %]" class="[% note.deleted_date ? 'm-strikethru' : '' %]" title="[% PROCESS shared/tags/list.tt tags=note.tags is_tooltip=1 %]">[% note.title %]</a>
                 </td>
             </tr>
         [% END %]
