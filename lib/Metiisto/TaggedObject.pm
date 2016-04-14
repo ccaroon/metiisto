@@ -11,6 +11,12 @@ __PACKAGE__->columns(Tag      => qw/tag_id/);
 __PACKAGE__->columns(Object   => qw/obj_class obj_id/);
 
 __PACKAGE__->has_a(tag_id => 'Metiisto::Tag');
+
+__PACKAGE__->set_sql(tags_by_type => qq{
+SELECT id,tag_id FROM tagged_object
+WHERE obj_class = ?
+GROUP BY tag_id
+});
 ################################################################################
 sub tag
 {

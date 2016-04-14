@@ -12,6 +12,8 @@
 
         [% PROCESS home/todos.tt %]
 
+        [% PROCESS home/notebooks.tt %]
+
         [% PROCESS home/notes.tt notes=favorite_notes title="Favorite Notes"%]
 
         <div class="pure-g">

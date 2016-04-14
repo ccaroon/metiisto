@@ -1,0 +1,18 @@
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        Notebooks
+    </div>
+    <div class="ui-widget-content">
+        <div style="height: 200px; overflow-y: auto;">
+            <table width="100%" class="pure-table pure-table-striped">
+            [% FOREACH name IN notebooks %]
+                <tr>
+                    <td>
+                        <a href="/tagged_objects?tag=[% name %]&type=note">[% name %]</a>
+                    </td>
+                </tr>
+            [% END %]
+            </table>
+        </div>
+    </div>
+</div>

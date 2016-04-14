@@ -52,9 +52,12 @@ sub home
 
     my $cloud_data = Metiisto::Tag->cloud_data(limit => 25);
 
+    my @notebooks = Metiisto::Note->notebooks();
+
     my $out = template 'home/index', {
         todos           => \@todos,
         entries         => \@entries,
+        notebooks       => \@notebooks,
         favorite_notes  => $fav_notes,
         countdowns      => \@countdowns,
         cloud_data      => $cloud_data

@@ -3,6 +3,7 @@ package Metiisto::Note;
 use strict;
 
 use Crypt::CBC;
+use Metiisto::TaggedObject;
 
 use base qw(Metiisto::Base Metiisto::Taggable);
 ################################################################################
@@ -53,6 +54,16 @@ sub favorites
     );
     
     return(wantarray ? @fav_notes : \@fav_notes);
+}
+################################################################################
+sub notebooks
+{
+    my $class = shift;
+    
+    my @results = Metiisto::TaggedObject->search_tags_by_type("Metiisto::Note");
+    my @notebooks = sort map {$_->tag()->name()} @results;
+    
+    return (wantarray ? @notebooks : \@notebooks);
 }
 ################################################################################
 sub encrypt
