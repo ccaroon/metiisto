@@ -9,41 +9,48 @@
         <p>[% PROCESS shared/pagination.tt page_data=pagination %]</p>
     </div>
     <div class="ui-widget-content">
-        <table width="100%" class="pure-table pure-table-striped">
-            <thead>
-                <tr>
-                    <th width="5%">Flags</th>
-                    <th width="75%">Title</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            [% FOREACH note IN notes %]
-            <tr>
-                <td align="center">
-                    [% IF note.is_favorite %]
-                        <i class="fa fa-star">&nbsp;</i>
+        <div class="pure-g">
+            <div class="pure-u-3-4">
+                <table width="100%" class="pure-table pure-table-striped">
+                    <thead>
+                        <tr>
+                            <th width="5%">Flags</th>
+                            <th width="75%">Title</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    [% FOREACH note IN notes %]
+                    <tr>
+                        <td align="center">
+                            [% IF note.is_favorite %]
+                                <i class="fa fa-star">&nbsp;</i>
+                            [% END %]
+                            [% IF note.is_encrypted %]
+                                [% icon = 'lock'%]
+                            [% ELSE %]
+                                [% icon = 'unlock'%]
+                            [% END %]
+                            <i class="fa fa-[% icon %]" id="note-[% note.id %]"></i>
+                        </td>
+                        <td><a href="/notes/[% note.id %]" class="[% note.deleted_date ? 'm-strikethru' : '' %]">[% note.title %]</a></td>
+                        <td align="center">
+                            [% PROCESS shared/list/actions.tt
+                                controller = 'notes'
+                                item_id = note.id
+                                delete_message = note.title
+                                query_string = "filter_text=" _ params.filter_text
+                            %]
+                        </td>
+                    </tr>
                     [% END %]
-                    [% IF note.is_encrypted %]
-                        [% icon = 'lock'%]
-                    [% ELSE %]
-                        [% icon = 'unlock'%]
-                    [% END %]
-                    <i class="fa fa-[% icon %]" id="note-[% note.id %]"></i>
-                </td>
-                <td><a href="/notes/[% note.id %]" class="[% note.deleted_date ? 'm-strikethru' : '' %]">[% note.title %]</a></td>
-                <td align="center">
-                    [% PROCESS shared/list/actions.tt
-                        controller = 'notes'
-                        item_id = note.id
-                        delete_message = note.title
-                        query_string = "filter_text=" _ params.filter_text
-                    %]
-                </td>
-            </tr>
-            [% END %]
-        </table>
-    </div>    
-
+                </table>
+            </div>
+            <div class="pure-u-1-4">                
+                [% PROCESS home/notes.tt notes=recent_notes title="Recent Notes" %]
+                [% PROCESS home/notes.tt notes=favorite_notes title="Favorite Notes"%]
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 

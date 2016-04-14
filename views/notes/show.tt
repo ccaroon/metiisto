@@ -9,7 +9,7 @@
         [% END %]
         <i class="fa fa-[% icon %]" id="note-[% note.id %]">&nbsp;</i>
         <i class="fa fa-print" id="action-print-note"/>&nbsp;</i>
-        Notes &raquo; <span class="[% note.deleted_date ? 'm-strikethru' : '' %]">[% note.title %]</span>
+        <a href="/notes">Notes</a> &raquo; <span class="[% note.deleted_date ? 'm-strikethru' : '' %]">[% note.title %]</span>
         [% PROCESS shared/tags/list.tt tags=note.tags %]
     </div>
     <div class="ui-widget-content markdown-body">

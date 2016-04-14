@@ -34,26 +34,8 @@ sub home
         due_date  => undef,
         { order_by => 'priority' }
     );
-
-    my @recent_notes = Metiisto::Note->search_where(
-        {
-            is_favorite => {'=', 0},
-            deleted_date  => {'is', undef},
-        },
-        {
-            order_by => 'created_date desc',
-            limit_dialect => 'LimitOffset',
-            limit => 5,
-        }
-    );
     
-    my @fav_notes = Metiisto::Note->search_where(
-        {
-            is_favorite => {'=', 1},
-            deleted_date  => {'is', undef},
-        },
-        { order_by => 'created_date asc' }
-    );
+    my $fav_notes = Metiisto::Note->favorites();
 
     my @countdowns = Metiisto::Countdown->search_where(
         { on_homepage => {'=', 1},  },
@@ -73,8 +55,7 @@ sub home
     my $out = template 'home/index', {
         todos           => \@todos,
         entries         => \@entries,
-        recent_notes    => \@recent_notes,
-        favorite_notes  => \@fav_notes,
+        favorite_notes  => $fav_notes,
         countdowns      => \@countdowns,
         cloud_data      => $cloud_data
     };

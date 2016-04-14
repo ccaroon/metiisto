@@ -53,8 +53,13 @@ sub list
         }
     );
 
+    my $recent_notes = Metiisto::Note->recent();
+    my $fav_notes = Metiisto::Note->favorites();
+
     my $out = template 'notes/list', {
-        notes => \@notes,
+        notes          => \@notes,
+        recent_notes   => $recent_notes,
+        favorite_notes => $fav_notes,
         pagination => {
             current_page  => $page->current_page(),
             first_page    => $page->first_page(),

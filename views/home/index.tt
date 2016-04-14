@@ -9,11 +9,9 @@
 
     <div class="pure-u-1-4">
         [% PROCESS home/current_release.tt %]
-        
+
         [% PROCESS home/todos.tt %]
-        
-        [% PROCESS home/notes.tt notes=recent_notes title="Recent Notes" %]
-        
+
         [% PROCESS home/notes.tt notes=favorite_notes title="Favorite Notes"%]
 
         <div class="pure-g">
@@ -21,7 +19,7 @@
             <div class="pure-u-1-2">[% PROCESS home/tag_cloud.tt %]</div>
         </div>
     </div>
-   
+
     <!-- Countdowns -->
     <div id="home_countdowns" class="pure-u-1-1">
         [% PROCESS home/countdowns.tt %]

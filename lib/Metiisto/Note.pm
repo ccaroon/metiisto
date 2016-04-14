@@ -22,6 +22,39 @@ __PACKAGE__->add_trigger(before_update => \&_trigger_before_update);
 
 __PACKAGE__->init_tagging();
 ################################################################################
+sub recent
+{
+    my $class = shift;
+    
+    my @recent_notes = Metiisto::Note->search_where(
+        {
+            is_favorite => {'=', 0},
+            deleted_date  => {'is', undef},
+        },
+        {
+            order_by => 'created_date desc',
+            limit_dialect => 'LimitOffset',
+            limit => 5,
+        }
+    );
+    
+    return(wantarray ? @recent_notes : \@recent_notes);
+}
+################################################################################
+sub favorites
+{
+    my $class = shift;
+    my @fav_notes = Metiisto::Note->search_where(
+        {
+            is_favorite => {'=', 1},
+            deleted_date  => {'is', undef},
+        },
+        { order_by => 'created_date asc' }
+    );
+    
+    return(wantarray ? @fav_notes : \@fav_notes);
+}
+################################################################################
 sub encrypt
 {
     my $this = shift;
