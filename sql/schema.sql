@@ -21,6 +21,7 @@ CREATE TABLE `entries` (
   `task_date` date NOT NULL DEFAULT '0000-00-00',
   `entry_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ticket_num` varchar(255) DEFAULT NULL,
+  `parent_ticket` varchar(255) DEFAULT NULL,
   `subject` varchar(255) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `category` varchar(255) NOT NULL DEFAULT 'Other',
