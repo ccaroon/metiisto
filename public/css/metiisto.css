@@ -76,14 +76,14 @@ body {
 
 #layout_footer {
     width: 100%;
-    position: fixed;
+    /*position: fixed;*/
     left: 0px;
     bottom: 2px;
 }
 
 #home_countdowns {
     width: 99%;
-    position: fixed;
+    /*position: fixed;*/
     left: 50px;
     bottom: 23px;
 }
