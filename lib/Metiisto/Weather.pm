@@ -20,6 +20,7 @@ use constant WI_ICON_MAP => {
     'rain'                         => 'wi-rain',
     'scattered clouds'             => 'wi-day-sunny-overcast',
     'thunderstorm'                 => 'wi-thunderstorm',
+    'thunderstorms and rain'       => 'wi-thunderstorm',
     'ice pellets'                  => 'wi-sleet'
 };
 ################################################################################
