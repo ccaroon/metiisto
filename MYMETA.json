@@ -4,7 +4,7 @@
       "Craig N. Caroon <youremail@example.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.150001",
+   "generated_by" : "ExtUtils::MakeMaker version 7.1, CPAN::Meta::Converter version 2.150001",
    "license" : [
       "perl_5"
    ],
@@ -66,5 +66,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.0"
+   "version" : "v1.0.0"
 }
