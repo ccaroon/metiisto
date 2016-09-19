@@ -12,6 +12,7 @@ CREATE TABLE `countdowns` (
   `units` varchar(255) NOT NULL DEFAULT 'day',
   `on_homepage` tinyint(1) NOT NULL DEFAULT '0',
   `is_real_time` tinyint(1) NOT NULL DEFAULT '0',
+  `auto_adjust` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 

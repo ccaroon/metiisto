@@ -4,11 +4,13 @@
         Countdowns &raquo; [% item.title %]
     </div>
     <div class="ui-widget-content">
+        <h1>[% item.to_string %]</h1>
         <p>
             <b>Title:</b> [% item.title %]<br>
             <b>Starts:</b> [% item.start_date.format("%b %d, %Y %I:%M:%S %p") %]<br>
             <b>Ends:</b> [% item.end_date.format("%b %d, %Y %I:%M:%S %p") %]<br>
             <b>Display units:</b> [% item.units.ucfirst %]s<br>
+            <b>Auto-Adjust:</b> [% item.auto_adjust ? 'Yes' : 'No' %]<br>
             <b>Realtime:</b> [% item.is_real_time ? 'Yes' : 'No' %]<br>
             <b>Display on homepage:</b> [% item.on_homepage ? 'Yes' : 'No' %]<br>
         </p>

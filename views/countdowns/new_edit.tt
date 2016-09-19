@@ -36,6 +36,14 @@
 
             <div class="pure-control-group">
                 [% PROCESS shared/toggle/widget.tt
+                    label = "Auto-Adjust:"
+                    id    = "countdown_auto_adjust"
+                    name  = "countdown.auto_adjust"
+                %]
+            </div>
+
+            <div class="pure-control-group">
+                [% PROCESS shared/toggle/widget.tt
                     label = "Realtime:"
                     id    = "countdown_is_real_time"
                     name  = "countdown.is_real_time"
@@ -63,6 +71,13 @@
 <script>
     $('.button').button();
 
+    [% PROCESS shared/toggle/init.tt
+        id         = "countdown_auto_adjust"
+        icon_on    = "check-square-o"
+        icon_off   = "square-o"
+        init_value = item.auto_adjust
+    %]
+        
     [% PROCESS shared/toggle/init.tt
         id         = "countdown_on_homepage"
         icon_on    = "check-square-o"

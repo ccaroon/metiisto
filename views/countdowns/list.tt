@@ -15,6 +15,8 @@
                     <th>Preview</th>
                     <th>Start</th>
                     <th>End</th>
+                    <th>Units</th>
+                    <th>Auto-Adjust</th>
                     <th>Realtime</th>
                     <th>On Homepage</th>
                     <th>Actions</th>
@@ -23,10 +25,12 @@
             [% FOREACH countdown IN items %]
             <tr>
                 <td>
-                    [% countdown.title %]
+                    [% countdown.to_string() %]
                 </td>
                 <td align="center">[% countdown.start_date.format("%b %d, %Y %I:%M:%S %p") %]</td>
                 <td align="center">[% countdown.end_date.format("%b %d, %Y %I:%M:%S %p") %]</td>
+                <td align="center">[% countdown.units() %]</td>
+                <td align="center">[% countdown.auto_adjust ? 'Yes' : 'No' %]</td>
                 <td align="center">[% countdown.is_real_time ? 'Yes' : 'No' %]</td>
                 <td align="center">[% countdown.on_homepage ? 'Yes' : 'No' %]</td>
                 <td align="center">

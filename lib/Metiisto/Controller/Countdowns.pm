@@ -22,7 +22,7 @@ sub new_record
     my @units = sort
         { Metiisto::Countdown->UNITS->{$b} <=> Metiisto::Countdown->UNITS->{$a} }
         keys %{Metiisto::Countdown->UNITS()};
-    my $countdown = { on_homepage => 0, is_real_time => 0 };
+    my $countdown = { on_homepage => 0, is_real_time => 0, auto_adjust => 1 };
 
     my $out = $this->SUPER::new_record(
         %args,

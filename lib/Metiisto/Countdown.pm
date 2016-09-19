@@ -26,7 +26,7 @@ use base 'Metiisto::Base';
 ################################################################################
 __PACKAGE__->table('countdowns');
 __PACKAGE__->columns(All => qw/
-    id title start_date end_date units on_homepage is_real_time
+    id title start_date end_date units on_homepage is_real_time auto_adjust
 /);
 __PACKAGE__->has_a_datetime('start_date');
 __PACKAGE__->has_a_datetime('end_date');
@@ -93,15 +93,18 @@ sub _interval
     my $adjust_value;
     my $limit_value;
     my $needs_adjusting = 0;
-    if (abs($time_left) < 1.0) {
-        $needs_adjusting = 1;
-        $adjust_value    = -1;
-        $limit_value     = UNIT_SECOND;
-    }
-    elsif (abs($time_left) >= UNITS->{$this->units()}->{max}) {
-        $needs_adjusting = 1;
-        $adjust_value    = 1;
-        $limit_value     = UNIT_YEAR;
+    
+    if ($this->auto_adjust()) {
+        if (abs($time_left) < 1.0) {
+            $needs_adjusting = 1;
+            $adjust_value    = -1;
+            $limit_value     = UNIT_SECOND;
+        }
+        elsif (abs($time_left) >= UNITS->{$this->units()}->{max}) {
+            $needs_adjusting = 1;
+            $adjust_value    = 1;
+            $limit_value     = UNIT_YEAR;
+        }
     }
 
     if ($needs_adjusting && $this->units() ne $limit_value)
@@ -147,6 +150,27 @@ sub english_units
     $units .= 's' if abs($i) > 1;
     
     return ($units);
+}
+################################################################################
+sub to_string
+{
+    my $this = shift;
+    
+    my $state = $this->current_state();
+    
+    my $str = "$state->{title} - ";
+
+    my $interval = abs($state->{interval}) . " $state->{units}";
+
+    if (!$state->{has_started}) {
+        $str .= "Starts In $interval";
+    } elsif ($state->{is_ongoing}) {
+        $str .= "Ends In $interval";
+    } else {
+        $str .= "$interval Ago";
+    }
+    
+    return ($str);
 }
 ################################################################################
 sub current_state
