@@ -9,7 +9,7 @@ __PACKAGE__->table('lists');
 __PACKAGE__->columns(Primary   => qw/id/);
 __PACKAGE__->columns(Essential => qw/name/);
 
-__PACKAGE__->has_many(items => 'Metiisto::Todo', { order_by => 'completed,priority' });
+__PACKAGE__->has_many(items => 'Metiisto::Todo', { order_by => 'completed,due_date,priority,title' });
 
 __PACKAGE__->init_tagging();
 ################################################################################
