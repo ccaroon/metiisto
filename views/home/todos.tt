@@ -16,6 +16,9 @@
               </td>
               <td class="[% todo.overdue ? 'ui-state-error' : '' %]">
                   <abbr style='border:none' title='([% todo.priority %]) [% todo.due_date ? todo.due_date.format('%b %d, %Y %r') : 'No Due Date' %]'><a href="/todos/[% todo.id %]">[% todo.title %]</a></abbr>
+                  [% IF todo.list %]
+                    <small>&raquo; <a href="/lists/[% todo.list.id %]">[% todo.list.name %]</a></small>
+                  [% END %]
                   [% IF todo.due_soon OR todo.overdue %]
                     <i class="fa fa-exclamation-triangle" style="float:right">&nbsp;</i>
                   [% END %]

@@ -3,7 +3,7 @@
         Notebooks
     </div>
     <div class="ui-widget-content">
-        <div style="height: 200px; overflow-y: auto;">
+        <div style="height: 150px; overflow-y: auto;">
             <table width="100%" class="pure-table pure-table-striped">
             [% FOREACH name IN notebooks %]
                 <tr>

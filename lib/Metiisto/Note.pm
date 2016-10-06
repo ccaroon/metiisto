@@ -50,7 +50,11 @@ sub favorites
             is_favorite => {'=', 1},
             deleted_date  => {'is', undef},
         },
-        { order_by => 'created_date asc' }
+        { 
+            order_by => 'created_date asc',
+            # limit_dialect => 'LimitOffset',
+            # limit => 5
+        }
     );
     
     return(wantarray ? @fav_notes : \@fav_notes);

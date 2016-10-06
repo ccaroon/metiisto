@@ -18,7 +18,19 @@ sub home
     my $this = shift;
 
     my @todos;
-    # With Due date, orderd by due_date, priority
+    # On a List, Due soon, ordered by due_date, priority
+    push @todos, Metiisto::Todo->search_where(
+        {
+            completed => 0,
+            list_id   => {'is not', undef},
+            due_date  => {
+                '<=',
+                Metiisto::Util::DateTime->now()->add_days(days => 7)->format_db(date_only => 1)
+            },
+        },
+        { order_by => 'due_date, priority' }
+    );
+    # Not on a List, with Due date, ordered by due_date, priority
     push @todos, Metiisto::Todo->search_where(
         {
             completed => 0,
@@ -27,14 +39,14 @@ sub home
         },
         { order_by => 'due_date, priority' }
     );
-    # No Due date, ordered by priority
+    # Not on a List, No Due date, ordered by priority
     push @todos, Metiisto::Todo->search(
         completed => 0,
         list_id   => undef,
         due_date  => undef,
         { order_by => 'priority' }
     );
-    
+
     my $fav_notes = Metiisto::Note->favorites();
 
     my @countdowns = Metiisto::Countdown->search_where(
