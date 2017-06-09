@@ -17,9 +17,9 @@ __PACKAGE__->has_many(objects => 'Metiisto::TaggedObject');
 sub names
 {
     my $class = shift;
-    
+
     my @names = map { $_->name() } $class->retrieve_all();
-    
+
     return (wantarray ? @names : \@names);
 }
 ################################################################################

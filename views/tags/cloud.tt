@@ -1,3 +1,5 @@
 [% FOREACH tag IN cloud_data.pairs %]
-    <a style="font-size: [% 0.85 + ((tag.value / 10) * 0.2) %]em" href="/tagged_objects?tag=[% tag.key %]">[% tag.key %]</a>
+    [% font_size = 0.85 + ((tag.value / 10) * 0.2) %]
+    [% font_size = font_size > 2.00 ? 2.00 : font_size %]
+    <a style="font-size: [% font_size %]em" href="/tagged_objects?tag=[% tag.key %]">[% tag.key %]</a>
 [% END %]
