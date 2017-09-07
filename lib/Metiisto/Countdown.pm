@@ -9,12 +9,12 @@ use constant UNIT_DAY    => 'day';
 use constant UNIT_HOUR   => 'hour';
 use constant UNIT_MINUTE => 'minute';
 use constant UNIT_SECOND => 'second';
-    
+
 use constant UNITS =>
 {
     UNIT_YEAR()   => {id => 7, max => 9_999_999.0},
     UNIT_MONTH()  => {id => 6, max => 12.0},
-    UNIT_WEEK()   => {id => 5, max => 4.01},
+    UNIT_WEEK()   => {id => 5, max => 4.06},
     UNIT_DAY()    => {id => 4, max => 7.0},
     UNIT_HOUR()   => {id => 3, max => 24.0},
     UNIT_MINUTE() => {id => 2, max => 60.0},
@@ -34,15 +34,15 @@ __PACKAGE__->has_a_datetime('end_date');
 sub has_started {
     my $this = shift;
     my $now  = time();
-    
+
     my $has_started = $now >= $this->start_date()->epoch() ? 1 : 0;
-    
+
     return ($has_started);
 }
 ################################################################################
 sub is_ongoing {
     my $this = shift;
-    
+
     my $is_ongoing = $this->has_started() && !$this->has_ended() ? 1 : 0;
 
     return ($is_ongoing);
@@ -52,7 +52,7 @@ sub has_ended {
     my $this = shift;
     my $now  = time();
 
-    my $has_ended = $now >= $this->end_date()->epoch() ? 1 : 0;    
+    my $has_ended = $now >= $this->end_date()->epoch() ? 1 : 0;
 
     return ($has_ended);
 }
@@ -87,13 +87,13 @@ sub _interval
     elsif ($this->units() eq UNIT_SECOND) {
         $time_left = $secs_diff;
     }
-    $time_left = sprintf("%0.1f", $time_left);
+    $time_left = sprintf("%0.2f", $time_left);
 
     # Auto-adjust units
     my $adjust_value;
     my $limit_value;
     my $needs_adjusting = 0;
-    
+
     if ($this->auto_adjust()) {
         if (abs($time_left) < 1.0) {
             $needs_adjusting = 1;
@@ -148,16 +148,16 @@ sub english_units
     my $i = $this->_interval($date);
     my $units = ucfirst $this->units();
     $units .= 's' if abs($i) > 1;
-    
+
     return ($units);
 }
 ################################################################################
 sub to_string
 {
     my $this = shift;
-    
+
     my $state = $this->current_state();
-    
+
     my $str = "$state->{title} - ";
 
     my $interval = abs($state->{interval}) . " $state->{units}";
@@ -169,7 +169,7 @@ sub to_string
     } else {
         $str .= "$interval Ago";
     }
-    
+
     return ($str);
 }
 ################################################################################
