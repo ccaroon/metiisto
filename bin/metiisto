@@ -59,33 +59,39 @@ function app_env
     fi
 }
 ################################################################################
+function usage
+{
+    echo "metiisto: Unknown command [$1]";
+    echo "Usage: $0 start|start_devel|stop|restart|status|env|run|log"
+}
+################################################################################
 case $1 in
-    start) 
+    start)
         app_start;
     ;;
     start_devel)
         app_start 'devel';
     ;;
-    stop) 
+    stop)
         app_stop;
     ;;
-    restart) 
+    restart)
         app_stop;
         sleep 1
         app_start;
     ;;
-    status) 
+    status)
         app_status;
     ;;
-    env) 
+    env)
         app_env $2;
     ;;
     run)
         DANCER_ENVIRONMENT=$METIISTO_ENV perl -Mstrict -M"Dancer ':script'" -MDancer::Plugin::Database $2
     ;;
-    log) 
+    log)
         tail -f $APP_DIR/logs/$METIISTO_ENV.log
     ;;
-    *) echo "metiisto: Unknown command [$1]";
+    *) usage $1;
 esac
 ################################################################################

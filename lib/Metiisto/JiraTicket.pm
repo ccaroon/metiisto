@@ -72,8 +72,8 @@ has sub_tasks => (
 
 has points => (
     is  => 'rw',
-    isa => sub { 
-        my $p = shift; 
+    isa => sub {
+        my $p = shift;
         die "'points' must be a number." unless (!defined($p) or looks_like_number($p))
     },
 );
@@ -81,15 +81,19 @@ has points => (
 has fix_version => (
     is  => 'rw',
 );
+
+has is_flagged => (
+    is  => 'rw',
+);
 ################################################################################
 sub search
 {
     my $class = shift;
     my %args = @_;
-    
+
     my %tickets;
     my @sub_tasks;
-    
+
     my $url = JIRA_URL;
     my $query = $args{query};
 
@@ -99,7 +103,7 @@ sub search
     $url =~ s/_JIRA_QUERY_/$query/;
     #$url .= FIELDS;
     my $req = HTTP::Request->new( GET => $url );
-    
+
     # Use Basic Auth. instead of user/pass in URL
     #$req->headers()->authorization_basic(
     #    session->{user}->preferences('jira_username'),
@@ -134,10 +138,14 @@ sub search
 
             foreach my $cf (@{$item->{customfields}->{customfield}})
             {
-                if ($cf->{customfieldname} eq 'Story Points')
+                # customfield_10002
+                if ($cf->{customfieldname} eq 'Flagged')
+                {
+                    $t->is_flagged(1);
+                }
+                elsif ($cf->{customfieldname} eq 'Story Points')
                 {
                     $t->points($cf->{customfieldvalues}->{customfieldvalue});
-                    last;
                 }
             }
 
@@ -173,7 +181,7 @@ sub search
     }
 
     my @tickets = map {$tickets{$_}} (sort {$a cmp $b} keys %tickets);
-    return (wantarray ? @tickets : \@tickets);    
+    return (wantarray ? @tickets : \@tickets);
 }
 ################################################################################
 sub add_sub_task
@@ -214,7 +222,7 @@ sub color
     return ($color);
 }
 ################################################################################
-sub TO_JSON 
+sub TO_JSON
 {
     my $this = shift;
 
@@ -229,7 +237,8 @@ sub TO_JSON
         link       => $this->link(),
         status     => $this->status(),
         sub_tasks  => \@sub_tasks,
-        color      => $this->color()
+        color      => $this->color(),
+        is_flagged => $this->is_flagged()
     });
 }
 ################################################################################

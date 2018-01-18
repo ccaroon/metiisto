@@ -81,7 +81,7 @@ sub home
 sub declare_routes
 {
     my $class = shift;
-    
+
     get '/home' => sub {
         my $c = Metiisto::Controller::Home->new();
         my $out = $c->home();

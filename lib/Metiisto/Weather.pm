@@ -21,7 +21,8 @@ use constant WI_ICON_MAP => {
     'scattered clouds'             => 'wi-day-sunny-overcast',
     'thunderstorm'                 => 'wi-thunderstorm',
     'thunderstorms and rain'       => 'wi-thunderstorm',
-    'ice pellets'                  => 'wi-sleet'
+    'ice pellets'                  => 'wi-sleet',
+    'snow'                         => 'wi-snowflake-cold'
 };
 ################################################################################
 sub current
