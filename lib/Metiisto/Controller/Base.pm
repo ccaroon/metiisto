@@ -21,10 +21,17 @@ sub new
 {
     my $class = shift;
     my $this  = {};
-    
+
     bless $this, $class;
-    
+
+    $this->_init();
+
     return ($this);
+}
+################################################################################
+sub _init
+{
+    my $this = shift;
 }
 ################################################################################
 sub import
@@ -128,7 +135,7 @@ sub create
 
     my $data = {};
     my $prefix = PL(vars->{controller});
-    
+
     my $params = $this->_munge_params(params => {params()});
     foreach my $p (keys %{$params})
     {
@@ -140,7 +147,7 @@ sub create
             $value = undef;
         }
 
-        $data->{$attr} = $value;        
+        $data->{$attr} = $value;
     }
 
     my $obj = $model->insert($data);
@@ -158,9 +165,9 @@ sub show
 {
     my $this = shift;
     my %args = @_;
-    
+
     my $model = $this->_model();
-    
+
     my $obj = $model->retrieve($args{id});
     my $out = template vars->{controller}.'/show', { item => $obj };
 
@@ -189,7 +196,7 @@ sub update
     my $this = shift;
     my %args = @_;
 
-    my $model = $this->_model();   
+    my $model = $this->_model();
     my $obj   = $model->retrieve(id => $args{id});
 
     my $prefix = PL(vars->{controller});
@@ -249,7 +256,7 @@ sub declare_routes
 
     my $base_url = lc $class;
     $base_url =~ s/.*:://g;
-    
+
     # List
     get "/$base_url" => sub {
         my $c = $class->new();
@@ -297,7 +304,7 @@ sub declare_routes
         my $out = $c->show(id => params->{id});
         return ($out);
     };
-    
+
     # Update
     post "/$base_url/:id" => sub {
         my $c = $class->new();
@@ -325,7 +332,7 @@ sub _munge_params
 sub _model
 {
     my $this = shift;
-    
+
     my $model = ucfirst(PL(vars->{controller}));
     return ("Metiisto::$model");
 }

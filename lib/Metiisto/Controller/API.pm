@@ -3,8 +3,8 @@ package Metiisto::Controller::API;
 use strict;
 
 use Dancer ':syntax';
-
-use Metiisto::JiraTicket;
+use Dancer qw(session);
+use Metiisto::Jira;
 use Metiisto::Util::Cache;
 
 # TTLs in seconds
@@ -13,76 +13,107 @@ use constant DEFAULT_TTL_CURRENT_RELEASE => 1 * (60*60); # 1 hour
 
 use base 'Metiisto::Controller::Base';
 ################################################################################
-sub my_tickets 
+sub _init
+{
+    my $this = shift;
+
+    my @jira_hosts   = split(/\|/, session->{user}->preferences('jira_host'));
+    my @jira_users   = split(/\|/, session->{user}->preferences('jira_username'));
+    my @jira_passwds = split(/\|/, session->{user}->preferences('jira_password'));
+    my @jira_filters = split(/\|/, session->{user}->preferences('jira_tickets_filter_id'));
+
+    # Assume each of the above list are the same length
+    $this->{_jira} = [];
+    for (my $i = 0; $i < scalar(@jira_hosts); $i++) {
+        my $host   = $jira_hosts[$i];
+        my $user   = $jira_users[$i];
+        my $pass   = $jira_passwds[$i];
+        my $filter = $jira_filters[$i];
+
+        push @{$this->{_jira}}, Metiisto::Jira->new(
+            name => 'ONE',
+            host => $host,
+            username => $user,
+            password => $pass,
+            filter => $filter
+        );
+    }
+}
+################################################################################
+sub my_tickets
 {
     my $this = shift;
 
     my $tickets = Metiisto::Util::Cache->get(key => 'my_tickets');
     unless ($tickets)
     {
-        $tickets = Metiisto::JiraTicket->search(
-            query => "filter=".session->{user}->preferences('jira_tickets_filter_id'));
+        my @all_tickets;
+        foreach my $jira (@{$this->{_jira}}) {
+            my @these_tickets = $jira->search(query => "filter=".$jira->filter());
+            push @all_tickets, @these_tickets;
+        }
 
+        $tickets = \@all_tickets;
         my $ttl = session->{user}->preferences('jira_my_tickets_cache_ttl') || DEFAULT_TTL_MY_TICKETS;
-        Metiisto::Util::Cache->set(key => 'my_tickets', 
+        Metiisto::Util::Cache->set(key => 'my_tickets',
             value => $tickets, ttl => $ttl);
     }
 
     return ($tickets);
 }
 ################################################################################
-sub current_release_data
-{
-    my $this = shift;
-
-    my $data = Metiisto::Util::Cache->get(key => 'current_release_data');
-    unless ($data)
-    {
-        my $release_tickets = Metiisto::JiraTicket->search(
-            query => "filter=".session->{user}->preferences('jira_current_release_filter_id'));
-
-        my $total_points = 0;
-        my $ready_points = 0;
-        foreach my $t (@$release_tickets)
-        {
-            $total_points += $t->points();
-            if ($t->status() =~ /(Ready for Release|Closed|Rejected|Released|Resolved)/)
-            {
-                $ready_points += $t->points();
-            }
-        }
-
-        my $release_name = '?????';
-        foreach my $ticket (@$release_tickets)
-        {
-            if ($ticket->fix_version()) {
-                $release_name = $ticket->fix_version();
-                last;
-            }
-        }
-
-        $data = {
-            name         => $release_name,
-            tickets      => $release_tickets,
-            ready_points => $ready_points,
-            total_points => $total_points,
-        };
-
-        my $ttl = session->{user}->preferences('jira_current_release_cache_ttl') || DEFAULT_TTL_CURRENT_RELEASE;
-        Metiisto::Util::Cache->set(
-            key   => 'current_release_data',
-            value => $data,
-            ttl   => $ttl
-        );
-    }
-
-    return ($data);
-}
+# sub current_release_data
+# {
+#     my $this = shift;
+#
+#     my $data = Metiisto::Util::Cache->get(key => 'current_release_data');
+#     unless ($data)
+#     {
+#         my $release_tickets = Metiisto::Jira->search(
+#             query => "filter=".session->{user}->preferences('jira_current_release_filter_id'));
+#
+#         my $total_points = 0;
+#         my $ready_points = 0;
+#         foreach my $t (@$release_tickets)
+#         {
+#             $total_points += $t->points();
+#             if ($t->status() =~ /(Ready for Release|Closed|Rejected|Released|Resolved)/)
+#             {
+#                 $ready_points += $t->points();
+#             }
+#         }
+#
+#         my $release_name = '?????';
+#         foreach my $ticket (@$release_tickets)
+#         {
+#             if ($ticket->fix_version()) {
+#                 $release_name = $ticket->fix_version();
+#                 last;
+#             }
+#         }
+#
+#         $data = {
+#             name         => $release_name,
+#             tickets      => $release_tickets,
+#             ready_points => $ready_points,
+#             total_points => $total_points,
+#         };
+#
+#         my $ttl = session->{user}->preferences('jira_current_release_cache_ttl') || DEFAULT_TTL_CURRENT_RELEASE;
+#         Metiisto::Util::Cache->set(
+#             key   => 'current_release_data',
+#             value => $data,
+#             ttl   => $ttl
+#         );
+#     }
+#
+#     return ($data);
+# }
 ################################################################################
 sub declare_routes
 {
     my $class = shift;
-    
+
     get '/api/my_tickets' => sub {
         my $c = Metiisto::Controller::API->new();
         my $out = $c->my_tickets();
@@ -90,12 +121,12 @@ sub declare_routes
         return ($out);
     };
 
-    get '/api/current_release_data' => sub {
-        my $c = Metiisto::Controller::API->new();
-        my $out = $c->current_release_data();
-
-        return ($out);
-    };
+    # get '/api/current_release_data' => sub {
+    #     my $c = Metiisto::Controller::API->new();
+    #     my $out = $c->current_release_data();
+    #
+    #     return ($out);
+    # };
 
 }
 ################################################################################
