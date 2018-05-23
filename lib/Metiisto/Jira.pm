@@ -84,6 +84,7 @@ sub search
         foreach my $item (@{$data->{channel}->{item}})
         {
             my $t = Metiisto::JiraTicket->new(
+                jira        => $this,
                 key         => $item->{key},
                 parent_key  => $item->{parent},
                 summary     => $item->{summary},

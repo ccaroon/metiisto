@@ -12,6 +12,11 @@ use constant SUB_TASK_TYPES => {
 };
 
 ################################################################################
+has jira => (
+    is => 'rw'
+    # Metiisto::Jira
+);
+
 has key => (
     is  => 'rw',
 );
@@ -109,6 +114,7 @@ sub TO_JSON
     my @sub_tasks = map {$_->TO_JSON()} @{$this->sub_tasks()};
 
     return ({
+        jira_host  => $this->jira()->host(),
         key        => $this->key(),
         parent_key => $this->parent_key(),
         summary    => $this->summary(),
