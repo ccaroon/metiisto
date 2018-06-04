@@ -61,6 +61,7 @@ sub _interval
 {
     my $this = shift;
     my $date = shift;
+    my $level = shift // 0;
 
     my $now = time();
     my $secs_diff = $date->epoch() - $now;
@@ -112,7 +113,14 @@ sub _interval
         my $new_unit = UNITS->{$this->units()}->{id} + $adjust_value;
         $this->units($UNITS_INDEX{$new_unit});
         $this->update();
-        $time_left = $this->_interval($date);
+        $level++;
+        if ($level > 10) {
+            warn "Capping Recurrsion level for '" . $this->title() . "'";
+            $time_left = 0.0;
+        }
+        else {
+            $time_left = $this->_interval($date, $level);
+        }
     }
     else #Round to the nearest quarter unit
     {
