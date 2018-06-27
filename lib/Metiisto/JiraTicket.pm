@@ -6,9 +6,9 @@ use Moo;
 use Scalar::Util qw(looks_like_number);
 
 use constant SUB_TASK_TYPES => {
-    'Sub-task'    => 1,
-    'Spec Review' => 1,
-    'Bug found'   => 1
+    'sub-task'    => 1,
+    'spec review' => 1,
+    'bug found'   => 1
 };
 
 ################################################################################
@@ -80,7 +80,7 @@ sub add_sub_task
 sub is_sub_task
 {
     my $this = shift;
-    return (exists SUB_TASK_TYPES->{$this->type()} ? 1 : 0);
+    return (exists SUB_TASK_TYPES->{lc($this->type())} ? 1 : 0);
 }
 ################################################################################
 sub color
