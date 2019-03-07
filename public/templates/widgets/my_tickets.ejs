@@ -10,7 +10,7 @@
                 <% if (ticket.is_flagged) { %>
                 <i class="fa fa-flag"></i>
                 <% }%>
-                <a href="http://<%= jira_host %>/browse/<%= ticket.parent_key %>"><%= ticket.parent_key %></a><%= sep %><a href="<%= ticket.link %>"><%= ticket.key %> - <%= ticket.summary %></a>
+                <a href="http://<%= ticket.jira_host %>/browse/<%= ticket.parent_key %>"><%= ticket.parent_key %></a><%= sep %><a href="<%= ticket.link %>"><%= ticket.key %> - <%= ticket.summary %></a>
                 &nbsp;
                 (<font color="<%= ticket.color %>"><%= ticket.status %></font>, <%= ticket.type %>, <%= ticket.points %>)
                 <%  if (ticket.sub_tasks.length != 0) { %>
@@ -31,7 +31,7 @@
                                 <a href="/entries/new?ticket_num=<%= sub.key %>&parent_ticket=<%= sub.parent_key %>&subject=<%= encodeURIComponent(sub.summary) %>&category=Ticket"><i class="fa fa-arrow-down"></i></a>
                             </td>
                             <td>
-                                <a href="http://<%= jira_host %>/browse/<%= sub.parent_key %>"><%= sub.parent_key %></a><%= sub_sep %><a href="<%= sub.link %>"><%= sub.key %> - <%= sub.summary %></a>&nbsp;&nbsp;(<font color="<%= sub.color %>"><%= sub.status %></font>)
+                                <a href="http://<%= ticket.jira_host %>/browse/<%= sub.parent_key %>"><%= sub.parent_key %></a><%= sub_sep %><a href="<%= sub.link %>"><%= sub.key %> - <%= sub.summary %></a>&nbsp;&nbsp;(<font color="<%= sub.color %>"><%= sub.status %></font>)
                             </td>
                         </tr>
                     <% } %>

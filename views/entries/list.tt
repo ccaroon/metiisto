@@ -1,5 +1,5 @@
 [%
-    PROCESS util/tools.tt;
+PROCESS util/tools.tt;
 %]
 <div class="ui-widget">
     <div class="ui-widget-header">Entries</div>
@@ -24,17 +24,17 @@
                 <td>[% entry.category %]</td>
                 <td>
                     [% sep = entry.parent_ticket ? " / " : "" %]
-                    <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.parent_ticket %]">[% entry.parent_ticket  %]</a>
+                    <a href="[% entry.ticket_link(1) %]">[% entry.parent_ticket %]</a>
                     [% sep %]
-                    <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.ticket_num%]">[% entry.ticket_num %]</a>
+                    <a href="[% entry.ticket_link() %]">[% entry.ticket_num %]</a>
                 </td>
                 <td><a href="/entries/[% entry.id %]">[% entry.subject | html %]</a></td>
                 <td align="center">
                     [% PROCESS shared/list/actions.tt
-                        controller = 'entries'
-                        item_id = entry.id
-                        delete_message = entry.subject
-                        query_string = "filter_text=" _ params.filter_text
+                    controller = 'entries'
+                    item_id = entry.id
+                    delete_message = entry.subject
+                    query_string = "filter_text=" _ params.filter_text
                     %]
                 </td>
             </tr>

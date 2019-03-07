@@ -1,29 +1,32 @@
 [%
-    USE date;
-    PROCESS util/tools.tt;
+USE date;
+PROCESS util/tools.tt;
 %]
 <div class="ui-widget">
     <div class="ui-widget-header">
-         <a href="/reports/daily">[% header ? header : "This Week's Entries"%]</a>
-         <a href="/entries/new"><i class="fa fa-plus"></i></a>
+        <a href="/reports/daily">[% header ? header : "This Week's Entries"%]</a>
+        <a href="/entries/new"><i class="fa fa-plus"></i></a>
     </div>
     <div class="ui-widget-content">
         <table width="100%" class="pure-table pure-table-striped">
             [% FOREACH entry IN entries %]
-                <tr>
-                    <td>[% entry.task_date.format( date_format ? date_format : '%a' ) %]</td>
-                    <td>
-                        [% IF entry.category == 'Ticket' %]
-                            [% sep = entry.parent_ticket ? " / " : "" %]
-                            <a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.parent_ticket %]">[% entry.parent_ticket %]</a>[% sep %]<a href="http://[% session.user.preferences('jira_host') %]/browse/[% entry.ticket_num %]">[% entry.ticket_num %]</a>
-                        [% ELSE %]
-                            [% entry.category %]
-                        [% END %]
-                    </td>
-                    <td width="75%">
-                        <a href="/entries/[% entry.id %]" title="[% PROCESS shared/tags/list.tt tags=entry.tags is_tooltip=1 %]">[% entry.subject %]</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>[% entry.task_date.format( date_format ? date_format : '%a' ) %]</td>
+                <td>
+                    [% IF entry.category == 'Ticket' %]
+                    [% sep = entry.parent_ticket ? " / " : "" %]
+                    <a href="[% entry.ticket_link(1) %]">[%
+                        entry.parent_ticket %]</a>[% sep %]<a href="[% entry.ticket_link() %]">[% entry.ticket_num
+                        %]</a>
+                    [% ELSE %]
+                    [% entry.category %]
+                    [% END %]
+                </td>
+                <td width="75%">
+                    <a href="/entries/[% entry.id %]"
+                        title="[% PROCESS shared/tags/list.tt tags=entry.tags is_tooltip=1 %]">[% entry.subject %]</a>
+                </td>
+            </tr>
             [% END %]
         </table>
     </div>

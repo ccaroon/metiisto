@@ -2,6 +2,7 @@ package Metiisto::Entry;
 ################################################################################
 use strict;
 
+use Metiisto::Jira;
 use Metiisto::Util::DateTime;
 
 use base qw(Metiisto::Base Metiisto::Taggable);
@@ -29,6 +30,29 @@ __PACKAGE__->has_a_datetime('task_date');
 __PACKAGE__->has_a_datetime('entry_date');
 
 __PACKAGE__->init_tagging();
+################################################################################
+sub ticket_link
+{
+    my $this = shift;
+    my $for_parent = shift;
+
+    my $ticket_num = $this->ticket_num();
+    if ($for_parent) {
+        $ticket_num = $this->parent_ticket();
+    }
+
+    my $link = "";
+    if ($ticket_num) {
+        # HACK: need to make more generic
+        my $jira = Metiisto::Jira->by_name("webassign");
+        if ($ticket_num =~ /^DO-/) {
+            $jira = Metiisto::Jira->by_name("cengage");
+        }
+        $link = $jira->browse_link($ticket_num)
+    }
+
+    return ($link);
+}
 ################################################################################
 sub recent_subjects
 {

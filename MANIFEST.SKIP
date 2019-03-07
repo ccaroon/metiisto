@@ -15,4 +15,3 @@ Makefile$
 ^.*\.log
 ^.*\.swp$
 .DS_Store
-metiisto.sublime-workspace

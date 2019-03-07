@@ -24,7 +24,7 @@ requires:
   Class::DBI::AbstractSearch: '0.07'
   Crypt::Blowfish: '2.14'
   Crypt::CBC: '2.33'
-  DBD::mysql: '4.031'
+  DBD::mysql: '4.046'
   DBI: '1.631'
   Dancer: '1.3134'
   Dancer::Plugin::Database: '2.1'

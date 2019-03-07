@@ -4,8 +4,7 @@
     $.ajax('/api/my_tickets').done(function (data) {
         template = new EJS({url: '/templates/widgets/my_tickets.ejs'});
         html = template.render({
-            tickets: data,
-            jira_host: "[%= session.user.preferences('jira_host') %]"
+            tickets: data
         });
         $('#tickets-widget-content').html(html);
     });
@@ -14,7 +13,7 @@
 
 <div class="ui-widget">
     <div class="ui-widget-header">
-        <a href="http://[% session.user.preferences('jira_host') %]">Tickets</a>
+        Tickets
     </div>
     <div class="ui-widget-content" id="tickets-widget-content">
         <i class="fa fa-spinner fa-spin fa-2x"></i>
