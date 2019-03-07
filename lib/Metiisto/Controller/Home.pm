@@ -64,7 +64,7 @@ sub home
 
     my $cloud_data = Metiisto::Tag->cloud_data(limit => 25);
 
-    my @notebooks = undef; #Metiisto::Note->notebooks();
+    my @notebooks = Metiisto::Note->notebooks();
 
     my $out = template 'home/index', {
         todos           => \@todos,

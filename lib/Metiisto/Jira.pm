@@ -112,7 +112,7 @@ sub browse_link
     my $this = shift;
     my $ticket_num = shift;
 
-    my $link = "http://" . $this->host() . "/browse/" . $ticket_num;
+    my $link = "https://" . $this->host() . "/browse/" . $ticket_num;
     return ($link)
 }
 ################################################################################
