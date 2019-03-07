@@ -13,33 +13,6 @@ use constant DEFAULT_TTL_CURRENT_RELEASE => 1 * (60*60); # 1 hour
 
 use base 'Metiisto::Controller::Base';
 ################################################################################
-sub _init
-{
-    my $this = shift;
-
-    my @jira_hosts   = split(/\|/, session->{user}->preferences('jira_host'));
-    my @jira_users   = split(/\|/, session->{user}->preferences('jira_username'));
-    my @jira_passwds = split(/\|/, session->{user}->preferences('jira_password'));
-    my @jira_filters = split(/\|/, session->{user}->preferences('jira_tickets_filter_id'));
-
-    # Assume each of the above list are the same length
-    $this->{_jira} = [];
-    for (my $i = 0; $i < scalar(@jira_hosts); $i++) {
-        my $host   = $jira_hosts[$i];
-        my $user   = $jira_users[$i];
-        my $pass   = $jira_passwds[$i];
-        my $filter = $jira_filters[$i];
-
-        push @{$this->{_jira}}, Metiisto::Jira->new(
-            name => 'ONE',
-            host => $host,
-            username => $user,
-            password => $pass,
-            filter => $filter
-        );
-    }
-}
-################################################################################
 sub my_tickets
 {
     my $this = shift;
@@ -48,7 +21,7 @@ sub my_tickets
     unless ($tickets)
     {
         my @all_tickets;
-        foreach my $jira (@{$this->{_jira}}) {
+        foreach my $jira (Metiisto::Jira->all()) {
             my @these_tickets = $jira->search(query => "filter=".$jira->filter());
             push @all_tickets, @these_tickets;
         }

@@ -2,9 +2,13 @@ package Metiisto::Jira;
 ################################################################################
 use strict;
 
+use Dancer ':syntax';
+use Dancer qw(session);
+
 use LWP::UserAgent;
 use HTTP::Request;
 use Moo;
+use URI::Encode qw(uri_encode);
 use XML::Simple;
 $XML::Simple::PREFERRED_PARSER='XML::LibXML::SAX::Parser';
 
@@ -32,6 +36,53 @@ has password => (
 has filter => (
     is  => 'rw',
 );
+
+my %JIRAS;
+################################################################################
+sub by_name
+{
+    my $class = shift;
+    my $name = shift;
+
+    return ($Metiisto::Jira::JIRAS{$name});
+}
+################################################################################
+sub all
+{
+    my $class = shift;
+
+    my @all = values(%Metiisto::Jira::JIRAS);
+
+    return(wantarray ? @all : \@all);
+}
+################################################################################
+sub init
+{
+    my $class = shift;
+
+    my @jira_names   = split(/\|/, session->{user}->preferences('jira_name'));
+    my @jira_hosts   = split(/\|/, session->{user}->preferences('jira_host'));
+    my @jira_users   = split(/\|/, session->{user}->preferences('jira_username'));
+    my @jira_passwds = split(/\|/, session->{user}->preferences('jira_password'));
+    my @jira_filters = split(/\|/, session->{user}->preferences('jira_tickets_filter_id'));
+
+    # Assume each of the above list are the same length
+    for (my $i = 0; $i < scalar(@jira_names); $i++) {
+        my $name   = $jira_names[$i];
+        my $host   = $jira_hosts[$i];
+        my $user   = $jira_users[$i];
+        my $pass   = $jira_passwds[$i];
+        my $filter = $jira_filters[$i];
+
+        Metiisto::Jira->new(
+            name => $name,
+            host => $host,
+            username => $user,
+            password => $pass,
+            filter => $filter
+        );
+    }
+}
 ################################################################################
 sub BUILD
 {
@@ -40,7 +91,8 @@ sub BUILD
     my $url = JIRA_URL;
     $url =~ s/_JIRA_HOST_/$this->host()/e;
     $url =~ s/_JIRA_USER_/$this->username()/e;
-    $url =~ s/_JIRA_PASS_/$this->password()/e;
+    my $encoded_passwd = uri_encode($this->password());
+    $url =~ s/_JIRA_PASS_/$encoded_passwd/;
 
     $this->{_url} = $url;
 
@@ -51,6 +103,17 @@ sub BUILD
             SSL_ca_file     => "$ENV{METIISTO_HOME}/public/certs/atlassian.net"
         }
     );
+
+    $Metiisto::Jira::JIRAS{$this->name()} = $this;
+}
+################################################################################
+sub browse_link
+{
+    my $this = shift;
+    my $ticket_num = shift;
+
+    my $link = "http://" . $this->host() . "/browse/" . $ticket_num;
+    return ($link)
 }
 ################################################################################
 sub search

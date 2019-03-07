@@ -46,6 +46,7 @@ hook before => sub
             my $weather = Metiisto::Weather->current(location => $user->location());
             var weather => $weather;
         }
+        Metiisto::Jira->init();
     }
     else
     {
