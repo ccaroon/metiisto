@@ -12,16 +12,18 @@
             </div>
             <div class="ui-widget-content">
                 [% Date.format(date.now, "%a - %b %d, %Y") %]
-                [% IF vars.weather.temp %]
-                    | <span title="[% vars.weather.text %]">
-                        <i class="wi [% vars.weather.wi_icon %]"></i>
-                        <a href="[% vars.weather.url %]">[% vars.weather.temp %]&#xb0;</a>
+                [%# To Uncomment this block, replace all the `?]` with `PERCENT]`
+                [% IF vars.weather.temp ?]
+                    | <span title="[% vars.weather.text ?]">
+                        <i class="wi [% vars.weather.wi_icon ?]"></i>
+                        <a href="[% vars.weather.url ?]">[% vars.weather.temp ?]&#xb0;</a>
                     </span>
-                [% ELSE %]
+                [% ELSE ?]
                     | <span title="Unavailable">
                         <i class="wi wi-na"></i>
                     </span>
-                [% END %]
+                [% END ?]
+                %]
             </div>
         </div>
     </div>

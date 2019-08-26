@@ -41,11 +41,12 @@ hook before => sub
     my $user = session('user');
     if ($user)
     {
-        if ($user->location())
-        {
-            my $weather = Metiisto::Weather->current(location => $user->location());
-            var weather => $weather;
-        }
+        # Weather code needs updating. See Metiisto::Weather for details.
+        # if ($user->location())
+        # {
+        #     my $weather = Metiisto::Weather->current(location => $user->location());
+        #     var weather => $weather;
+        # }
         Metiisto::Jira->init();
     }
     else

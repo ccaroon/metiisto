@@ -7,7 +7,7 @@ use base 'Metiisto::Base';
 use Metiisto::Util::DateTime;
 
 use constant DEFAULT_TIME_IN  =>'09:00';
-use constant DEFAULT_TIME_OUT =>'17:00';
+use constant DEFAULT_TIME_OUT =>'16:30';
 
 use constant DAY_TYPE_REGULAR  => 0;
 use constant DAY_TYPE_HOLIDAY  => 1;

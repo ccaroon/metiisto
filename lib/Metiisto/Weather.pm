@@ -25,6 +25,11 @@ use constant WI_ICON_MAP => {
     'snow'                         => 'wi-snowflake-cold'
 };
 ################################################################################
+# TODO:
+# Weather makes (made) use of Weather Underground's API which has been shutdown
+# since Feb of 2019. This code needs to be updated to use a new weather service.
+################################################################################
+################################################################################
 sub current
 {
     my $class = shift;
@@ -75,18 +80,18 @@ sub text2wi_icon
 sub _fetch_data
 {
     my $class = shift;
-    my %args = @_;
+    # my %args = @_;
 
-    my $ua = LWP::UserAgent->new(timeout => 5);
+    # my $ua = LWP::UserAgent->new(timeout => 5);
 
     # TODO: make API key a preference
     my $data = undef;
-    my $response = $ua->get("http://api.wunderground.com/api/8f4b19c7f8963947/conditions/q/$args{location}.json");
-    if ($response->is_success()) {
-        my $json = $response->content();
-        $data = decode_json $json;
-        $data = $data->{current_observation};
-    }
+    # my $response = $ua->get("http://api.wunderground.com/api/8f4b19c7f8963947/conditions/q/$args{location}.json");
+    # if ($response->is_success()) {
+    #     my $json = $response->content();
+    #     $data = decode_json $json;
+    #     $data = $data->{current_observation};
+    # }
 
     return($data);
 }
