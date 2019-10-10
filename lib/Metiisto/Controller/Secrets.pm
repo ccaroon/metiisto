@@ -10,7 +10,7 @@ use Metiisto::Secret;
 
 __PACKAGE__->setup_list_handler(
     entries_per_page => 15,
-    order_by         => 'category desc',
+    order_by         => 'category',
     filter_fields    => ['category', 'username', 'note']
 );
 ################################################################################
