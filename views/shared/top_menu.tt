@@ -16,6 +16,7 @@
         <li><a class="top-menu-item-text" href="/todos"><i class="top-menu-item-icon fa fa-lightbulb-o fa-1x"></i>Todos</a></li>
         <li><a class="top-menu-item-text" href="/notes"><i class="top-menu-item-icon fa fa-file-text-o fa-1x"></i>Notes</a></li>
         <li><a class="top-menu-item-text" href="/countdowns"><i class="top-menu-item-icon fa fa-calendar fa-1x"></i>Countdowns</a></li>
+        <li><a class="top-menu-item-text" href="/secrets"><i class="top-menu-item-icon fa fa-user-secret fa-1x"></i>Secrets</a></li>
         <li><a class="top-menu-item-text" href="/reports/weekly"><i class="top-menu-item-icon fa fa-bar-chart-o fa-1x"></i>Report</a></li>
     </ul>
 </div>

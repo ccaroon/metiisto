@@ -70,6 +70,17 @@ CREATE TABLE `schema_migrations` (
   UNIQUE KEY `uk_version` (`version`)
 ) ENGINE=InnoDB;
 
+-- secrets
+CREATE TABLE `secrets` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `category` varchar(256) NOT NULL,
+  `username` varchar(256) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `created_date` datetime NOT NULL,
+  `updated_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
 -- stickies
 CREATE TABLE `stickies` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
