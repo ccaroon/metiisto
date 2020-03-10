@@ -24,6 +24,15 @@ You'll need to install the required third-party Perl modules.
     3. Repeat for each missing module. You can re-run `perl Makefile.PL`
        if necessary.
 
+### DBD::mysql on (MacOS)
+1. Download module
+2. Un'tar
+3. `perl Makefile.PL --libs "-L/usr/local/opt/openssl@1.1/lib -L/usr/local/opt/mysql@5.7/lib -lmysqlclient -lssl -lcrypto"`
+4. `make`
+5. `make test`
+6. `make install`
+
+
 Database
 --------
 1. Update database connection information in the environment configs in

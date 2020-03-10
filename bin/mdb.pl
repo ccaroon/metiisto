@@ -64,6 +64,7 @@ sub restore
 
     my $db = config->{plugins}->{Database};
     print STDERR "Restoring '$backup_file' to $db->{database}\n";
+    print("mysql -h$db->{host} -u$db->{username} $db->{database} -p$db->{password} < $backup_file\n");
     exec("mysql -h$db->{host} -u$db->{username} $db->{database} -p$db->{password} < $backup_file");
 }
 ################################################################################
