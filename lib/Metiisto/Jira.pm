@@ -100,7 +100,8 @@ sub BUILD
         timeout => DEFAULT_TIMEOUT,
         ssl_opts => {
             verify_hostname => 1,
-            SSL_ca_file     => "$ENV{METIISTO_HOME}/public/certs/atlassian.net"
+            SSL_ca_file     => "$ENV{METIISTO_HOME}/public/certs/ca-certs.pem"
+            # SSL_ca_file     => "/usr/local/etc/openssl\@1.1/cert.pem"
         }
     );
 
