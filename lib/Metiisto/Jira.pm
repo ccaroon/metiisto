@@ -99,7 +99,7 @@ sub BUILD
     $this->{_UA} = LWP::UserAgent->new(
         timeout => DEFAULT_TIMEOUT,
         ssl_opts => {
-            verify_hostname => 1,
+            verify_hostname => 0,
             SSL_ca_file     => "$ENV{METIISTO_HOME}/public/certs/ca-certs.pem"
             # SSL_ca_file     => "/usr/local/etc/openssl\@1.1/cert.pem"
         }

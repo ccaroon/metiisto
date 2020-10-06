@@ -44,11 +44,11 @@ sub ticket_link
     my $link = "";
     if ($ticket_num) {
         # HACK: need to make more generic
-        my $jira = Metiisto::Jira->by_name("webassign");
+        my $jira = Metiisto::Jira->by_name("cengage");
+
         if ($ticket_num =~ /^DO-/) {
-            $jira = Metiisto::Jira->by_name("cengage");
+            $link = $jira->browse_link($ticket_num)
         }
-        $link = $jira->browse_link($ticket_num)
     }
 
     return ($link);
